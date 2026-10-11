@@ -29,7 +29,7 @@ export function expandEnv(str, env = process.env) {
  */
 export function serviceUrl(services, name, env = process.env) {
   const svc = services?.[name];
-  if (!svc) return null;
+  if (!svc || typeof svc !== 'object' || typeof svc.url !== 'string') return null; // ignores "_help" notes etc.
   const url = expandEnv(svc.url, env).replace(/\/+$/, '');
   if (!/^https?:\/\/[^/]+/i.test(url)) return null; // unset ${VAR} leaves a relative path: treat as not configured
   return { url, key: expandEnv(svc.key || '', env) };

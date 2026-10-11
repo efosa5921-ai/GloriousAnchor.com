@@ -58,3 +58,11 @@ test('staticFeedUrl builds RSSHub and RSS-Bridge URLs against the configured ser
   assert.throws(() => staticFeedUrl({ type: 'rsshub', route: 'no-slash' }, services, env), /route/);
   assert.equal(homepageFor({ type: 'rsshub', route: '/x', profile: 'https://x.com/a' }), 'https://x.com/a');
 });
+
+test('serviceUrl ignores non-service entries such as _help notes', () => {
+  const services = { _help: 'text', rsshub: { url: 'https://f.example/rsshub' }, broken: { nope: true } };
+  assert.equal(serviceUrl(services, '_help', {}), null);
+  assert.equal(serviceUrl(services, 'broken', {}), null);
+  assert.equal(serviceUrl(services, 'missing', {}), null);
+  assert.deepEqual(serviceUrl(services, 'rsshub', {}), { url: 'https://f.example/rsshub', key: '' });
+});

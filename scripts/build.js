@@ -57,6 +57,7 @@ const parser = new Parser({
 /** Basic-auth credentials for self-hosted services, keyed by URL prefix. */
 function authHeadersFor(url, services) {
   for (const name of Object.keys(services || {})) {
+    if (name.startsWith('_') || typeof services[name] !== 'object') continue;
     const svc = serviceUrl(services, name);
     const basic = expandEnv(services[name].basicAuth || '');
     if (svc && basic && url.startsWith(svc.url)) return { Authorization: 'Basic ' + Buffer.from(basic).toString('base64') };
