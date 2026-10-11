@@ -12,8 +12,9 @@ test('staticFeedUrl builds URLs for each source type', () => {
   assert.equal(staticFeedUrl({ type: 'tiktok' }), null);
 });
 
-test('channelIdFromHtml finds the id in several page shapes', () => {
+test('channelIdFromHtml finds the id in several page shapes and prefers the canonical one', () => {
   assert.equal(channelIdFromHtml('..."channelId":"UCVfwlh9XpX2Y_tQfjeln9QA",...'), 'UCVfwlh9XpX2Y_tQfjeln9QA');
+  assert.equal(channelIdFromHtml('"channelId":"UCwrongwrongwrongwrongw1" ... <link rel="canonical" href="https://www.youtube.com/channel/UCVfwlh9XpX2Y_tQfjeln9QA"> ... "externalId":"UCVfwlh9XpX2Y_tQfjeln9QA"'), 'UCVfwlh9XpX2Y_tQfjeln9QA', 'canonical beats the first channelId');
   assert.equal(channelIdFromHtml('<link rel="canonical" href="https://www.youtube.com/channel/UCVfwlh9XpX2Y_tQfjeln9QA">'), 'UCVfwlh9XpX2Y_tQfjeln9QA');
   assert.equal(channelIdFromHtml('<html>nothing</html>'), null);
 });
@@ -65,4 +66,19 @@ test('serviceUrl ignores non-service entries such as _help notes', () => {
   assert.equal(serviceUrl(services, 'broken', {}), null);
   assert.equal(serviceUrl(services, 'missing', {}), null);
   assert.deepEqual(serviceUrl(services, 'rsshub', {}), { url: 'https://f.example/rsshub', key: '' });
+});
+
+import { feedLinksFromHtml, conventionalFeedPaths } from '../scripts/lib/sources.js';
+
+test('feedLinksFromHtml finds advertised feeds and conventionalFeedPaths lists the usual suspects', () => {
+  const html = `<html><head>
+    <link rel="stylesheet" href="/a.css">
+    <link rel="alternate" type="application/rss+xml" title="Posts" href="/feed/">
+    <link type="application/atom+xml" rel="alternate" href="https://cdn.example.org/atom.xml">
+    <link rel="alternate" type="application/json" href="/feed.json">
+    </head></html>`;
+  assert.deepEqual(feedLinksFromHtml(html, 'https://site.org/page'), ['https://site.org/feed/', 'https://cdn.example.org/atom.xml']);
+  assert.deepEqual(feedLinksFromHtml('', 'https://site.org'), []);
+  assert.equal(conventionalFeedPaths('https://site.org/blog/x')[0], 'https://site.org/feed/');
+  assert.deepEqual(conventionalFeedPaths('not a url'), []);
 });

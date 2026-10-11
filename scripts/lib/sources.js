@@ -101,11 +101,14 @@ export function homepageFor(source) {
 /** Extract a YouTube channel id from a channel page's HTML. */
 export function channelIdFromHtml(html) {
   if (!html) return null;
+  // Order matters: the page's canonical link and externalId name *this* channel; the first
+  // "channelId" in the page data can belong to a featured or related channel.
   const patterns = [
-    /"channelId":"(UC[0-9A-Za-z_-]{22})"/,
-    /"externalId":"(UC[0-9A-Za-z_-]{22})"/,
     /<link rel="canonical" href="https:\/\/www\.youtube\.com\/channel\/(UC[0-9A-Za-z_-]{22})"/,
+    /<meta itemprop="identifier" content="(UC[0-9A-Za-z_-]{22})"/,
+    /"externalId":"(UC[0-9A-Za-z_-]{22})"/,
     /feeds\/videos\.xml\?channel_id=(UC[0-9A-Za-z_-]{22})/,
+    /"channelId":"(UC[0-9A-Za-z_-]{22})"/,
   ];
   for (const re of patterns) {
     const m = html.match(re);
@@ -132,4 +135,30 @@ export async function resolveFeedUrl(source, cache, fetchText, services) {
     return YT_FEED + id;
   }
   throw new Error(`source ${source.id}: cannot build a feed URL (type=${source.type || 'rss'})`);
+}
+
+/**
+ * Feed auto-discovery: find <link rel="alternate" type="application/rss+xml|atom+xml"> tags in a page,
+ * plus a few conventional paths, so a wrong feed URL can heal itself from the site's homepage.
+ */
+export function feedLinksFromHtml(html, baseUrl) {
+  const out = [];
+  if (html) {
+    const re = /<link\b[^>]*>/gi;
+    for (const tag of String(html).slice(0, 300000).match(re) || []) {
+      if (!/rel=["'][^"']*alternate[^"']*["']/i.test(tag)) continue;
+      if (!/type=["'][^"']*(rss|atom|feed)[^"']*["']/i.test(tag)) continue;
+      const href = tag.match(/href=["']([^"']+)["']/i);
+      if (!href) continue;
+      try { out.push(new URL(href[1], baseUrl).toString()); } catch { /* skip */ }
+    }
+  }
+  return [...new Set(out)];
+}
+
+export function conventionalFeedPaths(baseUrl) {
+  try {
+    const origin = new URL(baseUrl).origin;
+    return ['/feed/', '/rss', '/feed.xml', '/rss.xml', '/atom.xml', '/index.xml', '/feeds/posts/default'].map((p) => origin + p);
+  } catch { return []; }
 }

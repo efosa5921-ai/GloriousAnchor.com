@@ -311,7 +311,12 @@
       "url": "https://clearlyreformed.org/feed/",
       "category": "articles",
       "kind": "article",
-      "homepage": "https://clearlyreformed.org"
+      "homepage": "https://clearlyreformed.org",
+      "fallbacks": [
+        {
+          "url": "https://www.thegospelcoalition.org/blogs/kevin-deyoung/feed/"
+        }
+      ]
     },
     {
       "id": "voskamp",
@@ -392,7 +397,13 @@
       "type": "youtube",
       "handle": "@LigonierMinistries",
       "category": "video",
-      "kind": "video"
+      "kind": "video",
+      "fallbacks": [
+        {
+          "type": "youtube",
+          "handle": "@ligonier"
+        }
+      ]
     },
     {
       "id": "yt-tgc",
@@ -416,7 +427,13 @@
       "type": "youtube",
       "handle": "@CliffeKnechtle",
       "category": "video",
-      "kind": "video"
+      "kind": "video",
+      "fallbacks": [
+        {
+          "type": "youtube",
+          "handle": "@GiveMeAnAnswer"
+        }
+      ]
     },
     {
       "id": "yt-alisa",
@@ -501,7 +518,12 @@
       "type": "reddit",
       "subreddit": "TrueChristian",
       "category": "social",
-      "kind": "social"
+      "kind": "social",
+      "fallbacks": [
+        {
+          "url": "https://old.reddit.com/r/TrueChristian/.rss"
+        }
+      ]
     },
     {
       "id": "r-reformed",
@@ -509,7 +531,12 @@
       "type": "reddit",
       "subreddit": "Reformed",
       "category": "social",
-      "kind": "social"
+      "kind": "social",
+      "fallbacks": [
+        {
+          "url": "https://old.reddit.com/r/Reformed/.rss"
+        }
+      ]
     },
     {
       "id": "r-catholicism",
@@ -517,7 +544,12 @@
       "type": "reddit",
       "subreddit": "Catholicism",
       "category": "social",
-      "kind": "social"
+      "kind": "social",
+      "fallbacks": [
+        {
+          "url": "https://old.reddit.com/r/Catholicism/.rss"
+        }
+      ]
     },
     {
       "id": "bsky-ct",
@@ -533,7 +565,13 @@
       "type": "bluesky",
       "handle": "religionnews.com",
       "category": "social",
-      "kind": "social"
+      "kind": "social",
+      "fallbacks": [
+        {
+          "type": "bluesky",
+          "handle": "religionnews.bsky.social"
+        }
+      ]
     },
     {
       "id": "x-example",
@@ -593,6 +631,9 @@
     "perSource": 25,
     "maxAgeHours": 96,
     "fetchTimeoutMs": 15000,
-    "concurrency": 6
+    "concurrency": 8,
+    "hostDelayMs": {
+      "reddit.com": 2500
+    }
   }
 }

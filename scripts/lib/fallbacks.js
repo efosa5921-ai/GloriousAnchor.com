@@ -6,6 +6,7 @@
  * Each fallback inherits id/name/category/kind from the primary; its own keys replace the primary's fetch settings.
  */
 const FETCH_KEYS = ['type', 'url', 'route', 'params', 'bridge', 'handle', 'channelId', 'subreddit', 'instance', 'user', 'username', 'limit'];
+// (identity keys such as id, name, category, kind, homepage, profile are inherited by every fallback)
 
 export function candidatesFor(source) {
   const base = { ...source };

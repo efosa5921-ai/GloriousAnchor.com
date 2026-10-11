@@ -15,7 +15,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import Parser from 'rss-parser';
 import { normaliseItem, dedupe, mergeWithPrevious } from './lib/articles.js';
-import { resolveFeedUrl, homepageFor, serviceUrl, expandEnv } from './lib/sources.js';
+import { resolveFeedUrl, homepageFor, serviceUrl, expandEnv, feedLinksFromHtml, conventionalFeedPaths } from './lib/sources.js';
 import { unfurl, pickToArticle, needsManualFields, PICKS_SOURCE, PICKS_TTL_MS } from './lib/picks.js';
 import { fetchInstagramItems } from './lib/instagram.js';
 import { fetchWithFallbacks } from './lib/fallbacks.js';
@@ -35,8 +35,9 @@ function argValue(flag) {
   return i === -1 ? null : path.resolve(ROOT, args[i + 1]);
 }
 
+// A real browser user agent: several publishers (Substack, Desiring God, ...) answer 403 to anything that says "bot".
 const HEADERS = {
-  'User-Agent': 'Mozilla/5.0 (compatible; GloriousAnchorBot/1.0; +https://gloriousanchor.com)',
+  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
   Accept: 'application/rss+xml, application/atom+xml, application/xml, text/xml;q=0.9, text/html;q=0.8, application/json;q=0.8, */*;q=0.7',
   'Accept-Language': 'en-US,en;q=0.9',
 };
@@ -65,6 +66,20 @@ function authHeadersFor(url, services) {
   return {};
 }
 
+/** Some hosts (Reddit) rate-limit parallel requests: serialise per host with a gap, configured in limits.hostDelayMs. */
+const hostQueues = new Map();
+let hostDelays = {};
+function throttled(url, fn) {
+  let host;
+  try { host = new URL(url).hostname.replace(/^(www|old)\./, ''); } catch { return fn(); }
+  const delay = hostDelays[host];
+  if (!delay) return fn();
+  const prev = hostQueues.get(host) || Promise.resolve();
+  const next = prev.catch(() => {}).then(() => new Promise((r) => setTimeout(r, delay))).then(fn);
+  hostQueues.set(host, next.catch(() => {}));
+  return next;
+}
+
 let fixturePages = null;
 async function fetchText(url, timeoutMs, services) {
   if (fixturesDir) {
@@ -73,17 +88,47 @@ async function fetchText(url, timeoutMs, services) {
     if (!file) throw new Error(`no fixture page for ${url}`);
     return readFile(path.join(fixturesDir, file), 'utf8');
   }
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeoutMs);
-  try {
-    const res = await fetch(url, { signal: controller.signal, redirect: 'follow', headers: { ...HEADERS, ...authHeadersFor(url, services) } });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return await res.text();
-  } catch (err) {
-    throw new Error(err.name === 'AbortError' ? 'timeout' : String(err.message || err).split('\n')[0]);
-  } finally {
-    clearTimeout(timer);
+  return throttled(url, async () => {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const res = await fetch(url, { signal: controller.signal, redirect: 'follow', headers: { ...HEADERS, ...authHeadersFor(url, services) } });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return await res.text();
+    } catch (err) {
+      throw new Error(err.name === 'AbortError' ? 'timeout' : String(err.message || err).split('\n')[0]);
+    } finally {
+      clearTimeout(timer);
+    }
+  });
+}
+
+/**
+ * Built-in last resort for plain RSS sources: read the site's homepage, follow its advertised feed link
+ * (or try conventional paths), and remember what worked in resolved.json.
+ */
+async function discoverFeed(source, text, resolved) {
+  const home = source.homepage || (() => { try { return new URL(source.url).origin; } catch { return null; } })();
+  if (!home) throw new Error('no homepage to discover a feed from');
+  const key = `discover:${source.id}`;
+  const tried = new Set([source.url]);
+  const candidates = [];
+  if (resolved[key]) candidates.push(resolved[key]);
+  let html = '';
+  try { html = await text(home); } catch { /* homepage unreachable: fall through to conventional paths */ }
+  candidates.push(...feedLinksFromHtml(html, home), ...conventionalFeedPaths(home));
+  const errors = [];
+  for (const url of candidates) {
+    if (tried.has(url)) continue;
+    tried.add(url);
+    try {
+      const feed = await parser.parseString(await text(url));
+      if (!feed.items?.length) throw new Error('no items');
+      resolved[key] = url;
+      return feed;
+    } catch (err) { errors.push(`${url}: ${String(err.message || err).split('\n')[0]}`); }
   }
+  throw new Error(`discovery failed (${errors.slice(0, 3).join('; ')})`);
 }
 
 /** Fetch one candidate (the primary source or one of its fallbacks) and parse it into a feed. */
@@ -97,12 +142,19 @@ async function fetchCandidate(candidate, index, limits, resolved, services) {
     return candidate.type === 'instagram' ? (await import('./lib/instagram.js')).instagramToItems(body) : parser.parseString(body);
   }
   if (candidate.type === 'instagram') return fetchInstagramItems(candidate, text);
+  if (candidate.type === 'discover') return discoverFeed(candidate, text, resolved);
   const feedUrl = await resolveFeedUrl(candidate, resolved, text, services);
-  return parser.parseString(await text(feedUrl));
+  const feed = await parser.parseString(await text(feedUrl));
+  if (!feed.items?.length) throw new Error('feed has no items'); // treat an empty feed as a failure so fallbacks run
+  return feed;
 }
 
 async function fetchFeed(source, limits, resolved, services) {
-  const r = await fetchWithFallbacks(source, (c, i) => fetchCandidate(c, i, limits, resolved, services));
+  // Plain RSS sources get homepage feed-discovery as an implicit final fallback.
+  const withDiscovery = (source.type || 'rss') === 'rss' && !fixturesDir
+    ? { ...source, fallbacks: [...(source.fallbacks || []), { type: 'discover', url: source.url, homepage: source.homepage }] }
+    : source;
+  const r = await fetchWithFallbacks(withDiscovery, (c, i) => fetchCandidate(c, i, limits, resolved, services));
   if (r.error) return { source, error: r.error };
   return { source, feed: r.feed, via: r.via, warnings: r.warnings };
 }
@@ -181,6 +233,7 @@ async function main() {
   const config = JSON.parse(await readFile(path.join(ROOT, 'feeds.json'), 'utf8'));
   validate(config);
   const { categories, limits, site, services = {} } = config;
+  hostDelays = limits.hostDelayMs || {};
   const sources = config.sources.filter((s) => s.enabled !== false);
   const disabled = config.sources.filter((s) => s.enabled === false);
   const picksConfig = await readJson(fixturesDir ? path.join(fixturesDir, 'picks.json') : path.join(ROOT, 'picks.json'), { picks: [] });
