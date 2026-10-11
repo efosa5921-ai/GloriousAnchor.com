@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns:yt="http://www.youtube.com/xml/schemas/2015" xmlns:media="http://search.yahoo.com/mrss/" xmlns="http://www.w3.org/2005/Atom">
+ <link rel="self" href="http://www.youtube.com/feeds/videos.xml?channel_id=UCVfwlh9XpX2Y_tQfjeln9QA"/>
+ <id>yt:channel:Vfwlh9XpX2Y_tQfjeln9QA</id>
+ <yt:channelId>Vfwlh9XpX2Y_tQfjeln9QA</yt:channelId>
+ <title>BibleProject</title>
+ <link rel="alternate" href="https://www.youtube.com/channel/UCVfwlh9XpX2Y_tQfjeln9QA"/>
+ <author><name>BibleProject</name><uri>https://www.youtube.com/channel/UCVfwlh9XpX2Y_tQfjeln9QA</uri></author>
+ <published>2014-09-04T19:49:27+00:00</published>
+ <entry>
+  <id>yt:video:dQw4w9WgXcQ</id>
+  <yt:videoId>dQw4w9WgXcQ</yt:videoId>
+  <yt:channelId>UCVfwlh9XpX2Y_tQfjeln9QA</yt:channelId>
+  <title>The Book of Ruth: Loyal Love in Hard Times</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"/>
+  <author><name>BibleProject</name></author>
+  <published>2026-10-11T01:17:03+00:00</published>
+  <updated>2026-10-11T01:17:03+00:00</updated>
+  <media:group>
+   <media:title>The Book of Ruth: Loyal Love in Hard Times</media:title>
+   <media:content url="https://www.youtube.com/v/dQw4w9WgXcQ?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+   <media:thumbnail url="https://i2.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg" width="480" height="360"/>
+   <media:description>Ruth is a short book with a big message about hesed, the Hebrew word for loyal love. In this video we trace the story and its place in the wider biblical narrative.
+
+Download study notes at bibleproject.com</media:description>
+  </media:group>
+ </entry>
+ <entry>
+  <id>yt:video:abcdefghijk</id>
+  <yt:videoId>abcdefghijk</yt:videoId>
+  <title>Why Does the Bible Have So Many Genealogies?</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=abcdefghijk"/>
+  <author><name>BibleProject</name></author>
+  <published>2026-10-09T20:47:03+00:00</published>
+  <updated>2026-10-09T20:47:03+00:00</updated>
+  <media:group>
+   <media:title>Why Does the Bible Have So Many Genealogies?</media:title>
+   <media:description>Genealogies are more than lists of names.</media:description>
+  </media:group>
+ </entry>
+</feed>

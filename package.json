@@ -1,0 +1,17 @@
+{
+  "name": "gloriousanchor",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Glorious Anchor — a news and media aggregator built from public RSS feeds.",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "build": "node scripts/build.js",
+    "build:offline": "node scripts/build.js --fixtures test/fixtures",
+    "serve": "node scripts/serve.js",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "rss-parser": "^3.13.0"
+  }
+}

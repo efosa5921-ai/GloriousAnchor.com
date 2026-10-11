@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>RELEVANT</title>
+  <link rel="alternate" href="https://www.relevantmagazine.com/"/>
+  <updated>2026-10-11T00:39:39Z</updated>
+  <entry>
+    <title>Review: the new flagship phone is fast, pricey &amp; a little boring</title>
+    <link rel="alternate" href="https://www.relevantmagazine.com/reviews/123/phone-review?utm_source=rss&amp;utm_medium=feed"/>
+    <id>https://www.relevantmagazine.com/reviews/123</id>
+    <published>2026-10-11T00:39:39Z</published>
+    <updated>2026-10-11T00:39:39Z</updated>
+    <author><name>Jane Reviewer</name></author>
+    <content type="html">&lt;figure&gt;&lt;img alt="" src="https://cdn.example.com/phone.jpg" /&gt;&lt;/figure&gt;&lt;p&gt;It&#8217;s a great phone. &lt;strong&gt;Really.&lt;/strong&gt; But the price is hard to swallow.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Browser maker ships tracking-protection update</title>
+    <link rel="alternate" href="https://www.relevantmagazine.com/news/456/browser-update"/>
+    <id>https://www.relevantmagazine.com/news/456</id>
+    <published>2026-10-10T21:39:39Z</published>
+    <updated>2026-10-10T21:39:39Z</updated>
+    <content type="html">&lt;p&gt;The update blocks third-party cookies by default.&lt;/p&gt;</content>
+  </entry>
+</feed>

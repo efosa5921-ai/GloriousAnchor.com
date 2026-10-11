@@ -1,0 +1,58 @@
+name: Build & deploy
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # Refresh headlines every hour.
+    - cron: '7 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never run two refreshes at once; let the newest one win.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      # Restore the previous build's data so sections survive a feed outage.
+      - name: Restore previous articles
+        uses: actions/cache/restore@v4
+        with:
+          path: dist/data
+          key: articles-${{ github.run_id }}
+          restore-keys: articles-
+      - run: npm run build -- --verbose
+      - name: Save articles for next run
+        uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: dist/data
+          key: articles-${{ github.run_id }}
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,10 @@
+{
+  "name": "Glorious Anchor",
+  "short_name": "Anchor",
+  "description": "The day's news, anchored in one place.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f6f4ee",
+  "theme_color": "#0b1f3a",
+  "icons": [{ "src": "anchor.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:media="http://search.yahoo.com/mrss/" version="2.0">
+<channel>
+<title>Christianity Today</title><link>https://www.christianitytoday.com/news</link>
+<item>
+  <title>Leaders gather for climate summit as talks enter final day</title>
+  <description>Negotiators say a deal on emissions targets is &quot;within reach&quot; but differences remain over financing.</description>
+  <link>https://www.christianitytoday.com/news/world-12345678?at_medium=RSS&amp;at_campaign=rss</link>
+  <guid isPermaLink="false">https://www.christianitytoday.com/news/world-12345678#0</guid>
+  <pubDate>Sun, 11 Oct 2026 02:39:39 GMT</pubDate>
+  <media:thumbnail width="240" height="135" url="https://img.christianitytoday.com/240/cpsprodpb/1.jpg"/>
+  <media:thumbnail width="1024" height="576" url="https://img.christianitytoday.com/1024/cpsprodpb/1.jpg"/>
+</item>
+<item>
+  <title>Markets steady after central bank holds rates</title>
+  <description>Investors had widely expected the decision.</description>
+  <link>https://www.christianitytoday.com/news/business-22222222</link>
+  <pubDate>Sun, 11 Oct 2026 01:39:39 GMT</pubDate>
+  <media:thumbnail width="1024" height="576" url="https://img.christianitytoday.com/1024/cpsprodpb/2.jpg"/>
+</item>
+<item>
+  <title>Markets steady after central bank holds rates</title>
+  <description>Duplicate URL with trailing slash should be removed.</description>
+  <link>https://christianitytoday.com/news/business-22222222/</link>
+  <pubDate>Sat, 10 Oct 2026 23:39:39 GMT</pubDate>
+</item>
+<item>
+  <title>Very old story that should be dropped by the age cutoff</title>
+  <link>https://www.christianitytoday.com/news/old-1</link>
+  <pubDate>Thu, 01 Oct 2026 02:39:39 GMT</pubDate>
+</item>
+<item>
+  <title></title>
+  <link>https://www.christianitytoday.com/news/untitled</link>
+  <pubDate>Sun, 11 Oct 2026 02:39:39 GMT</pubDate>
+</item>
+</channel></rss>

@@ -1,0 +1,278 @@
+/* Glorious Anchor — client. Loads data/articles.json + data/meta.json and renders. */
+(() => {
+  'use strict';
+
+  const PAGE = 36;
+  const HERO_COUNT = 4;
+  const $ = (sel) => document.querySelector(sel);
+  const els = {
+    cats: $('#cats'), status: $('#status'), hero: $('#hero'), grid: $('#grid'), empty: $('#empty'),
+    more: $('#moreBtn'), sourceSel: $('#sourceSel'), sortSel: $('#sortSel'), q: $('#q'), searchForm: $('#searchForm'),
+    savedBtn: $('#savedBtn'), savedCount: $('#savedCount'), themeBtn: $('#themeBtn'), footerMeta: $('#footerMeta'),
+    tpl: $('#cardTpl'),
+  };
+
+  const state = {
+    articles: [], meta: null, category: 'top', source: '', sort: 'newest', query: '', showSaved: false, shown: PAGE,
+    saved: loadJSON('ga:saved', {}),
+  };
+
+  function loadJSON(key, fallback) { try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; } }
+  function saveJSON(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch { /* ignore */ } }
+
+  /* ---------- Theme ---------- */
+  function applyTheme(t) {
+    if (t) document.documentElement.setAttribute('data-theme', t); else document.documentElement.removeAttribute('data-theme');
+  }
+  applyTheme(loadJSON('ga:theme', null));
+  els.themeBtn.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme') ||
+      (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const next = current === 'dark' ? 'light' : 'dark';
+    applyTheme(next); saveJSON('ga:theme', next);
+  });
+
+  /* ---------- URL state ---------- */
+  function readUrl() {
+    const p = new URLSearchParams(location.search);
+    state.category = p.get('c') || 'top';
+    state.source = p.get('s') || '';
+    state.query = (p.get('q') || '').trim();
+    state.sort = ['source', 'news', 'video', 'social'].includes(p.get('sort')) ? p.get('sort') : 'newest';
+    state.showSaved = p.get('saved') === '1';
+  }
+  function writeUrl() {
+    const p = new URLSearchParams();
+    if (state.category !== 'top') p.set('c', state.category);
+    if (state.source) p.set('s', state.source);
+    if (state.query) p.set('q', state.query);
+    if (state.sort !== 'newest') p.set('sort', state.sort);
+    if (state.showSaved) p.set('saved', '1');
+    const qs = p.toString();
+    history.replaceState(null, '', qs ? `?${qs}` : location.pathname);
+  }
+
+  /* ---------- Formatting ---------- */
+  const rtf = new Intl.RelativeTimeFormat(undefined, { numeric: 'auto' });
+  function relTime(ts) {
+    const diff = (ts - Date.now()) / 1000;
+    const abs = Math.abs(diff);
+    if (abs < 60) return 'just now';
+    if (abs < 3600) return rtf.format(Math.round(diff / 60), 'minute');
+    if (abs < 86400) return rtf.format(Math.round(diff / 3600), 'hour');
+    if (abs < 86400 * 7) return rtf.format(Math.round(diff / 86400), 'day');
+    return new Date(ts).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+  }
+  function escapeHtml(s) { return s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+  function highlight(text, q) {
+    if (!q) return escapeHtml(text);
+    const terms = q.split(/\s+/).filter(Boolean).map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    if (!terms.length) return escapeHtml(text);
+    const re = new RegExp(`(${terms.join('|')})`, 'gi');
+    return text.split(re).map((part, i) => (i % 2 ? `<mark>${escapeHtml(part)}</mark>` : escapeHtml(part))).join('');
+  }
+
+  /* ---------- Filtering ---------- */
+  function visibleArticles() {
+    let list = state.articles;
+    if (state.showSaved) list = list.filter((a) => state.saved[a.id]);
+    else if (state.category !== 'top') list = list.filter((a) => a.category === state.category);
+    else if (!state.query && !state.source) list = topMix(list);
+    if (state.source) list = list.filter((a) => a.sourceId === state.source);
+    if (state.sort === 'video' || state.sort === 'social') list = list.filter((a) => a.kind === state.sort);
+    else if (state.sort === 'news') list = list.filter((a) => a.kind === 'news' || a.kind === 'article');
+    if (state.query) {
+      const terms = state.query.toLowerCase().split(/\s+/).filter(Boolean);
+      list = list.filter((a) => {
+        const hay = `${a.title} ${a.summary} ${a.source}`.toLowerCase();
+        return terms.every((t) => hay.includes(t));
+      });
+    }
+    return list;
+  }
+
+  /**
+   * "Top Stories" view: a time-sorted mix of everything, capped per source so one chatty feed,
+   * channel or subreddit can't dominate the front page. Featured sources get more room.
+   */
+  const TOP_CAPS = { news: 5, article: 4, video: 3, social: 2 };
+  function topMix(all) {
+    const perSource = new Map();
+    const out = [];
+    for (const a of all) {
+      const n = perSource.get(a.sourceId) || 0;
+      const cap = (TOP_CAPS[a.kind] || 4) * (a.featured ? 2 : 1);
+      if (n >= cap) continue;
+      perSource.set(a.sourceId, n + 1);
+      out.push(a);
+    }
+    return out;
+  }
+
+  /* ---------- Rendering ---------- */
+  function renderCats() {
+    const cats = state.meta.categories;
+    els.cats.innerHTML = '';
+    for (const c of cats) {
+      const b = document.createElement('button');
+      b.className = 'cat'; b.textContent = c.label; b.dataset.id = c.id;
+      b.setAttribute('aria-current', String(!state.showSaved && c.id === state.category));
+      b.addEventListener('click', () => { state.category = c.id; state.showSaved = false; state.shown = PAGE; update(); });
+      els.cats.appendChild(b);
+    }
+  }
+  function renderSources() {
+    const byCat = state.category === 'top' ? state.meta.sources : state.meta.sources.filter((s) => s.category === state.category);
+    const names = new Map();
+    for (const s of byCat) if (!names.has(s.id)) names.set(s.id, s);
+    const current = state.source;
+    els.sourceSel.innerHTML = '<option value="">All sources</option>';
+    const sorted = [...names.values()].sort((a, b) => a.name.localeCompare(b.name) || a.id.localeCompare(b.id));
+    for (const s of sorted) {
+      const o = document.createElement('option');
+      o.value = s.id;
+      const dup = sorted.filter((x) => x.name === s.name).length > 1;
+      const catLabel = state.meta.categories.find((c) => c.id === s.category)?.label;
+      o.textContent = dup && catLabel ? `${s.name} — ${catLabel}` : s.name;
+      els.sourceSel.appendChild(o);
+    }
+    els.sourceSel.value = names.has(current) ? current : '';
+    if (!names.has(current)) state.source = '';
+  }
+
+  const KIND_LABEL = { news: 'News', article: 'Article', video: 'Video', social: 'Post' };
+  function card(a, extraClass) {
+    const node = els.tpl.content.firstElementChild.cloneNode(true);
+    if (extraClass) node.classList.add(extraClass);
+    node.classList.add(`card--${a.kind || 'news'}`);
+    node.querySelector('.card__kind').textContent = KIND_LABEL[a.kind] || 'News';
+    const media = node.querySelector('.card__media');
+    const img = media.querySelector('img');
+    if (a.image) {
+      media.href = a.url; img.src = a.image; img.alt = '';
+      img.addEventListener('error', () => { node.classList.add('card--noimg'); }, { once: true });
+    } else node.classList.add('card--noimg');
+    const src = node.querySelector('.card__source');
+    src.textContent = a.source;
+    if (a.author && a.kind !== 'video' && a.author.toLowerCase() !== a.source.toLowerCase()) {
+      const by = document.createElement('span'); by.className = 'card__author'; by.textContent = ` · ${a.author}`;
+      src.after(by);
+    }
+    const t = node.querySelector('.card__time');
+    t.dateTime = new Date(a.publishedAt).toISOString();
+    t.textContent = relTime(a.publishedAt);
+    t.title = new Date(a.publishedAt).toLocaleString();
+    const link = node.querySelector('.card__title a');
+    link.href = a.url; link.innerHTML = highlight(a.title, state.query);
+    const sum = node.querySelector('.card__summary');
+    if (a.summary) sum.innerHTML = highlight(a.summary, state.query); else sum.remove();
+    const save = node.querySelector('.save');
+    const setSaved = (on) => { save.setAttribute('aria-pressed', String(on)); save.title = on ? 'Remove from saved' : 'Save story'; };
+    setSaved(Boolean(state.saved[a.id]));
+    save.addEventListener('click', () => {
+      if (state.saved[a.id]) delete state.saved[a.id]; else state.saved[a.id] = Date.now();
+      saveJSON('ga:saved', state.saved); setSaved(Boolean(state.saved[a.id])); updateSavedBadge();
+      if (state.showSaved) update();
+    });
+    return node;
+  }
+
+  function renderList(list) {
+    els.hero.innerHTML = ''; els.grid.innerHTML = '';
+    els.grid.classList.toggle('grid--grouped', state.sort === 'source');
+    const useHero = state.sort === 'newest' && !state.query && !state.showSaved && list.length >= HERO_COUNT;
+    let rest = list;
+    if (useHero) {
+      const strong = list.filter((a) => a.image && a.kind !== 'social');
+      const withImg = list.filter((a) => a.image);
+      const pick = (strong.length >= HERO_COUNT ? strong : withImg.length >= HERO_COUNT ? withImg : list).slice(0, HERO_COUNT);
+      const picked = new Set(pick.map((a) => a.id));
+      rest = list.filter((a) => !picked.has(a.id));
+      pick.forEach((a, i) => els.hero.appendChild(card(a, i === 0 ? 'lead' : 'side')));
+    }
+    els.hero.hidden = !useHero;
+
+    const slice = rest.slice(0, state.shown);
+    if (state.sort === 'source') {
+      const groups = new Map();
+      for (const a of slice) { if (!groups.has(a.sourceId)) groups.set(a.sourceId, []); groups.get(a.sourceId).push(a); }
+      for (const [, items] of groups) {
+        const sec = document.createElement('section'); sec.className = 'group';
+        const head = document.createElement('div'); head.className = 'group__head';
+        const h = document.createElement('h2'); h.textContent = items[0].source;
+        head.appendChild(h);
+        if (items[0].sourceHome) { const a = document.createElement('a'); a.href = items[0].sourceHome; a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'Visit site ↗'; head.appendChild(a); }
+        const g = document.createElement('div'); g.className = 'grid';
+        items.forEach((a) => g.appendChild(card(a)));
+        sec.append(head, g); els.grid.appendChild(sec);
+      }
+    } else {
+      const frag = document.createDocumentFragment();
+      slice.forEach((a) => frag.appendChild(card(a)));
+      els.grid.appendChild(frag);
+    }
+    els.empty.hidden = list.length > 0;
+    els.more.hidden = rest.length <= state.shown;
+    const label = state.showSaved ? 'saved' : state.query ? `matching “${state.query}”` : '';
+    const noun = state.sort === 'video' ? ['video', 'videos'] : state.sort === 'social' ? ['post', 'posts'] : ['item', 'items'];
+    els.status.textContent = `${list.length.toLocaleString()} ${list.length === 1 ? noun[0] : noun[1]} ${label}`.trim() +
+      (state.meta?.generatedAt ? ` · updated ${relTime(Date.parse(state.meta.generatedAt))}` : '');
+  }
+
+  function updateSavedBadge() {
+    const n = Object.keys(state.saved).length;
+    els.savedCount.textContent = String(n); els.savedCount.hidden = n === 0;
+    els.savedBtn.setAttribute('aria-pressed', String(state.showSaved));
+  }
+
+  function update() {
+    for (const b of els.cats.children) b.setAttribute('aria-current', String(!state.showSaved && b.dataset.id === state.category));
+    renderSources();
+    els.sortSel.value = state.sort; els.q.value = state.query;
+    updateSavedBadge();
+    renderList(visibleArticles());
+    writeUrl();
+  }
+
+  /* ---------- Events ---------- */
+  els.sourceSel.addEventListener('change', () => { state.source = els.sourceSel.value; state.shown = PAGE; update(); });
+  els.sortSel.addEventListener('change', () => { state.sort = els.sortSel.value; state.shown = PAGE; update(); });
+  els.more.addEventListener('click', () => { state.shown += PAGE; update(); });
+  els.savedBtn.addEventListener('click', () => { state.showSaved = !state.showSaved; state.shown = PAGE; update(); });
+  els.searchForm.addEventListener('submit', (e) => { e.preventDefault(); state.query = els.q.value.trim(); state.shown = PAGE; update(); });
+  let debounce;
+  els.q.addEventListener('input', () => { clearTimeout(debounce); debounce = setTimeout(() => { state.query = els.q.value.trim(); state.shown = PAGE; update(); }, 220); });
+  els.q.addEventListener('focus', () => els.searchForm.classList.add('open'));
+  els.q.addEventListener('blur', () => { if (!els.q.value) els.searchForm.classList.remove('open'); });
+  document.addEventListener('keydown', (e) => { if (e.key === '/' && !/input|textarea|select/i.test(document.activeElement.tagName)) { e.preventDefault(); els.q.focus(); } });
+  // Refresh relative timestamps once a minute.
+  setInterval(() => { document.querySelectorAll('time.card__time').forEach((t) => { t.textContent = relTime(Date.parse(t.dateTime)); }); }, 60000);
+
+  /* ---------- Boot ---------- */
+  function skeleton(n) {
+    els.grid.innerHTML = '';
+    for (let i = 0; i < n; i++) { const c = els.tpl.content.firstElementChild.cloneNode(true); c.classList.add('skeleton'); c.querySelector('.save').remove(); els.grid.appendChild(c); }
+  }
+
+  async function boot() {
+    readUrl(); skeleton(9);
+    try {
+      const [meta, articles] = await Promise.all([
+        fetch('data/meta.json', { cache: 'no-cache' }).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }),
+        fetch('data/articles.json', { cache: 'no-cache' }).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }),
+      ]);
+      state.meta = meta; state.articles = articles;
+      if (!meta.categories.some((c) => c.id === state.category)) state.category = 'top';
+      renderCats(); update();
+      const ok = meta.sourceStatus?.filter((s) => s.ok).length ?? 0;
+      els.footerMeta.textContent = `Last refreshed ${new Date(meta.generatedAt).toLocaleString()} · ${ok}/${meta.sourceStatus?.length ?? 0} feeds live · ${articles.length.toLocaleString()} items`;
+      if (meta.site?.verse) $('#footerVerse').textContent = meta.site.verse;
+      document.title = state.query ? `“${state.query}” — Glorious Anchor` : 'Glorious Anchor — Christian News, Voices & Video';
+    } catch (err) {
+      els.grid.innerHTML = '';
+      els.status.textContent = 'Could not load headlines. Please try again shortly.';
+      console.error(err);
+    }
+  }
+  boot();
+})();
