@@ -2,12 +2,12 @@
 /**
  * Build script for Glorious Anchor.
  *
- * 1. Reads feeds.json (sources, categories, limits).
- * 2. Resolves each source to a feed URL (RSS, YouTube channel, Reddit, Bluesky, Mastodon).
+ * 1. Reads feeds.json (sources, categories, services, limits) and picks.json (hand-picked URLs).
+ * 2. Resolves each source to a feed URL (RSS, YouTube, Reddit, Bluesky, Mastodon, RSSHub, RSS-Bridge).
  * 3. Fetches every feed concurrently (or reads fixtures with --fixtures <dir>).
- * 4. Normalises, de-duplicates and sorts the items.
- * 5. Merges with the previous build's data so a single failed feed never blanks a section.
- * 6. Writes dist/ (static site) with data/articles.json, data/meta.json and data/resolved.json.
+ * 4. Unfurls each pick into a card (Open Graph / oEmbed), cached for a week.
+ * 5. Normalises, de-duplicates and sorts; merges with the previous build so an outage never blanks a section.
+ * 6. Writes dist/ (static site) with data/articles.json, data/meta.json and caches.
  */
 import { readFile, writeFile, mkdir, cp, access } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
@@ -15,7 +15,8 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import Parser from 'rss-parser';
 import { normaliseItem, dedupe, mergeWithPrevious } from './lib/articles.js';
-import { resolveFeedUrl, homepageFor } from './lib/sources.js';
+import { resolveFeedUrl, homepageFor, serviceUrl, expandEnv } from './lib/sources.js';
+import { unfurl, pickToArticle, needsManualFields, PICKS_SOURCE, PICKS_TTL_MS } from './lib/picks.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = path.join(ROOT, 'src');
@@ -33,7 +34,7 @@ function argValue(flag) {
 
 const HEADERS = {
   'User-Agent': 'Mozilla/5.0 (compatible; GloriousAnchorBot/1.0; +https://gloriousanchor.com)',
-  Accept: 'application/rss+xml, application/atom+xml, application/xml, text/xml;q=0.9, text/html;q=0.8, */*;q=0.7',
+  Accept: 'application/rss+xml, application/atom+xml, application/xml, text/xml;q=0.9, text/html;q=0.8, application/json;q=0.8, */*;q=0.7',
   'Accept-Language': 'en-US,en;q=0.9',
 };
 
@@ -50,11 +51,28 @@ const parser = new Parser({
   },
 });
 
-async function fetchText(url, timeoutMs) {
+/** Basic-auth credentials for self-hosted services, keyed by URL prefix. */
+function authHeadersFor(url, services) {
+  for (const name of Object.keys(services || {})) {
+    const svc = serviceUrl(services, name);
+    const basic = expandEnv(services[name].basicAuth || '');
+    if (svc && basic && url.startsWith(svc.url)) return { Authorization: 'Basic ' + Buffer.from(basic).toString('base64') };
+  }
+  return {};
+}
+
+let fixturePages = null;
+async function fetchText(url, timeoutMs, services) {
+  if (fixturesDir) {
+    fixturePages ??= JSON.parse(await readFile(path.join(fixturesDir, 'pages.json'), 'utf8').catch(() => '{}'));
+    const file = fixturePages[url];
+    if (!file) throw new Error(`no fixture page for ${url}`);
+    return readFile(path.join(fixturesDir, file), 'utf8');
+  }
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    const res = await fetch(url, { signal: controller.signal, redirect: 'follow', headers: HEADERS });
+    const res = await fetch(url, { signal: controller.signal, redirect: 'follow', headers: { ...HEADERS, ...authHeadersFor(url, services) } });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return await res.text();
   } catch (err) {
@@ -64,7 +82,7 @@ async function fetchText(url, timeoutMs) {
   }
 }
 
-async function fetchFeed(source, limits, resolved) {
+async function fetchFeed(source, limits, resolved, services) {
   try {
     let xml;
     if (fixturesDir) {
@@ -72,8 +90,8 @@ async function fetchFeed(source, limits, resolved) {
       try { await access(file); } catch { return { source, error: 'no fixture' }; }
       xml = await readFile(file, 'utf8');
     } else {
-      const feedUrl = await resolveFeedUrl(source, resolved, (u) => fetchText(u, limits.fetchTimeoutMs));
-      xml = await fetchText(feedUrl, limits.fetchTimeoutMs);
+      const feedUrl = await resolveFeedUrl(source, resolved, (u) => fetchText(u, limits.fetchTimeoutMs, services), services);
+      xml = await fetchText(feedUrl, limits.fetchTimeoutMs, services);
     }
     return { source, feed: await parser.parseString(xml) };
   } catch (err) {
@@ -106,19 +124,62 @@ function validate(config) {
     ids.add(s.id);
     if (!catIds.has(s.category)) throw new Error(`feeds.json: source "${s.id}" has unknown category "${s.category}"`);
     if (s.category === 'top') throw new Error(`feeds.json: source "${s.id}" may not use the "top" pseudo-category; set "featured": true instead`);
+    if (s.id === PICKS_SOURCE.id) throw new Error(`feeds.json: source id "${PICKS_SOURCE.id}" is reserved for picks.json`);
   }
+}
+
+/** Build cards for every URL in picks.json, using a week-long cache of fetched metadata. */
+async function buildPicks(picksConfig, cache, limits, services) {
+  const picks = (picksConfig?.picks || []).filter((p) => p && p.url && p.enabled !== false);
+  const status = { id: PICKS_SOURCE.id, name: PICKS_SOURCE.name, ok: true, count: 0, errors: [] };
+  const now = Date.now();
+  const articles = await mapWithConcurrency(picks, limits.concurrency, async (pick) => {
+    const entry = cache[pick.url] || (cache[pick.url] = { firstSeen: now });
+    const manualComplete = pick.title && (pick.image || needsManualFields(pick.url));
+    const stale = !entry.data || now - (entry.fetchedAt || 0) > PICKS_TTL_MS;
+    if (!manualComplete && stale) {
+      try {
+        entry.data = await unfurl(pick.url, (u) => fetchText(u, limits.fetchTimeoutMs, services));
+        entry.fetchedAt = now;
+        delete entry.error;
+      } catch (err) {
+        entry.error = String(err.message || err).split('\n')[0];
+      }
+    }
+    const article = pickToArticle(pick, entry.data, entry.firstSeen);
+    if (!article) {
+      const why = entry.error || 'no title found';
+      const hint = needsManualFields(pick.url) ? ' (Instagram/Facebook posts need a "title" in picks.json)' : '';
+      status.errors.push(`${pick.url}: ${why}${hint}`);
+      console.warn(`  ✗ pick ${pick.url}: ${why}${hint}`);
+      return null;
+    }
+    if (verbose) console.log(`  ✓ pick ${article.source}: ${article.title.slice(0, 60)}`);
+    return article;
+  });
+  // Forget cache entries for URLs no longer listed.
+  const listed = new Set(picks.map((p) => p.url));
+  for (const url of Object.keys(cache)) if (!listed.has(url)) delete cache[url];
+  const out = articles.filter(Boolean);
+  status.count = out.length;
+  if (!status.errors.length) delete status.errors;
+  return { articles: out, status };
 }
 
 async function main() {
   const started = Date.now();
   const config = JSON.parse(await readFile(path.join(ROOT, 'feeds.json'), 'utf8'));
   validate(config);
-  const { sources, categories, limits, site } = config;
+  const { categories, limits, site, services = {} } = config;
+  const sources = config.sources.filter((s) => s.enabled !== false);
+  const disabled = config.sources.filter((s) => s.enabled === false);
+  const picksConfig = await readJson(fixturesDir ? path.join(fixturesDir, 'picks.json') : path.join(ROOT, 'picks.json'), { picks: [] });
   const previous = await readJson(path.join(DATA_DIR, 'articles.json'), []);
   const resolved = await readJson(path.join(DATA_DIR, 'resolved.json'), {});
+  const picksCache = await readJson(path.join(DATA_DIR, 'picks-cache.json'), {});
 
   console.log(`Fetching ${sources.length} feeds${fixturesDir ? ' from fixtures' : ''}...`);
-  const results = await mapWithConcurrency(sources, limits.concurrency, (s) => fetchFeed(s, limits, resolved));
+  const results = await mapWithConcurrency(sources, limits.concurrency, (s) => fetchFeed(s, limits, resolved, services));
 
   const fresh = [];
   const sourceStatus = [];
@@ -137,23 +198,37 @@ async function main() {
     sourceStatus.push({ id: r.source.id, name: r.source.name, ok: true, count: kept });
     if (verbose) console.log(`  ✓ ${r.source.id}: ${kept} items`);
   }
+  for (const s of disabled) sourceStatus.push({ id: s.id, name: s.name, ok: false, skipped: true, error: 'disabled in feeds.json' });
 
   const cutoff = Date.now() - limits.maxAgeHours * 3600 * 1000;
-  const merged = mergeWithPrevious(fresh, previous, sourceStatus, cutoff);
-  const articles = dedupe(merged).sort((a, b) => b.publishedAt - a.publishedAt);
+  const merged = mergeWithPrevious(fresh, previous.filter((p) => p?.sourceId !== PICKS_SOURCE.id), sourceStatus, cutoff);
+  let articles = dedupe(merged);
+
+  // Picks are owner-curated: regenerated every build, never aged out, and they win over feed copies of the same URL.
+  console.log(`Unfurling ${(picksConfig.picks || []).length} picks...`);
+  const picks = await buildPicks(picksConfig, picksCache, limits, services);
+  sourceStatus.push(picks.status);
+  const pickUrls = new Set(picks.articles.map((a) => a.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/+$/, '')));
+  articles = articles.filter((a) => !pickUrls.has(a.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/+$/, '')));
+  articles = [...picks.articles, ...articles].sort((a, b) => b.publishedAt - a.publishedAt);
+
+  const metaSources = sources.map((s) => ({ id: s.id, name: s.name, category: s.category, kind: s.kind || 'news', featured: Boolean(s.featured), homepage: homepageFor(s) }));
+  const metaCategories = picks.articles.length ? categories : categories.filter((c) => c.id !== PICKS_SOURCE.category);
+  if (picks.articles.length) metaSources.push({ ...PICKS_SOURCE });
 
   await mkdir(DATA_DIR, { recursive: true });
   await cp(SRC, DIST, { recursive: true });
   await writeFile(path.join(DATA_DIR, 'articles.json'), JSON.stringify(articles));
   await writeFile(path.join(DATA_DIR, 'resolved.json'), JSON.stringify(resolved, null, 2));
+  await writeFile(path.join(DATA_DIR, 'picks-cache.json'), JSON.stringify(picksCache, null, 2));
   await writeFile(
     path.join(DATA_DIR, 'meta.json'),
     JSON.stringify({
       site,
       generatedAt: new Date().toISOString(),
       articleCount: articles.length,
-      categories,
-      sources: sources.map((s) => ({ id: s.id, name: s.name, category: s.category, kind: s.kind || 'news', featured: Boolean(s.featured), homepage: homepageFor(s) })),
+      categories: metaCategories,
+      sources: metaSources,
       sourceStatus,
     }, null, 2),
   );
@@ -162,9 +237,9 @@ async function main() {
   const swPath = path.join(DIST, 'sw.js');
   await writeFile(swPath, (await readFile(swPath, 'utf8')).replace('__BUILD__', Date.now().toString(36)));
 
-  const okCount = sourceStatus.filter((s) => s.ok).length;
+  const okCount = sourceStatus.filter((s) => s.ok && s.id !== PICKS_SOURCE.id).length;
   const hash = createHash('sha1').update(JSON.stringify(articles.map((a) => a.id))).digest('hex').slice(0, 8);
-  console.log(`Done: ${articles.length} items from ${okCount}/${sources.length} feeds in ${((Date.now() - started) / 1000).toFixed(1)}s (set ${hash}).`);
+  console.log(`Done: ${articles.length} items from ${okCount}/${sources.length} feeds + ${picks.articles.length} picks in ${((Date.now() - started) / 1000).toFixed(1)}s (set ${hash}).`);
   if (okCount === 0 && articles.length === 0) {
     console.error('No feeds succeeded and no previous data exists.');
     process.exit(1);

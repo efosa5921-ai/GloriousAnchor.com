@@ -88,6 +88,9 @@
     if (state.source) list = list.filter((a) => a.sourceId === state.source);
     if (state.sort === 'video' || state.sort === 'social') list = list.filter((a) => a.kind === state.sort);
     else if (state.sort === 'news') list = list.filter((a) => a.kind === 'news' || a.kind === 'article');
+    if (state.sort === 'newest' && !state.query && (state.category === 'top' || state.category === 'picks')) {
+      list = [...list.filter((a) => a.pinned), ...list.filter((a) => !a.pinned)];
+    }
     if (state.query) {
       const terms = state.query.toLowerCase().split(/\s+/).filter(Boolean);
       list = list.filter((a) => {
@@ -102,7 +105,7 @@
    * "Top Stories" view: a time-sorted mix of everything, capped per source so one chatty feed,
    * channel or subreddit can't dominate the front page. Featured sources get more room.
    */
-  const TOP_CAPS = { news: 5, article: 4, video: 3, social: 2 };
+  const TOP_CAPS = { news: 5, article: 4, video: 3, social: 2, pick: 40 };
   function topMix(all) {
     const perSource = new Map();
     const out = [];
@@ -157,7 +160,7 @@
     if (!names.has(current)) state.source = '';
   }
 
-  const KIND_LABEL = { news: 'News', article: 'Article', video: 'Video', social: 'Post' };
+  const KIND_LABEL = { news: 'News', article: 'Article', video: 'Video', social: 'Post', pick: 'Pick' };
   function card(a, extraClass) {
     const node = els.tpl.content.firstElementChild.cloneNode(true);
     if (extraClass) node.classList.add(extraClass);
@@ -183,6 +186,8 @@
     link.href = a.url; link.innerHTML = highlight(a.title, state.query);
     const sum = node.querySelector('.card__summary');
     if (a.summary) sum.innerHTML = highlight(a.summary, state.query); else sum.remove();
+    if (a.note) { const n = document.createElement('p'); n.className = 'card__note'; n.innerHTML = highlight(a.note, state.query); node.querySelector('.card__body').appendChild(n); }
+    if (a.pinned) { node.classList.add('card--pinned'); node.querySelector('.card__kind').textContent = 'Pinned pick'; }
     const save = node.querySelector('.save');
     const setSaved = (on) => { save.setAttribute('aria-pressed', String(on)); save.title = on ? 'Remove from saved' : 'Save story'; };
     setSaved(Boolean(state.saved[a.id]));

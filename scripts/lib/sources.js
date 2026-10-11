@@ -8,15 +8,58 @@
  *   reddit   `subreddit` → https://www.reddit.com/r/<sub>/hot/.rss
  *   bluesky  `handle` (e.g. example.bsky.social or a custom domain) → https://bsky.app/profile/<handle>/rss
  *   mastodon `instance` + `user` → https://<instance>/@<user>.rss
+ *   rsshub   `route` on your self-hosted RSSHub (X, Instagram, TikTok, Facebook pages, …)
+ *   rssbridge `bridge` + `params` on your self-hosted RSS-Bridge
+ * Any source may carry `"enabled": false` to keep it in the file without fetching it.
  */
 
 export const YT_FEED = 'https://www.youtube.com/feeds/videos.xml?channel_id=';
 const CHANNEL_ID = /UC[0-9A-Za-z_-]{22}/;
 
-export function staticFeedUrl(source) {
+/** Replace ${VAR} with process.env.VAR (empty string when unset). */
+export function expandEnv(str, env = process.env) {
+  if (typeof str !== 'string') return str;
+  return str.replace(/\$\{([A-Z0-9_]+)\}/gi, (_, k) => env[k] ?? '');
+}
+
+/**
+ * Self-hosted feed services (see server/README.md). Configured in feeds.json under `services`,
+ * values may reference environment variables, e.g. "url": "${FEEDS_SERVER_URL}/rsshub".
+ */
+export function serviceUrl(services, name, env = process.env) {
+  const svc = services?.[name];
+  if (!svc) return null;
+  const url = expandEnv(svc.url, env).replace(/\/+$/, '');
+  if (!/^https?:\/\/[^/]+/i.test(url)) return null; // unset ${VAR} leaves a relative path: treat as not configured
+  return { url, key: expandEnv(svc.key || '', env) };
+}
+
+export function staticFeedUrl(source, services, env = process.env) {
   switch (source.type || 'rss') {
     case 'rss':
-      return source.url || null;
+      return expandEnv(source.url, env) || null;
+    case 'rsshub': {
+      // RSSHub route, e.g. "/twitter/user/BibleProject" or "/tiktok/user/@bibleproject"
+      const svc = serviceUrl(services, 'rsshub', env);
+      if (!svc) throw new Error('rsshub service not configured (set FEEDS_SERVER_URL)');
+      if (!source.route?.startsWith('/')) throw new Error('rsshub source needs a "route" starting with /');
+      const u = new URL(svc.url + source.route);
+      if (svc.key) u.searchParams.set('key', svc.key);
+      for (const [k, v] of Object.entries(source.params || {})) u.searchParams.set(k, expandEnv(String(v), env));
+      return u.toString();
+    }
+    case 'rssbridge': {
+      // RSS-Bridge bridge, e.g. "bridge": "Instagram", "params": { "context": "Username", "u": "bibleproject" }
+      const svc = serviceUrl(services, 'rssbridge', env);
+      if (!svc) throw new Error('rssbridge service not configured (set FEEDS_SERVER_URL)');
+      if (!source.bridge) throw new Error('rssbridge source needs a "bridge" name');
+      const u = new URL(svc.url + '/');
+      u.searchParams.set('action', 'display');
+      u.searchParams.set('bridge', source.bridge);
+      u.searchParams.set('format', 'Atom');
+      for (const [k, v] of Object.entries(source.params || {})) u.searchParams.set(k, expandEnv(String(v), env));
+      return u.toString();
+    }
     case 'youtube':
       return source.channelId && CHANNEL_ID.test(source.channelId) ? YT_FEED + source.channelId : null;
     case 'reddit':
@@ -35,6 +78,9 @@ export function staticFeedUrl(source) {
 export function homepageFor(source) {
   if (source.homepage) return source.homepage;
   switch (source.type) {
+    case 'rsshub':
+    case 'rssbridge':
+      return source.profile || null;
     case 'youtube':
       return source.handle ? `https://www.youtube.com/${source.handle.startsWith('@') ? source.handle : '@' + source.handle}` :
         source.channelId ? `https://www.youtube.com/channel/${source.channelId}` : 'https://www.youtube.com';
@@ -69,8 +115,8 @@ export function channelIdFromHtml(html) {
  * Resolve a source to a feed URL, using (and updating) `cache` for YouTube handles.
  * `fetchText(url)` is injected so this stays testable.
  */
-export async function resolveFeedUrl(source, cache, fetchText) {
-  const direct = staticFeedUrl(source);
+export async function resolveFeedUrl(source, cache, fetchText, services) {
+  const direct = staticFeedUrl(source, services);
   if (direct) return direct;
   if (source.type === 'youtube' && source.handle) {
     const key = `youtube:${source.handle.toLowerCase()}`;

@@ -37,6 +37,11 @@ jobs:
           key: articles-${{ github.run_id }}
           restore-keys: articles-
       - run: npm run build -- --verbose
+        env:
+          # Optional: self-hosted feed server for X / Instagram / TikTok / Facebook (see server/README.md)
+          FEEDS_SERVER_URL: ${{ secrets.FEEDS_SERVER_URL }}
+          RSSHUB_ACCESS_KEY: ${{ secrets.RSSHUB_ACCESS_KEY }}
+          FEEDS_BASIC_AUTH: ${{ secrets.FEEDS_BASIC_AUTH }}
       - name: Save articles for next run
         uses: actions/cache/save@v4
         if: always()

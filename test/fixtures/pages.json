@@ -1,0 +1,7 @@
+{
+  "https://www.christianitytoday.com/2026/10/example-article": "pages/ct-article.html",
+  "https://publish.twitter.com/oembed?omit_script=true&dnt=true&url=https%3A%2F%2Fx.com%2FBibleProject%2Fstatus%2F1234567890": "pages/x-oembed.json",
+  "https://www.tiktok.com/oembed?url=https%3A%2F%2Fwww.tiktok.com%2F%40bibleproject%2Fvideo%2F7000000000000000000": "pages/tiktok-oembed.json",
+  "https://www.youtube.com/oembed?format=json&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DdQw4w9WgXcQ": "pages/yt-oembed.json",
+  "https://www.instagram.com/p/ABC123/": "pages/ig-login.html"
+}

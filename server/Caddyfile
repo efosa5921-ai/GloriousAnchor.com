@@ -1,0 +1,20 @@
+# Automatic HTTPS for {$DOMAIN}. RSSHub is protected by its own ACCESS_KEY;
+# RSS-Bridge gets HTTP basic auth here.
+{$DOMAIN} {
+	encode gzip
+
+	handle_path /rsshub/* {
+		reverse_proxy rsshub:1200
+	}
+
+	handle_path /rss-bridge/* {
+		basic_auth {
+			{$BASIC_AUTH_USER} {$BASIC_AUTH_HASH}
+		}
+		reverse_proxy rss-bridge:80
+	}
+
+	handle {
+		respond "Glorious Anchor feed server" 200
+	}
+}

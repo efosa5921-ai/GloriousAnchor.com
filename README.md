@@ -19,6 +19,8 @@ every hour and publishes it to GitHub Pages, so there is no server to run and no
 | Writers & Blogs | article | Tim Challies, Kevin DeYoung, Ann Voskamp, Trevin Wax, Scot McKnight, Jemar Tisby, Kristin Du Mez |
 | YouTube | video | BibleProject, Desiring God, Ligonier, Mike Winger, Cliffe Knechtle, Elevation Worship, Bethel Music |
 | Social | social | r/Christianity, r/TrueChristian, r/Reformed, r/Catholicism, Bluesky accounts |
+| Picks | pick | Any single link you choose: an article, an X post, a TikTok, a YouTube video, an Instagram or Facebook post |
+| X / Instagram / TikTok / Facebook accounts | social, video | Through your own feed server, see [server/README.md](server/README.md) |
 
 **Top Stories** mixes every section, capped per source so a busy channel or subreddit cannot crowd out the rest.
 
@@ -85,9 +87,29 @@ Everything lives in [`feeds.json`](feeds.json). Each source has an `id` (unique,
 
 - **Substack**: use `https://<name>.substack.com/feed`.
 - **Your own articles**: point an entry at your blog's feed and give it `"featured": true`.
-- **X, Instagram, Facebook, TikTok** publish no public feeds. To include them, run a bridge such as a self-hosted
-  [RSSHub](https://docs.rsshub.app) or [RSS-Bridge](https://rss-bridge.org) and add its feed URL as an ordinary `url` source.
+- **Pause a source** without deleting it: `"enabled": false`.
+- **X, Instagram, Facebook, TikTok accounts** publish no public feeds. Run the small feed server in
+  [`server/`](server/README.md) (Docker, one command) and add sources with `"type": "rsshub"` or `"type": "rssbridge"`.
+  Disabled examples are already in `feeds.json`. A hosted alternative such as rss.app also works: paste its feed URL as a
+  normal `url` source.
 - `limits` controls items per feed, how many hours of history to keep, timeouts and concurrency.
+
+## Picks: single links you choose
+
+[`picks.json`](picks.json) holds hand-picked URLs. Paste any link and the build turns it into a card using the page's own
+preview data (Open Graph tags), or the public oEmbed endpoint for X, TikTok and YouTube. Fetched data is cached for a week.
+
+```jsonc
+{ "url": "https://www.christianitytoday.com/2026/10/some-article", "note": "Worth your time this week.", "pinned": true }
+{ "url": "https://x.com/BibleProject/status/1234567890" }
+{ "url": "https://www.tiktok.com/@bibleproject/video/7000000000000000000" }
+{ "url": "https://www.instagram.com/p/ABC123/", "title": "Sunday service highlights", "image": "https://example.com/photo.jpg", "source": "Instagram · @yourchurch" }
+```
+
+- Optional fields `title`, `summary`, `image`, `author`, `source`, `added` (date) override whatever was fetched.
+- **Instagram and Facebook** block automated previews, so give those posts a `title` (and ideally an `image`).
+- `note` shows as an editor's note on the card. `pinned: true` puts the pick at the top of Top Stories.
+- Picks never age out; remove the line to remove the card. `"enabled": false` hides one temporarily.
 
 After each build, `dist/data/meta.json` lists every source with `ok: true/false` and an error message, so a wrong
 URL or handle is easy to spot. Feed URLs and YouTube handles in the shipped config are best-effort; check the first
@@ -105,10 +127,13 @@ The workflow in `.github/workflows/build.yml` builds on every push to `main`, ho
 ## Project layout
 
 ```
-feeds.json              sources, categories and limits
+feeds.json              sources, categories, feed-server settings and limits
+picks.json              hand-picked single links (articles, posts, videos)
+server/                 optional self-hosted feed server for X, Instagram, TikTok, Facebook (Docker)
 scripts/build.js        resolve + fetch + normalise + write dist/
 scripts/lib/sources.js  turns a source entry into a feed URL (YouTube, Reddit, Bluesky, Mastodon)
 scripts/lib/articles.js pure helpers for normalising and de-duplicating items (tested)
+scripts/lib/picks.js    unfurls a single URL into a card via Open Graph or oEmbed (tested)
 scripts/serve.js        tiny local preview server
 src/                    static frontend (copied to dist/ as-is); sw.js is the service worker
 test/                   unit tests and feed fixtures for offline builds

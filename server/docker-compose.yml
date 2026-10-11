@@ -1,0 +1,55 @@
+# Glorious Anchor feed server: turns X, Instagram, TikTok and Facebook accounts into feeds.
+# See README.md in this folder. Start with:  docker compose up -d
+services:
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports: ["80:80", "443:443"]
+    environment:
+      DOMAIN: ${DOMAIN}
+      BASIC_AUTH_USER: ${BASIC_AUTH_USER}
+      BASIC_AUTH_HASH: ${BASIC_AUTH_HASH}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on: [rsshub, rss-bridge]
+
+  rsshub:
+    image: diygod/rsshub:chromium-bundled
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      CACHE_TYPE: redis
+      REDIS_URL: redis://redis:6379/
+      CACHE_EXPIRE: 1800
+      ACCESS_KEY: ${RSSHUB_ACCESS_KEY}
+      # X / Twitter: cookies from a logged-in account (see README)
+      TWITTER_AUTH_TOKEN: ${TWITTER_AUTH_TOKEN}
+      TWITTER_USERNAME: ${TWITTER_USERNAME}
+      TWITTER_PASSWORD: ${TWITTER_PASSWORD}
+      # Instagram: session cookie from a logged-in account (see README)
+      IG_USERNAME: ${IG_USERNAME}
+      IG_PASSWORD: ${IG_PASSWORD}
+      IG_COOKIE: ${IG_COOKIE}
+      # Keep RSSHub from fetching things nobody asked for
+      ALLOW_ORIGIN: "*"
+      DISALLOW_ROBOT: "true"
+    depends_on: [redis]
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    volumes: [redis_data:/data]
+
+  rss-bridge:
+    image: rssbridge/rss-bridge:latest
+    restart: unless-stopped
+    volumes:
+      - ./rss-bridge/config.ini.php:/config/config.ini.php:ro
+      - ./rss-bridge/whitelist.txt:/config/whitelist.txt:ro
+
+volumes:
+  caddy_data:
+  caddy_config:
+  redis_data:

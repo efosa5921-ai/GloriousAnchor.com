@@ -5,7 +5,7 @@
 
 const TRACKING_PARAMS = /^(utm_|fbclid|gclid|mc_cid|mc_eid|ref$|src$|cmp$|ns_|at_)/i;
 
-export const KINDS = ['news', 'article', 'video', 'social'];
+export const KINDS = ['news', 'article', 'video', 'social', 'pick'];
 
 export function cleanUrl(raw) {
   if (!raw) return null;

@@ -261,3 +261,11 @@ mark { background: var(--gold-soft); color: inherit; border-radius: 2px; padding
   .masthead { padding-top: env(safe-area-inset-top); }
   .footer { padding-bottom: env(safe-area-inset-bottom); }
 }
+
+/* Picks */
+.card--pick .card__kind { background: var(--navy); color: #fff; }
+:root[data-theme="dark"] .card--pick .card__kind { background: var(--gold); color: #0b1f3a; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .card--pick .card__kind { background: var(--gold); color: #0b1f3a; } }
+.card--pinned { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold), var(--shadow); }
+.card__note { margin: 4px 0 0; padding: 8px 12px; border-left: 3px solid var(--gold); background: var(--gold-soft); color: var(--text); font-size: .9rem; font-style: italic; border-radius: 0 6px 6px 0; }
+.card__note::before { content: "Editor's note: "; font-style: normal; font-weight: 600; font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }

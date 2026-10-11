@@ -1,0 +1,11 @@
+{
+  "picks": [
+    { "url": "https://www.christianitytoday.com/2026/10/example-article", "note": "Read this one slowly.", "pinned": true },
+    { "url": "https://x.com/BibleProject/status/1234567890" },
+    { "url": "https://www.tiktok.com/@bibleproject/video/7000000000000000000" },
+    { "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ", "added": "2026-10-09" },
+    { "url": "https://www.instagram.com/p/ABC123/", "title": "Sunday service highlights", "image": "https://example.com/ig.jpg", "source": "Instagram · @yourchurch", "added": "2026-10-10" },
+    { "url": "https://www.facebook.com/yourchurch/posts/999" },
+    { "url": "https://www.example.com/disabled", "title": "Hidden", "enabled": false }
+  ]
+}
