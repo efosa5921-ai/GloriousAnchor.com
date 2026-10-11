@@ -13,6 +13,11 @@
   <meta property="og:type" content="website">
   <link rel="icon" href="assets/anchor.svg" type="image/svg+xml">
   <link rel="manifest" href="assets/site.webmanifest">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Anchor">
   <link rel="preload" href="data/articles.json" as="fetch" crossorigin>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -31,6 +36,7 @@
           <input id="q" name="q" type="search" placeholder="Search stories, videos, posts…" autocomplete="off" spellcheck="false">
           <button type="submit" aria-label="Search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
         </form>
+        <button class="icon-btn" id="installBtn" hidden title="Install app"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg></button>
         <button class="icon-btn" id="savedBtn" aria-pressed="false" title="Saved stories"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg><span class="badge" id="savedCount" hidden>0</span></button>
         <button class="icon-btn" id="themeBtn" title="Toggle theme" aria-label="Toggle colour theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="sun" d="M12 4V2m0 20v-2m8-8h2M2 12h2m13.7-5.7 1.4-1.4M4.9 19.1l1.4-1.4m0-11.4L4.9 4.9m14.2 14.2-1.4-1.4"/><circle class="sun" cx="12" cy="12" r="4"/><path class="moon" d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
       </div>
@@ -41,9 +47,12 @@
   </header>
 
   <main class="wrap" id="main">
+    <div class="banner" id="offlineBanner" hidden role="status">You're offline. Showing the last headlines saved on this device.</div>
+    <div class="banner banner--update" id="updateBanner" hidden role="status">A new version is available. <button class="link" id="reloadBtn">Reload</button></div>
     <div class="toolbar">
       <p class="status" id="status" aria-live="polite">Loading headlines…</p>
       <div class="toolbar__right">
+        <button class="btn btn--small" id="customizeBtn" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h10M4 18h6"/><circle cx="17" cy="12" r="3"/></svg> Choose sources</button>
         <label class="select"><span class="visually-hidden">Filter by source</span>
           <select id="sourceSel"><option value="">All sources</option></select>
         </label>
@@ -62,6 +71,30 @@
     <section class="hero" id="hero" aria-label="Top stories" hidden></section>
     <section class="grid" id="grid" aria-label="Headlines"></section>
     <p class="empty" id="empty" hidden>No stories match. Try another category or search.</p>
+    <section class="setup" id="mySetup" hidden aria-labelledby="mySetupTitle">
+      <svg class="setup__icon" viewBox="0 0 32 32" aria-hidden="true"><use href="assets/anchor.svg#anchor"/></svg>
+      <h2 id="mySetupTitle">Build your own feed</h2>
+      <p>Pick the publishers, writers, channels and communities you want to follow. Your choices stay in this browser. No account needed.</p>
+      <button class="btn" id="mySetupBtn">Choose sources</button>
+    </section>
+    <dialog class="picker" id="picker" aria-labelledby="pickerTitle">
+      <form method="dialog" class="picker__form">
+        <header class="picker__head">
+          <h2 id="pickerTitle">Choose your sources</h2>
+          <p class="picker__count" id="pickerCount" aria-live="polite"></p>
+          <button type="submit" class="icon-btn icon-btn--plain" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+        </header>
+        <div class="picker__tools">
+          <input type="search" id="pickerSearch" placeholder="Filter sources…" autocomplete="off" aria-label="Filter sources">
+          <button type="button" class="link" id="pickerAll">Select all</button>
+          <button type="button" class="link" id="pickerNone">Clear</button>
+        </div>
+        <div class="picker__list" id="pickerList"></div>
+        <footer class="picker__foot">
+          <button type="submit" class="btn">Done</button>
+        </footer>
+      </form>
+    </dialog>
     <div class="more"><button class="btn" id="moreBtn" hidden>Load more</button></div>
   </main>
 

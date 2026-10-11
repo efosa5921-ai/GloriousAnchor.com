@@ -1,10 +1,22 @@
 {
   "name": "Glorious Anchor",
   "short_name": "Anchor",
-  "description": "The day's news, anchored in one place.",
-  "start_url": "./",
+  "description": "Christian news, voices and video, anchored in one place.",
+  "start_url": "../?source=pwa",
+  "scope": "../",
   "display": "standalone",
-  "background_color": "#f6f4ee",
+  "orientation": "portrait-primary",
+  "background_color": "#0b1f3a",
   "theme_color": "#0b1f3a",
-  "icons": [{ "src": "anchor.svg", "sizes": "any", "type": "image/svg+xml" }]
+  "categories": ["news", "lifestyle"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "My Feed", "url": "../?c=mine", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] },
+    { "name": "YouTube", "url": "../?c=video", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] },
+    { "name": "Saved", "url": "../?saved=1", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] }
+  ]
 }

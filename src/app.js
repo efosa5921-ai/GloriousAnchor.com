@@ -10,12 +10,18 @@
     more: $('#moreBtn'), sourceSel: $('#sourceSel'), sortSel: $('#sortSel'), q: $('#q'), searchForm: $('#searchForm'),
     savedBtn: $('#savedBtn'), savedCount: $('#savedCount'), themeBtn: $('#themeBtn'), footerMeta: $('#footerMeta'),
     tpl: $('#cardTpl'),
+    customizeBtn: $('#customizeBtn'), mySetup: $('#mySetup'), mySetupBtn: $('#mySetupBtn'),
+    picker: $('#picker'), pickerList: $('#pickerList'), pickerSearch: $('#pickerSearch'), pickerCount: $('#pickerCount'),
+    pickerAll: $('#pickerAll'), pickerNone: $('#pickerNone'),
   };
+  const MINE = 'mine';
 
   const state = {
     articles: [], meta: null, category: 'top', source: '', sort: 'newest', query: '', showSaved: false, shown: PAGE,
     saved: loadJSON('ga:saved', {}),
+    followed: new Set(loadJSON('ga:myfeed', [])),
   };
+  function persistFollowed() { saveJSON('ga:myfeed', [...state.followed]); }
 
   function loadJSON(key, fallback) { try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; } }
   function saveJSON(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch { /* ignore */ } }
@@ -76,6 +82,7 @@
   function visibleArticles() {
     let list = state.articles;
     if (state.showSaved) list = list.filter((a) => state.saved[a.id]);
+    else if (state.category === MINE) list = list.filter((a) => state.followed.has(a.sourceId));
     else if (state.category !== 'top') list = list.filter((a) => a.category === state.category);
     else if (!state.query && !state.source) list = topMix(list);
     if (state.source) list = list.filter((a) => a.sourceId === state.source);
@@ -110,19 +117,29 @@
   }
 
   /* ---------- Rendering ---------- */
+  function allCategories() {
+    const cats = [...state.meta.categories];
+    cats.splice(1, 0, { id: MINE, label: 'My Feed' });
+    return cats;
+  }
   function renderCats() {
-    const cats = state.meta.categories;
     els.cats.innerHTML = '';
-    for (const c of cats) {
+    for (const c of allCategories()) {
       const b = document.createElement('button');
       b.className = 'cat'; b.textContent = c.label; b.dataset.id = c.id;
+      if (c.id === MINE) {
+        b.classList.add('cat--mine');
+        b.insertAdjacentHTML('afterbegin', '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3 6.4 20.2l1.1-6.2L3 9.6l6.2-.9z"/></svg>');
+      }
       b.setAttribute('aria-current', String(!state.showSaved && c.id === state.category));
       b.addEventListener('click', () => { state.category = c.id; state.showSaved = false; state.shown = PAGE; update(); });
       els.cats.appendChild(b);
     }
   }
   function renderSources() {
-    const byCat = state.category === 'top' ? state.meta.sources : state.meta.sources.filter((s) => s.category === state.category);
+    const byCat = state.category === 'top' ? state.meta.sources
+      : state.category === MINE ? state.meta.sources.filter((s) => state.followed.has(s.id))
+      : state.meta.sources.filter((s) => s.category === state.category);
     const names = new Map();
     for (const s of byCat) if (!names.has(s.id)) names.set(s.id, s);
     const current = state.source;
@@ -202,6 +219,7 @@
         const h = document.createElement('h2'); h.textContent = items[0].source;
         head.appendChild(h);
         if (items[0].sourceHome) { const a = document.createElement('a'); a.href = items[0].sourceHome; a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'Visit site ↗'; head.appendChild(a); }
+        head.appendChild(followButton(items[0].sourceId));
         const g = document.createElement('div'); g.className = 'grid';
         items.forEach((a) => g.appendChild(card(a)));
         sec.append(head, g); els.grid.appendChild(sec);
@@ -211,7 +229,9 @@
       slice.forEach((a) => frag.appendChild(card(a)));
       els.grid.appendChild(frag);
     }
-    els.empty.hidden = list.length > 0;
+    const needsSetup = state.category === MINE && !state.showSaved && state.followed.size === 0;
+    els.mySetup.hidden = !needsSetup;
+    els.empty.hidden = list.length > 0 || needsSetup;
     els.more.hidden = rest.length <= state.shown;
     const label = state.showSaved ? 'saved' : state.query ? `matching “${state.query}”` : '';
     const noun = state.sort === 'video' ? ['video', 'videos'] : state.sort === 'social' ? ['post', 'posts'] : ['item', 'items'];
@@ -227,12 +247,87 @@
 
   function update() {
     for (const b of els.cats.children) b.setAttribute('aria-current', String(!state.showSaved && b.dataset.id === state.category));
+    els.customizeBtn.hidden = !(state.category === MINE && !state.showSaved && state.followed.size > 0);
     renderSources();
     els.sortSel.value = state.sort; els.q.value = state.query;
     updateSavedBadge();
     renderList(visibleArticles());
     writeUrl();
   }
+
+  /* ---------- My Feed: follow + source picker ---------- */
+  function followButton(sourceId) {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'follow';
+    const paint = () => { const on = state.followed.has(sourceId); b.setAttribute('aria-pressed', String(on)); b.textContent = on ? '✓ Following' : '+ Follow'; };
+    paint();
+    b.addEventListener('click', () => { if (state.followed.has(sourceId)) state.followed.delete(sourceId); else state.followed.add(sourceId); persistFollowed(); paint(); if (state.category === MINE) update(); });
+    return b;
+  }
+
+  function buildPicker() {
+    els.pickerList.innerHTML = '';
+    const cats = state.meta.categories.filter((c) => c.id !== 'top');
+    for (const c of cats) {
+      const sources = state.meta.sources.filter((s) => s.category === c.id).sort((a, b) => a.name.localeCompare(b.name));
+      if (!sources.length) continue;
+      const g = document.createElement('section'); g.className = 'pgroup'; g.dataset.cat = c.id;
+      const head = document.createElement('div'); head.className = 'pgroup__head';
+      const h = document.createElement('h3'); h.textContent = c.label;
+      const all = document.createElement('button'); all.type = 'button'; all.className = 'link'; all.dataset.toggle = c.id;
+      head.append(h, all); g.appendChild(head);
+      for (const s of sources) {
+        const label = document.createElement('label'); label.className = 'pitem'; label.dataset.name = s.name.toLowerCase();
+        const cb = document.createElement('input'); cb.type = 'checkbox'; cb.value = s.id; cb.checked = state.followed.has(s.id);
+        cb.addEventListener('change', () => { if (cb.checked) state.followed.add(s.id); else state.followed.delete(s.id); persistFollowed(); paintPicker(); });
+        const name = document.createElement('span'); name.className = 'pitem__name'; name.textContent = s.name;
+        const kind = document.createElement('span'); kind.className = 'pitem__kind'; kind.textContent = KIND_LABEL[s.kind] || s.kind;
+        label.append(cb, name, kind); g.appendChild(label);
+      }
+      els.pickerList.appendChild(g);
+    }
+    paintPicker();
+  }
+  function paintPicker() {
+    const n = state.followed.size;
+    els.pickerCount.textContent = n ? `${n} source${n === 1 ? '' : 's'} selected` : 'Nothing selected yet';
+    for (const g of els.pickerList.querySelectorAll('.pgroup')) {
+      const boxes = [...g.querySelectorAll('input')];
+      const allOn = boxes.every((b) => b.checked);
+      g.querySelector('[data-toggle]').textContent = allOn ? 'Deselect all' : 'Select all';
+    }
+  }
+  function setGroup(catId, on) {
+    for (const cb of els.pickerList.querySelectorAll(`.pgroup[data-cat="${catId}"] input`)) { cb.checked = on; if (on) state.followed.add(cb.value); else state.followed.delete(cb.value); }
+    persistFollowed(); paintPicker();
+  }
+  function openPicker() {
+    buildPicker();
+    els.pickerSearch.value = ''; filterPicker('');
+    if (typeof els.picker.showModal === 'function') els.picker.showModal(); else els.picker.setAttribute('open', '');
+    els.pickerSearch.focus();
+  }
+  function filterPicker(q) {
+    q = q.trim().toLowerCase();
+    for (const g of els.pickerList.querySelectorAll('.pgroup')) {
+      let visible = 0;
+      for (const item of g.querySelectorAll('.pitem')) { const show = !q || item.dataset.name.includes(q); item.hidden = !show; if (show) visible++; }
+      g.hidden = visible === 0;
+    }
+  }
+  els.pickerList.addEventListener('click', (e) => {
+    const t = e.target.closest('[data-toggle]');
+    if (!t) return;
+    const boxes = [...els.pickerList.querySelectorAll(`.pgroup[data-cat="${t.dataset.toggle}"] input`)];
+    setGroup(t.dataset.toggle, !boxes.every((b) => b.checked));
+  });
+  els.pickerAll.addEventListener('click', () => { for (const s of state.meta.sources) state.followed.add(s.id); for (const cb of els.pickerList.querySelectorAll('input')) cb.checked = true; persistFollowed(); paintPicker(); });
+  els.pickerNone.addEventListener('click', () => { state.followed.clear(); for (const cb of els.pickerList.querySelectorAll('input')) cb.checked = false; persistFollowed(); paintPicker(); });
+  els.pickerSearch.addEventListener('input', () => filterPicker(els.pickerSearch.value));
+  els.picker.addEventListener('close', () => { state.category = MINE; state.showSaved = false; state.shown = PAGE; update(); });
+  els.picker.addEventListener('click', (e) => { if (e.target === els.picker) els.picker.close(); });
+  els.customizeBtn.addEventListener('click', openPicker);
+  els.mySetupBtn.addEventListener('click', openPicker);
 
   /* ---------- Events ---------- */
   els.sourceSel.addEventListener('change', () => { state.source = els.sourceSel.value; state.shown = PAGE; update(); });
@@ -248,6 +343,30 @@
   // Refresh relative timestamps once a minute.
   setInterval(() => { document.querySelectorAll('time.card__time').forEach((t) => { t.textContent = relTime(Date.parse(t.dateTime)); }); }, 60000);
 
+  /* ---------- PWA: install prompt, offline notice, updates ---------- */
+  let installEvent = null;
+  const installBtn = $('#installBtn');
+  window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); installEvent = e; installBtn.hidden = false; });
+  installBtn.addEventListener('click', async () => { if (!installEvent) return; installEvent.prompt(); await installEvent.userChoice; installEvent = null; installBtn.hidden = true; });
+  window.addEventListener('appinstalled', () => { installBtn.hidden = true; });
+  const offlineBanner = $('#offlineBanner');
+  const paintOnline = () => { offlineBanner.hidden = navigator.onLine !== false; };
+  window.addEventListener('online', paintOnline); window.addEventListener('offline', paintOnline); paintOnline();
+  if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+    window.addEventListener('load', async () => {
+      try {
+        const reg = await navigator.serviceWorker.register('sw.js');
+        reg.addEventListener('updatefound', () => {
+          const sw = reg.installing;
+          sw?.addEventListener('statechange', () => {
+            if (sw.state === 'installed' && navigator.serviceWorker.controller) $('#updateBanner').hidden = false;
+          });
+        });
+        $('#reloadBtn').addEventListener('click', () => { reg.waiting?.postMessage('skipWaiting'); location.reload(); });
+      } catch (err) { console.warn('Service worker not registered', err); }
+    });
+  }
+
   /* ---------- Boot ---------- */
   function skeleton(n) {
     els.grid.innerHTML = '';
@@ -262,7 +381,7 @@
         fetch('data/articles.json', { cache: 'no-cache' }).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }),
       ]);
       state.meta = meta; state.articles = articles;
-      if (!meta.categories.some((c) => c.id === state.category)) state.category = 'top';
+      if (!allCategories().some((c) => c.id === state.category)) state.category = 'top';
       renderCats(); update();
       const ok = meta.sourceStatus?.filter((s) => s.ok).length ?? 0;
       els.footerMeta.textContent = `Last refreshed ${new Date(meta.generatedAt).toLocaleString()} · ${ok}/${meta.sourceStatus?.length ?? 0} feeds live · ${articles.length.toLocaleString()} items`;

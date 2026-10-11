@@ -27,9 +27,25 @@ every hour and publishes it to GitHub Pages, so there is no server to run and no
 - Search across headlines, summaries, video descriptions and posts, with highlighting (press `/` to focus)
 - Filter by source; sort newest-first or group by publisher; show only articles, only videos or only posts
 - Content-type badges, play overlay for videos, quote styling for social posts, author bylines
+- **My Feed**: follow just the publishers, writers, channels and communities you want, with a source picker; choices are stored in your browser only
 - Save items for later (stored in your browser only)
-- Light/dark theme, mobile-friendly, keyboard accessible, no trackers, no cookies
+- Installable mobile app (PWA) with offline reading; light/dark theme, keyboard accessible, no trackers, no cookies
 - Resilient builds: if a feed is down, its recent items from the previous build are kept
+
+## Mobile app
+
+Glorious Anchor is a Progressive Web App, so it installs like a native app from the browser with no app store:
+
+- **iPhone / iPad**: open the site in Safari, tap Share, then **Add to Home Screen**.
+- **Android**: open the site in Chrome and tap **Install** (the download icon in the header, or the browser's own prompt).
+- **Desktop**: Chrome and Edge show an install icon in the address bar.
+
+Once installed it opens full-screen with its own icon, keeps the last headlines for offline reading, offers home-screen
+shortcuts to My Feed, YouTube and Saved, and updates itself after each hourly rebuild (a "new version" banner appears).
+
+If you later want listings in the App Store or Google Play, the same code can be wrapped without a rewrite using
+[PWABuilder](https://www.pwabuilder.com) (generates store packages from the live URL) or
+[Capacitor](https://capacitorjs.com) (a native shell around the web app, with access to push notifications).
 
 ## Quick start
 
@@ -94,7 +110,7 @@ scripts/build.js        resolve + fetch + normalise + write dist/
 scripts/lib/sources.js  turns a source entry into a feed URL (YouTube, Reddit, Bluesky, Mastodon)
 scripts/lib/articles.js pure helpers for normalising and de-duplicating items (tested)
 scripts/serve.js        tiny local preview server
-src/                    static frontend (copied to dist/ as-is)
+src/                    static frontend (copied to dist/ as-is); sw.js is the service worker
 test/                   unit tests and feed fixtures for offline builds
 ```
 

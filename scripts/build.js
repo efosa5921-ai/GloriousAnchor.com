@@ -158,6 +158,9 @@ async function main() {
     }, null, 2),
   );
   await writeFile(path.join(DIST, '.nojekyll'), ''); // tell GitHub Pages not to run Jekyll
+  // Stamp the service worker so every deploy invalidates the cached app shell.
+  const swPath = path.join(DIST, 'sw.js');
+  await writeFile(swPath, (await readFile(swPath, 'utf8')).replace('__BUILD__', Date.now().toString(36)));
 
   const okCount = sourceStatus.filter((s) => s.ok).length;
   const hash = createHash('sha1').update(JSON.stringify(articles.map((a) => a.id))).digest('hex').slice(0, 8);
