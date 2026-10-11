@@ -17,6 +17,9 @@ import Parser from 'rss-parser';
 import { normaliseItem, dedupe, mergeWithPrevious } from './lib/articles.js';
 import { resolveFeedUrl, homepageFor, serviceUrl, expandEnv } from './lib/sources.js';
 import { unfurl, pickToArticle, needsManualFields, PICKS_SOURCE, PICKS_TTL_MS } from './lib/picks.js';
+import { fetchInstagramItems } from './lib/instagram.js';
+import { fetchWithFallbacks } from './lib/fallbacks.js';
+import { computeHealth } from './lib/health.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = path.join(ROOT, 'src');
@@ -82,21 +85,25 @@ async function fetchText(url, timeoutMs, services) {
   }
 }
 
-async function fetchFeed(source, limits, resolved, services) {
-  try {
-    let xml;
-    if (fixturesDir) {
-      const file = path.join(fixturesDir, `${source.id}.xml`);
-      try { await access(file); } catch { return { source, error: 'no fixture' }; }
-      xml = await readFile(file, 'utf8');
-    } else {
-      const feedUrl = await resolveFeedUrl(source, resolved, (u) => fetchText(u, limits.fetchTimeoutMs, services), services);
-      xml = await fetchText(feedUrl, limits.fetchTimeoutMs, services);
-    }
-    return { source, feed: await parser.parseString(xml) };
-  } catch (err) {
-    return { source, error: String(err.message || err).split('\n')[0] };
+/** Fetch one candidate (the primary source or one of its fallbacks) and parse it into a feed. */
+async function fetchCandidate(candidate, index, limits, resolved, services) {
+  const text = (u) => fetchText(u, limits.fetchTimeoutMs, services);
+  if (fixturesDir) {
+    const ext = candidate.type === 'instagram' ? 'json' : 'xml';
+    const file = path.join(fixturesDir, `${candidate.id}${index ? `.fb${index}` : ''}.${ext}`);
+    try { await access(file); } catch { throw new Error('no fixture'); }
+    const body = await readFile(file, 'utf8');
+    return candidate.type === 'instagram' ? (await import('./lib/instagram.js')).instagramToItems(body) : parser.parseString(body);
   }
+  if (candidate.type === 'instagram') return fetchInstagramItems(candidate, text);
+  const feedUrl = await resolveFeedUrl(candidate, resolved, text, services);
+  return parser.parseString(await text(feedUrl));
+}
+
+async function fetchFeed(source, limits, resolved, services) {
+  const r = await fetchWithFallbacks(source, (c, i) => fetchCandidate(c, i, limits, resolved, services));
+  if (r.error) return { source, error: r.error };
+  return { source, feed: r.feed, via: r.via, warnings: r.warnings };
 }
 
 async function mapWithConcurrency(items, limit, fn) {
@@ -125,6 +132,8 @@ function validate(config) {
     if (!catIds.has(s.category)) throw new Error(`feeds.json: source "${s.id}" has unknown category "${s.category}"`);
     if (s.category === 'top') throw new Error(`feeds.json: source "${s.id}" may not use the "top" pseudo-category; set "featured": true instead`);
     if (s.id === PICKS_SOURCE.id) throw new Error(`feeds.json: source id "${PICKS_SOURCE.id}" is reserved for picks.json`);
+    if (s.type === 'instagram' && !(s.username || s.handle)) throw new Error(`feeds.json: instagram source "${s.id}" needs a "username"`);
+    if (s.fallbacks !== undefined && !Array.isArray(s.fallbacks)) throw new Error(`feeds.json: "fallbacks" on "${s.id}" must be a list`);
   }
 }
 
@@ -177,6 +186,7 @@ async function main() {
   const previous = await readJson(path.join(DATA_DIR, 'articles.json'), []);
   const resolved = await readJson(path.join(DATA_DIR, 'resolved.json'), {});
   const picksCache = await readJson(path.join(DATA_DIR, 'picks-cache.json'), {});
+  const previousHealth = await readJson(path.join(DATA_DIR, 'health.json'), {});
 
   console.log(`Fetching ${sources.length} feeds${fixturesDir ? ' from fixtures' : ''}...`);
   const results = await mapWithConcurrency(sources, limits.concurrency, (s) => fetchFeed(s, limits, resolved, services));
@@ -195,8 +205,10 @@ async function main() {
       const article = normaliseItem(item, r.source, r.feed);
       if (article) { fresh.push(article); kept++; }
     }
-    sourceStatus.push({ id: r.source.id, name: r.source.name, ok: true, count: kept });
-    if (verbose) console.log(`  ✓ ${r.source.id}: ${kept} items`);
+    const st = { id: r.source.id, name: r.source.name, ok: true, count: kept };
+    if (r.via) { st.via = r.via; st.warning = r.warnings.join(' | '); }
+    sourceStatus.push(st);
+    if (verbose) console.log(`  ✓ ${r.source.id}: ${kept} items${r.via ? ` (via fallback ${r.via}; ${r.warnings.join(' | ')})` : ''}`);
   }
   for (const s of disabled) sourceStatus.push({ id: s.id, name: s.name, ok: false, skipped: true, error: 'disabled in feeds.json' });
 
@@ -221,6 +233,8 @@ async function main() {
   await writeFile(path.join(DATA_DIR, 'articles.json'), JSON.stringify(articles));
   await writeFile(path.join(DATA_DIR, 'resolved.json'), JSON.stringify(resolved, null, 2));
   await writeFile(path.join(DATA_DIR, 'picks-cache.json'), JSON.stringify(picksCache, null, 2));
+  const health = computeHealth(previousHealth, sourceStatus);
+  await writeFile(path.join(DATA_DIR, 'health.json'), JSON.stringify(health, null, 2));
   await writeFile(
     path.join(DATA_DIR, 'meta.json'),
     JSON.stringify({

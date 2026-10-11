@@ -40,7 +40,7 @@
     }
   ],
   "services": {
-    "_help": "Self-hosted feed server for X, Instagram, TikTok and Facebook accounts. See server/README.md. Values may use ${ENV_VARS}; set them as GitHub Actions secrets.",
+    "_help": "Self-hosted feed server for X, TikTok and Facebook accounts (server/README.md). Instagram uses the official API instead (type \"instagram\", secrets IG_USER_ID + IG_ACCESS_TOKEN). Values may use ${ENV_VARS}; set them as GitHub Actions secrets. Any source may list \"fallbacks\" to try when the primary fetch fails.",
     "rsshub": {
       "url": "${FEEDS_SERVER_URL}/rsshub",
       "key": "${RSSHUB_ACCESS_KEY}"
@@ -488,7 +488,12 @@
       "type": "reddit",
       "subreddit": "Christianity",
       "category": "social",
-      "kind": "social"
+      "kind": "social",
+      "fallbacks": [
+        {
+          "url": "https://www.reddit.com/r/Christianity/new/.rss"
+        }
+      ]
     },
     {
       "id": "r-truechristian",
@@ -538,14 +543,23 @@
       "profile": "https://x.com/BibleProject",
       "category": "social",
       "kind": "social",
-      "enabled": false
+      "enabled": false,
+      "fallbacks": [
+        {
+          "type": "rssbridge",
+          "bridge": "Twitter",
+          "params": {
+            "context": "By username",
+            "u": "BibleProject"
+          }
+        }
+      ]
     },
     {
       "id": "ig-example",
       "name": "Example on Instagram",
-      "type": "rsshub",
-      "route": "/instagram/user/bibleproject",
-      "profile": "https://www.instagram.com/bibleproject/",
+      "type": "instagram",
+      "username": "bibleproject",
       "category": "social",
       "kind": "social",
       "enabled": false

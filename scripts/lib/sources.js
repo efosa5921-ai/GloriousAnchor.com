@@ -10,6 +10,7 @@
  *   mastodon `instance` + `user` → https://<instance>/@<user>.rss
  *   rsshub   `route` on your self-hosted RSSHub (X, Instagram, TikTok, Facebook pages, …)
  *   rssbridge `bridge` + `params` on your self-hosted RSS-Bridge
+ *   instagram `username` via Meta's official Graph API (needs IG_USER_ID + IG_ACCESS_TOKEN; see lib/instagram.js)
  * Any source may carry `"enabled": false` to keep it in the file without fetching it.
  */
 
@@ -81,6 +82,8 @@ export function homepageFor(source) {
     case 'rsshub':
     case 'rssbridge':
       return source.profile || null;
+    case 'instagram':
+      return `https://www.instagram.com/${String(source.username || source.handle || '').replace(/^@/, '')}/`;
     case 'youtube':
       return source.handle ? `https://www.youtube.com/${source.handle.startsWith('@') ? source.handle : '@' + source.handle}` :
         source.channelId ? `https://www.youtube.com/channel/${source.channelId}` : 'https://www.youtube.com';

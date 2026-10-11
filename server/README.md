@@ -3,15 +3,20 @@
 X, Instagram, TikTok and Facebook publish no feeds, so this small server makes them. It runs two open-source
 feed generators behind one HTTPS address:
 
-- **RSSHub** (`/rsshub/...`) for X, Instagram, TikTok and hundreds of other sites. Protected by an access key.
+- **RSSHub** (`/rsshub/...`) for X, TikTok and hundreds of other sites. Protected by an access key.
 - **RSS-Bridge** (`/rss-bridge/...`) as a second option, mainly for Facebook pages. Protected by a password.
 
 The site's hourly build on GitHub Actions calls this server for the sources in `feeds.json` that use
 `"type": "rsshub"` or `"type": "rssbridge"`. Nothing else about the site changes.
 
-> Honest note: these platforms actively fight scraping. X and Instagram need cookies from a logged-in account and
-> break from time to time; Facebook is the least reliable. When a route breaks, `dist/data/meta.json` shows the error,
-> the site keeps the last items it had, and updating the Docker image usually fixes it.
+> **Instagram does not need this server.** Use `"type": "instagram"` in `feeds.json`, which calls Meta's official API
+> (see the main README). The server is for X, TikTok and Facebook.
+>
+> Honest note: these platforms actively fight scraping. X needs cookies from a logged-in account and breaks from time
+> to time; Facebook is the least reliable. When a route breaks, the site keeps the last items it had, a `feed-health`
+> issue is opened automatically after three failed builds, and updating the Docker image usually fixes it. Give
+> important sources a `fallbacks` list (for example RSS-Bridge or a hosted feed service) so one broken route does not
+> take the account offline.
 
 ## 1. Get a machine
 
@@ -38,9 +43,10 @@ Fill in:
   `docker run --rm caddy:2 caddy hash-password --plaintext 'your-password'`.
 - For **X**: log in to x.com in a browser with a spare account, open the browser's developer tools → Application →
   Cookies, and copy the value of `auth_token` into `TWITTER_AUTH_TOKEN`.
-- For **Instagram**: log in with a spare account, open developer tools → Network, click any request to instagram.com,
-  and copy the whole `Cookie` request header into `IG_COOKIE`.
-- TikTok needs nothing extra.
+- For **X**, RSSHub accepts several `auth_token` values separated by commas and rotates between them; two or three
+  spare accounts stretch the time between refreshes.
+- TikTok needs nothing extra. Instagram is handled by the official API instead (main README), so the `IG_*` lines in
+  `.env` are only needed if you insist on the scraping route.
 
 ## 3. Run
 
@@ -53,7 +59,6 @@ Test in a browser (replace the key):
 
 - `https://feeds.gloriousanchor.com/rsshub/tiktok/user/@bibleproject?key=YOUR_KEY`
 - `https://feeds.gloriousanchor.com/rsshub/twitter/user/BibleProject?key=YOUR_KEY`
-- `https://feeds.gloriousanchor.com/rsshub/instagram/user/bibleproject?key=YOUR_KEY`
 - `https://feeds.gloriousanchor.com/rss-bridge/?action=display&bridge=Facebook&context=User&u=BibleProject&format=Atom` (asks for the password)
 
 Each should return XML. Routes for other sites are listed at https://docs.rsshub.app and https://rss-bridge.org.
@@ -74,9 +79,6 @@ or delete the line):
 ```jsonc
 { "id": "x-bibleproject", "name": "BibleProject on X", "type": "rsshub", "route": "/twitter/user/BibleProject",
   "profile": "https://x.com/BibleProject", "category": "social", "kind": "social" }
-
-{ "id": "ig-bibleproject", "name": "BibleProject on Instagram", "type": "rsshub", "route": "/instagram/user/bibleproject",
-  "profile": "https://www.instagram.com/bibleproject/", "category": "social", "kind": "social" }
 
 { "id": "tt-bibleproject", "name": "BibleProject on TikTok", "type": "rsshub", "route": "/tiktok/user/@bibleproject",
   "profile": "https://www.tiktok.com/@bibleproject", "category": "video", "kind": "video" }

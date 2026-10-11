@@ -20,7 +20,8 @@ every hour and publishes it to GitHub Pages, so there is no server to run and no
 | YouTube | video | BibleProject, Desiring God, Ligonier, Mike Winger, Cliffe Knechtle, Elevation Worship, Bethel Music |
 | Social | social | r/Christianity, r/TrueChristian, r/Reformed, r/Catholicism, Bluesky accounts |
 | Picks | pick | Any single link you choose: an article, an X post, a TikTok, a YouTube video, an Instagram or Facebook post |
-| X / Instagram / TikTok / Facebook accounts | social, video | Through your own feed server, see [server/README.md](server/README.md) |
+| Instagram accounts | social | Official Meta Graph API, no scraping: `"type": "instagram"` (see below) |
+| X / TikTok / Facebook accounts | social, video | Through your own feed server, see [server/README.md](server/README.md) |
 
 **Top Stories** mixes every section, capped per source so a busy channel or subreddit cannot crowd out the rest.
 
@@ -88,6 +89,17 @@ Everything lives in [`feeds.json`](feeds.json). Each source has an `id` (unique,
 - **Substack**: use `https://<name>.substack.com/feed`.
 - **Your own articles**: point an entry at your blog's feed and give it `"featured": true`.
 - **Pause a source** without deleting it: `"enabled": false`.
+- **Instagram** (any Business or Creator account, which most ministries and outlets are): add
+  `{ "id": "ig-bibleproject", "name": "BibleProject on Instagram", "type": "instagram", "username": "bibleproject", "category": "social", "kind": "social" }`.
+  One-time setup: run `node scripts/instagram-setup.js` on your computer (instructions are printed in the file) and add
+  the two values it prints as GitHub secrets `IG_USER_ID` and `IG_ACCESS_TOKEN`. The token does not expire.
+- **Fallbacks**: any source may list other ways to fetch the same account, tried in order when the primary fails:
+  `"fallbacks": [ { "type": "rssbridge", "bridge": "Twitter", "params": { "context": "By username", "u": "BibleProject" } }, { "url": "https://rss.app/feeds/XXXX.xml" } ]`.
+  The build log and `meta.json` say when a fallback was used.
+- **Alerts**: the hourly build tracks consecutive failures per source. When any source has failed three builds in a
+  row, the workflow opens (or updates) a GitHub issue labelled `feed-health` listing what is down and the last error, and
+  closes it when everything recovers. GitHub emails you about the issue, so an expired cookie or a dead feed is noticed
+  within hours.
 - **X, Instagram, Facebook, TikTok accounts** publish no public feeds. Run the small feed server in
   [`server/`](server/README.md) (Docker, one command) and add sources with `"type": "rsshub"` or `"type": "rssbridge"`.
   Disabled examples are already in `feeds.json`. A hosted alternative such as rss.app also works: paste its feed URL as a

@@ -12,6 +12,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  issues: write
 
 # Never run two refreshes at once; let the newest one win.
 concurrency:
@@ -42,12 +43,46 @@ jobs:
           FEEDS_SERVER_URL: ${{ secrets.FEEDS_SERVER_URL }}
           RSSHUB_ACCESS_KEY: ${{ secrets.RSSHUB_ACCESS_KEY }}
           FEEDS_BASIC_AUTH: ${{ secrets.FEEDS_BASIC_AUTH }}
+          # Optional: Instagram via the official Graph API (run scripts/instagram-setup.js once)
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+      - name: Check feed health
+        id: health
+        run: node scripts/health.js --threshold 3
+      - name: Open, update or close the feed-health issue
+        if: github.event_name != 'pull_request'
+        uses: actions/github-script@v7
+        env:
+          ALERT: ${{ steps.health.outputs.alert }}
+          BODY: ${{ steps.health.outputs.body }}
+          COUNT: ${{ steps.health.outputs.count }}
+        with:
+          script: |
+            const label = 'feed-health';
+            const title = 'Feed health: some sources are failing';
+            const { owner, repo } = context.repo;
+            const { data: open } = await github.rest.issues.listForRepo({ owner, repo, labels: label, state: 'open', per_page: 5 });
+            const existing = open.find((i) => i.title === title);
+            if (process.env.ALERT === 'true') {
+              const body = process.env.BODY + `\n\n_Last checked by [this run](${context.serverUrl}/${owner}/${repo}/actions/runs/${context.runId})._`;
+              if (existing) await github.rest.issues.update({ owner, repo, issue_number: existing.number, body });
+              else {
+                try { await github.rest.issues.createLabel({ owner, repo, name: label, color: 'd93f0b', description: 'Automated feed-health alerts' }); } catch {}
+                await github.rest.issues.create({ owner, repo, title, body, labels: [label] });
+              }
+            } else if (existing) {
+              await github.rest.issues.createComment({ owner, repo, issue_number: existing.number, body: 'All sources are healthy again. Closing automatically.' });
+              await github.rest.issues.update({ owner, repo, issue_number: existing.number, state: 'closed' });
+            }
       - name: Save articles for next run
         uses: actions/cache/save@v4
         if: always()
         with:
           path: dist/data
           key: articles-${{ github.run_id }}
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
