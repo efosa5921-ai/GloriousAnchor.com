@@ -15,7 +15,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import Parser from 'rss-parser';
 import { normaliseItem, dedupe, mergeWithPrevious } from './lib/articles.js';
-import { resolveFeedUrl, homepageFor, serviceUrl, expandEnv, feedLinksFromHtml, conventionalFeedPaths } from './lib/sources.js';
+import { resolveFeedUrl, homepageFor, serviceUrl, expandEnv, feedLinksFromHtml, conventionalFeedPaths, relayUrl } from './lib/sources.js';
 import { unfurl, pickToArticle, needsManualFields, PICKS_SOURCE, PICKS_TTL_MS } from './lib/picks.js';
 import { fetchInstagramItems } from './lib/instagram.js';
 import { fetchWithFallbacks } from './lib/fallbacks.js';
@@ -88,7 +88,7 @@ async function fetchText(url, timeoutMs, services) {
     if (!file) throw new Error(`no fixture page for ${url}`);
     return readFile(path.join(fixturesDir, file), 'utf8');
   }
-  return throttled(url, async () => {
+  const direct = () => throttled(url, async () => {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), timeoutMs);
     try {
@@ -101,7 +101,26 @@ async function fetchText(url, timeoutMs, services) {
       clearTimeout(timer);
     }
   });
+  try {
+    return await direct();
+  } catch (err) {
+    // Blocked or rate-limited from GitHub's IP range? Retry once through the self-hosted relay, if configured.
+    const relay = BLOCKED_STATUS.test(err.message) ? relayUrl(services, url) : null;
+    if (!relay) throw err;
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const res = await fetch(relay, { signal: controller.signal, headers: HEADERS });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return await res.text();
+    } catch (err2) {
+      throw new Error(`${err.message}; via relay: ${err2.name === 'AbortError' ? 'timeout' : String(err2.message || err2).split('\n')[0]}`);
+    } finally {
+      clearTimeout(timer);
+    }
+  }
 }
+const BLOCKED_STATUS = /^HTTP (401|403|405|406|409|418|429|451|503)$/;
 
 /**
  * Built-in last resort for plain RSS sources: read the site's homepage, follow its advertised feed link

@@ -82,3 +82,13 @@ test('feedLinksFromHtml finds advertised feeds and conventionalFeedPaths lists t
   assert.equal(conventionalFeedPaths('https://site.org/blog/x')[0], 'https://site.org/feed/');
   assert.deepEqual(conventionalFeedPaths('not a url'), []);
 });
+
+import { relayUrl } from '../scripts/lib/sources.js';
+
+test('relayUrl wraps a URL for the self-hosted relay only when configured', () => {
+  const env = { FEEDS_SERVER_URL: 'https://feeds.example.com', RSSHUB_ACCESS_KEY: 'k1' };
+  const services = { relay: { url: '${FEEDS_SERVER_URL}/relay', key: '${RSSHUB_ACCESS_KEY}' } };
+  assert.equal(relayUrl(services, 'https://a.substack.com/feed?x=1', env), 'https://feeds.example.com/relay/?key=k1&url=https%3A%2F%2Fa.substack.com%2Ffeed%3Fx%3D1');
+  assert.equal(relayUrl(services, 'https://a/feed', {}), null, 'no server → no relay');
+  assert.equal(relayUrl({}, 'https://a/feed', env), null);
+});

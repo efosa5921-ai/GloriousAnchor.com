@@ -7,6 +7,10 @@
 		reverse_proxy rsshub:1200
 	}
 
+	handle_path /relay/* {
+		reverse_proxy relay:8080
+	}
+
 	handle_path /rss-bridge/* {
 		basic_auth {
 			{$BASIC_AUTH_USER} {$BASIC_AUTH_HASH}

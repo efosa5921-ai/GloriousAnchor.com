@@ -162,3 +162,13 @@ export function conventionalFeedPaths(baseUrl) {
     return ['/feed/', '/rss', '/feed.xml', '/rss.xml', '/atom.xml', '/index.xml', '/feeds/posts/default'].map((p) => origin + p);
   } catch { return []; }
 }
+
+/** URL that fetches `url` through the self-hosted relay, or null when no relay is configured. */
+export function relayUrl(services, url, env = process.env) {
+  const svc = serviceUrl(services, 'relay', env);
+  if (!svc || !svc.key) return null;
+  const u = new URL(svc.url + '/');
+  u.searchParams.set('key', svc.key);
+  u.searchParams.set('url', url);
+  return u.toString();
+}

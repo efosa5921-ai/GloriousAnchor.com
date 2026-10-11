@@ -40,7 +40,7 @@
     }
   ],
   "services": {
-    "_help": "Self-hosted feed server for X, TikTok and Facebook accounts (server/README.md). Instagram uses the official API instead (type \"instagram\", secrets IG_USER_ID + IG_ACCESS_TOKEN). Values may use ${ENV_VARS}; set them as GitHub Actions secrets. Any source may list \"fallbacks\" to try when the primary fetch fails.",
+    "_help": "Self-hosted feed server (server/README.md): rsshub + rssbridge turn X/TikTok/Facebook accounts into feeds; relay re-fetches any feed that blocks GitHub's IP range (Substack, Reddit, ...). Instagram uses the official API (type \"instagram\", secrets IG_USER_ID + IG_ACCESS_TOKEN). Values may use ${ENV_VARS}; set them as GitHub Actions secrets. Any source may list \"fallbacks\".",
     "rsshub": {
       "url": "${FEEDS_SERVER_URL}/rsshub",
       "key": "${RSSHUB_ACCESS_KEY}"
@@ -48,6 +48,10 @@
     "rssbridge": {
       "url": "${FEEDS_SERVER_URL}/rss-bridge",
       "basicAuth": "${FEEDS_BASIC_AUTH}"
+    },
+    "relay": {
+      "url": "${FEEDS_SERVER_URL}/relay",
+      "key": "${RSSHUB_ACCESS_KEY}"
     }
   },
   "sources": [
@@ -230,7 +234,9 @@
       "url": "https://www.plough.com/en/rss",
       "category": "culture",
       "kind": "article",
-      "homepage": "https://www.plough.com"
+      "homepage": "https://www.plough.com",
+      "enabled": false,
+      "_note": "No public feed found at this address; fix the URL or remove."
     },
     {
       "id": "crossway",
@@ -287,7 +293,9 @@
       "url": "https://www.gotquestions.org/rss.xml",
       "category": "teaching",
       "kind": "article",
-      "homepage": "https://www.gotquestions.org"
+      "homepage": "https://www.gotquestions.org",
+      "enabled": false,
+      "_note": "gotquestions.org publishes no feed we could find; fix the URL or remove."
     },
     {
       "id": "ccel",
@@ -340,7 +348,9 @@
       "url": "https://www.epm.org/blog/feed",
       "category": "articles",
       "kind": "article",
-      "homepage": "https://www.epm.org/blog"
+      "homepage": "https://www.epm.org/blog",
+      "enabled": false,
+      "_note": "epm.org/blog feed not found; fix the URL or remove."
     },
     {
       "id": "mcknight",
@@ -571,7 +581,9 @@
           "type": "bluesky",
           "handle": "religionnews.bsky.social"
         }
-      ]
+      ],
+      "enabled": false,
+      "_note": "Bluesky handle unknown; set the real handle and re-enable."
     },
     {
       "id": "x-example",
@@ -633,7 +645,7 @@
     "fetchTimeoutMs": 15000,
     "concurrency": 8,
     "hostDelayMs": {
-      "reddit.com": 2500
+      "reddit.com": 4000
     }
   }
 }

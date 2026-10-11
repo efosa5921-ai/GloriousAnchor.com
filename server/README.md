@@ -5,6 +5,9 @@ feed generators behind one HTTPS address:
 
 - **RSSHub** (`/rsshub/...`) for X, TikTok and hundreds of other sites. Protected by an access key.
 - **RSS-Bridge** (`/rss-bridge/...`) as a second option, mainly for Facebook pages. Protected by a password.
+- **Relay** (`/relay/...`) re-fetches ordinary feeds that block GitHub's IP range (Substack, Desiring God, Reddit).
+  The build uses it automatically on a 403/429 once `FEEDS_SERVER_URL` and `RSSHUB_ACCESS_KEY` are set. Protected by
+  the same access key.
 
 The site's hourly build on GitHub Actions calls this server for the sources in `feeds.json` that use
 `"type": "rsshub"` or `"type": "rssbridge"`. Nothing else about the site changes.
@@ -59,6 +62,7 @@ Test in a browser (replace the key):
 
 - `https://feeds.gloriousanchor.com/rsshub/tiktok/user/@bibleproject?key=YOUR_KEY`
 - `https://feeds.gloriousanchor.com/rsshub/twitter/user/BibleProject?key=YOUR_KEY`
+- `https://feeds.gloriousanchor.com/relay/?key=YOUR_KEY&url=https://scotmcknight.substack.com/feed`
 - `https://feeds.gloriousanchor.com/rss-bridge/?action=display&bridge=Facebook&context=User&u=BibleProject&format=Atom` (asks for the password)
 
 Each should return XML. Routes for other sites are listed at https://docs.rsshub.app and https://rss-bridge.org.

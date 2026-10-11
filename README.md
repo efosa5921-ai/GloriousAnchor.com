@@ -96,6 +96,9 @@ Everything lives in [`feeds.json`](feeds.json). Each source has an `id` (unique,
 - **Fallbacks**: any source may list other ways to fetch the same account, tried in order when the primary fails:
   `"fallbacks": [ { "type": "rssbridge", "bridge": "Twitter", "params": { "context": "By username", "u": "BibleProject" } }, { "url": "https://rss.app/feeds/XXXX.xml" } ]`.
   The build log and `meta.json` say when a fallback was used.
+- **Blocked by the publisher?** Some sites (Substack, Desiring God, Reddit, ...) refuse requests from GitHub's
+  datacenter IP range. If you run the feed server, the build automatically retries such fetches through its `relay`
+  service, which usually gets through. Nothing to configure beyond the server secrets.
 - **Alerts**: the hourly build tracks consecutive failures per source. When any source has failed three builds in a
   row, the workflow opens (or updates) a GitHub issue labelled `feed-health` listing what is down and the last error, and
   closes it when everything recovers. GitHub emails you about the issue, so an expired cookie or a dead feed is noticed

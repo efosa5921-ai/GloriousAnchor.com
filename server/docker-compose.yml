@@ -13,7 +13,7 @@ services:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
       - caddy_config:/config
-    depends_on: [rsshub, rss-bridge]
+    depends_on: [rsshub, rss-bridge, relay]
 
   rsshub:
     image: diygod/rsshub:chromium-bundled
@@ -41,6 +41,14 @@ services:
     image: redis:7-alpine
     restart: unless-stopped
     volumes: [redis_data:/data]
+
+  # Fetches any URL from this server's IP for the site build. Publishers that block GitHub's
+  # datacenter addresses (Substack, Desiring God, Reddit, ...) usually allow an ordinary VPS.
+  relay:
+    build: ./relay
+    restart: unless-stopped
+    environment:
+      RELAY_KEY: ${RSSHUB_ACCESS_KEY}
 
   rss-bridge:
     image: rssbridge/rss-bridge:latest
