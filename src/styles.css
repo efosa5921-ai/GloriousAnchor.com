@@ -113,8 +113,8 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 .hero .lead .card__media { aspect-ratio: 16 / 9; }
 .hero .lead .card__title { font-size: clamp(1.35rem, 2.4vw, 1.9rem); }
 .hero .lead .card__summary { display: -webkit-box; -webkit-line-clamp: 4; }
-.hero .side { display: grid; grid-template-columns: 112px 1fr; }
-.hero .side .card__media { aspect-ratio: 1; height: 100%; }
+.hero .side { display: grid; grid-template-columns: 112px minmax(0, 1fr); }
+.hero .side .card__media { aspect-ratio: auto; height: 100%; min-height: 112px; width: 100%; }
 .hero .side .card__summary { display: none; }
 .hero .side .card__title { font-size: 1rem; }
 .hero .side .save { top: auto; bottom: 8px; }
