@@ -15,7 +15,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import Parser from 'rss-parser';
 import { normaliseItem, dedupe, mergeWithPrevious } from './lib/articles.js';
-import { resolveFeedUrl, homepageFor, serviceUrl, expandEnv, feedLinksFromHtml, conventionalFeedPaths, relayUrl } from './lib/sources.js';
+import { resolveFeedUrl, homepageFor, serviceUrl, expandEnv, feedLinksFromHtml, conventionalFeedPaths, relayUrl, youtubeCacheKey } from './lib/sources.js';
 import { unfurl, pickToArticle, needsManualFields, PICKS_SOURCE, PICKS_TTL_MS } from './lib/picks.js';
 import { fetchInstagramItems } from './lib/instagram.js';
 import { fetchWithFallbacks } from './lib/fallbacks.js';
@@ -163,9 +163,16 @@ async function fetchCandidate(candidate, index, limits, resolved, services) {
   if (candidate.type === 'instagram') return fetchInstagramItems(candidate, text);
   if (candidate.type === 'discover') return discoverFeed(candidate, text, resolved);
   const feedUrl = await resolveFeedUrl(candidate, resolved, text, services);
-  const feed = await parser.parseString(await text(feedUrl));
-  if (!feed.items?.length) throw new Error('feed has no items'); // treat an empty feed as a failure so fallbacks run
-  return feed;
+  try {
+    const feed = await parser.parseString(await text(feedUrl));
+    if (!feed.items?.length) throw new Error('feed has no items'); // treat an empty feed as a failure so fallbacks run
+    return feed;
+  } catch (err) {
+    // A cached YouTube handle → channel id that yields nothing is probably wrong: forget it so the next build re-resolves.
+    const key = youtubeCacheKey(candidate);
+    if (key && resolved[key]) { delete resolved[key]; err.message += ' (cached channel id discarded; will re-resolve next build)'; }
+    throw err;
+  }
 }
 
 async function fetchFeed(source, limits, resolved, services) {

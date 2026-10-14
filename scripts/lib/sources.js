@@ -121,11 +121,15 @@ export function channelIdFromHtml(html) {
  * Resolve a source to a feed URL, using (and updating) `cache` for YouTube handles.
  * `fetchText(url)` is injected so this stays testable.
  */
+export function youtubeCacheKey(source) {
+  return source.type === 'youtube' && source.handle ? `youtube:${source.handle.toLowerCase()}` : null;
+}
+
 export async function resolveFeedUrl(source, cache, fetchText, services) {
   const direct = staticFeedUrl(source, services);
   if (direct) return direct;
   if (source.type === 'youtube' && source.handle) {
-    const key = `youtube:${source.handle.toLowerCase()}`;
+    const key = youtubeCacheKey(source);
     if (cache[key] && CHANNEL_ID.test(cache[key])) return YT_FEED + cache[key];
     const handle = source.handle.startsWith('@') ? source.handle : '@' + source.handle;
     const html = await fetchText(`https://www.youtube.com/${handle}`);

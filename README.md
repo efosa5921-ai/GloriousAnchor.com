@@ -150,6 +150,7 @@ scripts/lib/sources.js  turns a source entry into a feed URL (YouTube, Reddit, B
 scripts/lib/articles.js pure helpers for normalising and de-duplicating items (tested)
 scripts/lib/picks.js    unfurls a single URL into a card via Open Graph or oEmbed (tested)
 scripts/serve.js        tiny local preview server
+scripts/probe.js        diagnostic: fetch a URL or @youtubehandle and show what came back (also as the "Probe a feed" Actions workflow)
 src/                    static frontend (copied to dist/ as-is); sw.js is the service worker
 test/                   unit tests and feed fixtures for offline builds
 ```
