@@ -136,8 +136,10 @@ The workflow in `.github/workflows/build.yml` builds on every push to `main`, ho
 
 1. In the repository settings, open **Pages** and set **Source** to **GitHub Actions**.
 2. Push to `main` (or run the workflow manually). The site appears at `https://<user>.github.io/GloriousAnchor.com/`.
-3. For the custom domain, rename `CNAME.example` to `src/CNAME`, add `gloriousanchor.com` in **Pages → Custom domain**,
-   and point the domain's DNS at GitHub Pages (`A` records to GitHub's Pages IPs, or a `CNAME` for `www`).
+3. Custom domain (`src/CNAME` already contains `gloriousanchor.com`): at the registrar, add four `A` records for `@`
+   pointing to 185.199.108.153, 185.199.109.153, 185.199.110.153 and 185.199.111.153, and a `CNAME` record for `www`
+   pointing to `efosa5921-ai.github.io`. Then in **Settings → Pages → Custom domain** enter `gloriousanchor.com`, save,
+   wait for the DNS check to pass and tick **Enforce HTTPS**.
 
 ## Project layout
 
