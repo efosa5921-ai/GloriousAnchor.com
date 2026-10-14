@@ -88,7 +88,9 @@
       "url": "https://www.baptistpress.com/feed/",
       "category": "news",
       "kind": "news",
-      "homepage": "https://www.baptistpress.com"
+      "homepage": "https://www.baptistpress.com",
+      "enabled": false,
+      "_note": "Site sits behind a Cloudflare bot challenge and its feeds return no items to automated fetches. Re-enable if a working feed URL is found."
     },
     {
       "id": "baptist-news-global",
@@ -495,9 +497,9 @@
     },
     {
       "id": "yt-maverick",
-      "name": "Maverick City Music",
+      "name": "TRIBL (Maverick City Music)",
       "type": "youtube",
-      "handle": "@maverickcitymusic",
+      "handle": "@tribl",
       "category": "video",
       "kind": "video"
     },
