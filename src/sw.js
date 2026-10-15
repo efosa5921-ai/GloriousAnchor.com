@@ -25,6 +25,7 @@ self.addEventListener('fetch', (event) => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return; // never cache third-party images/feeds
+  if (url.pathname.includes('/admin/')) return; // the admin always loads fresh and talks to GitHub directly
 
   // Headlines: fresh when online, last copy when offline.
   if (url.pathname.includes('/data/')) {

@@ -109,6 +109,18 @@ Everything lives in [`feeds.json`](feeds.json). Each source has an `id` (unique,
   normal `url` source.
 - `limits` controls items per feed, how many hours of history to keep, timeouts and concurrency.
 
+## Admin page
+
+Everything below can also be done from **gloriousanchor.com/admin/** without touching files: add and pin picks, add,
+pause or feature sources, write and edit articles (with image upload and preview), change site settings, see build
+status and feed health, and trigger a rebuild. It talks straight to this repository through GitHub's API, so there is
+no server and every change is still a normal commit.
+
+One-time setup: create a fine-grained personal access token at GitHub → Settings → Developer settings → Fine-grained
+tokens, limited to this repository, with **Contents: Read and write** and **Actions: Read and write**. Paste it into
+the admin page; it is stored only in that browser. Sign out from the Settings tab to forget it. The page is not
+indexed by search engines and is useless without a token.
+
 ## Our Articles: publish your own writing
 
 Drop a Markdown file into [`articles/`](articles/) and the next build turns it into a page at
@@ -180,6 +192,7 @@ scripts/lib/picks.js    unfurls a single URL into a card via Open Graph or oEmbe
 scripts/serve.js        tiny local preview server
 scripts/probe.js        diagnostic: fetch a URL or @youtubehandle and show what came back (also as the "Probe a feed" Actions workflow)
 src/                    static frontend (copied to dist/ as-is); sw.js is the service worker; article.html is the article template
+src/admin/              the admin page (edits the repository through GitHub's API with your token)
 test/                   unit tests and feed fixtures for offline builds
 ```
 

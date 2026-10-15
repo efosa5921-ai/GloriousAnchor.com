@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin — Glorious Anchor</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#0b1f3a">
+  <link rel="icon" href="../assets/anchor.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin">
+  <header class="masthead">
+    <div class="wrap masthead__row">
+      <a class="brand" href="../" aria-label="Glorious Anchor home">
+        <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true"><use href="../assets/anchor.svg#anchor"/></svg>
+        <span class="brand__text"><span class="brand__name">Glorious Anchor</span><span class="brand__tag">Admin</span></span>
+      </a>
+      <div class="masthead__tools" id="topTools" hidden>
+        <button class="btn btn--small btn--gold" id="rebuildBtn" title="Publish the latest changes now">Rebuild now</button>
+        <button class="icon-btn" id="signOutBtn" title="Sign out"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M21 3v18"/></svg></button>
+      </div>
+    </div>
+    <nav class="cats" id="adminNav" hidden>
+      <div class="wrap cats__row">
+        <button class="cat" data-view="dashboard">Dashboard</button>
+        <button class="cat" data-view="picks">Picks</button>
+        <button class="cat" data-view="sources">Sources</button>
+        <button class="cat" data-view="articles">Articles</button>
+        <button class="cat" data-view="settings">Settings</button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="wrap admin__main" id="main">
+    <section id="setup" class="panel" hidden>
+      <h1>Connect to your site</h1>
+      <p>This page edits the files behind gloriousanchor.com directly in your GitHub repository. It needs a personal access token, which is saved only in this browser.</p>
+      <ol class="steps">
+        <li>Open <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com → Settings → Developer settings → Fine-grained tokens → Generate new token</a>.</li>
+        <li>Name it <em>Glorious Anchor admin</em>, set an expiration (up to one year), and under <strong>Repository access</strong> choose <strong>Only select repositories</strong> → <code>GloriousAnchor.com</code>.</li>
+        <li>Under <strong>Permissions → Repository permissions</strong> set <strong>Contents: Read and write</strong> and <strong>Actions: Read and write</strong>. Leave the rest.</li>
+        <li>Generate, copy the token (it starts with <code>github_pat_</code>) and paste it below.</li>
+      </ol>
+      <form id="setupForm" class="form">
+        <label>Repository <input id="repoInput" value="efosa5921-ai/GloriousAnchor.com" required></label>
+        <label>Access token <input id="tokenInput" type="password" autocomplete="off" placeholder="github_pat_…" required></label>
+        <button class="btn" type="submit">Connect</button>
+        <p class="form__error" id="setupError" hidden></p>
+      </form>
+    </section>
+
+    <section id="view" class="panel" hidden></section>
+  </main>
+
+  <div class="toast" id="toast" role="status" hidden></div>
+  <div class="busy" id="busy" hidden><span></span></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/14.1.2/marked.min.js" defer></script>
+  <script src="admin.js" defer></script>
+</body>
+</html>
