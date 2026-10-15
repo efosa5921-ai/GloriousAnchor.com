@@ -100,7 +100,7 @@
   async function render() {
     view.innerHTML = '';
     try {
-      await ({ dashboard: renderDashboard, picks: renderPicks, sources: renderSources, articles: renderArticles, settings: renderSettings }[state.view] || renderDashboard)();
+      await ({ dashboard: renderDashboard, picks: renderPicks, sources: renderSources, articles: renderArticles, churches: renderChurches, settings: renderSettings }[state.view] || renderDashboard)();
     } catch (err) {
       view.append(h('p', { class: 'form__error' }, `Could not load: ${err.message}`), h('button', { class: 'btn btn--ghost', onclick: render }, 'Try again'));
     }
@@ -136,6 +136,7 @@
     view.append(h('div', { class: 'row' },
       h('button', { class: 'btn', onclick: () => setView('picks') }, 'Add a pick'),
       h('button', { class: 'btn', onclick: () => { setView('articles'); } }, 'Write an article'),
+      h('button', { class: 'btn', onclick: () => setView('churches') }, 'List a church'),
       h('a', { class: 'btn btn--ghost', href: '../', target: '_blank', rel: 'noopener' }, 'Open the site ↗'),
     ));
     if (failing.length) {
@@ -335,6 +336,53 @@
     view.append(form);
   }
 
+  /* Churches */
+  async function renderChurches() {
+    const data = await loadJson('churches.json');
+    data.churches ||= [];
+    const built = await fetch(`../data/churches.json?t=${Date.now()}`, { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+    const located = new Map((built?.churches || []).map((c) => [c.name, c]));
+    view.append(h('h1', {}, 'Churches'), h('p', {}, 'Churches listed directly with Glorious Anchor. They appear first, with a "Listed" badge, in the church finder, alongside OpenStreetMap results. Addresses are located automatically after you save.'));
+    view.append(churchForm(null, (c) => { data.churches.unshift(c); markDirty('churches.json'); render(); }));
+    view.append(h('h2', {}, `Listed churches (${data.churches.length})`));
+    if (built?.problems?.length) view.append(h('p', { class: 'form__error' }, `Could not locate: ${built.problems.join('; ')}. Add more address detail or give latitude/longitude.`));
+    view.append(h('ul', { class: 'list' }, data.churches.map((c, i) => { const loc = located.get(c.name); return h('li', { class: 'item' + (c.enabled === false ? ' item--off' : '') },
+      h('label', { class: 'check', title: 'Shown in the finder' }, h('input', { type: 'checkbox', checked: c.enabled !== false, onchange: (e) => { if (e.target.checked) delete c.enabled; else c.enabled = false; markDirty('churches.json'); render(); } })),
+      h('div', { class: 'item__main' }, h('div', { class: 'item__title' }, c.name), h('div', { class: 'item__sub' }, [c.denomination, [c.address, c.city, c.country].filter(Boolean).join(', '), (c.lat && c.lng) || loc?.lat != null ? '📍 located' : 'not located yet (next build)'].filter(Boolean).join(' · '))),
+      h('div', { class: 'item__actions' },
+        h('button', { title: 'Edit', onclick: () => { const f = churchForm(c, (upd) => { Object.keys(c).forEach((k) => delete c[k]); Object.assign(c, upd); markDirty('churches.json'); render(); }); view.querySelector('form.form')?.replaceWith(f); window.scrollTo({ top: 0, behavior: 'smooth' }); } }, icon(ICONS.edit)),
+        h('button', { title: 'Remove', onclick: () => { if (confirm(`Remove "${c.name}" from the directory?`)) { data.churches.splice(i, 1); markDirty('churches.json'); render(); } } }, icon(ICONS.trash)),
+      )); })));
+    view.append(saveBar('churches.json', 'Update church directory (admin)'));
+    renderSaveBar();
+  }
+  function churchForm(existing, onSubmit) {
+    const c = existing || {};
+    const f = h('form', { class: 'form' },
+      h('h2', {}, existing ? 'Edit church' : 'Add a church'),
+      h('label', {}, 'Church name', h('input', { name: 'name', required: true, value: c.name || '' })),
+      h('label', {}, 'Street address', h('input', { name: 'address', required: !(c.lat && c.lng), value: c.address || '', placeholder: '12 Example Road' })),
+      h('div', { class: 'editor__grid' }, h('label', {}, 'City / town', h('input', { name: 'city', value: c.city || '' })), h('label', {}, 'Country', h('input', { name: 'country', value: c.country || '' }))),
+      h('div', { class: 'editor__grid' }, h('label', {}, 'Denomination', h('input', { name: 'denomination', value: c.denomination || '', placeholder: 'e.g. Anglican, Pentecostal, Catholic' })), h('label', {}, 'Service times', h('input', { name: 'serviceTimes', value: c.serviceTimes || '', placeholder: 'Sundays 9:00 and 11:00' }))),
+      h('div', { class: 'editor__grid' }, h('label', {}, 'Website', h('input', { name: 'website', value: c.website || '', placeholder: 'https://…' })), h('label', {}, 'Phone', h('input', { name: 'phone', value: c.phone || '' }))),
+      h('label', {}, 'Notes ', h('span', { class: 'help' }, '(optional, shown in the finder)'), h('input', { name: 'notes', value: c.notes || '' })),
+      h('details', {}, h('summary', { class: 'muted' }, 'Exact coordinates (optional: fill if the address cannot be located)'),
+        h('div', { class: 'editor__grid' }, h('label', {}, 'Latitude', h('input', { name: 'lat', type: 'number', step: 'any', value: c.lat ?? '' })), h('label', {}, 'Longitude', h('input', { name: 'lng', type: 'number', step: 'any', value: c.lng ?? '' })))),
+      h('div', { class: 'row' }, h('button', { class: 'btn', type: 'submit' }, existing ? 'Apply' : 'Add'), existing ? h('button', { class: 'btn btn--ghost', type: 'button', onclick: render }, 'Cancel') : null),
+    );
+    f.addEventListener('submit', (e) => {
+      e.preventDefault(); const fd = new FormData(f); const out = {};
+      for (const k of ['name', 'address', 'city', 'country', 'denomination', 'serviceTimes', 'website', 'phone', 'notes']) { const v = String(fd.get(k) || '').trim(); if (v) out[k] = v; }
+      const lat = parseFloat(fd.get('lat')), lng = parseFloat(fd.get('lng'));
+      if (Number.isFinite(lat) && Number.isFinite(lng)) { out.lat = lat; out.lng = lng; }
+      if (!out.address && !(out.lat != null)) { toast('Give a street address or exact coordinates.', true); return; }
+      if (c.enabled === false) out.enabled = false;
+      if (c.id) out.id = c.id;
+      onSubmit(out);
+    });
+    return f;
+  }
+
   /* Settings */
   async function renderSettings() {
     const data = await loadJson('feeds.json');
@@ -394,7 +442,7 @@
   function showAdmin() {
     $('#setup').hidden = true; $('#view').hidden = false; $('#topTools').hidden = false; $('#adminNav').hidden = false;
     const initial = location.hash.replace('#', '');
-    state.view = ['dashboard', 'picks', 'sources', 'articles', 'settings'].includes(initial) ? initial : 'dashboard';
+    state.view = ['dashboard', 'picks', 'sources', 'articles', 'churches', 'settings'].includes(initial) ? initial : 'dashboard';
     for (const b of document.querySelectorAll('#adminNav .cat')) b.setAttribute('aria-current', String(b.dataset.view === state.view));
     render();
   }

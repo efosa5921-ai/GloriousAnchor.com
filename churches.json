@@ -1,0 +1,9 @@
+{
+  "_help": [
+    "Your own church directory, shown with a 'Listed' badge in the church finder at /churches/ alongside OpenStreetMap results.",
+    "Fields: name (required), address (required unless lat and lng are given), city, country, denomination, website, phone, serviceTimes, notes, lat, lng, enabled (false hides it).",
+    "Addresses are located automatically at build time (OpenStreetMap geocoding) and the result is cached. Give lat/lng directly for precision.",
+    "Manage this list from gloriousanchor.com/admin/ under Churches."
+  ],
+  "churches": []
+}

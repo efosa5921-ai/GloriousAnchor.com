@@ -30,6 +30,7 @@ every hour and publishes it to GitHub Pages, so there is no server to run and no
 - Search across headlines, summaries, video descriptions and posts, with highlighting (press `/` to focus)
 - Filter by source; sort newest-first or group by publisher; show only articles, only videos or only posts
 - Content-type badges, play overlay for videos, quote styling for social posts, author bylines
+- **Find a church**: nearby churches from OpenStreetMap plus your own listed directory, with map and directions
 - **My Feed**: follow just the publishers, writers, channels and communities you want, with a source picker; choices are stored in your browser only
 - Save items for later (stored in your browser only)
 - Installable mobile app (PWA) with offline reading; light/dark theme, keyboard accessible, no trackers, no cookies
@@ -109,6 +110,14 @@ Everything lives in [`feeds.json`](feeds.json). Each source has an `id` (unique,
   normal `url` source.
 - `limits` controls items per feed, how many hours of history to keep, timeouts and concurrency.
 
+## Church finder
+
+`gloriousanchor.com/churches/` finds Christian churches near a visitor: by their location or any town, within a chosen
+radius, listed nearest-first with a map, denominations, websites and directions. Results come from OpenStreetMap
+(worldwide, free, no key) merged with your own directory in [`churches.json`](churches.json), which shows first with a
+"Listed" badge. Add churches from the admin (Churches tab) or by editing the file; addresses are located automatically
+at build time and cached. Give `lat`/`lng` directly for precision.
+
 ## Admin page
 
 Everything below can also be done from **gloriousanchor.com/admin/** without touching files: add and pin picks, add,
@@ -183,6 +192,7 @@ The workflow in `.github/workflows/build.yml` builds on every push to `main`, ho
 ```
 feeds.json              sources, categories, feed-server settings and limits
 picks.json              hand-picked single links (articles, posts, videos)
+churches.json           your church directory (shown in the church finder)
 articles/               your own articles in Markdown (published at /articles/<name>/)
 server/                 optional self-hosted feed server for X, Instagram, TikTok, Facebook (Docker)
 scripts/build.js        resolve + fetch + normalise + write dist/

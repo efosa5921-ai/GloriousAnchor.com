@@ -138,6 +138,8 @@
       b.addEventListener('click', () => { state.category = c.id; state.showSaved = false; state.shown = PAGE; update(); });
       els.cats.appendChild(b);
     }
+    const link = document.createElement('a'); link.className = 'cat cat--link'; link.href = 'churches/'; link.textContent = '⛪ Find a church';
+    els.cats.appendChild(link);
   }
   function renderSources() {
     const byCat = state.category === 'top' ? state.meta.sources

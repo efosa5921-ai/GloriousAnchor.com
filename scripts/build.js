@@ -21,6 +21,7 @@ import { fetchInstagramItems } from './lib/instagram.js';
 import { fetchWithFallbacks } from './lib/fallbacks.js';
 import { computeHealth } from './lib/health.js';
 import { compilePost, postToArticle, renderPostPage, renderIndexPage, renderFeed, OWN_SOURCE } from './lib/posts.js';
+import { normaliseChurch, geocodeKey, nominatimUrl, parseNominatim } from './lib/churches.js';
 import { readdir } from 'node:fs/promises';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -219,6 +220,33 @@ function validate(config) {
   }
 }
 
+/** The curated church directory: locate addresses once (OpenStreetMap Nominatim, cached) and write data/churches.json. */
+async function buildChurches(cache, limits) {
+  const raw = await readJson(path.join(ROOT, 'churches.json'), { churches: [] });
+  const churches = (raw.churches || []).map(normaliseChurch).filter(Boolean);
+  const problems = [];
+  for (const c of churches) {
+    if (c.lat != null) continue;
+    const key = geocodeKey(c);
+    if (cache[key]?.lat != null) { c.lat = cache[key].lat; c.lng = cache[key].lng; continue; }
+    if (fixturesDir) { problems.push(`${c.name}: no coordinates (geocoding is skipped in fixture builds)`); continue; }
+    if (cache[key]?.failedAt && Date.now() - cache[key].failedAt < 7 * 86400000) { problems.push(`${c.name}: address not found (retried weekly)`); continue; }
+    try {
+      await new Promise((r) => setTimeout(r, 1100)); // Nominatim asks for at most one request per second
+      const hit = parseNominatim(await fetchText(nominatimUrl(c.address), limits.fetchTimeoutMs));
+      if (!hit) throw new Error('address not found');
+      cache[key] = { lat: hit.lat, lng: hit.lng, label: hit.label, at: Date.now() };
+      c.lat = hit.lat; c.lng = hit.lng;
+      if (verbose) console.log(`  ✓ located ${c.name}: ${hit.label}`);
+    } catch (err) {
+      cache[key] = { failedAt: Date.now(), error: String(err.message || err) };
+      problems.push(`${c.name}: ${String(err.message || err)}`);
+      console.warn(`  ✗ church ${c.name}: ${String(err.message || err)}`);
+    }
+  }
+  return { churches, problems };
+}
+
 /** Compile articles/*.md into pages under dist/articles/, an index, an RSS feed, and front-page cards. */
 async function buildOwnArticles(site) {
   const dir = path.join(ROOT, 'articles');
@@ -296,6 +324,7 @@ async function main() {
   const resolved = await readJson(path.join(DATA_DIR, 'resolved.json'), {});
   const picksCache = await readJson(path.join(DATA_DIR, 'picks-cache.json'), {});
   const previousHealth = await readJson(path.join(DATA_DIR, 'health.json'), {});
+  const geocodeCache = await readJson(path.join(DATA_DIR, 'geocode-cache.json'), {});
 
   console.log(`Fetching ${sources.length} feeds${fixturesDir ? ' from fixtures' : ''}...`);
   const results = await mapWithConcurrency(sources, limits.concurrency, (s) => fetchFeed(s, limits, resolved, services));
@@ -332,6 +361,10 @@ async function main() {
   const pickUrls = new Set(picks.articles.map((a) => a.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/+$/, '')));
   articles = articles.filter((a) => !pickUrls.has(a.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/+$/, '')));
 
+  // Church directory: curated entries, located once and cached.
+  const directory = await buildChurches(geocodeCache, limits);
+  sourceStatus.push({ id: 'churches', name: 'Church directory', ok: true, count: directory.churches.length, ...(directory.problems.length ? { errors: directory.problems } : {}) });
+
   // Our own articles: Markdown in articles/ → pages on this site, never aged out.
   const own = await buildOwnArticles(site);
   sourceStatus.push({ id: OWN_SOURCE.id, name: OWN_SOURCE.name, ok: true, count: own.articles.length });
@@ -348,6 +381,8 @@ async function main() {
   await writeFile(path.join(DATA_DIR, 'articles.json'), JSON.stringify(articles));
   await writeFile(path.join(DATA_DIR, 'resolved.json'), JSON.stringify(resolved, null, 2));
   await writeFile(path.join(DATA_DIR, 'picks-cache.json'), JSON.stringify(picksCache, null, 2));
+  await writeFile(path.join(DATA_DIR, 'geocode-cache.json'), JSON.stringify(geocodeCache, null, 2));
+  await writeFile(path.join(DATA_DIR, 'churches.json'), JSON.stringify({ generatedAt: new Date().toISOString(), churches: directory.churches, problems: directory.problems }));
   const health = computeHealth(previousHealth, sourceStatus);
   await writeFile(path.join(DATA_DIR, 'health.json'), JSON.stringify(health, null, 2));
   await writeFile(
@@ -366,7 +401,7 @@ async function main() {
   const swPath = path.join(DIST, 'sw.js');
   await writeFile(swPath, (await readFile(swPath, 'utf8')).replace('__BUILD__', Date.now().toString(36)));
 
-  const okCount = sourceStatus.filter((s) => s.ok && s.id !== PICKS_SOURCE.id && s.id !== OWN_SOURCE.id).length;
+  const okCount = sourceStatus.filter((s) => s.ok && !['picks', 'ours', 'churches'].includes(s.id)).length;
   const hash = createHash('sha1').update(JSON.stringify(articles.map((a) => a.id))).digest('hex').slice(0, 8);
   console.log(`Done: ${articles.length} items from ${okCount}/${sources.length} feeds + ${picks.articles.length} picks + ${own.articles.length} own articles in ${((Date.now() - started) / 1000).toFixed(1)}s (set ${hash}).`);
   if (okCount === 0 && articles.length === 0) {

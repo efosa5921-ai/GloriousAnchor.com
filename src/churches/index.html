@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Find a church near you — Glorious Anchor</title>
+  <meta name="description" content="Find Christian churches near you: search by your location or a town, see them on a map with distances, websites and directions.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#0b1f3a">
+  <link rel="icon" href="../assets/anchor.svg" type="image/svg+xml">
+  <link rel="manifest" href="../assets/site.webmanifest">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="churches-page">
+  <header class="masthead">
+    <div class="wrap masthead__row">
+      <a class="brand" href="../" aria-label="Glorious Anchor home">
+        <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true"><use href="../assets/anchor.svg#anchor"/></svg>
+        <span class="brand__text"><span class="brand__name">Glorious Anchor</span><span class="brand__tag">Find a church near you</span></span>
+      </a>
+      <nav class="masthead__tools article-nav"><a href="../">← Headlines</a></nav>
+    </div>
+  </header>
+
+  <main class="wrap churches">
+    <h1 class="churches__title">Find a church near you</h1>
+    <p class="churches__intro">Search around your location or any town. Results come from OpenStreetMap's worldwide map of churches, plus churches listed directly with Glorious Anchor.</p>
+
+    <form class="finder" id="finder">
+      <button type="button" class="btn" id="locateBtn"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3M12 5a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg> Use my location</button>
+      <span class="finder__or">or</span>
+      <label class="visually-hidden" for="placeInput">Town, city or address</label>
+      <input id="placeInput" type="search" placeholder="Town, city or address…" autocomplete="off">
+      <button type="submit" class="btn btn--ghost">Search</button>
+      <label class="select finder__radius"><span class="visually-hidden">Search radius</span>
+        <select id="radiusSel">
+          <option value="3">within 3 km</option>
+          <option value="10" selected>within 10 km</option>
+          <option value="25">within 25 km</option>
+          <option value="50">within 50 km</option>
+        </select>
+      </label>
+      <label class="check finder__listed"><input type="checkbox" id="listedOnly"> Listed churches only</label>
+    </form>
+
+    <p class="status churches__status" id="status" aria-live="polite">Tap "Use my location" or search for a place to begin.</p>
+
+    <div class="churches__layout">
+      <div id="map" class="churches__map" aria-label="Map of churches" hidden></div>
+      <ol class="churches__list" id="results"></ol>
+    </div>
+
+    <p class="churches__foot">Missing or wrong? Churches can be added or corrected on <a href="https://www.openstreetmap.org/" target="_blank" rel="noopener">OpenStreetMap</a>, which everyone benefits from, or listed with us from the <a href="../admin/#churches">admin</a>. Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>.</p>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__row">
+      <div><p class="footer__verse">For where two or three gather in my name, there am I with them. — Matthew 18:20</p><p><strong>Glorious Anchor</strong> · <a href="../">Back to the headlines</a></p></div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="" defer></script>
+  <script src="churches.js" defer></script>
+</body>
+</html>
