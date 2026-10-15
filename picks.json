@@ -10,5 +10,9 @@
     "{ \"url\": \"https://www.tiktok.com/@someone/video/1234567890\" }",
     "{ \"url\": \"https://www.instagram.com/p/ABC123/\", \"title\": \"Sunday service highlights\", \"image\": \"https://.../photo.jpg\", \"source\": \"Instagram · @yourchurch\" }"
   ],
-  "picks": []
+  "picks": [
+    {
+      "url": "https://www.plough.com/articles/the-asbury-outpouring"
+    }
+  ]
 }
