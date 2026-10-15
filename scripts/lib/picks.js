@@ -103,6 +103,21 @@ export async function unfurl(url, fetchText) {
   return { ...parseOpenGraph(html, url), strategy: 'html' };
 }
 
+function hostLabel(url) {
+  try { return new URL(url).hostname.replace(/^www\./, '').split('.')[0]; } catch { return ''; }
+}
+
+/** "Some headline | Plough" → "Some headline" when the suffix is the site's own name. */
+export function stripSiteSuffix(title, names) {
+  let t = title;
+  for (const n of names.filter(Boolean)) {
+    const re = new RegExp(`\\s*[|\\-–—:·]\\s*${n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*$`, 'i');
+    const cut = t.replace(re, '').trim();
+    if (cut && cut !== t) { t = cut; break; }
+  }
+  return t;
+}
+
 export function needsManualFields(url) {
   const p = providerFor(url);
   return p === 'Instagram' || p === 'Facebook' || p === 'Threads';
@@ -113,9 +128,10 @@ export function pickToArticle(pick, fetched, firstSeen) {
   const url = cleanUrl(pick.url);
   if (!url) return null;
   const f = fetched || {};
-  const title = stripHtml(pick.title || f.title || '');
-  if (!title) return null;
   const provider = providerFor(url);
+  let title = stripHtml(pick.title || f.title || '');
+  if (!pick.title) title = stripSiteSuffix(title, [f.siteName, provider, hostLabel(url)]);
+  if (!title) return null;
   const descr = stripHtml(pick.summary ?? f.description ?? '');
   const dateRaw = pick.added || pick.date || f.publishedAt;
   let publishedAt = dateRaw ? Date.parse(dateRaw) : NaN;

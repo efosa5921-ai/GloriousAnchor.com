@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { providerFor, strategyFor, oembedUrl, parseOpenGraph, parseOembed, unfurl, pickToArticle, needsManualFields } from '../scripts/lib/picks.js';
+import { stripSiteSuffix, providerFor, strategyFor, oembedUrl, parseOpenGraph, parseOembed, unfurl, pickToArticle, needsManualFields } from '../scripts/lib/picks.js';
 
 test('providerFor and strategyFor recognise the big platforms', () => {
   assert.equal(providerFor('https://x.com/a/status/1'), 'X');
@@ -75,4 +75,15 @@ test('pickToArticle merges manual overrides over fetched data and handles dates'
   const c = pickToArticle({ url: 'https://x.com/a/status/1' }, { title: 'T' }, 1234);
   assert.equal(c.publishedAt, 1234, 'falls back to first-seen time');
   assert.equal(pickToArticle({ url: 'https://www.facebook.com/x/posts/1' }, {}, 1), null, 'no title → no card');
+});
+
+test('stripSiteSuffix removes a trailing site name but keeps real titles', () => {
+  assert.equal(stripSiteSuffix('The Asbury Outpouring | Plough', ['Plough']), 'The Asbury Outpouring');
+  assert.equal(stripSiteSuffix('Hope - Christianity Today', ['Christianity Today']), 'Hope');
+  assert.equal(stripSiteSuffix('Plough', ['Plough']), 'Plough', 'never empties a title');
+  assert.equal(stripSiteSuffix('A story about Plough farms', ['Plough']), 'A story about Plough farms');
+  const a = pickToArticle({ url: 'https://www.plough.com/articles/x' }, { title: 'The Asbury Outpouring | Plough', siteName: 'Plough' }, 1);
+  assert.equal(a.title, 'The Asbury Outpouring');
+  const b = pickToArticle({ url: 'https://www.plough.com/articles/x', title: 'Keep | Plough' }, { title: 'x' }, 1);
+  assert.equal(b.title, 'Keep | Plough', 'manual titles are left alone');
 });
