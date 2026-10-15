@@ -9,7 +9,8 @@
 .form label, .field { display: grid; gap: 4px; font-size: .9rem; font-weight: 600; }
 .form input, .form select, .form textarea, .field input, .field select, .field textarea { font: inherit; font-weight: 400; padding: 9px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--text); width: 100%; }
 .form textarea, .field textarea { min-height: 120px; resize: vertical; }
-.field textarea.body { min-height: 360px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .95rem; line-height: 1.5; }
+.editor textarea { font: inherit; padding: 9px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--text); width: 100%; resize: vertical; }
+.editor textarea.body { min-height: 360px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .95rem; line-height: 1.5; }
 .form__error { color: #b42318; font-weight: 600; }
 .check { display: flex; align-items: center; gap: 8px; font-weight: 500; }
 .check input { width: 18px; height: 18px; accent-color: var(--gold); margin: 0; }
