@@ -11,6 +11,10 @@
       "label": "Top Stories"
     },
     {
+      "id": "ours",
+      "label": "Our Articles"
+    },
+    {
       "id": "picks",
       "label": "Picks"
     },

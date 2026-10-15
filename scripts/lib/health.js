@@ -5,7 +5,7 @@
 export function computeHealth(previous, sourceStatus, now = Date.now()) {
   const health = {};
   for (const s of sourceStatus) {
-    if (s.skipped) continue;
+    if (s.skipped || s.id === 'ours') continue;
     const prev = previous?.[s.id];
     if (s.ok) {
       health[s.id] = { name: s.name, ok: true, failures: 0, lastOk: now, via: s.via || 0 };

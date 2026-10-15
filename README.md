@@ -109,6 +109,31 @@ Everything lives in [`feeds.json`](feeds.json). Each source has an `id` (unique,
   normal `url` source.
 - `limits` controls items per feed, how many hours of history to keep, timeouts and concurrency.
 
+## Our Articles: publish your own writing
+
+Drop a Markdown file into [`articles/`](articles/) and the next build turns it into a page at
+`gloriousanchor.com/articles/<name>/`, a card on the front page under the **Our Articles** tab, and an entry in the
+site's own feed at `/articles/feed.xml` that others can subscribe to. On GitHub: open the `articles` folder, click
+**Add file → Create new file**, name it like `2026-10-20-my-title.md`, paste the text below, and commit.
+
+```markdown
+---
+title: Why we started Glorious Anchor
+date: 2026-10-20
+author: Your Name
+summary: One or two sentences shown on the card.
+image: images/sunrise.jpg
+pinned: true
+---
+
+Write the article here in Markdown. **Bold**, *italic*, ## headings, lists, quotes and links all work.
+```
+
+- `title` and `date` are the only required lines. The date part of the file name is used if `date` is missing.
+- `image` is a file you uploaded to `articles/images/`, or a full `https://` URL. Optional.
+- `pinned: true` makes the article lead the front page. `draft: true` keeps it out of the build until you remove it.
+- Edit a file to update the article; delete it to unpublish. The address comes from the file name after the date.
+
 ## Picks: single links you choose
 
 [`picks.json`](picks.json) holds hand-picked URLs. Paste any link and the build turns it into a card using the page's own
@@ -146,6 +171,7 @@ The workflow in `.github/workflows/build.yml` builds on every push to `main`, ho
 ```
 feeds.json              sources, categories, feed-server settings and limits
 picks.json              hand-picked single links (articles, posts, videos)
+articles/               your own articles in Markdown (published at /articles/<name>/)
 server/                 optional self-hosted feed server for X, Instagram, TikTok, Facebook (Docker)
 scripts/build.js        resolve + fetch + normalise + write dist/
 scripts/lib/sources.js  turns a source entry into a feed URL (YouTube, Reddit, Bluesky, Mastodon)
@@ -153,7 +179,7 @@ scripts/lib/articles.js pure helpers for normalising and de-duplicating items (t
 scripts/lib/picks.js    unfurls a single URL into a card via Open Graph or oEmbed (tested)
 scripts/serve.js        tiny local preview server
 scripts/probe.js        diagnostic: fetch a URL or @youtubehandle and show what came back (also as the "Probe a feed" Actions workflow)
-src/                    static frontend (copied to dist/ as-is); sw.js is the service worker
+src/                    static frontend (copied to dist/ as-is); sw.js is the service worker; article.html is the article template
 test/                   unit tests and feed fixtures for offline builds
 ```
 

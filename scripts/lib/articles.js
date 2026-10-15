@@ -37,6 +37,7 @@ export function stripHtml(html) {
     .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16)))
     .replace(/&[a-z]+;/gi, ' ')
     .replace(/\s+/g, ' ')
+    .replace(/\s+([.,;:!?)])/g, '$1') // "para ." → "para." after a closing tag
     .trim();
 }
 

@@ -1,0 +1,46 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { parseFrontMatter, slugFromFilename, compilePost, postToArticle, renderPostPage, renderFeed } from '../scripts/lib/posts.js';
+
+const site = { name: 'Glorious Anchor', url: 'https://gloriousanchor.com', verse: 'Hebrews 6:19' };
+
+test('parseFrontMatter reads key: value pairs and leaves the body', () => {
+  const { meta, body } = parseFrontMatter('---\ntitle: "Hello & welcome"\ndate: 2026-10-15\npinned: true\n---\n# Heading\n\nText.');
+  assert.deepEqual(meta, { title: 'Hello & welcome', date: '2026-10-15', pinned: true });
+  assert.equal(body, '# Heading\n\nText.');
+  assert.deepEqual(parseFrontMatter('no front matter').meta, {});
+});
+
+test('slugFromFilename drops the date prefix and extension', () => {
+  assert.equal(slugFromFilename('2026-10-15-Why We Started!.md'), 'why-we-started');
+  assert.equal(slugFromFilename('hello.markdown'), 'hello');
+});
+
+test('compilePost renders markdown, derives metadata and skips drafts', () => {
+  const p = compilePost('2026-10-15-welcome.md', '---\ntitle: Welcome\nauthor: Team\nimage: images/a.jpg\n---\nFirst **para**.\n\n## Section\n\nMore.', site);
+  assert.equal(p.slug, 'welcome');
+  assert.equal(p.url, 'https://gloriousanchor.com/articles/welcome/');
+  assert.equal(p.image, 'https://gloriousanchor.com/articles/images/a.jpg');
+  assert.ok(p.html.includes('<strong>para</strong>'));
+  assert.equal(p.summary, 'First para. Section More.');
+  assert.equal(p.publishedAt, Date.parse('2026-10-15T12:00:00Z'));
+  assert.equal(p.author, 'Team');
+  assert.equal(compilePost('x.md', '---\ndraft: true\ntitle: X\n---\nbody', site), null);
+  assert.equal(compilePost('x.md', 'no title anywhere', site), null);
+  assert.equal(compilePost('x.md', '# From heading\n\nbody', site).title, 'From heading', 'title falls back to first heading');
+  const card = postToArticle(p);
+  assert.equal(card.sourceId, 'ours'); assert.equal(card.internal, true); assert.equal(card.kind, 'article');
+});
+
+test('renderPostPage and renderFeed escape text and include the essentials', () => {
+  const p = compilePost('2026-10-15-a.md', '---\ntitle: A <b>title</b> & more\nsummary: Sum "quoted"\n---\nBody', site);
+  const q = compilePost('2026-10-14-b.md', '---\ntitle: Other\n---\nBody', site);
+  const html = renderPostPage('<title>{{title}}</title>{{body}}{{more}}', p, site, [p, q]);
+  assert.ok(html.includes('<title>A title &amp; more</title>'));
+  assert.ok(html.includes('<p>Body</p>'));
+  assert.ok(html.includes('href="../b/"'), 'links to the other post by slug');
+  const xml = renderFeed([p, q], site);
+  assert.ok(xml.includes('<title>A title &amp; more</title>'));
+  assert.ok(xml.includes('<link>https://gloriousanchor.com/articles/a/</link>'));
+  assert.ok(xml.includes('<![CDATA[<p>Body</p>'));
+});

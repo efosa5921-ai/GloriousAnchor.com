@@ -20,6 +20,8 @@ import { unfurl, pickToArticle, needsManualFields, PICKS_SOURCE, PICKS_TTL_MS } 
 import { fetchInstagramItems } from './lib/instagram.js';
 import { fetchWithFallbacks } from './lib/fallbacks.js';
 import { computeHealth } from './lib/health.js';
+import { compilePost, postToArticle, renderPostPage, renderIndexPage, renderFeed, OWN_SOURCE } from './lib/posts.js';
+import { readdir } from 'node:fs/promises';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = path.join(ROOT, 'src');
@@ -211,9 +213,36 @@ function validate(config) {
     if (!catIds.has(s.category)) throw new Error(`feeds.json: source "${s.id}" has unknown category "${s.category}"`);
     if (s.category === 'top') throw new Error(`feeds.json: source "${s.id}" may not use the "top" pseudo-category; set "featured": true instead`);
     if (s.id === PICKS_SOURCE.id) throw new Error(`feeds.json: source id "${PICKS_SOURCE.id}" is reserved for picks.json`);
+    if (s.id === OWN_SOURCE.id) throw new Error(`feeds.json: source id "${OWN_SOURCE.id}" is reserved for our own articles`);
     if (s.type === 'instagram' && !(s.username || s.handle)) throw new Error(`feeds.json: instagram source "${s.id}" needs a "username"`);
     if (s.fallbacks !== undefined && !Array.isArray(s.fallbacks)) throw new Error(`feeds.json: "fallbacks" on "${s.id}" must be a list`);
   }
+}
+
+/** Compile articles/*.md into pages under dist/articles/, an index, an RSS feed, and front-page cards. */
+async function buildOwnArticles(site) {
+  const dir = path.join(ROOT, 'articles');
+  let files = [];
+  try { files = (await readdir(dir)).filter((f) => /\.(md|markdown)$/i.test(f)).sort(); } catch { return { posts: [], articles: [] }; }
+  const posts = [];
+  for (const f of files) {
+    const post = compilePost(f, await readFile(path.join(dir, f), 'utf8'), site);
+    if (post) posts.push(post);
+    else if (verbose) console.log(`  · article ${f}: skipped (draft or no title)`);
+  }
+  posts.sort((a, b) => b.publishedAt - a.publishedAt);
+  if (!posts.length) return { posts, articles: [] };
+  const template = await readFile(path.join(SRC, 'article.html'), 'utf8');
+  for (const p of posts) {
+    const out = path.join(DIST, p.path);
+    await mkdir(path.dirname(out), { recursive: true });
+    await writeFile(out, renderPostPage(template, p, site, posts));
+    if (verbose) console.log(`  ✓ article: ${p.title} → /articles/${p.slug}/`);
+  }
+  await writeFile(path.join(DIST, 'articles', 'index.html'), renderIndexPage(template, posts, site));
+  await writeFile(path.join(DIST, 'articles', 'feed.xml'), renderFeed(posts, site));
+  try { await cp(path.join(dir, 'images'), path.join(DIST, 'articles', 'images'), { recursive: true }); } catch { /* no images folder */ }
+  return { posts, articles: posts.map(postToArticle) };
 }
 
 /** Build cards for every URL in picks.json, using a week-long cache of fetched metadata. */
@@ -292,8 +321,8 @@ async function main() {
   }
   for (const s of disabled) sourceStatus.push({ id: s.id, name: s.name, ok: false, skipped: true, error: 'disabled in feeds.json' });
 
-  const cutoff = Date.now() - limits.maxAgeHours * 3600 * 1000;
-  const merged = mergeWithPrevious(fresh, previous.filter((p) => p?.sourceId !== PICKS_SOURCE.id), sourceStatus, cutoff);
+  const cutoff = fixturesDir ? 0 : Date.now() - limits.maxAgeHours * 3600 * 1000; // fixtures never age out
+  const merged = mergeWithPrevious(fresh, previous.filter((p) => p?.sourceId !== PICKS_SOURCE.id && p?.sourceId !== OWN_SOURCE.id), sourceStatus, cutoff);
   let articles = dedupe(merged);
 
   // Picks are owner-curated: regenerated every build, never aged out, and they win over feed copies of the same URL.
@@ -302,11 +331,17 @@ async function main() {
   sourceStatus.push(picks.status);
   const pickUrls = new Set(picks.articles.map((a) => a.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/+$/, '')));
   articles = articles.filter((a) => !pickUrls.has(a.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/+$/, '')));
-  articles = [...picks.articles, ...articles].sort((a, b) => b.publishedAt - a.publishedAt);
+
+  // Our own articles: Markdown in articles/ → pages on this site, never aged out.
+  const own = await buildOwnArticles(site);
+  sourceStatus.push({ id: OWN_SOURCE.id, name: OWN_SOURCE.name, ok: true, count: own.articles.length });
+  articles = [...own.articles, ...picks.articles, ...articles].sort((a, b) => b.publishedAt - a.publishedAt);
 
   const metaSources = sources.map((s) => ({ id: s.id, name: s.name, category: s.category, kind: s.kind || 'news', featured: Boolean(s.featured), homepage: homepageFor(s) }));
-  const metaCategories = picks.articles.length ? categories : categories.filter((c) => c.id !== PICKS_SOURCE.category);
+  let metaCategories = picks.articles.length ? categories : categories.filter((c) => c.id !== PICKS_SOURCE.category);
+  if (!own.articles.length) metaCategories = metaCategories.filter((c) => c.id !== OWN_SOURCE.category);
   if (picks.articles.length) metaSources.push({ ...PICKS_SOURCE });
+  if (own.articles.length) metaSources.push({ ...OWN_SOURCE });
 
   await mkdir(DATA_DIR, { recursive: true });
   await cp(SRC, DIST, { recursive: true });
@@ -331,9 +366,9 @@ async function main() {
   const swPath = path.join(DIST, 'sw.js');
   await writeFile(swPath, (await readFile(swPath, 'utf8')).replace('__BUILD__', Date.now().toString(36)));
 
-  const okCount = sourceStatus.filter((s) => s.ok && s.id !== PICKS_SOURCE.id).length;
+  const okCount = sourceStatus.filter((s) => s.ok && s.id !== PICKS_SOURCE.id && s.id !== OWN_SOURCE.id).length;
   const hash = createHash('sha1').update(JSON.stringify(articles.map((a) => a.id))).digest('hex').slice(0, 8);
-  console.log(`Done: ${articles.length} items from ${okCount}/${sources.length} feeds + ${picks.articles.length} picks in ${((Date.now() - started) / 1000).toFixed(1)}s (set ${hash}).`);
+  console.log(`Done: ${articles.length} items from ${okCount}/${sources.length} feeds + ${picks.articles.length} picks + ${own.articles.length} own articles in ${((Date.now() - started) / 1000).toFixed(1)}s (set ${hash}).`);
   if (okCount === 0 && articles.length === 0) {
     console.error('No feeds succeeded and no previous data exists.');
     process.exit(1);

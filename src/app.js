@@ -88,7 +88,7 @@
     if (state.source) list = list.filter((a) => a.sourceId === state.source);
     if (state.sort === 'video' || state.sort === 'social') list = list.filter((a) => a.kind === state.sort);
     else if (state.sort === 'news') list = list.filter((a) => a.kind === 'news' || a.kind === 'article');
-    if (state.sort === 'newest' && !state.query && (state.category === 'top' || state.category === 'picks')) {
+    if (state.sort === 'newest' && !state.query && ['top', 'picks', 'ours'].includes(state.category)) {
       list = [...list.filter((a) => a.pinned), ...list.filter((a) => !a.pinned)];
     }
     if (state.query) {
@@ -184,10 +184,12 @@
     t.title = new Date(a.publishedAt).toLocaleString();
     const link = node.querySelector('.card__title a');
     link.href = a.url; link.innerHTML = highlight(a.title, state.query);
+    if (a.internal) { link.removeAttribute('target'); media.removeAttribute('target'); }
     const sum = node.querySelector('.card__summary');
     if (a.summary) sum.innerHTML = highlight(a.summary, state.query); else sum.remove();
     if (a.note) { const n = document.createElement('p'); n.className = 'card__note'; n.innerHTML = highlight(a.note, state.query); node.querySelector('.card__body').appendChild(n); }
-    if (a.pinned) { node.classList.add('card--pinned'); node.querySelector('.card__kind').textContent = 'Pinned pick'; }
+    if (a.pinned) { node.classList.add('card--pinned'); node.querySelector('.card__kind').textContent = a.internal ? 'Pinned' : 'Pinned pick'; }
+    if (a.internal) node.querySelector('.card__kind').textContent = a.pinned ? 'Pinned' : 'Ours';
     const save = node.querySelector('.save');
     const setSaved = (on) => { save.setAttribute('aria-pressed', String(on)); save.title = on ? 'Remove from saved' : 'Save story'; };
     setSaved(Boolean(state.saved[a.id]));
@@ -205,9 +207,13 @@
     const useHero = state.sort === 'newest' && !state.query && !state.showSaved && list.length >= HERO_COUNT;
     let rest = list;
     if (useHero) {
-      const strong = list.filter((a) => a.image && a.kind !== 'social');
-      const withImg = list.filter((a) => a.image);
-      const pick = (strong.length >= HERO_COUNT ? strong : withImg.length >= HERO_COUNT ? withImg : list).slice(0, HERO_COUNT);
+      // Pinned items always lead; the remaining hero slots prefer stories with pictures.
+      const pinnedFirst = list.filter((a) => a.pinned);
+      const strong = list.filter((a) => !a.pinned && a.image && a.kind !== 'social');
+      const withImg = list.filter((a) => !a.pinned && a.image);
+      const rest0 = list.filter((a) => !a.pinned);
+      const pool = strong.length + pinnedFirst.length >= HERO_COUNT ? strong : withImg.length + pinnedFirst.length >= HERO_COUNT ? withImg : rest0;
+      const pick = [...pinnedFirst, ...pool].slice(0, HERO_COUNT);
       const picked = new Set(pick.map((a) => a.id));
       rest = list.filter((a) => !picked.has(a.id));
       pick.forEach((a, i) => els.hero.appendChild(card(a, i === 0 ? 'lead' : 'side')));
