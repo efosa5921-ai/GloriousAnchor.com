@@ -725,7 +725,9 @@
       "url": "https://feeds.truthforlife.org/truthforlife",
       "homepage": "https://www.truthforlife.org",
       "category": "radio",
-      "kind": "audio"
+      "kind": "audio",
+      "enabled": false,
+      "_note": "Feed host returned HTTP 520 and the site advertises no feed; find the podcast RSS (e.g. from Apple Podcasts) and re-enable."
     },
     {
       "id": "pod-renewing-your-mind",
