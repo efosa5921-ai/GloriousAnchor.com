@@ -263,6 +263,24 @@ async function finalizeSeo({ site, articles, posts, churches }) {
   index = index.replace('<!--prerender-->', prerenderCards(articles, 24, site.imageProxy));
   await writeFile(indexPath, index);
 
+  // Branded entry pages (/tv/, /radio/): the same app, opening on a category, with their own name and meta.
+  for (const [slug, brand] of Object.entries(site.brands || {})) {
+    if (slug.startsWith('_') || !brand?.category) continue;
+    let page = await readFile(path.join(SRC, 'index.html'), 'utf8');
+    page = page.replace(/<title>[^<]*<\/title>/, `<title>${escHtml(brand.name)} — ${escHtml(site.name)}</title>`)
+      .replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${escHtml(brand.description || brand.tagline || '')}">`)
+      .replace('<!--seo:head-->', [metaTags({ title: brand.name, description: brand.description || brand.tagline, url: `${b}/${slug}/`, image: social, site }), `<meta name="ga-brand" content="${escHtml(slug)}">`, `<meta name="ga-category" content="${escHtml(brand.category)}">`].join('\n  '))
+      .replace('<!--prerender-->', prerenderCards(articles.filter((a) => (a.categories || [a.category]).includes(brand.category)), 24, site.imageProxy))
+      .replace(/<span class="brand__name">[^<]*<\/span>/, `<span class="brand__name">${escHtml(brand.name)}</span>`)
+      .replace(/<span class="brand__tag">[^<]*<\/span>/, `<span class="brand__tag">${escHtml(brand.tagline || '')}</span>`)
+      .replaceAll('href="assets/', 'href="../assets/').replaceAll('src="assets/', 'src="../assets/').replaceAll('href="styles.css"', 'href="../styles.css"').replaceAll('src="app.js"', 'src="../app.js"')
+      .replaceAll('href="data/', 'href="../data/').replaceAll('href="articles/', 'href="../articles/').replaceAll('href="churches/', 'href="../churches/').replaceAll('href="admin/', 'href="../admin/')
+      .replace('<a class="brand" href="./"', '<a class="brand" href="./"');
+    await mkdir(path.join(DIST, slug), { recursive: true });
+    await writeFile(path.join(DIST, slug, 'index.html'), page);
+  }
+  const brandSlugs = Object.keys(site.brands || {}).filter((k) => !k.startsWith('_') && site.brands[k]?.category);
+
   // Church pages
   const located = churches.filter((c) => c.lat != null);
   for (const c of located) { c.slug = churchSlug(c); c.url = `${b}/churches/${c.slug}/`; }
@@ -293,6 +311,7 @@ async function finalizeSeo({ site, articles, posts, churches }) {
     { url: `${b}/articles/`, changefreq: 'weekly', priority: 0.8 },
     ...posts.map((p) => ({ url: p.url, lastmod: p.publishedAt, changefreq: 'monthly', priority: 0.9 })),
     { url: `${b}/churches/`, changefreq: 'weekly', priority: 0.8 },
+    ...brandSlugs.map((s) => ({ url: `${b}/${s}/`, changefreq: 'hourly', priority: 0.9 })),
     ...located.map((c) => ({ url: c.url, changefreq: 'monthly', priority: 0.7 })),
   ];
   await writeFile(path.join(DIST, 'sitemap.xml'), sitemapXml(entries));
@@ -378,7 +397,8 @@ async function main() {
   const started = Date.now();
   const config = JSON.parse(await readFile(path.join(ROOT, 'feeds.json'), 'utf8'));
   validate(config);
-  const { categories, limits, site, services = {} } = config;
+  const { categories, limits, site, services = {}, brands = {} } = config;
+  site.brands = brands;
   hostDelays = limits.hostDelayMs || {};
   const sources = config.sources.filter((s) => s.enabled !== false);
   const disabled = config.sources.filter((s) => s.enabled === false);
@@ -402,9 +422,10 @@ async function main() {
     }
     const items = (r.feed.items || []).slice(0, limits.perSource);
     let kept = 0;
+    const feedImage = r.feed.itunes?.image || r.feed.image?.url || null;
     for (const item of items) {
       const article = normaliseItem(item, r.source, r.feed);
-      if (article) { fresh.push(article); kept++; }
+      if (article) { if (!article.image && feedImage) article.image = feedImage; fresh.push(article); kept++; }
     }
     const st = { id: r.source.id, name: r.source.name, ok: true, count: kept };
     if (r.via) { st.via = r.via; st.warning = r.warnings.join(' | '); }

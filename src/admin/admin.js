@@ -204,7 +204,7 @@
     rsshub: { label: 'X / TikTok via feed server (RSSHub route)', fields: [['route', 'Route', '/twitter/user/Name'], ['profile', 'Profile link', 'https://x.com/Name']] },
     rssbridge: { label: 'Facebook via feed server (RSS-Bridge)', fields: [['bridge', 'Bridge', 'Facebook'], ['profile', 'Profile link', 'https://www.facebook.com/Name']] },
   };
-  const KINDS = { news: 'News', article: 'Article', video: 'Video', social: 'Post' };
+  const KINDS = { news: 'News', article: 'Article', video: 'Video', audio: 'Audio (podcast)', social: 'Post' };
   function sourceLabel(s) {
     return s.url || s.handle || s.username || (s.subreddit && `r/${s.subreddit}`) || s.route || (s.bridge && `${s.bridge} bridge`) || (s.user && `@${s.user}@${s.instance}`) || '';
   }

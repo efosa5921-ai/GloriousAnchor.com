@@ -18,6 +18,7 @@ every hour and publishes it to GitHub Pages, so there is no server to run and no
 | Teaching & Devotional | article | Desiring God, Ligonier, Our Daily Bread, Bible Gateway Blog, Got Questions |
 | Writers & Blogs | article | Tim Challies, Kevin DeYoung, Ann Voskamp, Trevin Wax, Scot McKnight, Jemar Tisby, Kristin Du Mez |
 | YouTube | video | BibleProject, Desiring God, Ligonier, Mike Winger, Cliffe Knechtle, Elevation Worship, Bethel Music |
+| Radio | audio | The Briefing, BibleProject Podcast, Truth for Life, Renewing Your Mind, The Holy Post, Gospelbound, Focus on the Family |
 | Social | social | r/Christianity, r/TrueChristian, r/Reformed, r/Catholicism, Bluesky accounts |
 | Picks | pick | Any single link you choose: an article, an X post, a TikTok, a YouTube video, an Instagram or Facebook post |
 | Instagram accounts | social | Official Meta Graph API, no scraping: `"type": "instagram"` (see below) |
@@ -28,8 +29,9 @@ every hour and publishes it to GitHub Pages, so there is no server to run and no
 ## Features
 
 - Search across headlines, summaries, video descriptions and posts, with highlighting (press `/` to focus)
-- Filter by source; sort newest-first or group by publisher; show only articles, only videos or only posts
-- Content-type badges, play overlay for videos, quote styling for social posts, author bylines
+- Filter by source; sort newest-first or group by publisher; show only articles, videos, audio or posts
+- Content-type badges, play overlay for videos, inline player for podcast episodes, quote styling for social posts, author bylines
+- **Branded entry pages**: `/tv/` (GAIN TV) and `/radio/` (GAIN Radio) are the same app opening on one section, with their own name, tagline and share card; configured under `site.brands` in `feeds.json`, so other network domains can redirect to them
 - **Find a church**: nearby churches from OpenStreetMap plus your own listed directory, with map and directions
 - **My Feed**: follow just the publishers, writers, channels and communities you want, with a source picker; choices are stored in your browser only
 - Save items for later (stored in your browser only)
@@ -70,7 +72,7 @@ Run the unit tests with `npm test`.
 ## Configuring sources
 
 Everything lives in [`feeds.json`](feeds.json). Each source has an `id` (unique, stable), a `name`, a `category`
-(one of the `categories` ids other than `top`), a `kind` (`news`, `article`, `video` or `social`) and optionally
+(one of the `categories` ids other than `top`), a `kind` (`news`, `article`, `video`, `audio` or `social`; `audio` sources are podcast feeds and get an inline player) and optionally
 `featured: true` to give it more room on the front page.
 
 ```jsonc

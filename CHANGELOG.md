@@ -6,6 +6,8 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 16 October 2026
 
+- **GAIN TV** and **GAIN Radio**: branded front doors for the Glorious Anchor International Network at [/tv/](/tv/) and [/radio/](/radio/). GAIN TV opens on the video section; GAIN Radio opens on the new **Radio** tab.
+- **Radio** tab: Christian podcasts and audio teaching, with a Listen button that plays each episode right on the card and shows its length. An "Audio only" filter joins the sort menu.
 - **Apologetics** and **Eschatology** tabs, seeded with trusted sites and channels. A source can now appear in more than one tab.
 - Faster loading: the front page becomes usable after one small download, and thumbnails are resized on the fly so they cost a few dozen kilobytes instead of megabytes.
 - Search-engine groundwork: sitemap, structured data on every page type, pre-rendered headlines for crawlers, and a preview card when links are shared.

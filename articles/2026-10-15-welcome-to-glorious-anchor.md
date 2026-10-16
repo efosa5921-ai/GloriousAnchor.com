@@ -23,11 +23,16 @@ Glorious Anchor gathers it into one calm page. Nothing here is written by an alg
 - **Eschatology** follows teaching on the end times and biblical prophecy.
 - **Writers & Blogs** collects individual authors, including their newsletters.
 - **YouTube** shows new videos from teaching, apologetics and worship channels.
+- **Radio** gathers Christian podcasts and audio teaching. Press Listen and the episode plays right there on the card.
 - **Social** brings in conversations from Christian communities online.
 - **Picks** are links we chose by hand, with a note on why they are worth your time.
 - **Our Articles**, this section, is where we publish our own writing.
 
 Use the search box to look across every headline, video and post at once. Type `/` on a keyboard to jump straight to it.
+
+## GAIN TV and GAIN Radio
+
+Glorious Anchor is part of the Glorious Anchor International Network, GAIN for short. Two of its channels live here as their own front doors: [GAIN TV](/tv/) opens straight onto the video section, and [GAIN Radio](/radio/) opens onto the podcasts. Everything else on the site is one tap away from either.
 
 ## Make it yours
 

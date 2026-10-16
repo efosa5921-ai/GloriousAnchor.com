@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { cleanUrl, stripHtml, truncate, extractImage, dedupe, mergeWithPrevious, normaliseItem, makeId, slimArticle, capOutput } from '../scripts/lib/articles.js';
+import { cleanUrl, stripHtml, truncate, extractImage, dedupe, mergeWithPrevious, normaliseItem, makeId, slimArticle, capOutput, audioEnclosure, parseDuration } from '../scripts/lib/articles.js';
 
 test('cleanUrl strips tracking params and hash, rejects non-http', () => {
   assert.equal(cleanUrl('https://ex.com/a?utm_source=x&id=1#frag'), 'https://ex.com/a?id=1');
@@ -116,4 +116,29 @@ test('slimArticle drops lookup fields and shortens summaries; capOutput limits p
   assert.equal(out.filter((x) => x.sourceId === 'a').length, 6, 'overall cap leaves room after exempt items');
   assert.equal(out.filter((x) => x.sourceId === 'picks').length, 5); assert.ok(out.some((x) => x.id === 'o'));
   assert.equal(capOutput(many, 10, 1000).filter((x) => x.sourceId === 'a').length, 10);
+});
+
+test('audio episodes carry their enclosure and duration', () => {
+  const src = { id: 'pod', name: 'Pod', kind: 'audio', category: 'radio' };
+  const ep = normaliseItem({ title: 'Ep 1', link: 'https://ex.com/ep1', pubDate: 'Mon, 13 Oct 2026 09:00:00 +0000', enclosure: { url: 'https://cdn.ex.com/ep1.mp3?utm_source=rss', type: 'audio/mpeg' }, itunes: { duration: '24:30' } }, src);
+  assert.equal(ep.kind, 'audio');
+  assert.equal(ep.audio, 'https://cdn.ex.com/ep1.mp3');
+  assert.equal(ep.duration, 24 * 60 + 30);
+  assert.equal(slimArticle(ep).audio, ep.audio);
+  assert.equal(slimArticle(ep).duration, ep.duration);
+  // Non-audio sources never get a player, even with an enclosure.
+  const news = normaliseItem({ title: 'N', link: 'https://ex.com/n', pubDate: 'Mon, 13 Oct 2026 09:00:00 +0000', enclosure: { url: 'https://cdn.ex.com/n.mp3', type: 'audio/mpeg' } }, { id: 'n', name: 'N', category: 'news' });
+  assert.equal(news.audio, undefined);
+});
+
+test('audioEnclosure accepts audio types or audio file extensions, parseDuration handles every itunes form', () => {
+  assert.equal(audioEnclosure({ enclosure: { url: 'https://ex.com/a.m4a', type: '' } }), 'https://ex.com/a.m4a');
+  assert.equal(audioEnclosure({ enclosure: { url: 'https://ex.com/a.jpg', type: 'image/jpeg' } }), null);
+  assert.equal(audioEnclosure({ mediaContent: [{ $: { url: 'https://ex.com/a.mp3', type: 'audio/mpeg' } }] }), 'https://ex.com/a.mp3');
+  assert.equal(audioEnclosure({}), null);
+  assert.equal(parseDuration('3600'), 3600);
+  assert.equal(parseDuration('1:02:03'), 3723);
+  assert.equal(parseDuration('45:10'), 2710);
+  assert.equal(parseDuration(undefined), undefined);
+  assert.equal(parseDuration('n/a'), undefined);
 });

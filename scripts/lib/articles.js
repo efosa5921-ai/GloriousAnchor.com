@@ -5,7 +5,7 @@
 
 const TRACKING_PARAMS = /^(utm_|fbclid|gclid|mc_cid|mc_eid|ref$|src$|cmp$|ns_|at_)/i;
 
-export const KINDS = ['news', 'article', 'video', 'social', 'pick'];
+export const KINDS = ['news', 'article', 'video', 'social', 'pick', 'audio'];
 
 export function cleanUrl(raw) {
   if (!raw) return null;
@@ -177,7 +177,26 @@ export function normaliseItem(item, source, feed) {
     categories: source.categories && source.categories.length > 1 ? source.categories : undefined,
     featured: Boolean(source.featured),
     videoId: kind === 'video' ? youtubeVideoId(item) : undefined,
+    audio: kind === 'audio' ? audioEnclosure(item) : undefined,
+    duration: kind === 'audio' ? parseDuration(item.itunes?.duration) : undefined,
   };
+}
+
+export function audioEnclosure(item) {
+  const e = item.enclosure;
+  if (e?.url && (/^audio\//.test(e.type || '') || /\.(mp3|m4a|aac|ogg|wav)(\?|$)/i.test(e.url))) return cleanUrl(e.url);
+  for (const m of [].concat(item.mediaContent || [])) { const a = m?.$ || m; if (a?.url && /^audio\//.test(a.type || '')) return cleanUrl(a.url); }
+  return null;
+}
+
+/** itunes:duration as seconds: "3600", "1:02:03" or "45:10". */
+export function parseDuration(d) {
+  if (d == null) return undefined;
+  const s = String(d).trim();
+  if (/^\d+$/.test(s)) return Number(s);
+  const parts = s.split(':').map(Number);
+  if (parts.some(Number.isNaN)) return undefined;
+  return parts.reduce((acc, n) => acc * 60 + n, 0);
 }
 
 /**
@@ -227,6 +246,8 @@ export function slimArticle(a, summaryMax = 160) {
   const out = { id: a.id, title: a.title, url: a.url, summary: a.summary ? truncate(a.summary, summaryMax) : '', image: a.image || null, author: a.author || null,
     publishedAt: a.publishedAt, kind: a.kind, source: a.source, sourceId: a.sourceId, category: a.category };
   if (a.categories) out.categories = a.categories;
+  if (a.audio) out.audio = a.audio;
+  if (a.duration) out.duration = a.duration;
   if (a.pinned) out.pinned = true;
   if (a.internal) out.internal = true;
   if (a.note) out.note = a.note;

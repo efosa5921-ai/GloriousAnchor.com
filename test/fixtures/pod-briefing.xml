@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>The Briefing</title>
+    <link>https://albertmohler.com/the-briefing</link>
+    <description>Daily analysis of news and events from a Christian worldview.</description>
+    <itunes:image href="https://albertmohler.com/wp-content/uploads/briefing-cover.jpg"/>
+    <item>
+      <title>Monday, October 13, 2026</title>
+      <link>https://albertmohler.com/2026/10/13/briefing-10-13-26</link>
+      <guid isPermaLink="false">briefing-2026-10-13</guid>
+      <pubDate>Mon, 13 Oct 2026 09:00:00 +0000</pubDate>
+      <description><![CDATA[<p>Part I: A look at the week's headlines. Part II: Questions from listeners.</p>]]></description>
+      <enclosure url="https://media.example.com/briefing/2026-10-13.mp3?src=rss" length="21000000" type="audio/mpeg"/>
+      <itunes:duration>24:30</itunes:duration>
+    </item>
+    <item>
+      <title>Friday, October 10, 2026</title>
+      <link>https://albertmohler.com/2026/10/10/briefing-10-10-26</link>
+      <guid isPermaLink="false">briefing-2026-10-10</guid>
+      <pubDate>Fri, 10 Oct 2026 09:00:00 +0000</pubDate>
+      <description><![CDATA[<p>Part I: Culture and the courts.</p>]]></description>
+      <enclosure url="https://media.example.com/briefing/2026-10-10.mp3" length="20000000" type="audio/mpeg"/>
+      <itunes:duration>1:02:03</itunes:duration>
+    </item>
+  </channel>
+</rss>

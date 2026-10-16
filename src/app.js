@@ -15,9 +15,15 @@
     pickerAll: $('#pickerAll'), pickerNone: $('#pickerNone'),
   };
   const MINE = 'mine';
+  // Branded entry pages (/tv/, /radio/) are the same app served one folder down, opening on their own category.
+  const metaContent = (name) => document.querySelector(`meta[name="${name}"]`)?.content || '';
+  const BRAND = metaContent('ga-brand');
+  const BASE = BRAND ? '../' : '';
+  const HOME_CAT = metaContent('ga-category') || 'top';
+  const SITE_TITLE = document.title;
 
   const state = {
-    articles: [], meta: null, sourceMap: new Map(), category: 'top', source: '', sort: 'newest', query: '', showSaved: false, shown: PAGE,
+    articles: [], meta: null, sourceMap: new Map(), category: HOME_CAT, source: '', sort: 'newest', query: '', showSaved: false, shown: PAGE,
     saved: loadJSON('ga:saved', {}),
     followed: new Set(loadJSON('ga:myfeed', [])),
   };
@@ -41,15 +47,15 @@
   /* ---------- URL state ---------- */
   function readUrl() {
     const p = new URLSearchParams(location.search);
-    state.category = p.get('c') || 'top';
+    state.category = p.get('c') || HOME_CAT;
     state.source = p.get('s') || '';
     state.query = (p.get('q') || '').trim();
-    state.sort = ['source', 'news', 'video', 'social'].includes(p.get('sort')) ? p.get('sort') : 'newest';
+    state.sort = ['source', 'news', 'video', 'audio', 'social'].includes(p.get('sort')) ? p.get('sort') : 'newest';
     state.showSaved = p.get('saved') === '1';
   }
   function writeUrl() {
     const p = new URLSearchParams();
-    if (state.category !== 'top') p.set('c', state.category);
+    if (state.category !== HOME_CAT) p.set('c', state.category);
     if (state.source) p.set('s', state.source);
     if (state.query) p.set('q', state.query);
     if (state.sort !== 'newest') p.set('sort', state.sort);
@@ -86,7 +92,7 @@
     else if (state.category !== 'top') list = list.filter((a) => (a.categories || [a.category]).includes(state.category));
     else if (!state.query && !state.source) list = topMix(list);
     if (state.source) list = list.filter((a) => a.sourceId === state.source);
-    if (state.sort === 'video' || state.sort === 'social') list = list.filter((a) => a.kind === state.sort);
+    if (['video', 'audio', 'social'].includes(state.sort)) list = list.filter((a) => a.kind === state.sort);
     else if (state.sort === 'news') list = list.filter((a) => a.kind === 'news' || a.kind === 'article');
     if (state.sort === 'newest' && !state.query && ['top', 'picks', 'ours'].includes(state.category)) {
       list = [...list.filter((a) => a.pinned), ...list.filter((a) => !a.pinned)];
@@ -105,7 +111,7 @@
    * "Top Stories" view: a time-sorted mix of everything, capped per source so one chatty feed,
    * channel or subreddit can't dominate the front page. Featured sources get more room.
    */
-  const TOP_CAPS = { news: 5, article: 4, video: 3, social: 2, pick: 40 };
+  const TOP_CAPS = { news: 5, article: 4, video: 3, audio: 2, social: 2, pick: 40 };
   function topMix(all) {
     const perSource = new Map();
     const out = [];
@@ -138,7 +144,7 @@
       b.addEventListener('click', () => { state.category = c.id; state.showSaved = false; state.shown = PAGE; update(); });
       els.cats.appendChild(b);
     }
-    const link = document.createElement('a'); link.className = 'cat cat--link'; link.href = 'churches/'; link.textContent = '⛪ Find a church';
+    const link = document.createElement('a'); link.className = 'cat cat--link'; link.href = `${BASE}churches/`; link.textContent = '⛪ Find a church';
     els.cats.appendChild(link);
   }
   function renderSources() {
@@ -162,7 +168,12 @@
     if (!names.has(current)) state.source = '';
   }
 
-  const KIND_LABEL = { news: 'News', article: 'Article', video: 'Video', social: 'Post', pick: 'Pick' };
+  const KIND_LABEL = { news: 'News', article: 'Article', video: 'Video', audio: 'Audio', social: 'Post', pick: 'Pick' };
+  function fmtDuration(sec) {
+    if (!sec) return '';
+    const h = Math.floor(sec / 3600), m = Math.round((sec % 3600) / 60);
+    return h ? `${h} h ${m} min` : `${Math.max(1, m)} min`;
+  }
   /** Third-party images go through a resizing proxy (set in feeds.json → site.imageProxy); our own files are served as-is. */
   function imgUrl(url, w) {
     const t = state.meta?.site?.imageProxy;
@@ -187,6 +198,24 @@
     } else node.classList.add('card--noimg');
     const src = node.querySelector('.card__source');
     src.textContent = a.source;
+    if (a.audio) {
+      // Podcast episodes play right on the card; the player is created on first tap so nothing loads until asked.
+      const row = document.createElement('div'); row.className = 'card__audio';
+      const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'listen';
+      btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><span>Listen</span>';
+      const dur = document.createElement('span'); dur.className = 'card__duration'; dur.textContent = fmtDuration(a.duration);
+      row.append(btn, dur);
+      node.querySelector('.card__body').appendChild(row);
+      const play = (e) => {
+        e.preventDefault();
+        if (row.querySelector('audio')) return;
+        const player = document.createElement('audio'); player.controls = true; player.preload = 'none'; player.src = a.audio;
+        btn.replaceWith(player); player.play().catch(() => {});
+        for (const other of document.querySelectorAll('.card__audio audio')) if (other !== player) other.pause();
+      };
+      btn.addEventListener('click', play);
+      if (a.image) media.addEventListener('click', play);
+    }
     if (a.author && a.kind !== 'video' && a.author.toLowerCase() !== a.source.toLowerCase()) {
       const by = document.createElement('span'); by.className = 'card__author'; by.textContent = ` · ${a.author}`;
       src.after(by);
@@ -259,7 +288,7 @@
     els.empty.hidden = list.length > 0 || needsSetup;
     els.more.hidden = rest.length <= state.shown;
     const label = state.showSaved ? 'saved' : state.query ? `matching “${state.query}”` : '';
-    const noun = state.sort === 'video' ? ['video', 'videos'] : state.sort === 'social' ? ['post', 'posts'] : ['item', 'items'];
+    const noun = state.sort === 'video' ? ['video', 'videos'] : state.sort === 'audio' ? ['episode', 'episodes'] : state.sort === 'social' ? ['post', 'posts'] : ['item', 'items'];
     els.status.textContent = `${list.length.toLocaleString()} ${list.length === 1 ? noun[0] : noun[1]} ${label}`.trim() +
       (state.meta?.generatedAt ? ` · updated ${relTime(Date.parse(state.meta.generatedAt))}` : '');
   }
@@ -380,7 +409,7 @@
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     window.addEventListener('load', async () => {
       try {
-        const reg = await navigator.serviceWorker.register('sw.js');
+        const reg = await navigator.serviceWorker.register(`${BASE}sw.js`);
         reg.addEventListener('updatefound', () => {
           const sw = reg.installing;
           sw?.addEventListener('statechange', () => {
@@ -404,10 +433,10 @@
     readUrl(); skeleton(9);
     try {
       // Stage 1: meta + a small "latest" slice so the page is usable in one short round trip.
-      const full = getJson('data/articles.json');
-      const [meta, latest] = await Promise.all([getJson('data/meta.json'), getJson('data/latest.json').catch(() => null)]);
+      const full = getJson(`${BASE}data/articles.json`);
+      const [meta, latest] = await Promise.all([getJson(`${BASE}data/meta.json`), getJson(`${BASE}data/latest.json`).catch(() => null)]);
       state.meta = meta; state.sourceMap = new Map(meta.sources.map((s) => [s.id, s]));
-      if (!allCategories().some((c) => c.id === state.category)) state.category = 'top';
+      if (!allCategories().some((c) => c.id === state.category)) state.category = HOME_CAT;
       const needsFull = state.category !== 'top' || state.query || state.source || state.showSaved;
       state.articles = latest && !needsFull ? latest : await full;
       renderCats(); update();
@@ -416,7 +445,7 @@
       const ok = meta.sourceStatus?.filter((s) => s.ok).length ?? 0;
       els.footerMeta.textContent = `Last refreshed ${new Date(meta.generatedAt).toLocaleString()} · ${ok}/${meta.sourceStatus?.length ?? 0} feeds live · ${state.articles.length.toLocaleString()} items`;
       if (meta.site?.verse) $('#footerVerse').textContent = meta.site.verse;
-      document.title = state.query ? `“${state.query}” — Glorious Anchor` : 'Glorious Anchor — Christian News, Voices & Video';
+      document.title = state.query ? `“${state.query}” — ${BRAND ? SITE_TITLE.split(' — ')[0] : 'Glorious Anchor'}` : SITE_TITLE;
     } catch (err) {
       els.grid.innerHTML = '';
       els.status.textContent = 'Could not load headlines. Please try again shortly.';

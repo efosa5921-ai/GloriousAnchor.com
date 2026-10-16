@@ -4,7 +4,8 @@
     "tagline": "Christian news, voices and video, anchored in one place.",
     "verse": "We have this hope as an anchor for the soul, firm and secure. — Hebrews 6:19",
     "url": "https://gloriousanchor.com",
-    "imageProxy": "https://wsrv.nl/?url={url}&w={w}&output=webp&q=75&default={url}"
+    "imageProxy": "https://wsrv.nl/?url={url}&w={w}&output=webp&q=75&default={url}",
+    "network": "Glorious Anchor International Network (GAIN)"
   },
   "categories": [
     {
@@ -48,10 +49,29 @@
       "label": "YouTube"
     },
     {
+      "id": "radio",
+      "label": "Radio"
+    },
+    {
       "id": "social",
       "label": "Social"
     }
   ],
+  "brands": {
+    "_help": "Branded entry pages built at /<path>/ that open on a category. Point other domains (GAIN TV, GAIN Radio) at these.",
+    "tv": {
+      "name": "GAIN TV",
+      "tagline": "Christian video from Glorious Anchor International Network",
+      "category": "video",
+      "description": "GAIN TV: new videos from Christian teaching, apologetics and worship channels, gathered by Glorious Anchor International Network."
+    },
+    "radio": {
+      "name": "GAIN Radio",
+      "tagline": "Christian podcasts and audio teaching from Glorious Anchor International Network",
+      "category": "radio",
+      "description": "GAIN Radio: Christian podcasts, sermons and audio teaching you can play right here, gathered by Glorious Anchor International Network."
+    }
+  },
   "services": {
     "_help": "Self-hosted feed server (server/README.md): rsshub + rssbridge turn X/TikTok/Facebook accounts into feeds; relay re-fetches any feed that blocks GitHub's IP range (Substack, Reddit, ...). Instagram uses the official API (type \"instagram\", secrets IG_USER_ID + IG_ACCESS_TOKEN). Values may use ${ENV_VARS}; set them as GitHub Actions secrets. Any source may list \"fallbacks\".",
     "rsshub": {
@@ -681,6 +701,63 @@
       "kind": "news",
       "enabled": false,
       "_note": "No feed found at the usual addresses; fix the URL or remove."
+    },
+    {
+      "id": "pod-briefing",
+      "name": "The Briefing (Albert Mohler)",
+      "url": "https://albertmohler.com/feed/podcast",
+      "homepage": "https://albertmohler.com/the-briefing",
+      "category": "radio",
+      "kind": "audio",
+      "featured": true
+    },
+    {
+      "id": "pod-bibleproject",
+      "name": "BibleProject Podcast",
+      "url": "https://feeds.simplecast.com/3NVmUWZO",
+      "homepage": "https://bibleproject.com/podcasts/the-bible-project-podcast/",
+      "category": "radio",
+      "kind": "audio"
+    },
+    {
+      "id": "pod-truth-for-life",
+      "name": "Truth For Life (Alistair Begg)",
+      "url": "https://feeds.truthforlife.org/truthforlife",
+      "homepage": "https://www.truthforlife.org",
+      "category": "radio",
+      "kind": "audio"
+    },
+    {
+      "id": "pod-renewing-your-mind",
+      "name": "Renewing Your Mind (Ligonier)",
+      "url": "https://renewingyourmind.org/feed",
+      "homepage": "https://renewingyourmind.org",
+      "category": "radio",
+      "kind": "audio"
+    },
+    {
+      "id": "pod-holy-post",
+      "name": "The Holy Post",
+      "url": "https://feeds.megaphone.fm/holypost",
+      "homepage": "https://www.holypost.com",
+      "category": "radio",
+      "kind": "audio"
+    },
+    {
+      "id": "pod-tgc",
+      "name": "Gospelbound (TGC)",
+      "url": "https://feeds.simplecast.com/fbd6gqBG",
+      "homepage": "https://www.thegospelcoalition.org/podcasts/gospelbound/",
+      "category": "radio",
+      "kind": "audio"
+    },
+    {
+      "id": "pod-focus",
+      "name": "Focus on the Family Broadcast",
+      "url": "https://www.focusonthefamily.com/feed/podcast/focus-on-the-family-daily-broadcast/",
+      "homepage": "https://www.focusonthefamily.com/episodes/broadcast/",
+      "category": "radio",
+      "kind": "audio"
     },
     {
       "id": "x-example",
