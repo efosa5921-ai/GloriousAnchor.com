@@ -22,6 +22,7 @@ import { fetchWithFallbacks } from './lib/fallbacks.js';
 import { computeHealth } from './lib/health.js';
 import { compilePost, postToArticle, renderPostPage, renderIndexPage, renderFeed, OWN_SOURCE } from './lib/posts.js';
 import { normaliseChurch, geocodeKey, nominatimUrl, parseNominatim } from './lib/churches.js';
+import { sitemapXml, homeJsonLd, churchJsonLd, prerenderCards, metaTags, churchSlug, base as siteBase } from './lib/seo.js';
 import { readdir } from 'node:fs/promises';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -247,6 +248,58 @@ async function buildChurches(cache, limits) {
   return { churches, problems };
 }
 
+const escHtml = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+/** SEO pass: pre-rendered headlines, meta/JSON-LD on the home and finder pages, a page per listed church, sitemap. */
+async function finalizeSeo({ site, articles, posts, churches }) {
+  const b = siteBase(site);
+  const social = `${b}/assets/social.jpg`;
+  // Home page
+  const indexPath = path.join(DIST, 'index.html');
+  let index = await readFile(indexPath, 'utf8');
+  const verification = site.googleSiteVerification ? `<meta name="google-site-verification" content="${escHtml(site.googleSiteVerification)}">` : '';
+  index = index.replace('<!--seo:head-->', [metaTags({ title: `${site.name} — Christian News, Voices & Video`, description: site.tagline, url: `${b}/`, image: social, site }), verification, homeJsonLd(site)].filter(Boolean).join('\n  '));
+  index = index.replace('<!--prerender-->', prerenderCards(articles, 24));
+  await writeFile(indexPath, index);
+
+  // Church pages
+  const located = churches.filter((c) => c.lat != null);
+  for (const c of located) { c.slug = churchSlug(c); c.url = `${b}/churches/${c.slug}/`; }
+  if (located.length) {
+    const tpl = await readFile(path.join(SRC, 'church.html'), 'utf8');
+    for (const c of located) {
+      const description = `${c.name}${c.denomination ? `, ${c.denomination}` : ''}${c.address ? `, ${c.address}` : ''}. Directions, service times and details on ${site.name}.`;
+      const details = [c.serviceTimes ? `<p><strong>Services:</strong> ${escHtml(c.serviceTimes)}</p>` : '', c.phone ? `<p><strong>Phone:</strong> <a href="tel:${escHtml(c.phone.replace(/\s+/g, ''))}">${escHtml(c.phone)}</a></p>` : '', c.notes ? `<p>${escHtml(c.notes)}</p>` : ''].join('');
+      const vars = { name: escHtml(c.name), nameEnc: encodeURIComponent(c.name), site: escHtml(site.name), verse: escHtml(site.verse || ''), description: escHtml(description),
+        denomination: escHtml(c.denomination || 'Church'), addressLine: c.address ? ` · ${escHtml(c.address)}` : '', details, lat: String(c.lat), lng: String(c.lng),
+        websiteLink: c.website ? `<a class="btn btn--ghost" href="${escHtml(c.website)}" target="_blank" rel="noopener">Website ↗</a>` : '',
+        meta: metaTags({ title: `${c.name} — ${site.name}`, description, url: c.url, image: social, site }), jsonld: churchJsonLd(c, site) };
+      const out = path.join(DIST, 'churches', c.slug, 'index.html');
+      await mkdir(path.dirname(out), { recursive: true });
+      await writeFile(out, tpl.replace(/\{\{(\w+)\}\}/g, (_, k) => vars[k] ?? ''));
+    }
+  }
+  // Finder page: meta + a static list of listed churches for crawlers
+  const finderPath = path.join(DIST, 'churches', 'index.html');
+  let finder = await readFile(finderPath, 'utf8');
+  finder = finder.replace('<!--seo:head-->', metaTags({ title: `Find a church near you — ${site.name}`, description: 'Find Christian churches near you: search by your location or a town, see them on a map with distances, websites and directions.', url: `${b}/churches/`, image: social, site }));
+  finder = finder.replace('<!--listed-->', located.length ? `<h2>Churches listed with ${escHtml(site.name)}</h2><ul class="article__more">${located.map((c) => `<li><a href="./${c.slug}/">${escHtml(c.name)}</a>${c.address ? ` <span class="muted">${escHtml(c.address)}</span>` : ''}</li>`).join('')}</ul>` : '');
+  await writeFile(finderPath, finder);
+
+  // Sitemap + robots
+  const entries = [
+    { url: `${b}/`, changefreq: 'hourly', priority: 1.0 },
+    { url: `${b}/articles/`, changefreq: 'weekly', priority: 0.8 },
+    ...posts.map((p) => ({ url: p.url, lastmod: p.publishedAt, changefreq: 'monthly', priority: 0.9 })),
+    { url: `${b}/churches/`, changefreq: 'weekly', priority: 0.8 },
+    ...located.map((c) => ({ url: c.url, changefreq: 'monthly', priority: 0.7 })),
+  ];
+  await writeFile(path.join(DIST, 'sitemap.xml'), sitemapXml(entries));
+  const robotsPath = path.join(DIST, 'robots.txt');
+  await writeFile(robotsPath, (await readFile(robotsPath, 'utf8')).trimEnd() + `\nSitemap: ${b}/sitemap.xml\n`);
+  return { pages: located.length, sitemapEntries: entries.length };
+}
+
 /** Compile articles/*.md into pages under dist/articles/, an index, an RSS feed, and front-page cards. */
 async function buildOwnArticles(site) {
   const dir = path.join(ROOT, 'articles');
@@ -397,6 +450,8 @@ async function main() {
     }, null, 2),
   );
   await writeFile(path.join(DIST, '.nojekyll'), ''); // tell GitHub Pages not to run Jekyll
+  const seo = await finalizeSeo({ site, articles, posts: own.posts, churches: directory.churches });
+  if (verbose) console.log(`  ✓ seo: ${seo.sitemapEntries} sitemap entries, ${seo.pages} church pages, headlines pre-rendered`);
   // Stamp the service worker so every deploy invalidates the cached app shell.
   const swPath = path.join(DIST, 'sw.js');
   await writeFile(swPath, (await readFile(swPath, 'utf8')).replace('__BUILD__', Date.now().toString(36)));

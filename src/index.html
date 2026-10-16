@@ -8,9 +8,7 @@
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#0b1f3a" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0a1322" media="(prefers-color-scheme: dark)">
-  <meta property="og:title" content="Glorious Anchor">
-  <meta property="og:description" content="Christian news, voices and video, anchored in one place.">
-  <meta property="og:type" content="website">
+  <!--seo:head-->
   <link rel="icon" href="assets/anchor.svg" type="image/svg+xml">
   <link rel="manifest" href="assets/site.webmanifest">
   <link rel="alternate" type="application/rss+xml" title="Glorious Anchor — Articles" href="articles/feed.xml">
@@ -70,7 +68,7 @@
     </div>
 
     <section class="hero" id="hero" aria-label="Top stories" hidden></section>
-    <section class="grid" id="grid" aria-label="Headlines"></section>
+    <section class="grid" id="grid" aria-label="Headlines"><!--prerender--></section>
     <p class="empty" id="empty" hidden>No stories match. Try another category or search.</p>
     <section class="setup" id="mySetup" hidden aria-labelledby="mySetupTitle">
       <svg class="setup__icon" viewBox="0 0 32 32" aria-hidden="true"><use href="assets/anchor.svg#anchor"/></svg>

@@ -118,6 +118,19 @@ radius, listed nearest-first with a map, denominations, websites and directions.
 "Listed" badge. Add churches from the admin (Churches tab) or by editing the file; addresses are located automatically
 at build time and cached. Give `lat`/`lng` directly for precision.
 
+## Search engines (SEO)
+
+Every build also produces `sitemap.xml` (home, article index, each article, the church finder and each listed church),
+pre-renders the latest headlines into the home page HTML so crawlers see content without JavaScript, and adds
+structured data: Organization and WebSite on the home page, Article on each of your articles, Church (address, map
+position, service times) on each listed church's page at `/churches/<name>/`. Every page carries a canonical URL and
+social preview tags (`assets/social.jpg` by default). `robots.txt` points at the sitemap and keeps `/admin/` out.
+
+One-time steps for you: add the site in Google Search Console (verify with a DNS TXT record at your registrar, or
+paste the HTML-tag code into the admin's Settings tab), submit `https://gloriousanchor.com/sitemap.xml`, and tick
+Enforce HTTPS in GitHub Pages settings. Then publish original articles and fill the church directory; those are the
+pages that rank.
+
 ## Admin page
 
 Everything below can also be done from **gloriousanchor.com/admin/** without touching files: add and pin picks, add,
@@ -199,6 +212,7 @@ scripts/build.js        resolve + fetch + normalise + write dist/
 scripts/lib/sources.js  turns a source entry into a feed URL (YouTube, Reddit, Bluesky, Mastodon)
 scripts/lib/articles.js pure helpers for normalising and de-duplicating items (tested)
 scripts/lib/picks.js    unfurls a single URL into a card via Open Graph or oEmbed (tested)
+scripts/lib/seo.js      sitemap, JSON-LD structured data, pre-rendered cards, meta tags (tested)
 scripts/serve.js        tiny local preview server
 scripts/probe.js        diagnostic: fetch a URL or @youtubehandle and show what came back (also as the "Probe a feed" Actions workflow)
 src/                    static frontend (copied to dist/ as-is); sw.js is the service worker; article.html is the article template

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{name}} — {{site}}</title>
+  <meta name="description" content="{{description}}">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#0b1f3a">
+  <link rel="icon" href="../../assets/anchor.svg" type="image/svg+xml">
+  {{meta}}
+  {{jsonld}}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="">
+  <link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="church-page">
+  <header class="masthead">
+    <div class="wrap masthead__row">
+      <a class="brand" href="../../" aria-label="{{site}} home">
+        <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true"><use href="../../assets/anchor.svg#anchor"/></svg>
+        <span class="brand__text"><span class="brand__name">{{site}}</span><span class="brand__tag">Church directory</span></span>
+      </a>
+      <nav class="masthead__tools article-nav"><a href="../../">← Headlines</a><a href="../">Find a church</a></nav>
+    </div>
+  </header>
+  <main class="wrap article">
+    <article class="church-detail">
+      <p class="muted"><a href="../">Churches</a> › {{name}}</p>
+      <h1 class="article__title">{{name}}</h1>
+      <p class="article__meta">{{denomination}}{{addressLine}}</p>
+      {{details}}
+      <p class="church__links">
+        <a class="btn" href="https://www.google.com/maps/dir/?api=1&destination={{lat}},{{lng}}" target="_blank" rel="noopener">Directions ↗</a>
+        {{websiteLink}}
+      </p>
+      <div id="map" class="churches__map" data-lat="{{lat}}" data-lng="{{lng}}" data-name="{{name}}"></div>
+      <p class="muted">Listed with {{site}}. Is something wrong? <a href="../../admin/#churches">Update the listing</a>.</p>
+    </article>
+    <aside class="article__aside">
+      <h2>Nearby</h2>
+      <p><a href="../?lat={{lat}}&lng={{lng}}&q={{nameEnc}}">See other churches near {{name}} →</a></p>
+    </aside>
+  </main>
+  <footer class="footer">
+    <div class="wrap footer__row"><div><p class="footer__verse">{{verse}}</p><p><strong>{{site}}</strong> · <a href="../../">Back to the headlines</a></p></div></div>
+  </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="" defer></script>
+  <script>
+    window.addEventListener('load', () => {
+      const el = document.getElementById('map'); if (!window.L || !el) return;
+      const lat = parseFloat(el.dataset.lat), lng = parseFloat(el.dataset.lng);
+      const map = L.map(el, { scrollWheelZoom: false }).setView([lat, lng], 15);
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap contributors' }).addTo(map);
+      L.circleMarker([lat, lng], { radius: 9, color: '#c9961f', fillColor: '#c9961f', fillOpacity: .9 }).addTo(map).bindPopup(el.dataset.name).openPopup();
+    });
+  </script>
+</body>
+</html>

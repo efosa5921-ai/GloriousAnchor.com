@@ -16,6 +16,7 @@
  */
 import { marked } from 'marked';
 import { stripHtml, truncate, makeId } from './articles.js';
+import { articleJsonLd, metaTags } from './seo.js';
 
 export const OWN_SOURCE = { id: 'ours', name: 'Glorious Anchor', category: 'ours', kind: 'article', featured: true, homepage: '/articles/' };
 
@@ -111,7 +112,8 @@ export function renderPostPage(template, post, site, others) {
     minutes: String(post.readingMinutes), body: post.html, more: more ? `<ul class="article__more">${more}</ul>` : '',
     site: esc(site.name), verse: esc(site.verse || ''),
     hero: post.image ? `<img class="article__hero" src="${esc(post.image)}" alt="">` : '',
-    ogimage: post.image ? `<meta property="og:image" content="${esc(post.image)}">` : '',
+    meta: metaTags({ title: post.title, description: post.summary, url: post.url, image: post.image || `${site.url.replace(/\/$/, '')}/assets/social.jpg`, type: 'article', site }),
+    jsonld: articleJsonLd(post, site),
   };
   return template.replace(/\{\{(\w+)\}\}/g, (_, k) => vars[k] ?? '');
 }
@@ -120,7 +122,8 @@ export function renderIndexPage(template, posts, site) {
   const items = posts.map((p) => `<li class="article-list__item"><a href="./${esc(p.slug)}/"><h2>${esc(p.title)}</h2></a><p class="muted">${esc(p.author)} · ${esc(fmtDate(p.publishedAt))} · ${p.readingMinutes} min read</p><p>${esc(p.summary)}</p></li>`).join('');
   const body = `<h1 class="article-list__title">Articles from ${esc(site.name)}</h1><ul class="article-list">${items || '<li>Nothing published yet.</li>'}</ul>`;
   const vars = { title: `Articles from ${esc(site.name)}`, description: esc(`Original articles from ${site.name}.`), url: esc(`${site.url.replace(/\/$/, '')}/articles/`),
-    author: '', date: '', isoDate: '', minutes: '', body, more: '', site: esc(site.name), verse: esc(site.verse || ''), hero: '', ogimage: '', image: '' };
+    author: '', date: '', isoDate: '', minutes: '', body, more: '', site: esc(site.name), verse: esc(site.verse || ''), hero: '', image: '',
+    meta: metaTags({ title: `Articles from ${site.name}`, description: `Original articles from ${site.name}.`, url: `${site.url.replace(/\/$/, '')}/articles/`, image: `${site.url.replace(/\/$/, '')}/assets/social.jpg`, site }), jsonld: '' };
   return template.replace(/\{\{(\w+)\}\}/g, (_, k) => vars[k] ?? '');
 }
 

@@ -382,6 +382,7 @@
 
   /* ---------- Boot ---------- */
   function skeleton(n) {
+    if (els.grid.querySelector('.card')) return; // pre-rendered headlines are already there; keep them until data loads
     els.grid.innerHTML = '';
     for (let i = 0; i < n; i++) { const c = els.tpl.content.firstElementChild.cloneNode(true); c.classList.add('skeleton'); c.querySelector('.save').remove(); els.grid.appendChild(c); }
   }
