@@ -83,7 +83,7 @@
     let list = state.articles;
     if (state.showSaved) list = list.filter((a) => state.saved[a.id]);
     else if (state.category === MINE) list = list.filter((a) => state.followed.has(a.sourceId));
-    else if (state.category !== 'top') list = list.filter((a) => a.category === state.category);
+    else if (state.category !== 'top') list = list.filter((a) => (a.categories || [a.category]).includes(state.category));
     else if (!state.query && !state.source) list = topMix(list);
     if (state.source) list = list.filter((a) => a.sourceId === state.source);
     if (state.sort === 'video' || state.sort === 'social') list = list.filter((a) => a.kind === state.sort);
@@ -144,7 +144,7 @@
   function renderSources() {
     const byCat = state.category === 'top' ? state.meta.sources
       : state.category === MINE ? state.meta.sources.filter((s) => state.followed.has(s.id))
-      : state.meta.sources.filter((s) => s.category === state.category);
+      : state.meta.sources.filter((s) => (s.categories || [s.category]).includes(state.category));
     const names = new Map();
     for (const s of byCat) if (!names.has(s.id)) names.set(s.id, s);
     const current = state.source;

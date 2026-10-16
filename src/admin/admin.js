@@ -214,7 +214,7 @@
     view.append(h('h1', {}, 'Sources'), h('p', {}, 'The publishers, writers, channels and communities the site follows. Untick to pause one without deleting it; star the ones that deserve more room on the front page.'));
     view.append(sourceForm(null, cats, (src) => { data.sources.push(src); markDirty('feeds.json'); render(); }, data.sources));
     for (const c of cats) {
-      const list = data.sources.filter((s) => s.category === c.id);
+      const list = data.sources.filter((s) => (s.categories || [s.category]).includes(c.id));
       if (!list.length) continue;
       view.append(h('div', { class: 'group' }, h('h3', {}, `${c.label} (${list.length})`),
         h('ul', { class: 'list' }, list.map((s) => h('li', { class: 'item' + (s.enabled === false ? ' item--off' : '') },
@@ -244,6 +244,7 @@
       h('div', { class: 'editor__grid' },
         h('label', {}, 'Section', h('select', { name: 'category' }, cats.map((c) => h('option', { value: c.id, selected: c.id === s.category }, c.label)))),
         h('label', {}, 'Shows as', h('select', { name: 'kind' }, Object.entries(KINDS).map(([k, v]) => h('option', { value: k, selected: k === (s.kind || 'news') }, v))))),
+      h('div', { class: 'field' }, 'Also show in ', h('span', { class: 'help' }, 'optional extra sections'), h('div', { class: 'row' }, cats.map((c) => h('label', { class: 'check' }, h('input', { type: 'checkbox', name: 'also', value: c.id, checked: !!(s.categories || []).slice(1).includes(c.id) }), c.label)))),
       h('label', { class: 'check' }, h('input', { name: 'featured', type: 'checkbox', checked: !!s.featured }), 'Featured: more room on the front page'),
       h('div', { class: 'row' }, h('button', { class: 'btn', type: 'submit' }, existing ? 'Apply' : 'Add'), existing ? h('button', { class: 'btn btn--ghost', type: 'button', onclick: render }, 'Cancel') : null),
     );
@@ -254,6 +255,8 @@
       for (const [name] of TYPES[t].fields) { const v = String(fd.get(name) || '').trim(); if (v) out[name] = v; }
       if (t === 'rssbridge') out.params = existing?.params || { context: 'User', u: (out.profile || '').split('/').filter(Boolean).pop() || '' };
       if (t === 'rss' && out.url && !/^https?:\/\//.test(out.url)) { toast('The feed URL must start with http:// or https://', true); return; }
+      const also = fd.getAll('also').filter((c) => c !== out.category);
+      if (also.length) out.categories = [out.category, ...also];
       if (fd.get('featured')) out.featured = true;
       if (s.enabled === false) out.enabled = false;
       if (s.fallbacks) out.fallbacks = s.fallbacks;

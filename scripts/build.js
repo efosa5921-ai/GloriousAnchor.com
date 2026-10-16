@@ -212,7 +212,8 @@ function validate(config) {
   for (const s of config.sources) {
     if (!s.id || ids.has(s.id)) throw new Error(`feeds.json: duplicate or missing source id "${s.id}"`);
     ids.add(s.id);
-    if (!catIds.has(s.category)) throw new Error(`feeds.json: source "${s.id}" has unknown category "${s.category}"`);
+    if (s.categories) { if (!Array.isArray(s.categories) || !s.categories.length) throw new Error(`feeds.json: "categories" on "${s.id}" must be a non-empty list`); s.category = s.categories[0]; }
+    for (const cat of s.categories || [s.category]) if (!catIds.has(cat)) throw new Error(`feeds.json: source "${s.id}" has unknown category "${cat}"`);
     if (s.category === 'top') throw new Error(`feeds.json: source "${s.id}" may not use the "top" pseudo-category; set "featured": true instead`);
     if (s.id === PICKS_SOURCE.id) throw new Error(`feeds.json: source id "${PICKS_SOURCE.id}" is reserved for picks.json`);
     if (s.id === OWN_SOURCE.id) throw new Error(`feeds.json: source id "${OWN_SOURCE.id}" is reserved for our own articles`);
@@ -423,7 +424,7 @@ async function main() {
   sourceStatus.push({ id: OWN_SOURCE.id, name: OWN_SOURCE.name, ok: true, count: own.articles.length });
   articles = [...own.articles, ...picks.articles, ...articles].sort((a, b) => b.publishedAt - a.publishedAt);
 
-  const metaSources = sources.map((s) => ({ id: s.id, name: s.name, category: s.category, kind: s.kind || 'news', featured: Boolean(s.featured), homepage: homepageFor(s) }));
+  const metaSources = sources.map((s) => ({ id: s.id, name: s.name, category: s.category, ...(s.categories ? { categories: s.categories } : {}), kind: s.kind || 'news', featured: Boolean(s.featured), homepage: homepageFor(s) }));
   let metaCategories = picks.articles.length ? categories : categories.filter((c) => c.id !== PICKS_SOURCE.category);
   if (!own.articles.length) metaCategories = metaCategories.filter((c) => c.id !== OWN_SOURCE.category);
   if (picks.articles.length) metaSources.push({ ...PICKS_SOURCE });

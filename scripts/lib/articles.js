@@ -173,7 +173,8 @@ export function normaliseItem(item, source, feed) {
     source: source.name,
     sourceId: source.id,
     sourceHome: source.homepage || (feed && feed.link) || null,
-    category: source.category,
+    category: (source.categories && source.categories[0]) || source.category,
+    categories: source.categories && source.categories.length > 1 ? source.categories : undefined,
     featured: Boolean(source.featured),
     videoId: kind === 'video' ? youtubeVideoId(item) : undefined,
   };

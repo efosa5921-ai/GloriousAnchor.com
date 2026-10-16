@@ -95,3 +95,11 @@ test('reddit "submitted by" boilerplate is stripped from summaries', () => {
   const a = normaliseItem({ title: 'A post', link: 'https://www.reddit.com/r/x/comments/1/a/', content: '<p>Body text.</p> submitted by /u/someone [link] [comments]' }, src, {});
   assert.equal(a.summary, 'Body text.');
 });
+
+test('a source can belong to several categories; the first is primary', () => {
+  const src = { id: 'yt', name: 'Y', category: 'video', categories: ['video', 'apologetics'], kind: 'video' };
+  const a = normaliseItem({ title: 'T', link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', isoDate: '2026-10-10T12:00:00Z' }, src, {});
+  assert.equal(a.category, 'video'); assert.deepEqual(a.categories, ['video', 'apologetics']);
+  const b = normaliseItem({ title: 'T', link: 'https://x/1', isoDate: '2026-10-10T12:00:00Z' }, { id: 'x', name: 'X', category: 'news', kind: 'news' }, {});
+  assert.equal(b.categories, undefined);
+});

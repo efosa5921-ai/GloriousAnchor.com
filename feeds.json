@@ -31,6 +31,14 @@
       "label": "Teaching & Devotional"
     },
     {
+      "id": "apologetics",
+      "label": "Apologetics"
+    },
+    {
+      "id": "eschatology",
+      "label": "Eschatology"
+    },
+    {
       "id": "articles",
       "label": "Writers & Blogs"
     },
@@ -435,7 +443,11 @@
       "type": "youtube",
       "handle": "@MikeWinger",
       "category": "video",
-      "kind": "video"
+      "kind": "video",
+      "categories": [
+        "video",
+        "apologetics"
+      ]
     },
     {
       "id": "yt-cliffe",
@@ -449,6 +461,10 @@
           "type": "youtube",
           "handle": "@GiveMeAnAnswer"
         }
+      ],
+      "categories": [
+        "video",
+        "apologetics"
       ]
     },
     {
@@ -457,7 +473,11 @@
       "type": "youtube",
       "handle": "@AlisaChilders",
       "category": "video",
-      "kind": "video"
+      "kind": "video",
+      "categories": [
+        "video",
+        "apologetics"
+      ]
     },
     {
       "id": "yt-capturing",
@@ -465,7 +485,11 @@
       "type": "youtube",
       "handle": "@CapturingChristianity",
       "category": "video",
-      "kind": "video"
+      "kind": "video",
+      "categories": [
+        "video",
+        "apologetics"
+      ]
     },
     {
       "id": "yt-elevation",
@@ -590,6 +614,70 @@
       ],
       "enabled": false,
       "_note": "Bluesky handle unknown; set the real handle and re-enable."
+    },
+    {
+      "id": "reasonable-faith",
+      "name": "Reasonable Faith",
+      "url": "https://www.reasonablefaith.org/rss",
+      "homepage": "https://www.reasonablefaith.org",
+      "category": "apologetics",
+      "kind": "article"
+    },
+    {
+      "id": "stand-to-reason",
+      "name": "Stand to Reason",
+      "url": "https://www.str.org/rss.xml",
+      "homepage": "https://www.str.org",
+      "category": "apologetics",
+      "kind": "article"
+    },
+    {
+      "id": "cold-case",
+      "name": "Cold-Case Christianity",
+      "url": "https://coldcasechristianity.com/feed/",
+      "homepage": "https://coldcasechristianity.com",
+      "category": "apologetics",
+      "kind": "article"
+    },
+    {
+      "id": "cross-examined",
+      "name": "CrossExamined",
+      "url": "https://crossexamined.org/feed/",
+      "homepage": "https://crossexamined.org",
+      "category": "apologetics",
+      "kind": "article"
+    },
+    {
+      "id": "apologetics315",
+      "name": "Apologetics 315",
+      "url": "https://apologetics315.com/feed/",
+      "homepage": "https://apologetics315.com",
+      "category": "apologetics",
+      "kind": "article"
+    },
+    {
+      "id": "harbingers-daily",
+      "name": "Harbingers Daily",
+      "url": "https://harbingersdaily.com/feed/",
+      "homepage": "https://harbingersdaily.com",
+      "category": "eschatology",
+      "kind": "news"
+    },
+    {
+      "id": "christ-in-prophecy",
+      "name": "Lamb & Lion Ministries",
+      "url": "https://christinprophecy.org/feed/",
+      "homepage": "https://christinprophecy.org",
+      "category": "eschatology",
+      "kind": "article"
+    },
+    {
+      "id": "prophecy-news-watch",
+      "name": "Prophecy News Watch",
+      "url": "https://www.prophecynewswatch.com/feed/",
+      "homepage": "https://www.prophecynewswatch.com",
+      "category": "eschatology",
+      "kind": "news"
     },
     {
       "id": "x-example",
