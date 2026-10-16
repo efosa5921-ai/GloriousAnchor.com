@@ -312,6 +312,15 @@ async function buildOwnArticles(site) {
     if (post) posts.push(post);
     else if (verbose) console.log(`  · article ${f}: skipped (draft or no title)`);
   }
+  // CHANGELOG.md becomes the "What's new" article, dated by its newest entry.
+  try {
+    const log = await readFile(path.join(ROOT, 'CHANGELOG.md'), 'utf8');
+    const newest = log.match(/^## (.+)$/m)?.[1];
+    const date = newest ? new Date(newest + ' UTC') : null;
+    const dated = date && !Number.isNaN(date.getTime()) ? log.replace(/^---\n/, `---\ndate: ${date.toISOString().slice(0, 10)}\nslug: whats-new\n`) : log.replace(/^---\n/, '---\nslug: whats-new\n');
+    const post = compilePost('whats-new.md', dated, site);
+    if (post) posts.push(post);
+  } catch { /* no changelog */ }
   posts.sort((a, b) => b.publishedAt - a.publishedAt);
   if (!posts.length) return { posts, articles: [] };
   const template = await readFile(path.join(SRC, 'article.html'), 'utf8');

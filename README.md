@@ -168,6 +168,11 @@ Write the article here in Markdown. **Bold**, *italic*, ## headings, lists, quot
 - `pinned: true` makes the article lead the front page. `draft: true` keeps it out of the build until you remove it.
 - Edit a file to update the article; delete it to unpublish. The address comes from the file name after the date.
 
+### What's new
+
+`CHANGELOG.md` is published as the article at `/articles/whats-new/`, dated by its newest heading. Add a dated entry at
+the top whenever a feature ships; the welcome article should keep describing the whole site.
+
 ## Picks: single links you choose
 
 [`picks.json`](picks.json) holds hand-picked URLs. Paste any link and the build turns it into a card using the page's own
