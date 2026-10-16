@@ -31,7 +31,7 @@ every hour and publishes it to GitHub Pages, so there is no server to run and no
 - Search across headlines, summaries, video descriptions and posts, with highlighting (press `/` to focus)
 - Filter by source; sort newest-first or group by publisher; show only articles, videos, audio or posts
 - Content-type badges, play overlay for videos, inline player for podcast episodes, quote styling for social posts, author bylines
-- **Branded entry pages**: `/tv/` (GAIN TV) and `/radio/` (GAIN Radio) are the same app opening on one section, with their own name, tagline and share card; configured under `site.brands` in `feeds.json`, so other network domains can redirect to them
+- **Branded entry pages**: `/tv/` (GAIN TV) and `/radio/` (GAIN Radio) are the same app opening on one section, with their own name, tagline and share card; configured under `site.brands` in `feeds.json`, so other network domains can redirect to them. The redirect sites for gaintv.app and gainradio.app live in [`redirects/`](redirects/README.md)
 - **Find a church**: nearby churches from OpenStreetMap plus your own listed directory, with map and directions
 - **My Feed**: follow just the publishers, writers, channels and communities you want, with a source picker; choices are stored in your browser only
 - Save items for later (stored in your browser only)
