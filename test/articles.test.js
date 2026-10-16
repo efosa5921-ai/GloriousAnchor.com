@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { cleanUrl, stripHtml, truncate, extractImage, dedupe, mergeWithPrevious, normaliseItem, makeId } from '../scripts/lib/articles.js';
+import { cleanUrl, stripHtml, truncate, extractImage, dedupe, mergeWithPrevious, normaliseItem, makeId, slimArticle, capOutput } from '../scripts/lib/articles.js';
 
 test('cleanUrl strips tracking params and hash, rejects non-http', () => {
   assert.equal(cleanUrl('https://ex.com/a?utm_source=x&id=1#frag'), 'https://ex.com/a?id=1');
@@ -102,4 +102,18 @@ test('a source can belong to several categories; the first is primary', () => {
   assert.equal(a.category, 'video'); assert.deepEqual(a.categories, ['video', 'apologetics']);
   const b = normaliseItem({ title: 'T', link: 'https://x/1', isoDate: '2026-10-10T12:00:00Z' }, { id: 'x', name: 'X', category: 'news', kind: 'news' }, {});
   assert.equal(b.categories, undefined);
+});
+
+test('slimArticle drops lookup fields and shortens summaries; capOutput limits per source but keeps picks and ours', () => {
+  const a = slimArticle({ id: '1', title: 'T', url: 'https://x/1', summary: 'word '.repeat(60), image: null, author: null, publishedAt: 5, kind: 'news', source: 'S', sourceId: 's', sourceHome: 'https://s', category: 'news', featured: true, videoId: 'abc', pinned: true });
+  assert.equal(a.sourceHome, undefined); assert.equal(a.featured, undefined); assert.equal(a.videoId, undefined); assert.equal(a.pinned, true);
+  assert.ok(a.summary.length <= 161);
+  const many = [];
+  for (let i = 0; i < 30; i++) many.push({ id: 'a' + i, sourceId: 'a', publishedAt: 100 - i });
+  for (let i = 0; i < 5; i++) many.push({ id: 'p' + i, sourceId: 'picks', publishedAt: 1 });
+  many.push({ id: 'o', sourceId: 'ours', publishedAt: 0 });
+  const out = capOutput(many, 10, 12);
+  assert.equal(out.filter((x) => x.sourceId === 'a').length, 6, 'overall cap leaves room after exempt items');
+  assert.equal(out.filter((x) => x.sourceId === 'picks').length, 5); assert.ok(out.some((x) => x.id === 'o'));
+  assert.equal(capOutput(many, 10, 1000).filter((x) => x.sourceId === 'a').length, 10);
 });

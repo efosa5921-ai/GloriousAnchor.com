@@ -221,3 +221,30 @@ export function mergeWithPrevious(fresh, previous, sourceStatus, cutoff) {
   }
   return kept;
 }
+
+/** Trim what the browser downloads: shorter summaries, no per-item fields the page can look up from meta.sources. */
+export function slimArticle(a, summaryMax = 160) {
+  const out = { id: a.id, title: a.title, url: a.url, summary: a.summary ? truncate(a.summary, summaryMax) : '', image: a.image || null, author: a.author || null,
+    publishedAt: a.publishedAt, kind: a.kind, source: a.source, sourceId: a.sourceId, category: a.category };
+  if (a.categories) out.categories = a.categories;
+  if (a.pinned) out.pinned = true;
+  if (a.internal) out.internal = true;
+  if (a.note) out.note = a.note;
+  return out;
+}
+
+/** Keep at most `perSource` items per feed and `max` overall (newest first); picks and our own articles are never dropped. */
+export function capOutput(articles, perSource = 15, max = 700) {
+  const counts = new Map();
+  const out = [];
+  for (const a of articles) {
+    const exempt = a.sourceId === 'picks' || a.sourceId === 'ours';
+    const n = counts.get(a.sourceId) || 0;
+    if (!exempt && n >= perSource) continue;
+    counts.set(a.sourceId, n + 1);
+    out.push(a);
+  }
+  const exempt = out.filter((a) => a.sourceId === 'picks' || a.sourceId === 'ours');
+  const rest = out.filter((a) => !(a.sourceId === 'picks' || a.sourceId === 'ours')).slice(0, Math.max(0, max - exempt.length));
+  return [...exempt, ...rest].sort((a, b) => b.publishedAt - a.publishedAt);
+}

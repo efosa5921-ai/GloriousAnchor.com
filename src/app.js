@@ -17,7 +17,7 @@
   const MINE = 'mine';
 
   const state = {
-    articles: [], meta: null, category: 'top', source: '', sort: 'newest', query: '', showSaved: false, shown: PAGE,
+    articles: [], meta: null, sourceMap: new Map(), category: 'top', source: '', sort: 'newest', query: '', showSaved: false, shown: PAGE,
     saved: loadJSON('ga:saved', {}),
     followed: new Set(loadJSON('ga:myfeed', [])),
   };
@@ -111,7 +111,7 @@
     const out = [];
     for (const a of all) {
       const n = perSource.get(a.sourceId) || 0;
-      const cap = (TOP_CAPS[a.kind] || 4) * (a.featured ? 2 : 1);
+      const cap = (TOP_CAPS[a.kind] || 4) * (a.featured ?? srcInfo(a).featured ? 2 : 1);
       if (n >= cap) continue;
       perSource.set(a.sourceId, n + 1);
       out.push(a);
@@ -163,6 +163,13 @@
   }
 
   const KIND_LABEL = { news: 'News', article: 'Article', video: 'Video', social: 'Post', pick: 'Pick' };
+  /** Third-party images go through a resizing proxy (set in feeds.json → site.imageProxy); our own files are served as-is. */
+  function imgUrl(url, w) {
+    const t = state.meta?.site?.imageProxy;
+    if (!t || !url || url.startsWith(location.origin) || /^https?:\/\/gloriousanchor\.com\//.test(url)) return url;
+    return t.replace(/\{url\}/g, encodeURIComponent(url)).replace('{w}', String(w));
+  }
+  const srcInfo = (a) => state.sourceMap.get(a.sourceId) || {};
   function card(a, extraClass) {
     const node = els.tpl.content.firstElementChild.cloneNode(true);
     if (extraClass) node.classList.add(extraClass);
@@ -171,8 +178,12 @@
     const media = node.querySelector('.card__media');
     const img = media.querySelector('img');
     if (a.image) {
-      media.href = a.url; img.src = a.image; img.alt = '';
-      img.addEventListener('error', () => { node.classList.add('card--noimg'); }, { once: true });
+      media.href = a.url; img.alt = '';
+      const w = extraClass === 'lead' ? 960 : 480;
+      const direct = a.image, viaProxy = imgUrl(direct, w);
+      img.src = viaProxy;
+      if (extraClass === 'lead') { img.loading = 'eager'; img.setAttribute('fetchpriority', 'high'); }
+      img.addEventListener('error', () => { if (img.src !== direct) img.src = direct; else node.classList.add('card--noimg'); });
     } else node.classList.add('card--noimg');
     const src = node.querySelector('.card__source');
     src.textContent = a.source;
@@ -231,7 +242,8 @@
         const head = document.createElement('div'); head.className = 'group__head';
         const h = document.createElement('h2'); h.textContent = items[0].source;
         head.appendChild(h);
-        if (items[0].sourceHome) { const a = document.createElement('a'); a.href = items[0].sourceHome; a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'Visit site ↗'; head.appendChild(a); }
+        const home = items[0].sourceHome || srcInfo(items[0]).homepage;
+        if (home) { const a = document.createElement('a'); a.href = home; a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'Visit site ↗'; head.appendChild(a); }
         head.appendChild(followButton(items[0].sourceId));
         const g = document.createElement('div'); g.className = 'grid';
         items.forEach((a) => g.appendChild(card(a)));
@@ -387,18 +399,22 @@
     for (let i = 0; i < n; i++) { const c = els.tpl.content.firstElementChild.cloneNode(true); c.classList.add('skeleton'); c.querySelector('.save').remove(); els.grid.appendChild(c); }
   }
 
+  const getJson = (u) => fetch(u, { cache: 'no-cache' }).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); });
   async function boot() {
     readUrl(); skeleton(9);
     try {
-      const [meta, articles] = await Promise.all([
-        fetch('data/meta.json', { cache: 'no-cache' }).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }),
-        fetch('data/articles.json', { cache: 'no-cache' }).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }),
-      ]);
-      state.meta = meta; state.articles = articles;
+      // Stage 1: meta + a small "latest" slice so the page is usable in one short round trip.
+      const full = getJson('data/articles.json');
+      const [meta, latest] = await Promise.all([getJson('data/meta.json'), getJson('data/latest.json').catch(() => null)]);
+      state.meta = meta; state.sourceMap = new Map(meta.sources.map((s) => [s.id, s]));
       if (!allCategories().some((c) => c.id === state.category)) state.category = 'top';
+      const needsFull = state.category !== 'top' || state.query || state.source || state.showSaved;
+      state.articles = latest && !needsFull ? latest : await full;
       renderCats(); update();
+      // Stage 2: the complete set for every tab and search, swapped in quietly.
+      if (state.articles !== await full) { const all = await full; state.articles = all; update(); }
       const ok = meta.sourceStatus?.filter((s) => s.ok).length ?? 0;
-      els.footerMeta.textContent = `Last refreshed ${new Date(meta.generatedAt).toLocaleString()} · ${ok}/${meta.sourceStatus?.length ?? 0} feeds live · ${articles.length.toLocaleString()} items`;
+      els.footerMeta.textContent = `Last refreshed ${new Date(meta.generatedAt).toLocaleString()} · ${ok}/${meta.sourceStatus?.length ?? 0} feeds live · ${state.articles.length.toLocaleString()} items`;
       if (meta.site?.verse) $('#footerVerse').textContent = meta.site.verse;
       document.title = state.query ? `“${state.query}” — Glorious Anchor` : 'Glorious Anchor — Christian News, Voices & Video';
     } catch (err) {

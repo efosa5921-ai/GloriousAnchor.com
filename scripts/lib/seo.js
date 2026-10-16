@@ -43,12 +43,14 @@ export function churchJsonLd(c, site) {
 }
 
 /** Static cards for the front page so crawlers (and no-JS visitors) see real headlines. Replaced by the app once data loads. */
-export function prerenderCards(articles, n = 24) {
+export const proxied = (template, url, w) => (template && url && !/^https?:\/\/gloriousanchor\.com\//.test(url) ? template.replace(/\{url\}/g, encodeURIComponent(url)).replace('{w}', String(w)) : url);
+
+export function prerenderCards(articles, n = 24, imageProxy = '') {
   const pinned = articles.filter((a) => a.pinned);
   const rest = articles.filter((a) => !a.pinned);
   const list = [...pinned, ...rest].slice(0, n);
   return list.map((a) => `<article class="card${a.image ? '' : ' card--noimg'}">
-  ${a.image ? `<a class="card__media" href="${esc(a.url)}"><img loading="lazy" decoding="async" src="${esc(a.image)}" alt=""></a>` : ''}
+  ${a.image ? `<a class="card__media" href="${esc(a.url)}"><img loading="lazy" decoding="async" src="${esc(proxied(imageProxy, a.image, 480))}" alt=""></a>` : ''}
   <div class="card__body">
     <div class="card__meta"><span class="card__source">${esc(a.source)}</span><span class="dot">·</span><time datetime="${new Date(a.publishedAt).toISOString()}">${new Date(a.publishedAt).toISOString().slice(0, 10)}</time></div>
     <h3 class="card__title"><a href="${esc(a.url)}"${a.internal ? '' : ' rel="noopener"'}>${esc(a.title)}</a></h3>

@@ -3,7 +3,8 @@
     "name": "Glorious Anchor",
     "tagline": "Christian news, voices and video, anchored in one place.",
     "verse": "We have this hope as an anchor for the soul, firm and secure. — Hebrews 6:19",
-    "url": "https://gloriousanchor.com"
+    "url": "https://gloriousanchor.com",
+    "imageProxy": "https://wsrv.nl/?url={url}&w={w}&output=webp&q=75&default={url}"
   },
   "categories": [
     {
@@ -742,6 +743,8 @@
     "concurrency": 8,
     "hostDelayMs": {
       "reddit.com": 4000
-    }
+    },
+    "outputPerSource": 15,
+    "outputMax": 700
   }
 }

@@ -14,7 +14,7 @@ import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import Parser from 'rss-parser';
-import { normaliseItem, dedupe, mergeWithPrevious } from './lib/articles.js';
+import { normaliseItem, dedupe, mergeWithPrevious, slimArticle, capOutput } from './lib/articles.js';
 import { resolveFeedUrl, homepageFor, serviceUrl, expandEnv, feedLinksFromHtml, conventionalFeedPaths, relayUrl, youtubeCacheKey } from './lib/sources.js';
 import { unfurl, pickToArticle, needsManualFields, PICKS_SOURCE, PICKS_TTL_MS } from './lib/picks.js';
 import { fetchInstagramItems } from './lib/instagram.js';
@@ -260,7 +260,7 @@ async function finalizeSeo({ site, articles, posts, churches }) {
   let index = await readFile(indexPath, 'utf8');
   const verification = site.googleSiteVerification ? `<meta name="google-site-verification" content="${escHtml(site.googleSiteVerification)}">` : '';
   index = index.replace('<!--seo:head-->', [metaTags({ title: `${site.name} — Christian News, Voices & Video`, description: site.tagline, url: `${b}/`, image: social, site }), verification, homeJsonLd(site)].filter(Boolean).join('\n  '));
-  index = index.replace('<!--prerender-->', prerenderCards(articles, 24));
+  index = index.replace('<!--prerender-->', prerenderCards(articles, 24, site.imageProxy));
   await writeFile(indexPath, index);
 
   // Church pages
@@ -374,7 +374,7 @@ async function main() {
   const sources = config.sources.filter((s) => s.enabled !== false);
   const disabled = config.sources.filter((s) => s.enabled === false);
   const picksConfig = await readJson(fixturesDir ? path.join(fixturesDir, 'picks.json') : path.join(ROOT, 'picks.json'), { picks: [] });
-  const previous = await readJson(path.join(DATA_DIR, 'articles.json'), []);
+  const previous = await readJson(path.join(DATA_DIR, 'articles-full.json'), await readJson(path.join(DATA_DIR, 'articles.json'), []));
   const resolved = await readJson(path.join(DATA_DIR, 'resolved.json'), {});
   const picksCache = await readJson(path.join(DATA_DIR, 'picks-cache.json'), {});
   const previousHealth = await readJson(path.join(DATA_DIR, 'health.json'), {});
@@ -432,7 +432,12 @@ async function main() {
 
   await mkdir(DATA_DIR, { recursive: true });
   await cp(SRC, DIST, { recursive: true });
-  await writeFile(path.join(DATA_DIR, 'articles.json'), JSON.stringify(articles));
+  // Full set stays in the build cache (articles.json is re-read next build); the site gets a slim, capped copy.
+  const published = capOutput(articles, limits.outputPerSource || 15, limits.outputMax || 700).map((a) => slimArticle(a));
+  const pinnedFirst = [...published.filter((a) => a.pinned), ...published.filter((a) => !a.pinned)];
+  await writeFile(path.join(DATA_DIR, 'articles.json'), JSON.stringify(published));
+  await writeFile(path.join(DATA_DIR, 'latest.json'), JSON.stringify(pinnedFirst.slice(0, 48)));
+  await writeFile(path.join(DATA_DIR, 'articles-full.json'), JSON.stringify(articles));
   await writeFile(path.join(DATA_DIR, 'resolved.json'), JSON.stringify(resolved, null, 2));
   await writeFile(path.join(DATA_DIR, 'picks-cache.json'), JSON.stringify(picksCache, null, 2));
   await writeFile(path.join(DATA_DIR, 'geocode-cache.json'), JSON.stringify(geocodeCache, null, 2));

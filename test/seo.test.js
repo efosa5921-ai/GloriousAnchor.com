@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { sitemapXml, jsonLd, homeJsonLd, articleJsonLd, churchJsonLd, prerenderCards, metaTags, churchSlug } from '../scripts/lib/seo.js';
+import { proxied, sitemapXml, jsonLd, homeJsonLd, articleJsonLd, churchJsonLd, prerenderCards, metaTags, churchSlug } from '../scripts/lib/seo.js';
 const site = { name: 'Glorious Anchor', url: 'https://gloriousanchor.com/', tagline: 'Tag' };
 
 test('sitemapXml lists urls with optional lastmod', () => {
@@ -30,4 +30,11 @@ test('metaTags and churchSlug', () => {
   const m = metaTags({ title: 'T "q"', description: 'D', url: 'https://g.com/x/', image: 'https://g.com/s.png', site });
   assert.ok(m.includes('<link rel="canonical" href="https://g.com/x/">') && m.includes('content="T &quot;q&quot;"') && m.includes('summary_large_image'));
   assert.equal(churchSlug({ name: 'St. Matthew\'s Catholic Church, Benin' }), 'st-matthew-s-catholic-church-benin');
+});
+
+test('proxied rewrites third-party images through the template but leaves our own alone', () => {
+  const t = 'https://wsrv.nl/?url={url}&w={w}&default={url}';
+  assert.equal(proxied(t, 'https://cdn.example.com/a.jpg', 480), 'https://wsrv.nl/?url=https%3A%2F%2Fcdn.example.com%2Fa.jpg&w=480&default=https%3A%2F%2Fcdn.example.com%2Fa.jpg');
+  assert.equal(proxied(t, 'https://gloriousanchor.com/assets/social.jpg', 480), 'https://gloriousanchor.com/assets/social.jpg');
+  assert.equal(proxied('', 'https://cdn.example.com/a.jpg', 480), 'https://cdn.example.com/a.jpg');
 });
