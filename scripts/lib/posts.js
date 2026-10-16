@@ -79,13 +79,14 @@ export function compilePost(filename, text, site) {
 }
 
 /** The aggregator card for a post. */
-export function postToArticle(post) {
+export function postToArticle(post, site) {
+  const fallback = site?.url ? `${site.url.replace(/\/$/, '')}/assets/social.jpg` : null;
   return {
     id: makeId(post.url, post.title),
     title: post.title,
     url: post.url,
     summary: post.summary,
-    image: post.image,
+    image: post.image || fallback, // own articles always get a picture on the card
     author: post.author,
     publishedAt: post.publishedAt,
     kind: 'article',

@@ -3,6 +3,7 @@ title: Welcome to Glorious Anchor
 date: 2026-10-15
 author: The Glorious Anchor team
 summary: Why we built one place for Christian news, teaching, writing and video, and how to make it yours.
+image: https://gloriousanchor.com/assets/social.jpg
 pinned: true
 ---
 

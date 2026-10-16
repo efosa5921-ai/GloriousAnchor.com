@@ -324,7 +324,7 @@ async function buildOwnArticles(site) {
   await writeFile(path.join(DIST, 'articles', 'index.html'), renderIndexPage(template, posts, site));
   await writeFile(path.join(DIST, 'articles', 'feed.xml'), renderFeed(posts, site));
   try { await cp(path.join(dir, 'images'), path.join(DIST, 'articles', 'images'), { recursive: true }); } catch { /* no images folder */ }
-  return { posts, articles: posts.map(postToArticle) };
+  return { posts, articles: posts.map((p) => postToArticle(p, site)) };
 }
 
 /** Build cards for every URL in picks.json, using a week-long cache of fetched metadata. */

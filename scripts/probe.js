@@ -13,10 +13,12 @@ let target = process.argv[2];
 if (!target) { console.error('usage: node scripts/probe.js <url | @youtubehandle>'); process.exit(1); }
 
 async function get(url) {
-  const res = await fetch(url, { redirect: 'follow', headers: { 'User-Agent': UA, Accept: 'application/rss+xml, application/atom+xml, application/xml, text/xml;q=0.9, text/html;q=0.8, */*;q=0.7' } });
+  const t0 = Date.now();
+  const res = await fetch(url, { redirect: 'follow', headers: { 'User-Agent': UA, Accept: 'application/rss+xml, application/atom+xml, application/xml, text/xml;q=0.9, text/html;q=0.8, */*;q=0.7', 'Accept-Encoding': 'gzip, br' } });
+  const ttfb = Date.now() - t0;
   const body = await res.text();
   console.log(`\n=== ${url}`);
-  console.log(`status: ${res.status} ${res.statusText}  final url: ${res.url}`);
+  console.log(`status: ${res.status} ${res.statusText}  final url: ${res.url}  ttfb: ${ttfb} ms  total: ${Date.now() - t0} ms  content-encoding: ${res.headers.get('content-encoding') || 'none'}`);
   for (const h of ['content-type', 'server', 'cf-ray', 'x-cache', 'cache-control', 'content-length']) if (res.headers.get(h)) console.log(`${h}: ${res.headers.get(h)}`);
   console.log(`body: ${body.length} chars`);
   return { res, body };
