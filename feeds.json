@@ -677,7 +677,9 @@
       "url": "https://www.prophecynewswatch.com/feed/",
       "homepage": "https://www.prophecynewswatch.com",
       "category": "eschatology",
-      "kind": "news"
+      "kind": "news",
+      "enabled": false,
+      "_note": "No feed found at the usual addresses; fix the URL or remove."
     },
     {
       "id": "x-example",
