@@ -50,10 +50,16 @@ export function digestText(items, site, date) {
   return lines.join('\n');
 }
 
-/** HTML body shared by the /digest/ page and the RSS item (inline-safe for email). */
-export function digestHtml(items, site, date) {
-  const rows = items.map((a) => `<li style="margin:0 0 14px"><a href="${esc(shareUrl(a, site))}" style="font-weight:600;color:#0b1f3a;text-decoration:none">${esc(a.title)}</a><br><span style="color:#6b7280;font-size:14px">${esc(a.internal ? site.name : a.source)}${a.summary ? ` · ${esc(a.summary)}` : ''}</span></li>`).join('\n');
-  return `<p style="color:#6b7280">${esc(longDate(date))}</p>\n<ul style="list-style:none;padding:0;margin:0">\n${rows}\n</ul>\n<p>More every day at <a href="${esc(base(site))}/">${esc(base(site).replace(/^https?:\/\//, ''))}</a>.</p>`;
+/**
+ * HTML list of the day's items. inline=true (the RSS/email item) carries fixed colours for mail clients;
+ * inline=false (the /digest/ page) uses classes so the site's light and dark themes apply.
+ */
+export function digestHtml(items, site, date, { inline = true } = {}) {
+  const st = inline
+    ? { li: ' style="margin:0 0 14px"', a: ' style="font-weight:600;color:#0b1f3a;text-decoration:none"', meta: ' style="color:#6b7280;font-size:14px"', date: ' style="color:#6b7280"', ul: ' style="list-style:none;padding:0;margin:0"' }
+    : { li: ' class="digest__item"', a: ' class="digest__title"', meta: ' class="digest__meta"', date: ' class="digest__date"', ul: ' class="digest__list"' };
+  const rows = items.map((a) => `<li${st.li}><a href="${esc(shareUrl(a, site))}"${st.a}>${esc(a.title)}</a><br><span${st.meta}>${esc(a.internal ? site.name : a.source)}${a.summary ? ` · ${esc(a.summary)}` : ''}</span></li>`).join('\n');
+  return `<p${st.date}>${esc(longDate(date))}</p>\n<ul${st.ul}>\n${rows}\n</ul>\n<p>More every day at <a href="${esc(base(site))}/">${esc(base(site).replace(/^https?:\/\//, ''))}</a>.</p>`;
 }
 
 /** The /digest/ page: readable on its own, with one-tap copy for WhatsApp. */
@@ -91,7 +97,7 @@ export function renderDigestPage(items, site, date, text) {
       <a class="btn btn--ghost" href="feed.xml">Email / RSS feed</a>
     </div>
     <div class="article__body digest__body">
-${digestHtml(items, site, date)}
+${digestHtml(items, site, date, { inline: false })}
     </div>
     <pre id="digestText" hidden>${esc(text)}</pre>
     <p class="footer__meta">Subscribe by email: paste <code>${esc(b)}/digest/feed.xml</code> into any RSS-to-email service, or read it in a feed reader.</p>

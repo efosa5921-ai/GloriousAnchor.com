@@ -58,3 +58,11 @@ test('renderDigestPage embeds the text for copying and a WhatsApp share link', (
   assert.match(page, /https:\/\/wa\.me\/\?text=TEXT%20%26%20more/);
   assert.match(page, /<link rel="canonical" href="https:\/\/gloriousanchor\.com\/digest\/">/);
 });
+
+test('the digest page uses theme classes while the email item keeps inline colours', () => {
+  const items = [mk('a')];
+  assert.match(digestHtml(items, site, '2026-10-17'), /style="font-weight:600;color:#0b1f3a/);
+  const page = renderDigestPage(items, site, '2026-10-17', 'T');
+  assert.match(page, /class="digest__title"/);
+  assert.doesNotMatch(page, /color:#0b1f3a/);
+});

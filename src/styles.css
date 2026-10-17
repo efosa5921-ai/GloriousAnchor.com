@@ -182,6 +182,12 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 .story__more .card__kind { margin-right: 2px; }
 .digest__actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0 24px; }
 .digest__body ul { padding: 0; }
+.digest__date { color: var(--muted); }
+.digest__list { list-style: none; margin: 0; padding: 0; }
+.digest__item { margin: 0 0 18px; }
+.digest__title { font-family: var(--serif); font-weight: 700; font-size: 1.2rem; line-height: 1.3; color: var(--text); text-decoration: none; }
+.digest__title:hover { text-decoration: underline; }
+.digest__meta { color: var(--muted); font-size: .95rem; }
 
 mark { background: var(--gold-soft); color: inherit; border-radius: 2px; padding: 0 1px; }
 .empty { text-align: center; color: var(--muted); padding: 48px 0; }
