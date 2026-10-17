@@ -196,6 +196,10 @@ After each build, `dist/data/meta.json` lists every source with `ok: true/false`
 URL or handle is easy to spot. Feed URLs and YouTube handles in the shipped config are best-effort; check the first
 build's log and correct any that fail.
 
+## Bible Quiz
+
+`quizzes.json` holds the quizzes (id, title, description, difficulty, questions with `options` and the `answer` index, optional `ref` and `note`). The build validates them (`scripts/lib/quiz.js`), publishes `data/quizzes.json` and renders `/quiz/` from `src/quiz/index.html`; `src/quiz/quiz.js` plays a quiz with shuffled questions and options, shows the reference after each answer, keeps best scores in the browser and offers WhatsApp, X and share-sheet buttons with a link back to that quiz. The quiz of the day rotates by UTC day. The admin's Quizzes view edits quizzes in a plain text format (`Q:`, `A:` with `*` on the right answer, `Ref:`, `Note:`).
+
 ## Pictures
 
 Feed items often lack an image. The build fetches the article page's `og:image` for news and article items without one (`scripts/lib/images.js`): results, including misses, are cached for a week in `dist/data/og-cache.json`, obvious logos are rejected, and at most `limits.pageImagesPerBuild` (default 60) pages are fetched per build so builds stay quick; `limits.pageImages: false` turns it off. Anything still without a picture, on the app, the story pages and the prerendered cards alike, shows a branded cover (source name on one of six gradients chosen by hashing the source id) rather than an empty box; social posts keep their quote style.

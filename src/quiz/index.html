@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bible Quiz — {{site}}</title>
+  <meta name="description" content="Test your Bible knowledge with a new quiz every day. Ten questions, instant answers with the verse, and a score to share.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#0b1f3a">
+  <!--seo:head-->
+  <link rel="icon" href="../assets/anchor.svg" type="image/svg+xml">
+  <link rel="manifest" href="../assets/site.webmanifest">
+  <link rel="preload" href="../data/quizzes.json" as="fetch" crossorigin>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="article-page quiz-page">
+  <header class="masthead">
+    <div class="wrap masthead__row">
+      <a class="brand" href="../" aria-label="{{site}} home">
+        <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true"><use href="../assets/anchor.svg#anchor"/></svg>
+        <span class="brand__text"><span class="brand__name">{{site}}</span><span class="brand__tag">Bible Quiz</span></span>
+      </a>
+      <nav class="masthead__tools article-nav"><a href="../">← All headlines</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+    <section class="quiz" id="quiz" aria-live="polite">
+      <p class="digest__kicker" id="qKicker">Quiz of the day</p>
+      <h1 class="digest__h1" id="qTitle">{{todayTitle}}</h1>
+      <p class="digest__lede" id="qDesc">Loading today's questions…</p>
+      <div id="qStage"></div>
+    </section>
+    <section class="quiz__all">
+      <h2>All quizzes</h2>
+      <ul class="article__more quiz__list" id="qList">
+<!--quizlist-->
+      </ul>
+      <p class="footer__meta">A new quiz of the day, every day. Answers show the Bible reference so you can read it for yourself.</p>
+    </section>
+    <!--subscribe-->
+  </main>
+  <footer class="footer">
+    <div class="wrap footer__row">
+      <div><p><strong>{{site}}</strong> · <a href="../">Front page</a> · <a href="../digest/">Daily digest</a> · <a href="../churches/">Find a church</a></p></div>
+    </div>
+  </footer>
+  <script src="quiz.js" defer></script>
+</body>
+</html>

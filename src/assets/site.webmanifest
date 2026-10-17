@@ -32,6 +32,16 @@
   ],
   "shortcuts": [
     {
+      "name": "Bible Quiz",
+      "url": "../quiz/",
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
       "name": "Daily digest",
       "url": "../digest/",
       "icons": [

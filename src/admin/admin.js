@@ -100,7 +100,7 @@
   async function render() {
     view.innerHTML = '';
     try {
-      await ({ dashboard: renderDashboard, picks: renderPicks, sources: renderSources, articles: renderArticles, churches: renderChurches, settings: renderSettings }[state.view] || renderDashboard)();
+      await ({ dashboard: renderDashboard, picks: renderPicks, sources: renderSources, articles: renderArticles, churches: renderChurches, quizzes: renderQuizzes, settings: renderSettings }[state.view] || renderDashboard)();
     } catch (err) {
       view.append(h('p', { class: 'form__error' }, `Could not load: ${err.message}`), h('button', { class: 'btn btn--ghost', onclick: render }, 'Try again'));
     }
@@ -137,6 +137,7 @@
       h('button', { class: 'btn', onclick: () => setView('picks') }, 'Add a pick'),
       h('button', { class: 'btn', onclick: () => { setView('articles'); } }, 'Write an article'),
       h('button', { class: 'btn', onclick: () => setView('churches') }, 'List a church'),
+      h('button', { class: 'btn', onclick: () => setView('quizzes') }, 'Write a quiz'),
       h('a', { class: 'btn btn--ghost', href: '../', target: '_blank', rel: 'noopener' }, 'Open the site ↗'),
     ));
     if (failing.length) {
@@ -359,6 +360,84 @@
     view.append(saveBar('churches.json', 'Update church directory (admin)'));
     renderSaveBar();
   }
+  /* ---------- Bible quizzes ---------- */
+  const QUIZ_HELP = `One question per block, blank line between blocks. Mark the correct option with a * at the end. Ref and Note are optional.
+
+Q: Who built the ark?
+A: Noah *
+A: Moses
+A: Abraham
+A: Jonah
+Ref: Genesis 6:13–22
+Note: Anything extra to show after answering.`;
+  function quizToText(questions) {
+    return (questions || []).map((qu) => [`Q: ${qu.q}`, ...qu.options.map((o, i) => `A: ${o}${i === qu.answer ? ' *' : ''}`), qu.ref ? `Ref: ${qu.ref}` : '', qu.note ? `Note: ${qu.note}` : ''].filter(Boolean).join('\n')).join('\n\n');
+  }
+  function textToQuiz(text) {
+    const out = []; let cur = null;
+    const flush = () => { if (cur) { out.push(cur); cur = null; } };
+    for (const raw of text.split('\n')) {
+      const line = raw.trim();
+      if (!line) { flush(); continue; }
+      const m = line.match(/^(Q|A|Ref|Note)\s*:\s*(.*)$/i);
+      if (!m) throw new Error(`Could not read this line: "${line}". Start lines with Q:, A:, Ref: or Note:.`);
+      const [, key, val] = m; const k = key.toLowerCase();
+      if (k === 'q') { flush(); cur = { q: val, options: [], answer: -1 }; continue; }
+      if (!cur) throw new Error(`"${line}" appears before any Q: line.`);
+      if (k === 'a') { if (/\s*\*$/.test(val)) { cur.answer = cur.options.length; cur.options.push(val.replace(/\s*\*$/, '').trim()); } else cur.options.push(val); }
+      else if (k === 'ref') cur.ref = val; else cur.note = val;
+    }
+    flush();
+    out.forEach((qu, i) => {
+      if (qu.options.length < 2 || qu.options.length > 6) throw new Error(`Question ${i + 1} needs 2 to 6 answers.`);
+      if (qu.answer < 0) throw new Error(`Question ${i + 1} has no correct answer marked with *.`);
+    });
+    if (out.length < 3) throw new Error('A quiz needs at least 3 questions.');
+    return out;
+  }
+  async function renderQuizzes() {
+    const data = await loadJson('quizzes.json');
+    data.quizzes ||= [];
+    view.append(h('h1', {}, 'Bible quizzes'), h('p', {}, 'Played at /quiz/. The quiz of the day rotates through the enabled quizzes, one per day. Answers show the reference so readers can look it up.'));
+    view.append(quizForm(null, (qz) => { data.quizzes.push(qz); markDirty('quizzes.json'); render(); }, data.quizzes));
+    view.append(h('h2', {}, `Quizzes (${data.quizzes.length})`));
+    view.append(h('ul', { class: 'list' }, data.quizzes.map((qz, i) => h('li', { class: 'item' + (qz.enabled === false ? ' item--off' : '') },
+      h('label', { class: 'check', title: 'Enabled' }, h('input', { type: 'checkbox', checked: qz.enabled !== false, onchange: (e) => { if (e.target.checked) delete qz.enabled; else qz.enabled = false; markDirty('quizzes.json'); render(); } })),
+      h('div', { class: 'item__body' }, h('strong', {}, qz.title), h('span', { class: 'muted' }, ` · ${(qz.questions || []).length} questions · ${qz.difficulty || 'medium'} · `, h('a', { href: `../quiz/?q=${encodeURIComponent(qz.id)}`, target: '_blank' }, 'play ↗')), qz.description ? h('div', { class: 'muted' }, qz.description) : null),
+      h('div', { class: 'item__actions' },
+        h('button', { title: 'Edit', onclick: () => { const f = quizForm(qz, (upd) => { Object.keys(qz).forEach((k) => delete qz[k]); Object.assign(qz, upd); markDirty('quizzes.json'); render(); }, data.quizzes); view.querySelector('form.form')?.replaceWith(f); window.scrollTo({ top: 0, behavior: 'smooth' }); } }, icon(ICONS.edit)),
+        h('button', { title: 'Delete', onclick: () => { if (confirm(`Delete the quiz "${qz.title}"?`)) { data.quizzes.splice(i, 1); markDirty('quizzes.json'); render(); } } }, icon(ICONS.trash)),
+      )))));
+    view.append(saveBar('quizzes.json', 'Update Bible quizzes (admin)'));
+  }
+  function quizForm(existing, onSubmit, all) {
+    const qz = existing || {};
+    const f = h('form', { class: 'form' },
+      h('h2', {}, existing ? 'Edit quiz' : 'New quiz'),
+      h('div', { class: 'editor__grid' },
+        h('label', {}, 'Title', h('input', { name: 'title', required: true, value: qz.title || '', placeholder: 'e.g. The Parables of Jesus' })),
+        h('label', {}, 'Difficulty', h('select', { name: 'difficulty' }, ['easy', 'medium', 'hard'].map((d) => h('option', { value: d, selected: d === (qz.difficulty || 'medium') }, d))))),
+      h('label', {}, 'Description ', h('span', { class: 'help' }, 'One sentence shown above the quiz.'), h('input', { name: 'description', value: qz.description || '' })),
+      h('label', {}, 'Questions ', h('span', { class: 'help' }, 'Q: question, then A: lines (mark the right one with *), then Ref: and Note: if wanted. Blank line between questions.'),
+        h('textarea', { name: 'questions', class: 'body', rows: 18, required: true, placeholder: QUIZ_HELP }, quizToText(qz.questions))),
+      h('div', { class: 'row' }, h('button', { class: 'btn', type: 'submit' }, existing ? 'Apply' : 'Add quiz'), existing ? h('button', { class: 'btn btn--ghost', type: 'button', onclick: render }, 'Cancel') : null),
+    );
+    f.addEventListener('submit', (e) => {
+      e.preventDefault(); const fd = new FormData(f);
+      try {
+        const title = String(fd.get('title') || '').trim();
+        const id = qz.id || title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+        if (!id) throw new Error('Give the quiz a title.');
+        if (!qz.id && all.some((o) => o.id === id)) throw new Error('A quiz with that title already exists.');
+        const out = { id, title, difficulty: String(fd.get('difficulty')), questions: textToQuiz(String(fd.get('questions') || '')) };
+        const description = String(fd.get('description') || '').trim(); if (description) out.description = description;
+        if (qz.enabled === false) out.enabled = false;
+        onSubmit(out);
+      } catch (err) { toast(err.message, true); }
+    });
+    return f;
+  }
+
   function churchForm(existing, onSubmit) {
     const c = existing || {};
     const f = h('form', { class: 'form' },
@@ -452,7 +531,7 @@
   function showAdmin() {
     $('#setup').hidden = true; $('#view').hidden = false; $('#topTools').hidden = false; $('#adminNav').hidden = false;
     const initial = location.hash.replace('#', '');
-    state.view = ['dashboard', 'picks', 'sources', 'articles', 'churches', 'settings'].includes(initial) ? initial : 'dashboard';
+    state.view = ['dashboard', 'picks', 'sources', 'articles', 'churches', 'quizzes', 'settings'].includes(initial) ? initial : 'dashboard';
     for (const b of document.querySelectorAll('#adminNav .cat')) b.setAttribute('aria-current', String(b.dataset.view === state.view));
     render();
   }

@@ -26,6 +26,7 @@ import { subscribeHtml, sitemapXml, homeJsonLd, churchJsonLd, prerenderCards, me
 import { readdir } from 'node:fs/promises';
 import { shareUrl, renderSharePage, relatedStories } from './lib/share.js';
 import { fillMissingImages } from './lib/images.js';
+import { validateQuizzes, renderQuizPage } from './lib/quiz.js';
 import { pickDigest, digestDate, digestText, digestHtml, renderDigestPage, renderDigestFeed, renderTopFeed } from './lib/digest.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -295,12 +296,22 @@ async function finalizeSeo({ site, articles, posts, churches }) {
       .replace(/<span class="brand__name">[^<]*<\/span>/, `<span class="brand__name">${escHtml(brand.name)}</span>`)
       .replace(/<span class="brand__tag">[^<]*<\/span>/, `<span class="brand__tag">${escHtml(brand.tagline || '')}</span>`)
       .replaceAll('href="assets/', 'href="../assets/').replaceAll('src="assets/', 'src="../assets/').replaceAll('href="styles.css"', 'href="../styles.css"').replaceAll('src="app.js"', 'src="../app.js"')
-      .replaceAll('href="data/', 'href="../data/').replaceAll('href="feed.xml"', 'href="../feed.xml"').replaceAll('href="digest/', 'href="../digest/').replaceAll('href="articles/', 'href="../articles/').replaceAll('href="churches/', 'href="../churches/').replaceAll('href="admin/', 'href="../admin/')
+      .replaceAll('href="data/', 'href="../data/').replaceAll('href="feed.xml"', 'href="../feed.xml"').replaceAll('href="digest/', 'href="../digest/').replaceAll('href="quiz/', 'href="../quiz/').replaceAll('href="articles/', 'href="../articles/').replaceAll('href="churches/', 'href="../churches/').replaceAll('href="admin/', 'href="../admin/')
       .replace('<a class="brand" href="./"', '<a class="brand" href="./"');
     await mkdir(path.join(DIST, slug), { recursive: true });
     await writeFile(path.join(DIST, slug, 'index.html'), page);
   }
   const brandSlugs = Object.keys(site.brands || {}).filter((k) => !k.startsWith('_') && site.brands[k]?.category);
+
+  // Bible quiz page
+  const quizData = validateQuizzes(await readJson(path.join(ROOT, 'quizzes.json'), { quizzes: [] }));
+  for (const p of quizData.problems) console.warn(`  ⚠ quizzes.json: ${p}`);
+  await writeFile(path.join(DATA_DIR, 'quizzes.json'), JSON.stringify({ generatedAt: new Date().toISOString(), quizzes: quizData.quizzes }));
+  const quizPath = path.join(DIST, 'quiz', 'index.html');
+  await writeFile(quizPath, renderQuizPage(await readFile(quizPath, 'utf8'), {
+    site, quizzes: quizData.quizzes, subscribe: subscribeHtml(site, { compact: true }),
+    metaTags: metaTags({ title: `Bible Quiz — ${site.name}`, description: 'Test your Bible knowledge with a new quiz every day. Ten questions, instant answers with the verse, and a score to share.', url: `${b}/quiz/`, image: social, site }),
+  }));
 
   // Church pages
   const located = churches.filter((c) => c.lat != null);
@@ -333,6 +344,7 @@ async function finalizeSeo({ site, articles, posts, churches }) {
     ...posts.map((p) => ({ url: p.url, lastmod: p.publishedAt, changefreq: 'monthly', priority: 0.9 })),
     { url: `${b}/churches/`, changefreq: 'weekly', priority: 0.8 },
     { url: `${b}/digest/`, changefreq: 'daily', priority: 0.8 },
+    { url: `${b}/quiz/`, changefreq: 'daily', priority: 0.8 },
     ...brandSlugs.map((s) => ({ url: `${b}/${s}/`, changefreq: 'hourly', priority: 0.9 })),
     ...located.map((c) => ({ url: c.url, changefreq: 'monthly', priority: 0.7 })),
   ];

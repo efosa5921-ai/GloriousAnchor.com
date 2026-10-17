@@ -46,6 +46,10 @@ The **Find a church** button opens a finder that locates Christian churches arou
 
 If your church is missing, you can add it to OpenStreetMap, which helps everyone, or ask us to list it.
 
+## Test yourself
+
+The [Bible Quiz](/quiz/) sets a new quiz of the day, ten questions with four answers each. Every answer shows the reference so you can read the passage yourself, and at the end you get a score to share with your group and dare them to beat it.
+
 ## Pass it on
 
 Every card has a share button: send a story to a WhatsApp group, post it to X, Facebook or Telegram, email it, or copy the link. Whoever opens it lands on the story here, one tap from the full article at its source, with more from the same section alongside. On a phone it opens your own share sheet. The [daily digest](/digest/), in the tab bar beside Find a church, gathers the day's best stories in one page you can copy straight into a group. Put your email address in the subscribe box and the digest comes to your inbox every morning. If you prefer a feed reader, [/feed.xml](/feed.xml) carries the latest items.
