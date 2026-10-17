@@ -12,6 +12,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: quiz-video
@@ -41,3 +42,7 @@ jobs:
           git config user.email "noreply@gloriousanchor.com"
           git add videos/quiz/*.mp4
           git diff --cached --quiet && echo "No changes" || (git commit -m "Render quiz video(s): ${{ github.event.inputs.quiz }}" && git push origin main)
+      - name: Rebuild the site with the new videos
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run build.yml --ref main
