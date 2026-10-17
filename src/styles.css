@@ -149,6 +149,18 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 .save[aria-pressed="true"] { background: var(--gold); color: #0b1f3a; }
 .save[aria-pressed="true"] svg path { fill: currentColor; }
 .card--noimg .save { background: var(--surface-2); color: var(--text); }
+.share { position: absolute; top: 8px; right: 46px; width: 32px; height: 32px; border-radius: 50%; border: 0; background: rgba(0,0,0,.35); color: #fff; display: grid; place-items: center; opacity: 0; transition: opacity .15s; }
+.share svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.card:hover .share, .share:focus-visible, .card:has(.share__menu) .share { opacity: 1; }
+.card--noimg .share { background: var(--surface-2); color: var(--text); }
+.hero .side .share { top: auto; bottom: 8px; }
+@media (pointer: coarse) { .save, .share { opacity: 1; background: rgba(0,0,0,.45); } }
+.share__menu { position: absolute; top: 44px; right: 8px; z-index: 5; display: grid; gap: 2px; min-width: 150px; padding: 6px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); }
+.hero .side .share__menu { top: auto; bottom: 44px; }
+.share__menu a, .share__menu button { display: block; width: 100%; text-align: left; padding: 8px 10px; border-radius: 6px; border: 0; background: transparent; color: var(--text); font: inherit; font-size: .9rem; text-decoration: none; cursor: pointer; }
+.share__menu a:hover, .share__menu button:hover, .share__menu a:focus-visible { background: var(--surface-2); }
+.digest__actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0 24px; }
+.digest__body ul { padding: 0; }
 
 mark { background: var(--gold-soft); color: inherit; border-radius: 2px; padding: 0 1px; }
 .empty { text-align: center; color: var(--muted); padding: 48px 0; }

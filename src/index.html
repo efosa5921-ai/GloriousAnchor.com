@@ -20,6 +20,8 @@
   <link rel="preload" href="data/meta.json" as="fetch" crossorigin>
   <link rel="preload" href="data/latest.json" as="fetch" crossorigin>
   <link rel="preconnect" href="https://wsrv.nl">
+  <link rel="alternate" type="application/rss+xml" title="Glorious Anchor — Top Stories" href="feed.xml">
+  <link rel="alternate" type="application/rss+xml" title="Glorious Anchor — Daily digest" href="digest/feed.xml">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -107,7 +109,7 @@
         <p><strong>Glorious Anchor</strong> links to the original publishers, channels and posts. Headlines, summaries and thumbnails belong to their creators; follow the link to read or watch at the source.</p>
       </div>
       <p class="footer__meta" id="footerMeta"></p>
-      <p class="footer__meta"><a href="churches/">Find a church</a> · <a href="articles/">Our articles</a> · <a href="admin/">Admin</a></p>
+      <p class="footer__meta"><a href="churches/">Find a church</a> · <a href="articles/">Our articles</a> · <a href="digest/">Daily digest</a> · <a href="feed.xml">RSS</a> · <a href="admin/">Admin</a></p>
     </div>
   </footer>
 
@@ -120,6 +122,7 @@
         <p class="card__summary"></p>
       </div>
       <button class="save" aria-pressed="false" title="Save story"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg></button>
+      <button class="share" title="Share" aria-label="Share"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg></button>
     </article>
   </template>
 

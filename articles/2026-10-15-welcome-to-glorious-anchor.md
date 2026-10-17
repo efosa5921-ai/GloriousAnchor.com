@@ -46,6 +46,10 @@ The **Find a church** button opens a finder that locates Christian churches arou
 
 If your church is missing, you can add it to OpenStreetMap, which helps everyone, or ask us to list it.
 
+## Pass it on
+
+Every card has a share button: send a story to a WhatsApp group, post it to X, Facebook or Telegram, email it, or copy the link. On a phone it opens your own share sheet. The [daily digest](/digest/) gathers the day's best stories in one short list you can copy straight into a group, or receive by email through its feed. If you prefer a feed reader, [/feed.xml](/feed.xml) carries the latest items.
+
 ## On your phone
 
 Open the site in your phone's browser and choose *Add to Home Screen* (Safari) or *Install* (Chrome). Glorious Anchor then opens like an app, keeps the latest headlines for reading offline, and tells you when a new version is ready. Home-screen shortcuts jump straight to My Feed, the church finder and your saved items.

@@ -232,6 +232,7 @@
     if (a.note) { const n = document.createElement('p'); n.className = 'card__note'; n.innerHTML = highlight(a.note, state.query); node.querySelector('.card__body').appendChild(n); }
     if (a.pinned) { node.classList.add('card--pinned'); node.querySelector('.card__kind').textContent = a.internal ? 'Pinned' : 'Pinned pick'; }
     if (a.internal) node.querySelector('.card__kind').textContent = a.pinned ? 'Pinned' : 'Ours';
+    node.querySelector('.share').addEventListener('click', (e) => share(a, e.currentTarget));
     const save = node.querySelector('.save');
     const setSaved = (on) => { save.setAttribute('aria-pressed', String(on)); save.title = on ? 'Remove from saved' : 'Save story'; };
     setSaved(Boolean(state.saved[a.id]));
@@ -241,6 +242,41 @@
       if (state.showSaved) update();
     });
     return node;
+  }
+
+  /* ---------- Sharing ---------- */
+  const SITE_URL = () => (state.meta?.site?.url || location.origin).replace(/\/$/, '');
+  function shareText(a) { return `${a.title}${a.internal ? '' : ` — ${a.source}`}`; }
+  function shareTargets(a) {
+    const url = a.url, text = shareText(a), via = `via ${state.meta?.site?.name || 'Glorious Anchor'} ${SITE_URL()}`;
+    return [
+      ['WhatsApp', `https://wa.me/?text=${encodeURIComponent(`${text}\n${url}\n\n${via}`)}`],
+      ['X', `https://twitter.com/intent/tweet?text=${encodeURIComponent(`${text} ${via}`)}&url=${encodeURIComponent(url)}`],
+      ['Facebook', `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`],
+      ['Telegram', `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(`${text}\n${via}`)}`],
+      ['Email', `mailto:?subject=${encodeURIComponent(text)}&body=${encodeURIComponent(`${url}\n\n${via}`)}`],
+    ];
+  }
+  let openMenu = null;
+  function closeShare() { openMenu?.remove(); openMenu = null; }
+  document.addEventListener('click', (e) => { if (openMenu && !openMenu.contains(e.target) && !e.target.closest('.share')) closeShare(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeShare(); });
+  async function share(a, btn) {
+    const text = shareText(a);
+    if (navigator.share && matchMedia('(pointer: coarse)').matches) {
+      try { await navigator.share({ title: a.title, text: `${text} — via ${state.meta?.site?.name || 'Glorious Anchor'}`, url: a.url }); return; } catch (err) { if (err.name === 'AbortError') return; }
+    }
+    if (openMenu?.dataset.id === a.id) { closeShare(); return; }
+    closeShare();
+    const menu = document.createElement('div'); menu.className = 'share__menu'; menu.dataset.id = a.id; menu.setAttribute('role', 'menu');
+    for (const [label, href] of shareTargets(a)) {
+      const l = document.createElement('a'); l.href = href; l.textContent = label; l.target = '_blank'; l.rel = 'noopener'; l.setAttribute('role', 'menuitem');
+      l.addEventListener('click', closeShare); menu.appendChild(l);
+    }
+    const copy = document.createElement('button'); copy.type = 'button'; copy.textContent = 'Copy link'; copy.setAttribute('role', 'menuitem');
+    copy.addEventListener('click', async () => { try { await navigator.clipboard.writeText(a.url); copy.textContent = 'Copied!'; } catch { window.prompt('Copy this link', a.url); } setTimeout(closeShare, 900); });
+    menu.appendChild(copy);
+    btn.closest('.card').appendChild(menu); openMenu = menu; menu.querySelector('a').focus();
   }
 
   function renderList(list) {
@@ -425,7 +461,7 @@
   function skeleton(n) {
     if (els.grid.querySelector('.card')) return; // pre-rendered headlines are already there; keep them until data loads
     els.grid.innerHTML = '';
-    for (let i = 0; i < n; i++) { const c = els.tpl.content.firstElementChild.cloneNode(true); c.classList.add('skeleton'); c.querySelector('.save').remove(); els.grid.appendChild(c); }
+    for (let i = 0; i < n; i++) { const c = els.tpl.content.firstElementChild.cloneNode(true); c.classList.add('skeleton'); c.querySelector('.save').remove(); c.querySelector('.share').remove(); els.grid.appendChild(c); }
   }
 
   const getJson = (u) => fetch(u, { cache: 'no-cache' }).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); });

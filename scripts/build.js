@@ -24,6 +24,7 @@ import { compilePost, postToArticle, renderPostPage, renderIndexPage, renderFeed
 import { normaliseChurch, geocodeKey, nominatimUrl, parseNominatim } from './lib/churches.js';
 import { sitemapXml, homeJsonLd, churchJsonLd, prerenderCards, metaTags, churchSlug, base as siteBase } from './lib/seo.js';
 import { readdir } from 'node:fs/promises';
+import { pickDigest, digestDate, digestText, digestHtml, renderDigestPage, renderDigestFeed, renderTopFeed } from './lib/digest.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = path.join(ROOT, 'src');
@@ -252,6 +253,23 @@ async function buildChurches(cache, limits) {
 const escHtml = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 /** SEO pass: pre-rendered headlines, meta/JSON-LD on the home and finder pages, a page per listed church, sitemap. */
+/** GoatCounter (free, no cookies) or Cloudflare Web Analytics (free, no cookies); both set from feeds.json → site. */
+export function analyticsTag(site) {
+  const tags = [];
+  if (site.goatcounter) tags.push(`<script data-goatcounter="https://${escHtml(site.goatcounter)}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>`);
+  if (site.cloudflareAnalytics) tags.push(`<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "${escHtml(site.cloudflareAnalytics)}"}'></script>`);
+  return tags.join('\n  ');
+}
+async function walkHtml(dir) {
+  const out = [];
+  for (const entry of await readdir(dir, { withFileTypes: true })) {
+    const p = path.join(dir, entry.name);
+    if (entry.isDirectory()) { if (entry.name !== 'admin') out.push(...await walkHtml(p)); }
+    else if (entry.name.endsWith('.html')) out.push(p);
+  }
+  return out;
+}
+
 async function finalizeSeo({ site, articles, posts, churches }) {
   const b = siteBase(site);
   const social = `${b}/assets/social.jpg`;
@@ -274,7 +292,7 @@ async function finalizeSeo({ site, articles, posts, churches }) {
       .replace(/<span class="brand__name">[^<]*<\/span>/, `<span class="brand__name">${escHtml(brand.name)}</span>`)
       .replace(/<span class="brand__tag">[^<]*<\/span>/, `<span class="brand__tag">${escHtml(brand.tagline || '')}</span>`)
       .replaceAll('href="assets/', 'href="../assets/').replaceAll('src="assets/', 'src="../assets/').replaceAll('href="styles.css"', 'href="../styles.css"').replaceAll('src="app.js"', 'src="../app.js"')
-      .replaceAll('href="data/', 'href="../data/').replaceAll('href="articles/', 'href="../articles/').replaceAll('href="churches/', 'href="../churches/').replaceAll('href="admin/', 'href="../admin/')
+      .replaceAll('href="data/', 'href="../data/').replaceAll('href="feed.xml"', 'href="../feed.xml"').replaceAll('href="digest/', 'href="../digest/').replaceAll('href="articles/', 'href="../articles/').replaceAll('href="churches/', 'href="../churches/').replaceAll('href="admin/', 'href="../admin/')
       .replace('<a class="brand" href="./"', '<a class="brand" href="./"');
     await mkdir(path.join(DIST, slug), { recursive: true });
     await writeFile(path.join(DIST, slug, 'index.html'), page);
@@ -311,13 +329,22 @@ async function finalizeSeo({ site, articles, posts, churches }) {
     { url: `${b}/articles/`, changefreq: 'weekly', priority: 0.8 },
     ...posts.map((p) => ({ url: p.url, lastmod: p.publishedAt, changefreq: 'monthly', priority: 0.9 })),
     { url: `${b}/churches/`, changefreq: 'weekly', priority: 0.8 },
+    { url: `${b}/digest/`, changefreq: 'daily', priority: 0.8 },
     ...brandSlugs.map((s) => ({ url: `${b}/${s}/`, changefreq: 'hourly', priority: 0.9 })),
     ...located.map((c) => ({ url: c.url, changefreq: 'monthly', priority: 0.7 })),
   ];
   await writeFile(path.join(DIST, 'sitemap.xml'), sitemapXml(entries));
   const robotsPath = path.join(DIST, 'robots.txt');
   await writeFile(robotsPath, (await readFile(robotsPath, 'utf8')).trimEnd() + `\nSitemap: ${b}/sitemap.xml\n`);
-  return { pages: located.length, sitemapEntries: entries.length };
+  // Analytics (optional, privacy-friendly): injected into every page only when a site id is set.
+  const analytics = analyticsTag(site);
+  if (analytics) {
+    for (const file of await walkHtml(DIST)) {
+      const html = await readFile(file, 'utf8');
+      if (html.includes('</head>') && !html.includes(analytics)) await writeFile(file, html.replace('</head>', `  ${analytics}\n</head>`));
+    }
+  }
+  return { pages: located.length, sitemapEntries: entries.length, analytics: Boolean(analytics) };
 }
 
 /** Compile articles/*.md into pages under dist/articles/, an index, an RSS feed, and front-page cards. */
@@ -485,6 +512,20 @@ async function main() {
       sourceStatus,
     }, null, 2),
   );
+  // Daily digest (page + WhatsApp text + RSS-to-email feed) and a plain top-stories feed.
+  const digestFile = path.join(DATA_DIR, 'digests.json');
+  const digests = await readJson(digestFile, {});
+  const today = digestDate();
+  const digestItems = pickDigest(published, { count: 8 });
+  const text = digestText(digestItems, site, today);
+  digests[today] = { html: digestHtml(digestItems, site, today), items: digestItems.map((a) => a.id) };
+  for (const d of Object.keys(digests).sort().slice(0, -14)) delete digests[d];
+  await writeFile(digestFile, JSON.stringify(digests));
+  await mkdir(path.join(DIST, 'digest'), { recursive: true });
+  await writeFile(path.join(DIST, 'digest', 'index.html'), renderDigestPage(digestItems, site, today, text));
+  await writeFile(path.join(DIST, 'digest', 'digest.txt'), text);
+  await writeFile(path.join(DIST, 'digest', 'feed.xml'), renderDigestFeed(digests, site));
+  await writeFile(path.join(DIST, 'feed.xml'), renderTopFeed(published, site));
   await writeFile(path.join(DIST, '.nojekyll'), ''); // tell GitHub Pages not to run Jekyll
   const seo = await finalizeSeo({ site, articles, posts: own.posts, churches: directory.churches });
   if (verbose) console.log(`  ✓ seo: ${seo.sitemapEntries} sitemap entries, ${seo.pages} church pages, headlines pre-rendered`);

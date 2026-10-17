@@ -46,6 +46,17 @@ jobs:
           # Optional: Instagram via the official Graph API (run scripts/instagram-setup.js once)
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+      - name: Announce new items on Telegram and X (needs secrets; skipped otherwise)
+        if: github.event_name != 'pull_request'
+        continue-on-error: true
+        run: node scripts/announce.js
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
       - name: Check feed health
         id: health
         run: node scripts/health.js --threshold 3

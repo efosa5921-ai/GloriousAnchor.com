@@ -398,6 +398,10 @@
       h('label', {}, 'Verse (footer)', h('input', { name: 'verse', value: data.site.verse || '' })),
       h('label', {}, 'Site address', h('input', { name: 'url', type: 'url', value: data.site.url || '' })),
       h('label', {}, 'Google Search Console verification code ', h('span', { class: 'help' }, 'Optional. From Search Console → URL-prefix property → HTML tag: paste only the content value.'), h('input', { name: 'googleSiteVerification', value: data.site.googleSiteVerification || '' })),
+      h('h2', {}, 'Growth'),
+      h('label', {}, 'GoatCounter site code ', h('span', { class: 'help' }, 'Optional, free visitor statistics without cookies. Sign up at goatcounter.com and paste the code you chose (the part before .goatcounter.com).'), h('input', { name: 'goatcounter', value: data.site.goatcounter || '' })),
+      h('label', {}, 'Cloudflare Web Analytics token ', h('span', { class: 'help' }, 'Optional alternative: Cloudflare dashboard → Web Analytics → Add a site → copy the token from the snippet.'), h('input', { name: 'cloudflareAnalytics', value: data.site.cloudflareAnalytics || '' })),
+      h('label', {}, 'X (Twitter) handle ', h('span', { class: 'help' }, 'Added as "via @handle" when items are shared or auto-posted.'), h('input', { name: 'xHandle', value: data.site.xHandle || '' })),
       h('h2', {}, 'Feeds'),
       h('label', {}, 'Keep stories for (hours) ', h('span', { class: 'help' }, 'Feed stories older than this drop off. Picks and your articles never expire.'), h('input', { name: 'maxAgeHours', type: 'number', min: 6, max: 720, value: data.limits.maxAgeHours || 96 })),
       h('label', {}, 'Items per feed', h('input', { name: 'perSource', type: 'number', min: 5, max: 100, value: data.limits.perSource || 25 })),
@@ -405,7 +409,7 @@
     );
     f.addEventListener('submit', (e) => {
       e.preventDefault(); const fd = new FormData(f);
-      for (const k of ['name', 'tagline', 'verse', 'url', 'googleSiteVerification']) { const v = String(fd.get(k) || '').trim(); if (v) data.site[k] = v; else delete data.site[k]; }
+      for (const k of ['name', 'tagline', 'verse', 'url', 'googleSiteVerification', 'goatcounter', 'cloudflareAnalytics', 'xHandle']) { const v = String(fd.get(k) || '').trim(); if (v) data.site[k] = v; else delete data.site[k]; }
       data.limits.maxAgeHours = Number(fd.get('maxAgeHours')) || 96; data.limits.perSource = Number(fd.get('perSource')) || 25;
       markDirty('feeds.json'); toast('Applied. Click Save changes to publish.');
     });

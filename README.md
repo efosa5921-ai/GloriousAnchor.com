@@ -196,6 +196,15 @@ After each build, `dist/data/meta.json` lists every source with `ok: true/false`
 URL or handle is easy to spot. Feed URLs and YouTube handles in the shipped config are best-effort; check the first
 build's log and correct any that fail.
 
+## Growth: sharing, digest, feeds, auto-posting, analytics
+
+- **Share buttons** on every card (WhatsApp, X, Facebook, Telegram, email, copy link; native share sheet on touch devices).
+- **Daily digest** at `/digest/`: `pickDigest` chooses up to 8 items (own articles and picks from the last week first, then one item per source with per-kind caps). Written as a page, `digest/digest.txt` (WhatsApp-ready) and `digest/feed.xml` (one item per day, kept 14 days in `dist/data/digests.json`, so RSS-to-email services such as Buttondown, Mailchimp or Substack send one email a day).
+- **Top-stories feed** at `/feed.xml` for feed readers and automation tools (Zapier, IFTTT, Buffer).
+- **Auto-posting**: `scripts/announce.js` runs after each build and posts every new own article and pick plus up to three fresh stories to a Telegram channel (secrets `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`) and/or X (`X_API_KEY`, `X_API_SECRET`, `X_ACCESS_TOKEN`, `X_ACCESS_SECRET`; OAuth 1.0a, free tier is enough). State lives in `dist/data/announced.json`; the first run records existing items without posting. Skipped when no secrets are set; `--dry-run` prints what would be posted.
+- **Analytics**: set `site.goatcounter` (GoatCounter site code) or `site.cloudflareAnalytics` (token) in `feeds.json` or the admin settings; the snippet is injected into every page except the admin. Both are free and cookie-free.
+- `site.xHandle` adds "via @handle" to shares and posts.
+
 ## Deployment
 
 The workflow in `.github/workflows/build.yml` builds on every push to `main`, hourly on a schedule, and on demand.
