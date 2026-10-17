@@ -7,16 +7,118 @@
       "description": "Ten questions every reader of the Bible should be able to answer. A gentle start.",
       "difficulty": "easy",
       "questions": [
-        { "q": "How many books are in the Protestant Bible?", "options": ["27", "39", "66", "73"], "answer": 2, "ref": "39 in the Old Testament, 27 in the New", "note": "Catholic Bibles include seven more books, the Deuterocanon, making 73." },
-        { "q": "Who built the ark?", "options": ["Noah", "Moses", "Abraham", "Jonah"], "answer": 0, "ref": "Genesis 6:13–22" },
-        { "q": "Which is the first book of the Bible?", "options": ["Exodus", "Genesis", "Psalms", "Matthew"], "answer": 1, "ref": "Genesis 1:1" },
-        { "q": "Who was swallowed by a great fish?", "options": ["Elijah", "Daniel", "Jonah", "Peter"], "answer": 2, "ref": "Jonah 1:17" },
-        { "q": "On which day did God rest from creating?", "options": ["The fifth", "The sixth", "The seventh", "The tenth"], "answer": 2, "ref": "Genesis 2:2" },
-        { "q": "Who led the Israelites out of Egypt?", "options": ["Joshua", "Moses", "Aaron", "Joseph"], "answer": 1, "ref": "Exodus 3:10; 12:51" },
-        { "q": "What is the shortest verse in the English Bible?", "options": ["\"Jesus wept.\"", "\"Pray continually.\"", "\"Rejoice always.\"", "\"God is love.\""], "answer": 0, "ref": "John 11:35", "note": "Two words in English; in Greek, 1 Thessalonians 5:16 (\"Rejoice always\") is shorter." },
-        { "q": "Which disciple denied Jesus three times?", "options": ["Judas", "Thomas", "John", "Peter"], "answer": 3, "ref": "Luke 22:54–62" },
-        { "q": "Where was Jesus born?", "options": ["Nazareth", "Jerusalem", "Bethlehem", "Capernaum"], "answer": 2, "ref": "Matthew 2:1; Luke 2:4–7" },
-        { "q": "Who was the first king of Israel?", "options": ["David", "Saul", "Solomon", "Samuel"], "answer": 1, "ref": "1 Samuel 10:1, 24" }
+        {
+          "q": "How many books are in the Protestant Bible?",
+          "options": [
+            "27",
+            "39",
+            "66",
+            "73"
+          ],
+          "answer": 2,
+          "ref": "39 in the Old Testament, 27 in the New",
+          "note": "Catholic Bibles include seven more books, the Deuterocanon, making 73."
+        },
+        {
+          "q": "Who built the ark?",
+          "options": [
+            "Noah",
+            "Moses",
+            "Abraham",
+            "Jonah"
+          ],
+          "answer": 0,
+          "ref": "Genesis 6:13–22"
+        },
+        {
+          "q": "Which is the first book of the Bible?",
+          "options": [
+            "Exodus",
+            "Genesis",
+            "Psalms",
+            "Matthew"
+          ],
+          "answer": 1,
+          "ref": "Genesis 1:1"
+        },
+        {
+          "q": "Who was swallowed by a great fish?",
+          "options": [
+            "Elijah",
+            "Daniel",
+            "Jonah",
+            "Peter"
+          ],
+          "answer": 2,
+          "ref": "Jonah 1:17"
+        },
+        {
+          "q": "On which day did God rest from creating?",
+          "options": [
+            "The fifth",
+            "The sixth",
+            "The seventh",
+            "The tenth"
+          ],
+          "answer": 2,
+          "ref": "Genesis 2:2"
+        },
+        {
+          "q": "Who led the Israelites out of Egypt?",
+          "options": [
+            "Joshua",
+            "Moses",
+            "Aaron",
+            "Joseph"
+          ],
+          "answer": 1,
+          "ref": "Exodus 3:10; 12:51"
+        },
+        {
+          "q": "What is the shortest verse in the English Bible?",
+          "options": [
+            "\"Jesus wept.\"",
+            "\"Pray continually.\"",
+            "\"Rejoice always.\"",
+            "\"God is love.\""
+          ],
+          "answer": 0,
+          "ref": "John 11:35",
+          "note": "Two words in English; in Greek, 1 Thessalonians 5:16 (\"Rejoice always\") is shorter."
+        },
+        {
+          "q": "Which disciple denied Jesus three times?",
+          "options": [
+            "Judas",
+            "Thomas",
+            "John",
+            "Peter"
+          ],
+          "answer": 3,
+          "ref": "Luke 22:54–62"
+        },
+        {
+          "q": "Where was Jesus born?",
+          "options": [
+            "Nazareth",
+            "Jerusalem",
+            "Bethlehem",
+            "Capernaum"
+          ],
+          "answer": 2,
+          "ref": "Matthew 2:1; Luke 2:4–7"
+        },
+        {
+          "q": "Who was the first king of Israel?",
+          "options": [
+            "David",
+            "Saul",
+            "Solomon",
+            "Samuel"
+          ],
+          "answer": 1,
+          "ref": "1 Samuel 10:1, 24"
+        }
       ]
     },
     {
@@ -25,16 +127,118 @@
       "description": "Matthew, Mark, Luke and John: how well do you know the life of Jesus?",
       "difficulty": "medium",
       "questions": [
-        { "q": "How many Gospels are in the New Testament?", "options": ["Three", "Four", "Five", "Twelve"], "answer": 1, "ref": "Matthew, Mark, Luke and John" },
-        { "q": "Which Gospel opens with \"In the beginning was the Word\"?", "options": ["Matthew", "Mark", "Luke", "John"], "answer": 3, "ref": "John 1:1" },
-        { "q": "Who baptised Jesus?", "options": ["Peter", "John the Baptist", "Andrew", "Nicodemus"], "answer": 1, "ref": "Matthew 3:13–17" },
-        { "q": "How many days was Jesus tempted in the wilderness?", "options": ["Seven", "Twelve", "Forty", "Seventy"], "answer": 2, "ref": "Matthew 4:1–2" },
-        { "q": "At a wedding in which town did Jesus turn water into wine?", "options": ["Cana", "Bethany", "Jericho", "Nain"], "answer": 0, "ref": "John 2:1–11" },
-        { "q": "About how many men did Jesus feed with five loaves and two fish?", "options": ["Five hundred", "One thousand", "Four thousand", "Five thousand"], "answer": 3, "ref": "Matthew 14:17–21", "note": "A separate feeding of four thousand is recorded in Matthew 15." },
-        { "q": "Who asked Jesus, \"What is truth?\"", "options": ["Caiaphas", "Herod", "Pilate", "Nicodemus"], "answer": 2, "ref": "John 18:38" },
-        { "q": "Which disciple had been a tax collector?", "options": ["Matthew", "Philip", "Bartholomew", "James"], "answer": 0, "ref": "Matthew 9:9", "note": "Mark and Luke call him Levi." },
-        { "q": "In John's Gospel, who first saw the risen Jesus?", "options": ["Peter", "Mary Magdalene", "Thomas", "Mary the mother of Jesus"], "answer": 1, "ref": "John 20:11–18" },
-        { "q": "The parable of the Good Samaritan is found in which Gospel?", "options": ["Matthew", "Mark", "Luke", "John"], "answer": 2, "ref": "Luke 10:25–37" }
+        {
+          "q": "How many Gospels are in the New Testament?",
+          "options": [
+            "Three",
+            "Four",
+            "Five",
+            "Twelve"
+          ],
+          "answer": 1,
+          "ref": "Matthew, Mark, Luke and John"
+        },
+        {
+          "q": "Which Gospel opens with \"In the beginning was the Word\"?",
+          "options": [
+            "Matthew",
+            "Mark",
+            "Luke",
+            "John"
+          ],
+          "answer": 3,
+          "ref": "John 1:1"
+        },
+        {
+          "q": "Who baptised Jesus?",
+          "options": [
+            "Peter",
+            "John the Baptist",
+            "Andrew",
+            "Nicodemus"
+          ],
+          "answer": 1,
+          "ref": "Matthew 3:13–17"
+        },
+        {
+          "q": "How many days was Jesus tempted in the wilderness?",
+          "options": [
+            "Seven",
+            "Twelve",
+            "Forty",
+            "Seventy"
+          ],
+          "answer": 2,
+          "ref": "Matthew 4:1–2"
+        },
+        {
+          "q": "At a wedding in which town did Jesus turn water into wine?",
+          "options": [
+            "Cana",
+            "Bethany",
+            "Jericho",
+            "Nain"
+          ],
+          "answer": 0,
+          "ref": "John 2:1–11"
+        },
+        {
+          "q": "About how many men did Jesus feed with five loaves and two fish?",
+          "options": [
+            "Five hundred",
+            "One thousand",
+            "Four thousand",
+            "Five thousand"
+          ],
+          "answer": 3,
+          "ref": "Matthew 14:17–21",
+          "note": "A separate feeding of four thousand is recorded in Matthew 15."
+        },
+        {
+          "q": "Who asked Jesus, \"What is truth?\"",
+          "options": [
+            "Caiaphas",
+            "Herod",
+            "Pilate",
+            "Nicodemus"
+          ],
+          "answer": 2,
+          "ref": "John 18:38"
+        },
+        {
+          "q": "Which disciple had been a tax collector?",
+          "options": [
+            "Matthew",
+            "Philip",
+            "Bartholomew",
+            "James"
+          ],
+          "answer": 0,
+          "ref": "Matthew 9:9",
+          "note": "Mark and Luke call him Levi."
+        },
+        {
+          "q": "In John's Gospel, who first saw the risen Jesus?",
+          "options": [
+            "Peter",
+            "Mary Magdalene",
+            "Thomas",
+            "Mary the mother of Jesus"
+          ],
+          "answer": 1,
+          "ref": "John 20:11–18"
+        },
+        {
+          "q": "The parable of the Good Samaritan is found in which Gospel?",
+          "options": [
+            "Matthew",
+            "Mark",
+            "Luke",
+            "John"
+          ],
+          "answer": 2,
+          "ref": "Luke 10:25–37"
+        }
       ]
     },
     {
@@ -43,16 +247,236 @@
       "description": "Judges, kings, prophets and a queen. Ten people who trusted God against the odds.",
       "difficulty": "medium",
       "questions": [
-        { "q": "Who was thrown into the lions' den?", "options": ["Daniel", "Shadrach", "Jeremiah", "Joseph"], "answer": 0, "ref": "Daniel 6:16–23" },
-        { "q": "Who defeated Goliath?", "options": ["Saul", "Jonathan", "David", "Samson"], "answer": 2, "ref": "1 Samuel 17:48–50" },
-        { "q": "Which judge defeated the Midianites with only 300 men?", "options": ["Samson", "Gideon", "Deborah", "Jephthah"], "answer": 1, "ref": "Judges 7:7, 19–22" },
-        { "q": "Who was sold into slavery by his brothers?", "options": ["Benjamin", "Jacob", "Joseph", "Reuben"], "answer": 2, "ref": "Genesis 37:28" },
-        { "q": "Which prophet was taken up to heaven in a whirlwind?", "options": ["Elisha", "Elijah", "Isaiah", "Enoch"], "answer": 1, "ref": "2 Kings 2:11" },
-        { "q": "Who was Ruth's mother-in-law?", "options": ["Naomi", "Orpah", "Hannah", "Leah"], "answer": 0, "ref": "Ruth 1:3–4, 22" },
-        { "q": "Which queen risked her life to save her people from Haman's plot?", "options": ["Bathsheba", "Jezebel", "Esther", "The Queen of Sheba"], "answer": 2, "ref": "Esther 4:16; 7:3" },
-        { "q": "Who led the rebuilding of Jerusalem's walls?", "options": ["Ezra", "Nehemiah", "Zerubbabel", "Haggai"], "answer": 1, "ref": "Nehemiah 2:17–18; 6:15" },
-        { "q": "Whose great strength was tied to his uncut hair?", "options": ["Gideon", "Samson", "Saul", "Absalom"], "answer": 1, "ref": "Judges 16:17" },
-        { "q": "Which king asked God for wisdom rather than riches?", "options": ["David", "Hezekiah", "Solomon", "Josiah"], "answer": 2, "ref": "1 Kings 3:9–12" }
+        {
+          "q": "Who was thrown into the lions' den?",
+          "options": [
+            "Daniel",
+            "Shadrach",
+            "Jeremiah",
+            "Joseph"
+          ],
+          "answer": 0,
+          "ref": "Daniel 6:16–23"
+        },
+        {
+          "q": "Who defeated Goliath?",
+          "options": [
+            "Saul",
+            "Jonathan",
+            "David",
+            "Samson"
+          ],
+          "answer": 2,
+          "ref": "1 Samuel 17:48–50"
+        },
+        {
+          "q": "Which judge defeated the Midianites with only 300 men?",
+          "options": [
+            "Samson",
+            "Gideon",
+            "Deborah",
+            "Jephthah"
+          ],
+          "answer": 1,
+          "ref": "Judges 7:7, 19–22"
+        },
+        {
+          "q": "Who was sold into slavery by his brothers?",
+          "options": [
+            "Benjamin",
+            "Jacob",
+            "Joseph",
+            "Reuben"
+          ],
+          "answer": 2,
+          "ref": "Genesis 37:28"
+        },
+        {
+          "q": "Which prophet was taken up to heaven in a whirlwind?",
+          "options": [
+            "Elisha",
+            "Elijah",
+            "Isaiah",
+            "Enoch"
+          ],
+          "answer": 1,
+          "ref": "2 Kings 2:11"
+        },
+        {
+          "q": "Who was Ruth's mother-in-law?",
+          "options": [
+            "Naomi",
+            "Orpah",
+            "Hannah",
+            "Leah"
+          ],
+          "answer": 0,
+          "ref": "Ruth 1:3–4, 22"
+        },
+        {
+          "q": "Which queen risked her life to save her people from Haman's plot?",
+          "options": [
+            "Bathsheba",
+            "Jezebel",
+            "Esther",
+            "The Queen of Sheba"
+          ],
+          "answer": 2,
+          "ref": "Esther 4:16; 7:3"
+        },
+        {
+          "q": "Who led the rebuilding of Jerusalem's walls?",
+          "options": [
+            "Ezra",
+            "Nehemiah",
+            "Zerubbabel",
+            "Haggai"
+          ],
+          "answer": 1,
+          "ref": "Nehemiah 2:17–18; 6:15"
+        },
+        {
+          "q": "Whose great strength was tied to his uncut hair?",
+          "options": [
+            "Gideon",
+            "Samson",
+            "Saul",
+            "Absalom"
+          ],
+          "answer": 1,
+          "ref": "Judges 16:17"
+        },
+        {
+          "q": "Which king asked God for wisdom rather than riches?",
+          "options": [
+            "David",
+            "Hezekiah",
+            "Solomon",
+            "Josiah"
+          ],
+          "answer": 2,
+          "ref": "1 Kings 3:9–12"
+        }
+      ]
+    },
+    {
+      "id": "the-holy-spirit",
+      "title": "The Holy Spirit",
+      "description": "From the dove at the Jordan to the fire at Pentecost: ten questions on the Spirit of God.",
+      "difficulty": "medium",
+      "questions": [
+        {
+          "q": "On which feast day did the Holy Spirit come upon the disciples in Jerusalem?",
+          "options": [
+            "Passover",
+            "Pentecost",
+            "Tabernacles",
+            "Purim"
+          ],
+          "answer": 1,
+          "ref": "Acts 2:1–4"
+        },
+        {
+          "q": "What appeared to rest on each of the disciples at Pentecost?",
+          "options": [
+            "A dove",
+            "Tongues of fire",
+            "A cloud",
+            "A rainbow"
+          ],
+          "answer": 1,
+          "ref": "Acts 2:3"
+        },
+        {
+          "q": "At Jesus’ baptism, the Spirit descended on him in the form of what?",
+          "options": [
+            "A flame",
+            "A lamb",
+            "A dove",
+            "A cloud"
+          ],
+          "answer": 2,
+          "ref": "Matthew 3:16"
+        },
+        {
+          "q": "In John 14, what does Jesus call the Holy Spirit whom the Father will send?",
+          "options": [
+            "The Advocate, or Helper",
+            "The Judge",
+            "The Shepherd",
+            "The Messenger"
+          ],
+          "answer": 0,
+          "ref": "John 14:16–17, 26",
+          "note": "The Greek word is Paraclete; Bibles translate it Advocate, Helper, Comforter or Counsellor."
+        },
+        {
+          "q": "Which of these is NOT part of the fruit of the Spirit in Galatians 5?",
+          "options": [
+            "Patience",
+            "Kindness",
+            "Wealth",
+            "Gentleness"
+          ],
+          "answer": 2,
+          "ref": "Galatians 5:22–23",
+          "note": "Love, joy, peace, patience, kindness, goodness, faithfulness, gentleness and self-control."
+        },
+        {
+          "q": "Who said, “You will receive power when the Holy Spirit comes on you; and you will be my witnesses”?",
+          "options": [
+            "Peter",
+            "Jesus",
+            "Paul",
+            "John the Baptist"
+          ],
+          "answer": 1,
+          "ref": "Acts 1:8"
+        },
+        {
+          "q": "At Pentecost, Peter quoted which prophet: “I will pour out my Spirit on all people”?",
+          "options": [
+            "Isaiah",
+            "Ezekiel",
+            "Joel",
+            "Malachi"
+          ],
+          "answer": 2,
+          "ref": "Acts 2:16–17; Joel 2:28"
+        },
+        {
+          "q": "Which couple died after lying to the Holy Spirit about money from a sale of land?",
+          "options": [
+            "Aquila and Priscilla",
+            "Ananias and Sapphira",
+            "Zechariah and Elizabeth",
+            "Joseph and Mary"
+          ],
+          "answer": 1,
+          "ref": "Acts 5:1–11"
+        },
+        {
+          "q": "Which Old Testament craftsman was filled with the Spirit of God to build the tabernacle?",
+          "options": [
+            "Hiram",
+            "Bezalel",
+            "Nehemiah",
+            "Tubal-Cain"
+          ],
+          "answer": 1,
+          "ref": "Exodus 31:1–5"
+        },
+        {
+          "q": "Paul tells the Corinthians that their bodies are a temple of whom?",
+          "options": [
+            "The angels",
+            "The church",
+            "Moses",
+            "The Holy Spirit"
+          ],
+          "answer": 3,
+          "ref": "1 Corinthians 6:19"
+        }
       ]
     }
   ]

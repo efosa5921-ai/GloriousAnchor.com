@@ -7,7 +7,7 @@ test('the shipped quizzes.json is valid and every answer index points at an opti
   const data = JSON.parse(await readFile(new URL('../quizzes.json', import.meta.url), 'utf8'));
   const { quizzes, problems } = validateQuizzes(data);
   assert.deepEqual(problems, []);
-  assert.equal(quizzes.length, 3);
+  assert.equal(quizzes.length, 4);
   for (const q of quizzes) { assert.equal(q.questions.length, 10); for (const qu of q.questions) assert.ok(qu.options[qu.answer]); }
 });
 
