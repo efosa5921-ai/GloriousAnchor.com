@@ -495,6 +495,7 @@
       const ok = meta.sourceStatus?.filter((s) => s.ok).length ?? 0;
       els.footerMeta.textContent = `Last refreshed ${new Date(meta.generatedAt).toLocaleString()} · ${ok}/${meta.sourceStatus?.length ?? 0} feeds live · ${state.articles.length.toLocaleString()} items`;
       if (meta.site?.verse) $('#footerVerse').textContent = meta.site.verse;
+      if (meta.site?.contactEmail) { const c = $('#contactLink'); c.href = `mailto:${meta.site.contactEmail}`; c.hidden = false; }
       document.title = state.query ? `“${state.query}” — ${BRAND ? SITE_TITLE.split(' — ')[0] : 'Glorious Anchor'}` : SITE_TITLE;
     } catch (err) {
       els.grid.innerHTML = '';

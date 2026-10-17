@@ -56,6 +56,6 @@ Open the site in your phone's browser and choose *Add to Home Screen* (Safari) o
 
 ## A note on sources
 
-We link, we do not copy. Headlines, summaries and images belong to the people who made them, and we show only what they publish in their own public feeds, with a link back to the source. The site sets no tracking cookies and shows no advertising. If you publish something you think belongs here, or would rather not be included, we would love to hear from you.
+We link, we do not copy. Headlines, summaries and images belong to the people who made them, and we show only what they publish in their own public feeds, with a link back to the source. The site sets no tracking cookies and shows no advertising. If you publish something you think belongs here, or would rather not be included, write to [info@gloriousanchor.com](mailto:info@gloriousanchor.com). We would love to hear from you.
 
 Thank you for reading. Stay anchored.
