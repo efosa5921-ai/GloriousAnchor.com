@@ -208,6 +208,7 @@ Feed items often lack an image. The build fetches the article page's `og:image` 
 - **Auto-posting**: `scripts/announce.js` runs after each build and posts every new own article and pick plus up to three fresh stories to a Telegram channel (secrets `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`) and/or X (`X_API_KEY`, `X_API_SECRET`, `X_ACCESS_TOKEN`, `X_ACCESS_SECRET`; OAuth 1.0a, free tier is enough). State lives in `dist/data/announced.json`; the first run records existing items without posting. Skipped when no secrets are set; `--dry-run` prints what would be posted.
 - **Analytics**: set `site.goatcounter` (GoatCounter site code) or `site.cloudflareAnalytics` (token) in `feeds.json` or the admin settings; the snippet is injected into every page except the admin. Both are free and cookie-free.
 - `site.xHandle` adds "via @handle" to shares and posts.
+- **Newsletter sign-up**: `site.newsletter` (admin → Settings → Growth) is the public sign-up page. A Buttondown address renders an inline form posting to Buttondown's embed endpoint on the front page, brand pages, digest and story pages; any other address renders a Subscribe button. The digest page shows a confirmation notice when opened with `?subscribed=1` or `?confirmed=1` (set those as Buttondown's redirects) and has a "Copy for email" button that yields Markdown for the newsletter editor, for sending by hand on Buttondown's free plan.
 
 ## Deployment
 

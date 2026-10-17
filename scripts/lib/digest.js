@@ -5,7 +5,18 @@
  */
 
 import { shareUrl } from './share.js';
-import { cardHtml } from './seo.js';
+import { cardHtml, subscribeHtml } from './seo.js';
+
+/** Markdown version for pasting into a newsletter editor (Buttondown, Substack, etc.). */
+export function digestMarkdown(items, site, date) {
+  const lines = [`## Today on ${site.name} — ${longDate(date)}`, ''];
+  for (const a of items) {
+    const who = a.internal ? site.name : a.source;
+    lines.push(`**[${a.title}](${shareUrl(a, site)})**  `, `${who}${a.summary ? ` · ${a.summary}` : ''}`, '');
+  }
+  lines.push(`More every day at [${base(site).replace(/^https?:\/\//, '')}](${base(site)}/).`);
+  return lines.join('\n');
+}
 
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const base = (site) => (site.url || '').replace(/\/$/, '');
@@ -66,6 +77,7 @@ export function digestHtml(items, site, date, { inline = true } = {}) {
 /** The /digest/ page: readable on its own, with one-tap copy for WhatsApp. */
 export function renderDigestPage(items, site, date, text) {
   const b = base(site);
+  const md = digestMarkdown(items, site, date);
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -92,31 +104,40 @@ export function renderDigestPage(items, site, date, text) {
   </div></header>
   <main class="wrap">
     <section class="digest__head">
+      <p class="digest__notice" id="notice" hidden></p>
       <p class="digest__kicker">Daily digest · ${esc(longDate(date))}</p>
       <h1 class="digest__h1">Today on ${esc(site.name)}</h1>
       <p class="digest__lede">The day's best stories, chosen from every section. Pass them on to your group, or have them land in your inbox each morning.</p>
       <div class="digest__actions">
         <button class="btn" id="copyWa" type="button">Copy for WhatsApp</button>
         <a class="btn btn--ghost" href="https://wa.me/?text=${encodeURIComponent(text)}" target="_blank" rel="noopener">Share on WhatsApp</a>
-        <a class="btn btn--ghost" href="feed.xml">Get it by email</a>
+        ${site.newsletter ? `<a class="btn btn--ghost" href="#subscribe">Get it by email</a>` : `<a class="btn btn--ghost" href="feed.xml">RSS feed</a>`}
+        <button class="btn btn--ghost" id="copyMd" type="button" title="Markdown for a newsletter editor">Copy for email</button>
       </div>
     </section>
     <section class="digest__stories grid">
 ${items.map((a, i) => cardHtml(a, { href: shareUrl(a, site), imageProxy: site.imageProxy, site, summary: true, date: false, extra: i === 0 ? 'card--lead' : '' })).join('\n')}
     </section>
+    <div id="subscribe">${subscribeHtml(site)}</div>
     <section class="digest__foot">
       <p>${esc(site.verse || '')}</p>
-      <p class="footer__meta">Subscribe by email: paste <code>${esc(b)}/digest/feed.xml</code> into Buttondown, Mailchimp or any RSS-to-email service, or open it in a feed reader. A new digest every day.</p>
+      <p class="footer__meta">Feed readers and automation: <code>${esc(b)}/digest/feed.xml</code> carries one digest a day; <code>${esc(b)}/feed.xml</code> carries every new item.</p>
     </section>
     <pre id="digestText" hidden>${esc(text)}</pre>
+    <pre id="digestMd" hidden>${esc(md)}</pre>
   </main>
   <footer class="footer"><div class="wrap"><p class="footer__meta"><a href="../">${esc(site.name)}</a> · <a href="../articles/">Our articles</a> · <a href="../churches/">Find a church</a></p></div></footer>
   <script>
-    document.getElementById('copyWa').addEventListener('click', async (e) => {
-      const t = document.getElementById('digestText').textContent;
+    const copier = (btnId, srcId, label) => document.getElementById(btnId).addEventListener('click', async (e) => {
+      const t = document.getElementById(srcId).textContent;
       try { await navigator.clipboard.writeText(t); e.target.textContent = 'Copied!'; } catch { window.prompt('Copy this text', t); }
-      setTimeout(() => { e.target.textContent = 'Copy for WhatsApp'; }, 2000);
+      setTimeout(() => { e.target.textContent = label; }, 2000);
     });
+    copier('copyWa', 'digestText', 'Copy for WhatsApp');
+    copier('copyMd', 'digestMd', 'Copy for email');
+    const q = new URLSearchParams(location.search), notice = document.getElementById('notice');
+    if (q.has('subscribed')) { notice.textContent = 'Almost there: check your inbox and tap the confirmation link.'; notice.hidden = false; }
+    else if (q.has('confirmed')) { notice.textContent = 'You are in. The next digest lands in your inbox tomorrow morning.'; notice.hidden = false; }
   </script>
 </body>
 </html>

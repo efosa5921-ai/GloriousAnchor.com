@@ -22,7 +22,7 @@ import { fetchWithFallbacks } from './lib/fallbacks.js';
 import { computeHealth } from './lib/health.js';
 import { compilePost, postToArticle, renderPostPage, renderIndexPage, renderFeed, OWN_SOURCE } from './lib/posts.js';
 import { normaliseChurch, geocodeKey, nominatimUrl, parseNominatim } from './lib/churches.js';
-import { sitemapXml, homeJsonLd, churchJsonLd, prerenderCards, metaTags, churchSlug, base as siteBase } from './lib/seo.js';
+import { subscribeHtml, sitemapXml, homeJsonLd, churchJsonLd, prerenderCards, metaTags, churchSlug, base as siteBase } from './lib/seo.js';
 import { readdir } from 'node:fs/promises';
 import { shareUrl, renderSharePage, relatedStories } from './lib/share.js';
 import { fillMissingImages } from './lib/images.js';
@@ -280,7 +280,7 @@ async function finalizeSeo({ site, articles, posts, churches }) {
   let index = await readFile(indexPath, 'utf8');
   const verification = site.googleSiteVerification ? `<meta name="google-site-verification" content="${escHtml(site.googleSiteVerification)}">` : '';
   index = index.replace('<!--seo:head-->', [metaTags({ title: `${site.name} — Christian News, Voices & Video`, description: site.tagline, url: `${b}/`, image: social, site }), verification, homeJsonLd(site)].filter(Boolean).join('\n  '));
-  index = index.replace('<!--prerender-->', prerenderCards(articles, 24, site.imageProxy));
+  index = index.replace('<!--prerender-->', prerenderCards(articles, 24, site.imageProxy)).replace('<!--subscribe-->', subscribeHtml(site));
   await writeFile(indexPath, index);
 
   // Branded entry pages (/tv/, /radio/): the same app, opening on a category, with their own name and meta.
@@ -291,6 +291,7 @@ async function finalizeSeo({ site, articles, posts, churches }) {
       .replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${escHtml(brand.description || brand.tagline || '')}">`)
       .replace('<!--seo:head-->', [metaTags({ title: brand.name, description: brand.description || brand.tagline, url: `${b}/${slug}/`, image: social, site }), `<meta name="ga-brand" content="${escHtml(slug)}">`, `<meta name="ga-category" content="${escHtml(brand.category)}">`].join('\n  '))
       .replace('<!--prerender-->', prerenderCards(articles.filter((a) => (a.categories || [a.category]).includes(brand.category)), 24, site.imageProxy))
+      .replace('<!--subscribe-->', subscribeHtml(site))
       .replace(/<span class="brand__name">[^<]*<\/span>/, `<span class="brand__name">${escHtml(brand.name)}</span>`)
       .replace(/<span class="brand__tag">[^<]*<\/span>/, `<span class="brand__tag">${escHtml(brand.tagline || '')}</span>`)
       .replaceAll('href="assets/', 'href="../assets/').replaceAll('src="assets/', 'src="../assets/').replaceAll('href="styles.css"', 'href="../styles.css"').replaceAll('src="app.js"', 'src="../app.js"')

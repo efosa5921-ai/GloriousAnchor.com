@@ -3,7 +3,7 @@
  * Glorious Anchor preview card; opened, it shows the story card on our site with a clear "read the full story" button
  * and more stories from the same section, so a shared link always introduces the site before sending readers on.
  */
-import { proxied, cardHtml } from './seo.js';
+import { proxied, cardHtml, subscribeHtml } from './seo.js';
 
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const base = (site) => (site.url || '').replace(/\/$/, '');
@@ -87,6 +87,7 @@ ${moreHtml}
       </div>
       <p><a class="btn btn--ghost" href="../../${a.category && a.category !== 'top' ? `?c=${encodeURIComponent(a.category)}` : ''}">See all headlines →</a> &nbsp; <a class="btn btn--ghost" href="../../digest/">Today's digest</a></p>
     </aside>` : ''}
+    ${subscribeHtml(site, { compact: true })}
   </main>
   <footer class="footer">
     <div class="wrap footer__row">

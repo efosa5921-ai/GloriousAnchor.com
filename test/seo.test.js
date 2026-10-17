@@ -51,3 +51,14 @@ test('cardHtml renders the site card markup with picture, cover or quote style',
   assert.match(cardHtml({ ...base, kind: 'social' }, {}), /class="card card--social card--noimg" data-cover="">\s*<div class="card__body">/);
   assert.match(cardHtml({ ...base, internal: true, pinned: true }, { site: { name: 'GA' } }), /card__kind">Pinned<\/span><span class="card__source">GA</);
 });
+
+test('subscribeHtml renders a Buttondown form, a plain button for other services, nothing when unset', async () => {
+  const { subscribeHtml } = await import('../scripts/lib/seo.js');
+  const bd = subscribeHtml({ name: 'GA', newsletter: 'https://buttondown.com/gloriousanchor' });
+  assert.match(bd, /action="https:\/\/buttondown\.com\/api\/emails\/embed-subscribe\/gloriousanchor" method="post"/);
+  assert.match(bd, /<input type="email" name="email"/);
+  const other = subscribeHtml({ name: 'GA', newsletter: 'https://example.substack.com/subscribe' });
+  assert.match(other, /<a class="btn" href="https:\/\/example\.substack\.com\/subscribe"/);
+  assert.doesNotMatch(other, /<form/);
+  assert.equal(subscribeHtml({ name: 'GA' }), '');
+});

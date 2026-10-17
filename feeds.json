@@ -5,7 +5,8 @@
     "verse": "We have this hope as an anchor for the soul, firm and secure. — Hebrews 6:19",
     "url": "https://gloriousanchor.com",
     "imageProxy": "https://wsrv.nl/?url={url}&w={w}&output=webp&q=75&default={url}",
-    "network": "Glorious Anchor International Network (GAIN)"
+    "network": "Glorious Anchor International Network (GAIN)",
+    "newsletter": "https://buttondown.com/gloriousanchor"
   },
   "categories": [
     {

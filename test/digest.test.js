@@ -67,3 +67,15 @@ test('the digest page uses theme classes while the email item keeps inline colou
   assert.match(page, /href="https:\/\/gloriousanchor\.com\/s\/a\/"/);
   assert.doesNotMatch(page, /color:#0b1f3a/);
 });
+
+test('digest page carries the subscribe form, both copy buttons and Markdown for the editor', async () => {
+  const { digestMarkdown } = await import('../scripts/lib/digest.js');
+  const s = { ...site, newsletter: 'https://buttondown.com/gloriousanchor' };
+  const page = renderDigestPage([mk('a')], s, '2026-10-17', 'T');
+  assert.match(page, /embed-subscribe\/gloriousanchor/);
+  assert.match(page, /id="copyMd"/);
+  assert.match(page, /href="#subscribe">Get it by email/);
+  const md = digestMarkdown([mk('a', { summary: 'Sum' })], s, '2026-10-17');
+  assert.match(md, /^## Today on Glorious Anchor — Saturday, 17 October 2026/);
+  assert.match(md, /\*\*\[Title a\]\(https:\/\/gloriousanchor\.com\/s\/a\/\)\*\*  \nSource a · Sum/);
+});

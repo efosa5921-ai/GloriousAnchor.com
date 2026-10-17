@@ -73,6 +73,25 @@ export function cardHtml(a, { href = a.url, imageProxy = '', site = null, summar
   </div>
 </article>`;
 }
+/**
+ * Email sign-up box. site.newsletter is the public sign-up page (e.g. https://buttondown.com/name); Buttondown
+ * pages get an inline form posting to their embed endpoint, anything else gets a button to the page.
+ */
+export function subscribeHtml(site, { compact = false } = {}) {
+  const url = site.newsletter;
+  if (!url) return '';
+  const m = url.match(/^https?:\/\/buttondown\.(?:com|email)\/([\w.-]+)\/?$/i);
+  const form = m
+    ? `<form class="subscribe__form" action="https://buttondown.com/api/emails/embed-subscribe/${esc(m[1])}" method="post" target="_blank">
+      <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" autocomplete="email">
+      <button class="btn" type="submit">Subscribe</button>
+    </form>`
+    : `<a class="btn" href="${esc(url)}" target="_blank" rel="noopener">Subscribe by email</a>`;
+  return `<section class="subscribe${compact ? ' subscribe--compact' : ''}" aria-label="Email newsletter">
+    <div class="subscribe__text"><strong>Every morning, in your inbox.</strong> The day's best Christian news, articles and video from ${esc(site.name)}. Free, no spam, leave any time.</div>
+    ${form}
+  </section>`;
+}
 export function prerenderCards(articles, n = 24, imageProxy = '') {
   const pinned = articles.filter((a) => a.pinned);
   const rest = articles.filter((a) => !a.pinned);
