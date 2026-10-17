@@ -1,24 +1,37 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { shareUrl, renderSharePage } from '../scripts/lib/share.js';
+import { shareUrl, renderSharePage, relatedStories } from '../scripts/lib/share.js';
 
-const site = { name: 'Glorious Anchor', url: 'https://gloriousanchor.com/', imageProxy: 'https://wsrv.nl/?url={url}&w={w}' };
+const site = { name: 'Glorious Anchor', url: 'https://gloriousanchor.com/', imageProxy: 'https://wsrv.nl/?url={url}&w={w}', tagline: 'Tag', verse: 'V' };
+const mk = (id, extra) => ({ id, title: `Title ${id}`, url: `https://ex.com/${id}`, publishedAt: Date.parse('2026-10-17T08:00:00Z'), kind: 'news', source: `Source ${id}`, sourceId: `s-${id}`, category: 'news', ...extra });
 
 test('shareUrl wraps external stories and leaves our own pages alone', () => {
   assert.equal(shareUrl({ id: 'ab c', url: 'https://ex.com/x' }, site), 'https://gloriousanchor.com/s/ab%20c/');
   assert.equal(shareUrl({ id: 'o', url: 'https://gloriousanchor.com/articles/o/', internal: true }, site), 'https://gloriousanchor.com/articles/o/');
 });
 
-test('renderSharePage carries the story preview, the brand, and forwards to the article', () => {
-  const html = renderSharePage({ id: 'x1', title: 'Hope & "joy"', url: 'https://ex.com/a?b=1', source: 'Example', summary: 'Sum', image: 'https://ex.com/i.jpg', kind: 'video' }, site);
+test('relatedStories picks same-section stories, newest first, pictures preferred, never itself', () => {
+  const me = mk('me', { categories: ['news', 'culture'] });
+  const list = [me, mk('a', { image: 'i' }), mk('b', { category: 'culture', image: 'i', publishedAt: Date.parse('2026-10-17T09:00:00Z') }), mk('c', { category: 'video' }), mk('d')];
+  assert.deepEqual(relatedStories(me, list, 2).map((x) => x.id), ['b', 'a']);
+  assert.deepEqual(relatedStories(me, list, 6).map((x) => x.id).sort(), ['a', 'b', 'd']);
+});
+
+test('renderSharePage shows the story, the brand, the read button and related stories, hidden from search', () => {
+  const a = { id: 'x1', title: 'Hope & "joy"', url: 'https://ex.com/a?b=1', source: 'Example', summary: 'Sum', image: 'https://ex.com/i.jpg', kind: 'video', publishedAt: Date.parse('2026-10-17T08:00:00Z'), category: 'video' };
+  const html = renderSharePage(a, site, [mk('r1', { image: 'https://ex.com/r.jpg' })], 'YouTube');
   assert.match(html, /<meta property="og:title" content="Hope &amp; &quot;joy&quot;">/);
   assert.match(html, /<meta property="og:site_name" content="Glorious Anchor">/);
   assert.match(html, /<meta property="og:image" content="https:\/\/wsrv\.nl\/\?url=https%3A%2F%2Fex\.com%2Fi\.jpg&amp;w=1200">/);
-  assert.match(html, /<meta http-equiv="refresh" content="0; url=https:\/\/ex\.com\/a\?b=1">/);
-  assert.match(html, /location\.replace\("https:\/\/ex\.com\/a\?b=1"\)/);
+  assert.match(html, /<meta name="robots" content="noindex">/);
   assert.match(html, /<link rel="canonical" href="https:\/\/ex\.com\/a\?b=1">/);
-  assert.match(html, /Watch at Example/);
-  const noImg = renderSharePage({ id: 'x2', title: 'T', url: 'https://ex.com/b', source: 'S', kind: 'news' }, site);
-  assert.match(noImg, /og:image" content="https:\/\/gloriousanchor\.com\/assets\/social\.jpg"/);
-  assert.match(noImg, /Read at S/);
+  assert.doesNotMatch(html, /http-equiv="refresh"|location\.replace/);
+  assert.match(html, /class="btn story__cta" href="https:\/\/ex\.com\/a\?b=1" rel="noopener">Watch at Example →<\/a>/);
+  assert.match(html, /<h2>More in YouTube<\/h2>/);
+  assert.match(html, /href="https:\/\/gloriousanchor\.com\/s\/r1\/">Title r1<\/a>/);
+  assert.match(html, /href="\.\.\/\.\.\/\?c=video"/);
+  const pod = renderSharePage({ ...a, kind: 'audio', audio: 'https://ex.com/ep.mp3', image: null }, site, [], '');
+  assert.match(pod, /<audio class="story__audio" controls preload="none" src="https:\/\/ex\.com\/ep\.mp3">/);
+  assert.match(pod, /og:image" content="https:\/\/gloriousanchor\.com\/assets\/social\.jpg"/);
+  assert.doesNotMatch(pod, /story__more/);
 });

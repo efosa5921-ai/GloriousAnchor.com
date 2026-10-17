@@ -159,6 +159,16 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 .hero .side .share__menu { top: auto; bottom: 44px; }
 .share__menu a, .share__menu button { display: block; width: 100%; text-align: left; padding: 8px 10px; border-radius: 6px; border: 0; background: transparent; color: var(--text); font: inherit; font-size: .9rem; text-decoration: none; cursor: pointer; }
 .share__menu a:hover, .share__menu button:hover, .share__menu a:focus-visible { background: var(--surface-2); }
+.story__meta { margin-bottom: 12px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.story .article__title a { color: inherit; text-decoration: none; }
+.story .article__title a:hover { text-decoration: underline; }
+.story__media { display: block; }
+.story__summary { font-size: 1.15rem; line-height: 1.6; color: var(--muted); margin: 0 0 20px; }
+.story__cta { display: inline-block; font-size: 1.05rem; padding: 12px 26px; text-decoration: none; }
+.story__audio { display: block; width: 100%; margin: 0 0 14px; }
+.story__note { color: var(--muted); font-size: .9rem; margin-top: 18px; }
+.story__more .grid { margin: 12px 0 20px; }
+.story__more .card__kind { margin-right: 2px; }
 .digest__actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0 24px; }
 .digest__body ul { padding: 0; }
 

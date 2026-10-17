@@ -6,7 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 17 October 2026
 
-- **Share from any card**: WhatsApp, X, Facebook, Telegram, email or copy link, and your phone's own share sheet on mobile. Shared stories use a short gloriousanchor.com link that shows a Glorious Anchor preview card, then opens the article.
+- **Share from any card**: WhatsApp, X, Facebook, Telegram, email or copy link, and your phone's own share sheet on mobile. Shared stories use a short gloriousanchor.com link that opens a story page here, with the headline, a "read the full story" button and more from the same section.
 - **Daily digest** at [/digest/](/digest/): the day's best stories in one short list, with a one-tap "Copy for WhatsApp" and an email-ready feed.
 - **RSS feeds**: [/feed.xml](/feed.xml) for the latest items and [/digest/feed.xml](/digest/feed.xml) for one digest a day.
 - New items can be **posted automatically to a Telegram channel and to X** once those accounts are connected.
