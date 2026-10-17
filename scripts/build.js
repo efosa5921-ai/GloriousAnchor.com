@@ -450,7 +450,9 @@ async function main() {
     }
     const items = (r.feed.items || []).slice(0, limits.perSource);
     let kept = 0;
-    const feedImage = r.feed.itunes?.image || r.feed.image?.url || null;
+    // Podcast cover art stands in for episodes without a picture. Other feeds' channel images are usually a tiny
+    // logo that looks terrible stretched across a card, so news and blog items simply go without.
+    const feedImage = (r.source.kind === 'audio' && (r.feed.itunes?.image || r.feed.image?.url)) || null;
     for (const item of items) {
       const article = normaliseItem(item, r.source, r.feed);
       if (article) { if (!article.image && feedImage) article.image = feedImage; fresh.push(article); kept++; }
