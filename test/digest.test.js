@@ -34,7 +34,7 @@ test('pickDigest fills up on a quiet day', () => {
 test('digestText is WhatsApp-ready and digestHtml escapes', () => {
   const t = digestText([mk('a', { title: 'Hello <b>' })], site, '2026-10-17');
   assert.match(t, /^\*Glorious Anchor — Saturday, 17 October 2026\*/);
-  assert.match(t, /• Hello <b> — Source a\nhttps:\/\/ex\.com\/a/);
+  assert.match(t, /• Hello <b> — Source a\nhttps:\/\/gloriousanchor\.com\/s\/a\//);
   assert.match(t, /More every day at https:\/\/gloriousanchor\.com — Anchored\./);
   const html = digestHtml([mk('a', { title: 'Hello <b>' })], site, '2026-10-17');
   assert.match(html, /Hello &lt;b&gt;/);

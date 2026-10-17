@@ -3,6 +3,7 @@
  * Pure helpers here (selection, message text, OAuth 1.0a signing); scripts/announce.js does the network calls.
  */
 import { createHmac, randomBytes } from 'node:crypto';
+import { shareUrl } from './share.js';
 
 export const X_MAX = 280;
 const URL_LEN = 23; // X counts every link as 23 characters
@@ -26,14 +27,15 @@ export function telegramMessage(a, site) {
   const esc = (s) => String(s ?? '').replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
   const who = a.internal ? site.name : a.source;
   const tag = a.internal ? 'New on' : a.kind === 'pick' ? 'Our pick, via' : a.kind === 'video' ? 'Video via' : a.kind === 'audio' ? 'Listen via' : 'Via';
-  return `<b>${esc(a.title)}</b>\n${esc(who)} · ${tag} ${esc(site.name)}\n${esc(a.url)}`;
+  return `<b>${esc(a.title)}</b>\n${esc(who)} · ${tag} ${esc(site.name)}\n${esc(shareUrl(a, site))}`;
 }
 
 export function xText(a, site) {
   const who = a.internal ? '' : ` — ${a.source}`;
   const handle = site.xHandle ? ` via @${site.xHandle.replace(/^@/, '')}` : '';
-  const tail = `${who}${handle}\n${a.url}`;
-  const room = X_MAX - (tail.length - a.url.length + URL_LEN) - 1;
+  const link = shareUrl(a, site);
+  const tail = `${who}${handle}\n${link}`;
+  const room = X_MAX - (tail.length - link.length + URL_LEN) - 1;
   const title = a.title.length > room ? `${a.title.slice(0, Math.max(0, room - 1)).trimEnd()}…` : a.title;
   return `${title}${tail}`;
 }

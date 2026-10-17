@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page not found — Glorious Anchor</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/assets/anchor.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="article-page">
+  <header class="masthead"><div class="wrap masthead__row">
+    <a class="brand" href="/" aria-label="Glorious Anchor home"><svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true"><use href="/assets/anchor.svg#anchor"/></svg><span class="brand__text"><span class="brand__name">Glorious Anchor</span><span class="brand__tag">Christian news, voices and video</span></span></a>
+  </div></header>
+  <main class="wrap article">
+    <h1>That page is not here</h1>
+    <p class="article__lede" id="why">The link may be mistyped, or the story has moved off our front page. Headlines stay for a few days; the original article is still at its source.</p>
+    <p><a class="btn" href="/">Go to the front page</a> &nbsp; <a class="btn btn--ghost" href="/digest/">Today's digest</a></p>
+  </main>
+  <script>
+    if (/^\/s\//.test(location.pathname)) document.getElementById('why').textContent = 'This shared story has moved off our front page. Headlines stay for a few days; search the front page for it, or ask whoever shared it for the original link.';
+  </script>
+</body>
+</html>

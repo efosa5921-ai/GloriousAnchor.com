@@ -247,8 +247,10 @@
   /* ---------- Sharing ---------- */
   const SITE_URL = () => (state.meta?.site?.url || location.origin).replace(/\/$/, '');
   function shareText(a) { return `${a.title}${a.internal ? '' : ` — ${a.source}`}`; }
+  /** Stories are shared as gloriousanchor.com/s/<id>/: a branded preview card that forwards to the article. */
+  function shareLink(a) { return a.internal ? a.url : `${SITE_URL()}/s/${encodeURIComponent(a.id)}/`; }
   function shareTargets(a) {
-    const url = a.url, text = shareText(a), via = `via ${state.meta?.site?.name || 'Glorious Anchor'} ${SITE_URL()}`;
+    const url = shareLink(a), text = shareText(a), via = `via ${state.meta?.site?.name || 'Glorious Anchor'}`;
     return [
       ['WhatsApp', `https://wa.me/?text=${encodeURIComponent(`${text}\n${url}\n\n${via}`)}`],
       ['X', `https://twitter.com/intent/tweet?text=${encodeURIComponent(`${text} ${via}`)}&url=${encodeURIComponent(url)}`],
@@ -264,7 +266,7 @@
   async function share(a, btn) {
     const text = shareText(a);
     if (navigator.share && matchMedia('(pointer: coarse)').matches) {
-      try { await navigator.share({ title: a.title, text: `${text} — via ${state.meta?.site?.name || 'Glorious Anchor'}`, url: a.url }); return; } catch (err) { if (err.name === 'AbortError') return; }
+      try { await navigator.share({ title: a.title, text: `${text} — via ${state.meta?.site?.name || 'Glorious Anchor'}`, url: shareLink(a) }); return; } catch (err) { if (err.name === 'AbortError') return; }
     }
     if (openMenu?.dataset.id === a.id) { closeShare(); return; }
     closeShare();
@@ -274,7 +276,7 @@
       l.addEventListener('click', closeShare); menu.appendChild(l);
     }
     const copy = document.createElement('button'); copy.type = 'button'; copy.textContent = 'Copy link'; copy.setAttribute('role', 'menuitem');
-    copy.addEventListener('click', async () => { try { await navigator.clipboard.writeText(a.url); copy.textContent = 'Copied!'; } catch { window.prompt('Copy this link', a.url); } setTimeout(closeShare, 900); });
+    copy.addEventListener('click', async () => { const u = shareLink(a); try { await navigator.clipboard.writeText(u); copy.textContent = 'Copied!'; } catch { window.prompt('Copy this link', u); } setTimeout(closeShare, 900); });
     menu.appendChild(copy);
     btn.closest('.card').appendChild(menu); openMenu = menu; menu.querySelector('a').focus();
   }

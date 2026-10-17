@@ -24,6 +24,7 @@ import { compilePost, postToArticle, renderPostPage, renderIndexPage, renderFeed
 import { normaliseChurch, geocodeKey, nominatimUrl, parseNominatim } from './lib/churches.js';
 import { sitemapXml, homeJsonLd, churchJsonLd, prerenderCards, metaTags, churchSlug, base as siteBase } from './lib/seo.js';
 import { readdir } from 'node:fs/promises';
+import { shareUrl, renderSharePage } from './lib/share.js';
 import { pickDigest, digestDate, digestText, digestHtml, renderDigestPage, renderDigestFeed, renderTopFeed } from './lib/digest.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -512,6 +513,13 @@ async function main() {
       sourceStatus,
     }, null, 2),
   );
+  // Share pages: /s/<id>/ shows a Glorious Anchor preview card, then forwards to the article.
+  const external = published.filter((a) => !a.internal);
+  await Promise.all(external.map(async (a) => {
+    const dir = path.join(DIST, 's', encodeURIComponent(a.id));
+    await mkdir(dir, { recursive: true });
+    await writeFile(path.join(dir, 'index.html'), renderSharePage(a, site));
+  }));
   // Daily digest (page + WhatsApp text + RSS-to-email feed) and a plain top-stories feed.
   const digestFile = path.join(DATA_DIR, 'digests.json');
   const digests = await readJson(digestFile, {});

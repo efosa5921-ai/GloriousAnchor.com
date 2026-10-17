@@ -14,12 +14,13 @@ test('selectNew posts every new own article and pick, then a few fresh stories, 
 });
 
 test('messages are formatted and X text never exceeds the limit', () => {
-  assert.equal(telegramMessage(mk('a', { title: 'A & B' }), site), '<b>A &amp; B</b>\nSource a · Via Glorious Anchor\nhttps://ex.com/a');
+  assert.equal(telegramMessage(mk('a', { title: 'A & B' }), site), '<b>A &amp; B</b>\nSource a · Via Glorious Anchor\nhttps://gloriousanchor.com/s/a/');
   assert.match(telegramMessage(mk('o', { internal: true }), site), /Glorious Anchor · New on Glorious Anchor/);
   const long = xText(mk('l', { title: 'x'.repeat(400) }), site);
-  assert.ok(long.length - 'https://ex.com/l'.length + 23 <= X_MAX);
-  assert.match(long, /…\s—\sSource l via @gloriousanchor\nhttps:\/\/ex\.com\/l$/);
-  assert.equal(xText(mk('s'), site), 'Title s — Source s via @gloriousanchor\nhttps://ex.com/s');
+  assert.ok(long.length - 'https://gloriousanchor.com/s/l/'.length + 23 <= X_MAX);
+  assert.match(long, /…\s—\sSource l via @gloriousanchor\nhttps:\/\/gloriousanchor\.com\/s\/l\/$/);
+  assert.equal(xText(mk('s'), site), 'Title s — Source s via @gloriousanchor\nhttps://gloriousanchor.com/s/s/');
+  assert.equal(xText(mk('o', { internal: true, url: 'https://gloriousanchor.com/articles/o/' }), site), 'Title o via @gloriousanchor\nhttps://gloriousanchor.com/articles/o/');
 });
 
 test('oauthHeader reproduces the signature from the OAuth 1.0a worked example', () => {

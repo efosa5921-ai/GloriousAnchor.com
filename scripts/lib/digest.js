@@ -4,6 +4,8 @@
  * services) and a plain top-stories feed for feed readers.
  */
 
+import { shareUrl } from './share.js';
+
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const base = (site) => (site.url || '').replace(/\/$/, '');
 
@@ -42,7 +44,7 @@ export function digestText(items, site, date) {
   const lines = [`*${site.name} — ${longDate(date)}*`, ''];
   for (const a of items) {
     const who = a.internal ? site.name : a.source;
-    lines.push(`• ${a.title}${who ? ` — ${who}` : ''}`, a.url, '');
+    lines.push(`• ${a.title}${who ? ` — ${who}` : ''}`, shareUrl(a, site), '');
   }
   lines.push(`More every day at ${base(site)} ${site.tagline ? `— ${site.tagline}` : ''}`.trim());
   return lines.join('\n');
@@ -50,7 +52,7 @@ export function digestText(items, site, date) {
 
 /** HTML body shared by the /digest/ page and the RSS item (inline-safe for email). */
 export function digestHtml(items, site, date) {
-  const rows = items.map((a) => `<li style="margin:0 0 14px"><a href="${esc(a.url)}" style="font-weight:600;color:#0b1f3a;text-decoration:none">${esc(a.title)}</a><br><span style="color:#6b7280;font-size:14px">${esc(a.internal ? site.name : a.source)}${a.summary ? ` · ${esc(a.summary)}` : ''}</span></li>`).join('\n');
+  const rows = items.map((a) => `<li style="margin:0 0 14px"><a href="${esc(shareUrl(a, site))}" style="font-weight:600;color:#0b1f3a;text-decoration:none">${esc(a.title)}</a><br><span style="color:#6b7280;font-size:14px">${esc(a.internal ? site.name : a.source)}${a.summary ? ` · ${esc(a.summary)}` : ''}</span></li>`).join('\n');
   return `<p style="color:#6b7280">${esc(longDate(date))}</p>\n<ul style="list-style:none;padding:0;margin:0">\n${rows}\n</ul>\n<p>More every day at <a href="${esc(base(site))}/">${esc(base(site).replace(/^https?:\/\//, ''))}</a>.</p>`;
 }
 

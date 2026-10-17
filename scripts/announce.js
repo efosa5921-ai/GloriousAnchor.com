@@ -24,7 +24,7 @@ const readJson = async (f, fallback) => { try { return JSON.parse(await readFile
 async function postTelegram(a, site) {
   const res = await fetch(`https://api.telegram.org/bot${telegram.token}/sendMessage`, {
     method: 'POST', headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ chat_id: telegram.chat, text: telegramMessage(a, site), parse_mode: 'HTML', link_preview_options: { url: a.url, prefer_large_media: true } }),
+    body: JSON.stringify({ chat_id: telegram.chat, text: telegramMessage(a, site), parse_mode: 'HTML', link_preview_options: { prefer_large_media: true } }),
   });
   if (!res.ok) throw new Error(`Telegram ${res.status}: ${(await res.text()).slice(0, 200)}`);
 }
