@@ -7,7 +7,8 @@
     "imageProxy": "https://wsrv.nl/?url={url}&w={w}&output=webp&q=75&default={url}",
     "network": "Glorious Anchor International Network (GAIN)",
     "newsletter": "https://buttondown.com/gloriousanchor",
-    "contactEmail": "info@gloriousanchor.com"
+    "contactEmail": "info@gloriousanchor.com",
+    "goatcounter": "gloriousanchor"
   },
   "categories": [
     {
