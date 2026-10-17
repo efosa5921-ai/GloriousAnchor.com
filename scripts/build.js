@@ -308,8 +308,9 @@ async function finalizeSeo({ site, articles, posts, churches }) {
   for (const p of quizData.problems) console.warn(`  ⚠ quizzes.json: ${p}`);
   await writeFile(path.join(DATA_DIR, 'quizzes.json'), JSON.stringify({ generatedAt: new Date().toISOString(), quizzes: quizData.quizzes }));
   const quizPath = path.join(DIST, 'quiz', 'index.html');
+  const videoIds = new Set((await readdir(path.join(ROOT, 'videos', 'quiz')).catch(() => [])).filter((f) => f.endsWith('.mp4')).map((f) => f.slice(0, -4)));
   await writeFile(quizPath, renderQuizPage(await readFile(quizPath, 'utf8'), {
-    site, quizzes: quizData.quizzes, subscribe: subscribeHtml(site, { compact: true }),
+    site, quizzes: quizData.quizzes, videoIds, subscribe: subscribeHtml(site, { compact: true }),
     metaTags: metaTags({ title: `Bible Quiz — ${site.name}`, description: 'Test your Bible knowledge with a new quiz every day. Ten questions, instant answers with the verse, and a score to share.', url: `${b}/quiz/`, image: social, site }),
   }));
 
@@ -512,6 +513,9 @@ async function main() {
 
   await mkdir(DATA_DIR, { recursive: true });
   await cp(SRC, DIST, { recursive: true });
+  // Rendered quiz videos (made by the "Render quiz videos" workflow) ship with the site.
+  const videosDir = path.join(ROOT, 'videos');
+  try { await access(videosDir); await cp(videosDir, path.join(DIST, 'videos'), { recursive: true }); } catch { /* none yet */ }
   // Full set stays in the build cache (articles.json is re-read next build); the site gets a slim, capped copy.
   const published = capOutput(articles, limits.outputPerSource || 15, limits.outputMax || 700).map((a) => slimArticle(a));
   const pinnedFirst = [...published.filter((a) => a.pinned), ...published.filter((a) => !a.pinned)];

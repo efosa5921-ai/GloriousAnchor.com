@@ -24,6 +24,9 @@
   function start() {
     order = shuffle(quiz.questions.map((_, k) => k)); i = 0; score = 0;
     title.textContent = quiz.title; desc.textContent = quiz.description || '';
+    const v = document.querySelector(`#qList li[data-id="${CSS.escape(quiz.id)}"] .quiz__video`);
+    document.querySelector('#qVideo')?.remove();
+    if (v) desc.after(el('p', { id: 'qVideo' }, el('a', { class: 'btn btn--ghost', href: v.getAttribute('href'), download: '' }, '▶ Watch or download the video version')));
     question();
   }
 

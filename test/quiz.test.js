@@ -36,3 +36,9 @@ test('dailyIndex rotates once per UTC day and renderQuizPage fills the template'
     site: { name: 'GA' }, quizzes: [{ id: 'a', title: 'A & B', description: 'D', difficulty: 'easy', questions: [1, 2, 3] }], metaTags: '<meta x>', subscribe: '<form>', });
   assert.match(html, /<meta x>/); assert.match(html, /<h1>A &amp; B<\/h1>/); assert.match(html, /href="\?q=a"/); assert.match(html, /<form>GA$/);
 });
+
+test('renderQuizPage links a video when one has been rendered', () => {
+  const html = renderQuizPage('<ul><!--quizlist--></ul>', { site: { name: 'GA' }, quizzes: [{ id: 'a', title: 'A', difficulty: 'easy', questions: [1, 2, 3] }, { id: 'b', title: 'B', difficulty: 'easy', questions: [1, 2, 3] }], metaTags: '', subscribe: '', videoIds: new Set(['a']) });
+  assert.match(html, /data-id="a"[^]*href="\.\.\/videos\/quiz\/a\.mp4" download/);
+  assert.doesNotMatch(html, /videos\/quiz\/b\.mp4/);
+});

@@ -36,9 +36,9 @@ export function dailyIndex(count, now = Date.now()) {
   return Math.floor(now / 86400000) % count;
 }
 
-export function renderQuizPage(template, { site, quizzes, metaTags, subscribe }) {
+export function renderQuizPage(template, { site, quizzes, metaTags, subscribe, videoIds = new Set() }) {
   const today = quizzes[dailyIndex(quizzes.length)];
-  const list = quizzes.map((q) => `<li><a href="?q=${esc(q.id)}"><strong>${esc(q.title)}</strong> <span class="muted">· ${q.questions.length} questions · ${esc(q.difficulty)}</span></a>${q.description ? `<br><span class="muted">${esc(q.description)}</span>` : ''}</li>`).join('\n');
+  const list = quizzes.map((q) => `<li data-id="${esc(q.id)}"><a href="?q=${esc(q.id)}"><strong>${esc(q.title)}</strong> <span class="muted">· ${q.questions.length} questions · ${esc(q.difficulty)}</span></a>${videoIds.has(q.id) ? ` · <a class="quiz__video" href="../videos/quiz/${esc(q.id)}.mp4" download>▶ Video</a>` : ''}${q.description ? `<br><span class="muted">${esc(q.description)}</span>` : ''}</li>`).join('\n');
   return template
     .replace('<!--seo:head-->', metaTags)
     .replace('<!--subscribe-->', subscribe)

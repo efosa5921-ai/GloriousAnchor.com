@@ -6,7 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 17 October 2026
 
-- **Bible Quiz** at [/quiz/](/quiz/): a quiz of the day plus a library of ten-question quizzes, with the Bible reference shown after each answer and a score you can share. Reach it from the tab bar or the app shortcut. New quizzes are written in the admin.
+- **Bible Quiz** at [/quiz/](/quiz/): a quiz of the day plus a library of ten-question quizzes, with the Bible reference shown after each answer and a score you can share. Reach it from the tab bar or the app shortcut. New quizzes are written in the admin, and each quiz can be turned into a vertical video for YouTube Shorts, TikTok, Reels or WhatsApp status with one click.
 - A **Contact** link in the footer: info@gloriousanchor.com.
 - **Subscribe by email**: a sign-up box on the front page, the digest and every story page. The digest arrives each morning; free, no spam, leave any time.
 - **Pictures for more stories**: when a feed leaves a story without a picture, we fetch the one its own page names for sharing. Stories that still have none get a designed cover with the source's name instead of a blank.

@@ -405,9 +405,13 @@ Note: Anything extra to show after answering.`;
       h('label', { class: 'check', title: 'Enabled' }, h('input', { type: 'checkbox', checked: qz.enabled !== false, onchange: (e) => { if (e.target.checked) delete qz.enabled; else qz.enabled = false; markDirty('quizzes.json'); render(); } })),
       h('div', { class: 'item__body' }, h('strong', {}, qz.title), h('span', { class: 'muted' }, ` · ${(qz.questions || []).length} questions · ${qz.difficulty || 'medium'} · `, h('a', { href: `../quiz/?q=${encodeURIComponent(qz.id)}`, target: '_blank' }, 'play ↗')), qz.description ? h('div', { class: 'muted' }, qz.description) : null),
       h('div', { class: 'item__actions' },
+        h('button', { title: 'Create video', onclick: () => renderVideo(qz.id) }, '▶'),
         h('button', { title: 'Edit', onclick: () => { const f = quizForm(qz, (upd) => { Object.keys(qz).forEach((k) => delete qz[k]); Object.assign(qz, upd); markDirty('quizzes.json'); render(); }, data.quizzes); view.querySelector('form.form')?.replaceWith(f); window.scrollTo({ top: 0, behavior: 'smooth' }); } }, icon(ICONS.edit)),
         h('button', { title: 'Delete', onclick: () => { if (confirm(`Delete the quiz "${qz.title}"?`)) { data.quizzes.splice(i, 1); markDirty('quizzes.json'); render(); } } }, icon(ICONS.trash)),
       )))));
+    view.append(h('div', { class: 'row' },
+      h('button', { class: 'btn btn--ghost', onclick: () => renderVideo('all') }, 'Create videos for all quizzes'),
+      h('span', { class: 'help' }, 'Makes a vertical video of each quiz (question, countdown, answer with reference) for YouTube Shorts, TikTok, Reels or WhatsApp status. Takes about five minutes; it then appears on the quiz page as "Watch or download".')));
     view.append(saveBar('quizzes.json', 'Update Bible quizzes (admin)'));
   }
   function quizForm(existing, onSubmit, all) {
@@ -501,6 +505,13 @@ Note: Anything extra to show after answering.`;
   }
 
   /* ---------- rebuild, sign in/out, boot ---------- */
+  async function renderVideo(quizId) {
+    if (state.dirty.size && !confirm('You have unsaved changes; the video uses what is saved. Continue?')) return;
+    try {
+      await api(`/repos/${store.repo}/actions/workflows/quiz-video.yml/dispatches`, { method: 'POST', body: JSON.stringify({ ref: BRANCH, inputs: { quiz: quizId, limit: '0' } }) });
+      toast('Video rendering started. In about five minutes it is on the quiz page under "Watch or download".');
+    } catch (e) { toast(e.message, true); }
+  }
   async function rebuild() {
     try {
       await api(`/repos/${store.repo}/actions/workflows/build.yml/dispatches`, { method: 'POST', body: JSON.stringify({ ref: BRANCH }) });

@@ -1,0 +1,41 @@
+name: Render quiz videos
+
+on:
+  workflow_dispatch:
+    inputs:
+      quiz:
+        description: 'Quiz id to render (or "all")'
+        default: all
+      limit:
+        description: 'Only the first N questions (0 = all)'
+        default: '0'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: quiz-video
+  cancel-in-progress: false
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Install Chromium
+        run: npm i --no-save playwright@1.49.1 && npx playwright install --with-deps chromium
+      - name: Render
+        run: node scripts/quiz-video.js --quiz "${{ github.event.inputs.quiz }}" --limit "${{ github.event.inputs.limit }}"
+      - name: Commit videos
+        run: |
+          git config user.name "quiz-video bot"
+          git config user.email "noreply@gloriousanchor.com"
+          git add videos/quiz/*.mp4
+          git diff --cached --quiet && echo "No changes" || (git commit -m "Render quiz video(s): ${{ github.event.inputs.quiz }}" && git push origin main)
