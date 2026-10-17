@@ -29,6 +29,8 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - name: Install ffmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
       - name: Install Chromium
         run: npm i --no-save playwright@1.49.1 && npx playwright install --with-deps chromium
       - name: Render
