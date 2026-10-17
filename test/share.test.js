@@ -44,3 +44,10 @@ test('story page pictures fall back to the original, then hide, when the proxy f
   for (const img of imgs) { assert.match(img, /data-alt="https:\/\/ex\.com\/p\.jpg"/); assert.match(img, /onerror="/); }
   assert.match(imgs[1], /card--noimg/);
 });
+
+test('cards without a picture get a branded cover; social posts keep the quote style', () => {
+  const a = { id: 'c1', title: 'T', url: 'https://ex.com/t', source: 'Religion News Service', sourceId: 'rns', kind: 'news', publishedAt: 0, category: 'news' };
+  const html = renderSharePage(a, site, [{ ...a, id: 'c2' }, { ...a, id: 'c3', kind: 'social', source: 'r/x' }], 'News');
+  assert.match(html, /<article class="card card--cover card--news">\s*<a class="card__media" href="https:\/\/gloriousanchor\.com\/s\/c2\/"><span class="cover cover--\d" aria-hidden="true"><svg[^]*?<b>Religion News Service<\/b><\/span><\/a>/);
+  assert.match(html, /<article class="card card--noimg card--social">\s*<div class="card__body">/);
+});

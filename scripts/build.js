@@ -25,6 +25,7 @@ import { normaliseChurch, geocodeKey, nominatimUrl, parseNominatim } from './lib
 import { sitemapXml, homeJsonLd, churchJsonLd, prerenderCards, metaTags, churchSlug, base as siteBase } from './lib/seo.js';
 import { readdir } from 'node:fs/promises';
 import { shareUrl, renderSharePage, relatedStories } from './lib/share.js';
+import { fillMissingImages } from './lib/images.js';
 import { pickDigest, digestDate, digestText, digestHtml, renderDigestPage, renderDigestFeed, renderTopFeed } from './lib/digest.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -436,6 +437,7 @@ async function main() {
   const picksCache = await readJson(path.join(DATA_DIR, 'picks-cache.json'), {});
   const previousHealth = await readJson(path.join(DATA_DIR, 'health.json'), {});
   const geocodeCache = await readJson(path.join(DATA_DIR, 'geocode-cache.json'), {});
+  const ogCache = await readJson(path.join(DATA_DIR, 'og-cache.json'), {});
 
   console.log(`Fetching ${sources.length} feeds${fixturesDir ? ' from fixtures' : ''}...`);
   const results = await mapWithConcurrency(sources, limits.concurrency, (s) => fetchFeed(s, limits, resolved, services));
@@ -468,6 +470,11 @@ async function main() {
   const merged = mergeWithPrevious(fresh, previous.filter((p) => p?.sourceId !== PICKS_SOURCE.id && p?.sourceId !== OWN_SOURCE.id), sourceStatus, cutoff);
   let articles = dedupe(merged);
 
+  // Stories without a picture: ask the article page for its sharing image (cached a week, limited per build).
+  if (limits.pageImages !== false) {
+    const og = await fillMissingImages(articles, ogCache, { fetchText: (u, t) => fetchText(u, t, services), maxFetches: limits.pageImagesPerBuild || 60, concurrency: limits.concurrency });
+    if (verbose) console.log(`  ✓ pictures: ${og.filled} stories given their page's sharing image (${og.fetched} pages fetched)`);
+  }
   // Picks are owner-curated: regenerated every build, never aged out, and they win over feed copies of the same URL.
   console.log(`Unfurling ${(picksConfig.picks || []).length} picks...`);
   const picks = await buildPicks(picksConfig, picksCache, limits, services);
@@ -501,6 +508,7 @@ async function main() {
   await writeFile(path.join(DATA_DIR, 'resolved.json'), JSON.stringify(resolved, null, 2));
   await writeFile(path.join(DATA_DIR, 'picks-cache.json'), JSON.stringify(picksCache, null, 2));
   await writeFile(path.join(DATA_DIR, 'geocode-cache.json'), JSON.stringify(geocodeCache, null, 2));
+  await writeFile(path.join(DATA_DIR, 'og-cache.json'), JSON.stringify(ogCache));
   await writeFile(path.join(DATA_DIR, 'churches.json'), JSON.stringify({ generatedAt: new Date().toISOString(), churches: directory.churches, problems: directory.problems }));
   const health = computeHealth(previousHealth, sourceStatus);
   await writeFile(path.join(DATA_DIR, 'health.json'), JSON.stringify(health, null, 2));

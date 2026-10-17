@@ -45,12 +45,17 @@ export function churchJsonLd(c, site) {
 /** Static cards for the front page so crawlers (and no-JS visitors) see real headlines. Replaced by the app once data loads. */
 export const proxied = (template, url, w) => (template && url && !/^https?:\/\/gloriousanchor\.com\//.test(url) ? template.replace(/\{url\}/g, encodeURIComponent(url)).replace('{w}', String(w)) : url);
 
+/** A designed stand-in for cards without a picture: the source name on one of six brand gradients, with the anchor. */
+export function coverIndex(key = '') { let h = 0; for (const c of String(key)) h = (h * 31 + c.charCodeAt(0)) >>> 0; return h % 6; }
+export function coverHtml(a) {
+  return `<span class="cover cover--${coverIndex(a.sourceId || a.source)}" aria-hidden="true"><svg viewBox="0 0 32 32"><use href="/assets/anchor.svg#anchor"/></svg><b>${esc(a.source || '')}</b></span>`;
+}
 export function prerenderCards(articles, n = 24, imageProxy = '') {
   const pinned = articles.filter((a) => a.pinned);
   const rest = articles.filter((a) => !a.pinned);
   const list = [...pinned, ...rest].slice(0, n);
-  return list.map((a) => `<article class="card${a.image ? '' : ' card--noimg'}">
-  ${a.image ? `<a class="card__media" href="${esc(a.url)}"><img loading="lazy" decoding="async" src="${esc(proxied(imageProxy, a.image, 480))}" data-alt="${esc(a.image)}" alt="" onerror="if(this.dataset.alt&amp;&amp;this.src!==this.dataset.alt){this.src=this.dataset.alt}else{this.closest('.card')?.classList.add('card--noimg');this.parentNode.remove()}"></a>` : ''}
+  return list.map((a) => `<article class="card${a.image ? '' : a.kind === 'social' ? ' card--noimg' : ' card--cover'}">
+  ${a.image ? `<a class="card__media" href="${esc(a.url)}"><img loading="lazy" decoding="async" src="${esc(proxied(imageProxy, a.image, 480))}" data-alt="${esc(a.image)}" alt="" onerror="if(this.dataset.alt&amp;&amp;this.src!==this.dataset.alt){this.src=this.dataset.alt}else{this.closest('.card')?.classList.add('card--noimg');this.parentNode.remove()}"></a>` : a.kind === 'social' ? '' : `<a class="card__media" href="${esc(a.url)}">${coverHtml(a)}</a>`}
   <div class="card__body">
     <div class="card__meta"><span class="card__source">${esc(a.source)}</span><span class="dot">·</span><time datetime="${new Date(a.publishedAt).toISOString()}">${new Date(a.publishedAt).toISOString().slice(0, 10)}</time></div>
     <h3 class="card__title"><a href="${esc(a.url)}"${a.internal ? '' : ' rel="noopener"'}>${esc(a.title)}</a></h3>

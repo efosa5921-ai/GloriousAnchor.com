@@ -196,6 +196,10 @@ After each build, `dist/data/meta.json` lists every source with `ok: true/false`
 URL or handle is easy to spot. Feed URLs and YouTube handles in the shipped config are best-effort; check the first
 build's log and correct any that fail.
 
+## Pictures
+
+Feed items often lack an image. The build fetches the article page's `og:image` for news and article items without one (`scripts/lib/images.js`): results, including misses, are cached for a week in `dist/data/og-cache.json`, obvious logos are rejected, and at most `limits.pageImagesPerBuild` (default 60) pages are fetched per build so builds stay quick; `limits.pageImages: false` turns it off. Anything still without a picture, on the app, the story pages and the prerendered cards alike, shows a branded cover (source name on one of six gradients chosen by hashing the source id) rather than an empty box; social posts keep their quote style.
+
 ## Growth: sharing, digest, feeds, auto-posting, analytics
 
 - **Share buttons** on every card (WhatsApp, X, Facebook, Telegram, email, copy link; native share sheet on touch devices). Every external story is shared as `/s/<id>/`, a **story page**: Glorious Anchor Open Graph tags (title, source, picture) so previews in WhatsApp, X and Telegram carry the brand, then on the site the headline, summary and a "Read the full story at <source>" button (inline player for podcasts), plus up to six more stories from the same section linking to their own story pages. Pages are `noindex` with a canonical link to the source, generated for the published set; a story that has aged off lands on `404.html`. The digest and auto-posts use the same links.

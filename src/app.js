@@ -181,6 +181,17 @@
     return t.replace(/\{url\}/g, encodeURIComponent(url)).replace('{w}', String(w));
   }
   const srcInfo = (a) => state.sourceMap.get(a.sourceId) || {};
+  /** Cards without a picture get a branded cover: the source name on one of six gradients. Social posts keep their quote style. */
+  function coverIndex(key = '') { let h = 0; for (const c of String(key)) h = (h * 31 + c.charCodeAt(0)) >>> 0; return h % 6; }
+  function showCover(node, a) {
+    if (a.kind === 'social') { node.classList.add('card--noimg'); return; }
+    const media = node.querySelector('.card__media');
+    media.href = a.url; media.innerHTML = '';
+    const cover = document.createElement('span'); cover.className = `cover cover--${coverIndex(a.sourceId || a.source)}`; cover.setAttribute('aria-hidden', 'true');
+    cover.innerHTML = `<svg viewBox="0 0 32 32"><use href="${BASE}assets/anchor.svg#anchor"/></svg>`;
+    const name = document.createElement('b'); name.textContent = a.source || ''; cover.appendChild(name);
+    media.appendChild(cover); node.classList.add('card--cover');
+  }
   function card(a, extraClass) {
     const node = els.tpl.content.firstElementChild.cloneNode(true);
     if (extraClass) node.classList.add(extraClass);
@@ -194,8 +205,8 @@
       const direct = a.image, viaProxy = imgUrl(direct, w);
       img.src = viaProxy;
       if (extraClass === 'lead') { img.loading = 'eager'; img.setAttribute('fetchpriority', 'high'); }
-      img.addEventListener('error', () => { if (img.src !== direct) img.src = direct; else node.classList.add('card--noimg'); });
-    } else node.classList.add('card--noimg');
+      img.addEventListener('error', () => { if (img.src !== direct) img.src = direct; else showCover(node, a); });
+    } else showCover(node, a);
     const src = node.querySelector('.card__source');
     src.textContent = a.source;
     if (a.audio) {
