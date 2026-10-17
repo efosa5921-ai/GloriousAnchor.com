@@ -50,7 +50,7 @@ export function prerenderCards(articles, n = 24, imageProxy = '') {
   const rest = articles.filter((a) => !a.pinned);
   const list = [...pinned, ...rest].slice(0, n);
   return list.map((a) => `<article class="card${a.image ? '' : ' card--noimg'}">
-  ${a.image ? `<a class="card__media" href="${esc(a.url)}"><img loading="lazy" decoding="async" src="${esc(proxied(imageProxy, a.image, 480))}" alt=""></a>` : ''}
+  ${a.image ? `<a class="card__media" href="${esc(a.url)}"><img loading="lazy" decoding="async" src="${esc(proxied(imageProxy, a.image, 480))}" data-alt="${esc(a.image)}" alt="" onerror="if(this.dataset.alt&amp;&amp;this.src!==this.dataset.alt){this.src=this.dataset.alt}else{this.closest('.card')?.classList.add('card--noimg');this.parentNode.remove()}"></a>` : ''}
   <div class="card__body">
     <div class="card__meta"><span class="card__source">${esc(a.source)}</span><span class="dot">·</span><time datetime="${new Date(a.publishedAt).toISOString()}">${new Date(a.publishedAt).toISOString().slice(0, 10)}</time></div>
     <h3 class="card__title"><a href="${esc(a.url)}"${a.internal ? '' : ' rel="noopener"'}>${esc(a.title)}</a></h3>

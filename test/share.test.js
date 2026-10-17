@@ -35,3 +35,12 @@ test('renderSharePage shows the story, the brand, the read button and related st
   assert.match(pod, /og:image" content="https:\/\/gloriousanchor\.com\/assets\/social\.jpg"/);
   assert.doesNotMatch(pod, /story__more/);
 });
+
+test('story page pictures fall back to the original, then hide, when the proxy fails', () => {
+  const a = { id: 'f1', title: 'T', url: 'https://ex.com/t', source: 'S', image: 'https://ex.com/p.jpg', kind: 'news', publishedAt: 0, category: 'news' };
+  const html = renderSharePage(a, site, [{ ...a, id: 'f2' }], 'News');
+  const imgs = html.match(/<img[^>]+>/g);
+  assert.equal(imgs.length, 2);
+  for (const img of imgs) { assert.match(img, /data-alt="https:\/\/ex\.com\/p\.jpg"/); assert.match(img, /onerror="/); }
+  assert.match(imgs[1], /card--noimg/);
+});

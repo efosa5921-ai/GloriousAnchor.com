@@ -31,12 +31,12 @@ export function renderSharePage(a, site, more = [], categoryLabel = '') {
   const who = a.source || site.name;
   const description = `${who}${a.summary ? ` · ${a.summary}` : ''}`;
   const image = a.image ? proxied(site.imageProxy, a.image, 1200) : `${b}/assets/social.jpg`;
-  const hero = a.image ? `<a class="story__media" href="${esc(a.url)}" rel="noopener"><img class="article__hero" src="${esc(proxied(site.imageProxy, a.image, 960))}" alt="" fetchpriority="high"></a>` : '';
+  const hero = a.image ? `<a class="story__media" href="${esc(a.url)}" rel="noopener"><img class="article__hero" src="${esc(proxied(site.imageProxy, a.image, 960))}" data-alt="${esc(a.image)}" alt="" fetchpriority="high" onerror="if(this.dataset.alt&amp;&amp;this.src!==this.dataset.alt){this.src=this.dataset.alt}else{this.parentNode.remove()}"></a>` : '';
   const cta = a.kind === 'audio' && a.audio
     ? `<audio class="story__audio" controls preload="none" src="${esc(a.audio)}"></audio>\n      <a class="btn btn--ghost story__cta" href="${esc(a.url)}" rel="noopener">Episode page at ${esc(who)} →</a>`
     : `<a class="btn story__cta" href="${esc(a.url)}" rel="noopener">${verb(a)} at ${esc(who)} →</a>`;
   const moreHtml = more.map((m) => `<article class="card${m.image ? '' : ' card--noimg'} card--${esc(m.kind || 'news')}">
-  ${m.image ? `<a class="card__media" href="${esc(shareUrl(m, site))}"><img loading="lazy" decoding="async" src="${esc(proxied(site.imageProxy, m.image, 480))}" alt=""></a>` : ''}
+  ${m.image ? `<a class="card__media" href="${esc(shareUrl(m, site))}"><img loading="lazy" decoding="async" src="${esc(proxied(site.imageProxy, m.image, 480))}" data-alt="${esc(m.image)}" alt="" onerror="if(this.dataset.alt&amp;&amp;this.src!==this.dataset.alt){this.src=this.dataset.alt}else{this.closest('.card')?.classList.add('card--noimg');this.parentNode.remove()}"></a>` : ''}
   <div class="card__body">
     <div class="card__meta"><span class="card__kind">${KIND_LABEL[m.kind] || 'News'}</span><span class="card__source">${esc(m.internal ? site.name : m.source)}</span></div>
     <h3 class="card__title"><a href="${esc(shareUrl(m, site))}">${esc(m.title)}</a></h3>
