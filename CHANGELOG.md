@@ -4,6 +4,10 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 17 October 2026
+
+- **gaintv.app** and **gainradio.app** now open GAIN TV and GAIN Radio directly.
+
 ## 16 October 2026
 
 - **GAIN TV** and **GAIN Radio**: branded front doors for the Glorious Anchor International Network at [/tv/](/tv/) and [/radio/](/radio/). GAIN TV opens on the video section; GAIN Radio opens on the new **Radio** tab.

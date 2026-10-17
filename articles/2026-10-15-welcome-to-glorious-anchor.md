@@ -32,7 +32,7 @@ Use the search box to look across every headline, video and post at once. Type `
 
 ## GAIN TV and GAIN Radio
 
-Glorious Anchor is part of the Glorious Anchor International Network, GAIN for short. Two of its channels live here as their own front doors: [GAIN TV](/tv/) opens straight onto the video section, and [GAIN Radio](/radio/) opens onto the podcasts. Everything else on the site is one tap away from either.
+Glorious Anchor is part of the Glorious Anchor International Network, GAIN for short. Two of its channels live here as their own front doors: [GAIN TV](/tv/) opens straight onto the video section, and [GAIN Radio](/radio/) opens onto the podcasts. They have their own addresses too: gaintv.app and gainradio.app bring you straight here. Everything else on the site is one tap away from either.
 
 ## Make it yours
 
