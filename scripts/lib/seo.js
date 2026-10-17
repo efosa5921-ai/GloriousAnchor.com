@@ -50,6 +50,29 @@ export function coverIndex(key = '') { let h = 0; for (const c of String(key)) h
 export function coverHtml(a) {
   return `<span class="cover cover--${coverIndex(a.sourceId || a.source)}" aria-hidden="true"><svg viewBox="0 0 32 32"><use href="/assets/anchor.svg#anchor"/></svg><b>${esc(a.source || '')}</b></span>`;
 }
+const KIND_LABEL = { news: 'News', article: 'Article', video: 'Video', audio: 'Audio', social: 'Post', pick: 'Pick' };
+const IMG_FALLBACK = `onerror="if(this.dataset.alt&amp;&amp;this.src!==this.dataset.alt){this.src=this.dataset.alt}else{var c=this.closest('.card');c&amp;&amp;c.classList.add(c.classList.contains('card--social')?'card--noimg':'card--cover');this.parentNode.innerHTML=c&amp;&amp;c.dataset.cover||''}"`;
+/**
+ * A static story card in the site's card markup (used by the digest, story pages and prerendered headlines).
+ * href: where the card links; summary/date: whether to show them; extra: extra classes.
+ */
+export function cardHtml(a, { href = a.url, imageProxy = '', site = null, summary = true, date = true, extra = '' } = {}) {
+  const who = a.internal && site ? site.name : (a.source || '');
+  const cls = `card card--${a.kind || 'news'}${a.image ? '' : a.kind === 'social' ? ' card--noimg' : ' card--cover'}${a.pinned ? ' card--pinned' : ''}${extra ? ` ${extra}` : ''}`;
+  const cover = a.kind === 'social' ? '' : coverHtml({ ...a, source: who });
+  const media = a.image
+    ? `<a class="card__media" href="${esc(href)}"><img loading="lazy" decoding="async" src="${esc(proxied(imageProxy, a.image, 480))}" data-alt="${esc(a.image)}" alt="" ${IMG_FALLBACK}></a>`
+    : cover ? `<a class="card__media" href="${esc(href)}">${cover}</a>` : '';
+  const kind = a.internal ? (a.pinned ? 'Pinned' : 'Ours') : a.pinned ? 'Pinned pick' : (KIND_LABEL[a.kind] || 'News');
+  return `<article class="${cls}" data-cover="${esc(cover)}">
+  ${media}
+  <div class="card__body">
+    <div class="card__meta"><span class="card__kind">${kind}</span><span class="card__source">${esc(who)}</span>${date ? `<span class="dot">·</span><time datetime="${new Date(a.publishedAt).toISOString()}">${new Date(a.publishedAt).toISOString().slice(0, 10)}</time>` : ''}</div>
+    <h3 class="card__title"><a href="${esc(href)}"${a.internal ? '' : ' rel="noopener"'}>${esc(a.title)}</a></h3>
+    ${summary && a.summary ? `<p class="card__summary">${esc(a.summary)}</p>` : ''}
+  </div>
+</article>`;
+}
 export function prerenderCards(articles, n = 24, imageProxy = '') {
   const pinned = articles.filter((a) => a.pinned);
   const rest = articles.filter((a) => !a.pinned);

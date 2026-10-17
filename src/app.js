@@ -144,8 +144,9 @@
       b.addEventListener('click', () => { state.category = c.id; state.showSaved = false; state.shown = PAGE; update(); });
       els.cats.appendChild(b);
     }
+    const digest = document.createElement('a'); digest.className = 'cat cat--link cat--digest'; digest.href = `${BASE}digest/`; digest.textContent = '☀ Daily digest';
     const link = document.createElement('a'); link.className = 'cat cat--link'; link.href = `${BASE}churches/`; link.textContent = '⛪ Find a church';
-    els.cats.appendChild(link);
+    els.cats.append(digest, link);
   }
   function renderSources() {
     const byCat = state.category === 'top' ? state.meta.sources

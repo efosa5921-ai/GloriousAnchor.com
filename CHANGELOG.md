@@ -8,7 +8,7 @@ summary: A running list of what has been added to the site, newest first.
 
 - **Pictures for more stories**: when a feed leaves a story without a picture, we fetch the one its own page names for sharing. Stories that still have none get a designed cover with the source's name instead of a blank.
 - **Share from any card**: WhatsApp, X, Facebook, Telegram, email or copy link, and your phone's own share sheet on mobile. Shared stories use a short gloriousanchor.com link that opens a story page here, with the headline, a "read the full story" button and more from the same section.
-- **Daily digest** at [/digest/](/digest/): the day's best stories in one short list, with a one-tap "Copy for WhatsApp" and an email-ready feed.
+- **Daily digest** at [/digest/](/digest/): the day's best stories as picture cards, with a one-tap "Copy for WhatsApp" and an email-ready feed. Reach it from the "Daily digest" tab or the app's home-screen shortcut.
 - **RSS feeds**: [/feed.xml](/feed.xml) for the latest items and [/digest/feed.xml](/digest/feed.xml) for one digest a day.
 - New items can be **posted automatically to a Telegram channel and to X** once those accounts are connected.
 - Optional **visitor statistics** (GoatCounter or Cloudflare, both cookie-free) switched on from the admin settings.

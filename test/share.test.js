@@ -28,7 +28,7 @@ test('renderSharePage shows the story, the brand, the read button and related st
   assert.doesNotMatch(html, /http-equiv="refresh"|location\.replace/);
   assert.match(html, /class="btn story__cta" href="https:\/\/ex\.com\/a\?b=1" rel="noopener">Watch at Example →<\/a>/);
   assert.match(html, /<h2>More in YouTube<\/h2>/);
-  assert.match(html, /href="https:\/\/gloriousanchor\.com\/s\/r1\/">Title r1<\/a>/);
+  assert.match(html, /href="https:\/\/gloriousanchor\.com\/s\/r1\/"[^>]*>Title r1<\/a>/);
   assert.match(html, /href="\.\.\/\.\.\/\?c=video"/);
   const pod = renderSharePage({ ...a, kind: 'audio', audio: 'https://ex.com/ep.mp3', image: null }, site, [], '');
   assert.match(pod, /<audio class="story__audio" controls preload="none" src="https:\/\/ex\.com\/ep\.mp3">/);
@@ -48,6 +48,6 @@ test('story page pictures fall back to the original, then hide, when the proxy f
 test('cards without a picture get a branded cover; social posts keep the quote style', () => {
   const a = { id: 'c1', title: 'T', url: 'https://ex.com/t', source: 'Religion News Service', sourceId: 'rns', kind: 'news', publishedAt: 0, category: 'news' };
   const html = renderSharePage(a, site, [{ ...a, id: 'c2' }, { ...a, id: 'c3', kind: 'social', source: 'r/x' }], 'News');
-  assert.match(html, /<article class="card card--cover card--news">\s*<a class="card__media" href="https:\/\/gloriousanchor\.com\/s\/c2\/"><span class="cover cover--\d" aria-hidden="true"><svg[^]*?<b>Religion News Service<\/b><\/span><\/a>/);
-  assert.match(html, /<article class="card card--noimg card--social">\s*<div class="card__body">/);
+  assert.match(html, /<article class="card card--news card--cover" data-cover="[^"]*">\s*<a class="card__media" href="https:\/\/gloriousanchor\.com\/s\/c2\/"><span class="cover cover--\d" aria-hidden="true"><svg[^]*?<b>Religion News Service<\/b><\/span><\/a>/);
+  assert.match(html, /<article class="card card--social card--noimg" data-cover="">\s*<div class="card__body">/);
 });

@@ -101,6 +101,7 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 .cat:hover { background: rgba(255,255,255,.1); }
 .cat[aria-current="true"] { background: var(--gold); color: #0b1f3a; }
 .cat--link { text-decoration: none; margin-left: auto; border: 1px solid rgba(255,255,255,.25); }
+.cat--link + .cat--link { margin-left: 4px; }
 .cat--link:hover { text-decoration: none; background: rgba(255,255,255,.14); }
 
 /* Toolbar */
@@ -180,7 +181,22 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 .story__note { color: var(--muted); font-size: .9rem; margin-top: 18px; }
 .story__more .grid { margin: 12px 0 20px; }
 .story__more .card__kind { margin-right: 2px; }
-.digest__actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0 24px; }
+.digest__head { padding: 36px 0 22px; max-width: 760px; }
+.digest__kicker { margin: 0 0 8px; color: var(--gold); font-weight: 700; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; }
+.digest__h1 { font-family: var(--serif); font-size: clamp(2rem, 5vw, 3rem); line-height: 1.1; margin: 0 0 12px; }
+.digest__lede { font-size: 1.1rem; line-height: 1.6; color: var(--muted); margin: 0; }
+.digest__actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0 0; }
+.digest__actions .btn { text-decoration: none; }
+.digest__stories { margin-top: 8px; }
+.digest__stories .card--lead { grid-column: 1 / -1; }
+.digest__stories .card--lead .card__media { aspect-ratio: 21 / 9; }
+.digest__stories .card--lead .card__title { font-size: clamp(1.4rem, 3vw, 2rem); }
+.digest__stories .card--lead .card__summary { font-size: 1.05rem; -webkit-line-clamp: 4; }
+.digest__stories .card--lead.card--cover .cover b { font-size: 1.8rem; }
+.digest__stories .card__title { padding-right: 0; }
+.digest__foot { margin: 36px 0 20px; padding-top: 20px; border-top: 2px solid var(--gold); max-width: 760px; }
+.digest__foot p:first-child { font-family: var(--serif); font-style: italic; font-size: 1.05rem; }
+@media (min-width: 881px) { .digest__stories .card--lead { display: grid; grid-template-columns: 1.3fr 1fr; } .digest__stories .card--lead .card__media { aspect-ratio: auto; height: 100%; min-height: 300px; } .digest__stories .card--lead .card__body { justify-content: center; padding: 28px; } }
 .digest__body ul { padding: 0; }
 .digest__date { color: var(--muted); }
 .digest__list { list-style: none; margin: 0; padding: 0; }

@@ -38,3 +38,16 @@ test('proxied rewrites third-party images through the template but leaves our ow
   assert.equal(proxied(t, 'https://gloriousanchor.com/assets/social.jpg', 480), 'https://gloriousanchor.com/assets/social.jpg');
   assert.equal(proxied('', 'https://cdn.example.com/a.jpg', 480), 'https://cdn.example.com/a.jpg');
 });
+
+test('cardHtml renders the site card markup with picture, cover or quote style', async () => {
+  const { cardHtml } = await import('../scripts/lib/seo.js');
+  const base = { id: 'k', title: 'T <1>', url: 'https://ex.com/k', source: 'Src', sourceId: 'src', publishedAt: 0, kind: 'news' };
+  const pic = cardHtml({ ...base, image: 'https://ex.com/p.jpg', summary: 'S' }, { imageProxy: 'https://p/?u={url}&w={w}' });
+  assert.match(pic, /^<article class="card card--news" data-cover="/);
+  assert.match(pic, /src="https:\/\/p\/\?u=https%3A%2F%2Fex\.com%2Fp\.jpg&amp;w=480"/);
+  assert.match(pic, /<p class="card__summary">S<\/p>/);
+  assert.match(pic, /T &lt;1&gt;/);
+  assert.match(cardHtml(base, {}), /class="card card--news card--cover"[^]*<span class="cover cover--\d"/);
+  assert.match(cardHtml({ ...base, kind: 'social' }, {}), /class="card card--social card--noimg" data-cover="">\s*<div class="card__body">/);
+  assert.match(cardHtml({ ...base, internal: true, pinned: true }, { site: { name: 'GA' } }), /card__kind">Pinned<\/span><span class="card__source">GA</);
+});

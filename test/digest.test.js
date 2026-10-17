@@ -63,6 +63,7 @@ test('the digest page uses theme classes while the email item keeps inline colou
   const items = [mk('a')];
   assert.match(digestHtml(items, site, '2026-10-17'), /style="font-weight:600;color:#0b1f3a/);
   const page = renderDigestPage(items, site, '2026-10-17', 'T');
-  assert.match(page, /class="digest__title"/);
+  assert.match(page, /<article class="card card--news card--cover card--lead"/);
+  assert.match(page, /href="https:\/\/gloriousanchor\.com\/s\/a\/"/);
   assert.doesNotMatch(page, /color:#0b1f3a/);
 });

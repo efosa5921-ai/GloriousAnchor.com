@@ -32,6 +32,16 @@
   ],
   "shortcuts": [
     {
+      "name": "Daily digest",
+      "url": "../digest/",
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
       "name": "Find a church",
       "url": "../churches/",
       "icons": [

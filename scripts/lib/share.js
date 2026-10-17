@@ -3,7 +3,7 @@
  * Glorious Anchor preview card; opened, it shows the story card on our site with a clear "read the full story" button
  * and more stories from the same section, so a shared link always introduces the site before sending readers on.
  */
-import { proxied, coverHtml } from './seo.js';
+import { proxied, cardHtml } from './seo.js';
 
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const base = (site) => (site.url || '').replace(/\/$/, '');
@@ -35,13 +35,7 @@ export function renderSharePage(a, site, more = [], categoryLabel = '') {
   const cta = a.kind === 'audio' && a.audio
     ? `<audio class="story__audio" controls preload="none" src="${esc(a.audio)}"></audio>\n      <a class="btn btn--ghost story__cta" href="${esc(a.url)}" rel="noopener">Episode page at ${esc(who)} →</a>`
     : `<a class="btn story__cta" href="${esc(a.url)}" rel="noopener">${verb(a)} at ${esc(who)} →</a>`;
-  const moreHtml = more.map((m) => `<article class="card${m.image ? '' : m.kind === 'social' ? ' card--noimg' : ' card--cover'} card--${esc(m.kind || 'news')}">
-  ${m.image ? `<a class="card__media" href="${esc(shareUrl(m, site))}"><img loading="lazy" decoding="async" src="${esc(proxied(site.imageProxy, m.image, 480))}" data-alt="${esc(m.image)}" alt="" onerror="if(this.dataset.alt&amp;&amp;this.src!==this.dataset.alt){this.src=this.dataset.alt}else{this.closest('.card')?.classList.add('card--noimg');this.parentNode.remove()}"></a>` : m.kind === 'social' ? '' : `<a class="card__media" href="${esc(shareUrl(m, site))}">${coverHtml(m)}</a>`}
-  <div class="card__body">
-    <div class="card__meta"><span class="card__kind">${KIND_LABEL[m.kind] || 'News'}</span><span class="card__source">${esc(m.internal ? site.name : m.source)}</span></div>
-    <h3 class="card__title"><a href="${esc(shareUrl(m, site))}">${esc(m.title)}</a></h3>
-  </div>
-</article>`).join('\n');
+  const moreHtml = more.map((m) => cardHtml(m, { href: shareUrl(m, site), imageProxy: site.imageProxy, site, summary: false, date: false })).join('\n');
   return `<!doctype html>
 <html lang="en">
 <head>

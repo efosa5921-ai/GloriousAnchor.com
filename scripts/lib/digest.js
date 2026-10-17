@@ -5,6 +5,7 @@
  */
 
 import { shareUrl } from './share.js';
+import { cardHtml } from './seo.js';
 
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const base = (site) => (site.url || '').replace(/\/$/, '');
@@ -84,23 +85,30 @@ export function renderDigestPage(items, site, date, text) {
   <link rel="alternate" type="application/rss+xml" title="${esc(site.name)} — Daily digest" href="feed.xml">
   <link rel="stylesheet" href="../styles.css">
 </head>
-<body class="article-page">
+<body class="article-page digest-page">
   <header class="masthead"><div class="wrap masthead__row">
     <a class="brand" href="../" aria-label="${esc(site.name)} home"><svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true"><use href="../assets/anchor.svg#anchor"/></svg><span class="brand__text"><span class="brand__name">${esc(site.name)}</span><span class="brand__tag">Daily digest</span></span></a>
+    <nav class="masthead__tools article-nav"><a href="../">← All headlines</a></nav>
   </div></header>
-  <main class="wrap article">
-    <h1>Today on ${esc(site.name)}</h1>
-    <p class="article__lede">The day's best stories in one short list. Copy it into a WhatsApp or Telegram group, or subscribe by email.</p>
-    <div class="digest__actions">
-      <button class="btn" id="copyWa" type="button">Copy for WhatsApp</button>
-      <a class="btn btn--ghost" href="https://wa.me/?text=${encodeURIComponent(text)}" target="_blank" rel="noopener">Share on WhatsApp</a>
-      <a class="btn btn--ghost" href="feed.xml">Email / RSS feed</a>
-    </div>
-    <div class="article__body digest__body">
-${digestHtml(items, site, date, { inline: false })}
-    </div>
+  <main class="wrap">
+    <section class="digest__head">
+      <p class="digest__kicker">Daily digest · ${esc(longDate(date))}</p>
+      <h1 class="digest__h1">Today on ${esc(site.name)}</h1>
+      <p class="digest__lede">The day's best stories, chosen from every section. Pass them on to your group, or have them land in your inbox each morning.</p>
+      <div class="digest__actions">
+        <button class="btn" id="copyWa" type="button">Copy for WhatsApp</button>
+        <a class="btn btn--ghost" href="https://wa.me/?text=${encodeURIComponent(text)}" target="_blank" rel="noopener">Share on WhatsApp</a>
+        <a class="btn btn--ghost" href="feed.xml">Get it by email</a>
+      </div>
+    </section>
+    <section class="digest__stories grid">
+${items.map((a, i) => cardHtml(a, { href: shareUrl(a, site), imageProxy: site.imageProxy, site, summary: true, date: false, extra: i === 0 ? 'card--lead' : '' })).join('\n')}
+    </section>
+    <section class="digest__foot">
+      <p>${esc(site.verse || '')}</p>
+      <p class="footer__meta">Subscribe by email: paste <code>${esc(b)}/digest/feed.xml</code> into Buttondown, Mailchimp or any RSS-to-email service, or open it in a feed reader. A new digest every day.</p>
+    </section>
     <pre id="digestText" hidden>${esc(text)}</pre>
-    <p class="footer__meta">Subscribe by email: paste <code>${esc(b)}/digest/feed.xml</code> into any RSS-to-email service, or read it in a feed reader.</p>
   </main>
   <footer class="footer"><div class="wrap"><p class="footer__meta"><a href="../">${esc(site.name)}</a> · <a href="../articles/">Our articles</a> · <a href="../churches/">Find a church</a></p></div></footer>
   <script>
