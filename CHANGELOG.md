@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 18 October 2026
 
+- **Share the digest as a picture**: a branded card of the day's headlines for WhatsApp, Instagram or Facebook, with the text copied for the caption.
 - **Follow us**: the Glorious Anchor WhatsApp channel and Telegram channel are linked under the subscribe box and in the footer.
 - **The Holy Spirit** tab: news and teaching on the Spirit-filled life from Charisma News, Charisma Magazine, The Pneuma Review and Influence Magazine.
 

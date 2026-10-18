@@ -239,6 +239,7 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 .quiz__list a:hover strong { text-decoration: underline; }
 .digest__actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0 0; }
 .digest__actions .btn { text-decoration: none; }
+.digest__hint { margin: 10px 0 0; color: var(--muted); font-size: .9rem; }
 .digest__stories { margin-top: 8px; }
 .digest__stories .card--lead { grid-column: 1 / -1; }
 .digest__stories .card--lead .card__media { aspect-ratio: 21 / 9; }

@@ -6,6 +6,7 @@
 
 import { shareUrl } from './share.js';
 import { cardHtml, subscribeHtml } from './seo.js';
+import { previewImage } from './share.js';
 
 /** Markdown version for pasting into a newsletter editor (Buttondown, Substack, etc.). */
 export function digestMarkdown(items, site, date) {
@@ -113,7 +114,9 @@ export function renderDigestPage(items, site, date, text) {
         <a class="btn btn--ghost" href="https://wa.me/?text=${encodeURIComponent(text)}" target="_blank" rel="noopener">Share on WhatsApp</a>
         ${site.newsletter ? `<a class="btn btn--ghost" href="#subscribe">Get it by email</a>` : `<a class="btn btn--ghost" href="feed.xml">RSS feed</a>`}
         <button class="btn btn--ghost" id="copyMd" type="button" title="Markdown for a newsletter editor">Copy for email</button>
+        <button class="btn btn--ghost" id="shareCard" type="button" title="A picture of today's headlines to post on WhatsApp, Instagram or Facebook">Share as picture</button>
       </div>
+      <p class="digest__hint" id="cardHint" hidden></p>
     </section>
     <section class="digest__stories grid">
 ${items.map((a, i) => cardHtml(a, { href: shareUrl(a, site), imageProxy: site.imageProxy, site, summary: true, date: false, extra: i === 0 ? 'card--lead' : '' })).join('\n')}
@@ -124,6 +127,7 @@ ${items.map((a, i) => cardHtml(a, { href: shareUrl(a, site), imageProxy: site.im
       <p class="footer__meta">Feed readers and automation: <code>${esc(b)}/digest/feed.xml</code> carries one digest a day; <code>${esc(b)}/feed.xml</code> carries every new item.</p>
     </section>
     <pre id="digestText" hidden>${esc(text)}</pre>
+    <script type="application/json" id="digestData">${JSON.stringify({ site: site.name, date: longDate(date), url: b.replace(/^https?:\/\//, ''), items: items.map((a) => ({ title: a.title, source: a.internal ? site.name : a.source, image: a.image ? previewImage(a, site) : null })) }).replace(/</g, '\\u003c')}</script>
     <pre id="digestMd" hidden>${esc(md)}</pre>
   </main>
   <footer class="footer"><div class="wrap"><p class="footer__meta"><a href="../">${esc(site.name)}</a> · <a href="../articles/">Our articles</a> · <a href="../churches/">Find a church</a></p></div></footer>
@@ -135,6 +139,64 @@ ${items.map((a, i) => cardHtml(a, { href: shareUrl(a, site), imageProxy: site.im
     });
     copier('copyWa', 'digestText', 'Copy for WhatsApp');
     copier('copyMd', 'digestMd', 'Copy for email');
+    // "Share as picture": draw a branded card of today's headlines and hand it to the phone's share sheet (or download it).
+    const cardBtn = document.getElementById('shareCard'), hint = document.getElementById('cardHint');
+    async function digestCard() {
+      const d = JSON.parse(document.getElementById('digestData').textContent);
+      const W = 1080, H = 1350, c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d');
+      const g = x.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#1f3f6e'); g.addColorStop(.6, '#0b1f3a'); g.addColorStop(1, '#07142a'); x.fillStyle = g; x.fillRect(0, 0, W, H);
+      // anchor mark
+      x.save(); x.translate(72, 64); x.scale(2.6, 2.6); x.fillStyle = '#0b1f3a'; x.beginPath(); x.arc(16, 16, 15, 0, Math.PI * 2); x.fill();
+      x.strokeStyle = '#e8b84a'; x.lineWidth = 2.2; x.lineCap = 'round'; x.lineJoin = 'round';
+      x.beginPath(); x.arc(16, 7.5, 2.5, 0, Math.PI * 2); x.stroke(); x.beginPath(); x.moveTo(16, 10); x.lineTo(16, 25); x.stroke(); x.beginPath(); x.moveTo(11, 13.5); x.lineTo(21, 13.5); x.stroke();
+      x.beginPath(); x.moveTo(7, 19); x.bezierCurveTo(7, 23, 11, 26, 16, 26); x.bezierCurveTo(21, 26, 25, 23, 25, 19); x.stroke();
+      x.beginPath(); x.moveTo(7, 19); x.lineTo(5, 17.5); x.moveTo(7, 19); x.lineTo(9.5, 18.5); x.moveTo(25, 19); x.lineTo(27, 17.5); x.moveTo(25, 19); x.lineTo(22.5, 18.5); x.stroke(); x.restore();
+      x.fillStyle = '#fff'; x.font = '700 44px Georgia, "Times New Roman", serif'; x.fillText(d.site, 172, 100);
+      x.fillStyle = '#e8b84a'; x.font = '700 26px Inter, Arial, sans-serif'; x.fillText('DAILY DIGEST · ' + d.date.toUpperCase(), 172, 138);
+      // lead picture (if the proxy allows cross-origin drawing)
+      let y = 200;
+      const lead = d.items.find((i) => i.image);
+      if (lead) {
+        try {
+          const img = await new Promise((res, rej) => { const im = new Image(); im.crossOrigin = 'anonymous'; im.onload = () => res(im); im.onerror = rej; im.src = lead.image; });
+          const bw = W - 144, bh = 380, r = Math.max(bw / img.width, bh / img.height), sw = bw / r, sh = bh / r;
+          x.save(); x.beginPath(); x.roundRect(72, y, bw, bh, 24); x.clip(); x.drawImage(img, (img.width - sw) / 2, (img.height - sh) / 2, sw, sh, 72, y, bw, bh); x.restore();
+          y += bh + 40;
+        } catch { /* no picture, headlines only */ }
+      }
+      x.fillStyle = '#fff'; x.font = '700 56px Georgia, "Times New Roman", serif'; x.fillText('Today on ' + d.site, 72, y + 50); y += 110;
+      const wrap = (t, max) => { const words = t.split(' '), lines = []; let line = ''; for (const w of words) { const test = line ? line + ' ' + w : w; if (x.measureText(test).width > max && line) { lines.push(line); line = w; } else line = test; } if (line) lines.push(line); return lines; };
+      const slotsAvail = Math.floor((H - 120 - y) / 118);
+      for (const it of d.items.slice(0, Math.max(3, Math.min(8, slotsAvail)))) {
+        x.fillStyle = '#e8b84a'; x.beginPath(); x.arc(84, y + 14, 7, 0, Math.PI * 2); x.fill();
+        x.fillStyle = '#fff'; x.font = '600 36px Inter, Arial, sans-serif';
+        const lines = wrap(it.title, W - 190).slice(0, 2); if (lines.length === 2 && wrap(it.title, W - 190).length > 2) lines[1] = lines[1].replace(/\s?\S*$/, '…');
+        lines.forEach((l, i) => x.fillText(l, 110, y + 26 + i * 44));
+        x.fillStyle = 'rgba(255,255,255,.65)'; x.font = '400 26px Inter, Arial, sans-serif'; x.fillText(it.source, 110, y + 26 + lines.length * 44 - 6);
+        y += 40 + lines.length * 44 + 18;
+      }
+      x.fillStyle = '#e8b84a'; x.font = '700 32px Inter, Arial, sans-serif'; x.fillText(d.url + '/digest', 72, H - 60);
+      x.fillStyle = 'rgba(255,255,255,.6)'; x.font = '400 26px Inter, Arial, sans-serif'; x.textAlign = 'right'; x.fillText('Follow for more every day', W - 72, H - 60); x.textAlign = 'left';
+      return new Promise((res) => c.toBlob(res, 'image/png'));
+    }
+    cardBtn.addEventListener('click', async () => {
+      cardBtn.disabled = true; cardBtn.textContent = 'Preparing…';
+      try {
+        const blob = await digestCard(); window.__digestCardSize = blob.size;
+        const file = new File([blob], 'glorious-anchor-digest.png', { type: 'image/png' });
+        const caption = document.getElementById('digestText').textContent;
+        try { await navigator.clipboard.writeText(caption); } catch { /* ignore */ }
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          await navigator.share({ files: [file], text: caption });
+          hint.textContent = 'Shared. The headline text is on your clipboard to paste as the caption.';
+        } else {
+          const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = file.name; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+          hint.textContent = 'Picture downloaded, and the headline text is on your clipboard to paste as the caption.';
+        }
+        hint.hidden = false;
+      } catch (err) { if (err?.name !== 'AbortError') { hint.textContent = 'Could not make the picture: ' + err.message; hint.hidden = false; } }
+      cardBtn.disabled = false; cardBtn.textContent = 'Share as picture';
+    });
     const q = new URLSearchParams(location.search), notice = document.getElementById('notice');
     if (q.has('subscribed')) { notice.textContent = 'Almost there: check your inbox and tap the confirmation link.'; notice.hidden = false; }
     else if (q.has('confirmed')) { notice.textContent = 'You are in. The next digest lands in your inbox tomorrow morning.'; notice.hidden = false; }
