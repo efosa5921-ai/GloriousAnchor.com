@@ -77,9 +77,18 @@ export function cardHtml(a, { href = a.url, imageProxy = '', site = null, summar
  * Email sign-up box. site.newsletter is the public sign-up page (e.g. https://buttondown.com/name); Buttondown
  * pages get an inline form posting to their embed endpoint, anything else gets a button to the page.
  */
+/** "Follow us" links: WhatsApp channel, Telegram channel, X. Only the ones set in feeds.json → site appear. */
+export function followHtml(site, { label = 'Follow us' } = {}) {
+  const links = [];
+  if (site.whatsappChannel) links.push(['WhatsApp channel', site.whatsappChannel, 'whatsapp']);
+  if (site.telegramChannel) links.push(['Telegram', site.telegramChannel, 'telegram']);
+  if (site.xHandle) links.push([`@${site.xHandle.replace(/^@/, '')} on X`, `https://x.com/${encodeURIComponent(site.xHandle.replace(/^@/, ''))}`, 'x']);
+  if (!links.length) return '';
+  return `<nav class="follow" aria-label="${esc(label)}"><span class="follow__label">${esc(label)}</span>${links.map(([text, href, k]) => `<a class="follow__link follow__link--${k}" href="${esc(href)}" target="_blank" rel="noopener">${esc(text)}</a>`).join('')}</nav>`;
+}
 export function subscribeHtml(site, { compact = false } = {}) {
   const url = site.newsletter;
-  if (!url) return '';
+  if (!url) return followHtml(site);
   const m = url.match(/^https?:\/\/buttondown\.(?:com|email)\/([\w.-]+)\/?$/i);
   const form = m
     ? `<form class="subscribe__form" action="https://buttondown.com/api/emails/embed-subscribe/${esc(m[1])}" method="post" target="_blank">
@@ -90,7 +99,7 @@ export function subscribeHtml(site, { compact = false } = {}) {
   return `<section class="subscribe${compact ? ' subscribe--compact' : ''}" aria-label="Email newsletter">
     <div class="subscribe__text"><strong>Every morning, in your inbox.</strong> The day's best Christian news, articles and video from ${esc(site.name)}. Free, no spam, leave any time.</div>
     ${form}
-  </section>`;
+  </section>${followHtml(site)}`;
 }
 export function prerenderCards(articles, n = 24, imageProxy = '') {
   const pinned = articles.filter((a) => a.pinned);

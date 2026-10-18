@@ -62,3 +62,13 @@ test('subscribeHtml renders a Buttondown form, a plain button for other services
   assert.doesNotMatch(other, /<form/);
   assert.equal(subscribeHtml({ name: 'GA' }), '');
 });
+
+test('followHtml lists only the channels that are set and rides along with the subscribe box', async () => {
+  const { followHtml, subscribeHtml } = await import('../scripts/lib/seo.js');
+  assert.equal(followHtml({}), '');
+  const f = followHtml({ whatsappChannel: 'https://whatsapp.com/channel/abc', telegramChannel: 'https://t.me/ga', xHandle: '@ga' });
+  assert.match(f, /follow__link--whatsapp" href="https:\/\/whatsapp\.com\/channel\/abc"/);
+  assert.match(f, /follow__link--telegram" href="https:\/\/t\.me\/ga"/);
+  assert.match(f, /follow__link--x" href="https:\/\/x\.com\/ga"[^>]*>@ga on X</);
+  assert.match(subscribeHtml({ name: 'GA', newsletter: 'https://buttondown.com/ga', telegramChannel: 'https://t.me/ga' }), /<\/section><nav class="follow"/);
+});
