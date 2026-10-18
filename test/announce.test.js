@@ -43,3 +43,17 @@ test('date-only or numbered episode titles get the show name in front', async ()
   assert.equal(postTitle({ title: 'A real headline', source: 'RNS' }), 'A real headline');
   assert.match(telegramMessage({ id: 'd', title: '18.10.26', url: 'https://ex.com/d', source: 'The Briefing', kind: 'audio', publishedAt: 0 }, site), /^<b>The Briefing: 18\.10\.26<\/b>/);
 });
+
+test('findRepost matches by id, URL, article slug or title fragment', async () => {
+  const { findRepost } = await import('../scripts/lib/announce.js');
+  const list = [
+    { id: 'a1', title: 'How did Noah warn the world?', url: 'https://gloriousanchor.com/articles/noah-warning/', slug: 'noah-warning' },
+    { id: 'b2', title: 'Other story', url: 'https://ex.com/story' },
+  ];
+  assert.equal(findRepost(list, 'b2').id, 'b2');
+  assert.equal(findRepost(list, 'https://www.gloriousanchor.com/articles/noah-warning').id, 'a1');
+  assert.equal(findRepost(list, 'HTTPS://EX.COM/story/').id, 'b2');
+  assert.equal(findRepost(list, 'noah warn').id, 'a1');
+  assert.equal(findRepost(list, 'nothing here'), null);
+  assert.equal(findRepost(list, ''), null);
+});

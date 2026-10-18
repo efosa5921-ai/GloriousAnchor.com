@@ -35,6 +35,17 @@ export function telegramMessage(a, site) {
   return `<b>${esc(postTitle(a))}</b>\n${esc(who)} · ${tag} ${esc(site.name)}\n${esc(shareUrl(a, site))}`;
 }
 
+/** The item to repost: matched by id, by URL (article page or source link), or by a title fragment. */
+export function findRepost(articles, needle) {
+  const n = String(needle || '').trim().toLowerCase();
+  if (!n) return null;
+  const norm = (u) => String(u || '').toLowerCase().replace(/^https?:\/\/(www\.)?/, '').replace(/\/+$/, '');
+  return articles.find((a) => a.id === n)
+    || articles.find((a) => norm(a.url) === norm(n) || (a.slug && norm(n).endsWith(`/articles/${a.slug}`)))
+    || articles.find((a) => String(a.title || '').toLowerCase().includes(n))
+    || null;
+}
+
 export function xText(a, site) {
   const who = a.internal ? '' : ` — ${a.source}`;
   const handle = site.xHandle ? ` via @${site.xHandle.replace(/^@/, '')}` : '';

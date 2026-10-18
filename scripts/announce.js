@@ -5,12 +5,14 @@
  * Keeps dist/data/announced.json so nothing is posted twice; the first run only records what exists (no flood).
  * X charges per post, so by default X receives only our own articles and picks; set X_STORIES_PER_RUN to add
  * that many fresh stories per build on top (Telegram is free and always gets everything selected).
+ * X posts carry the item's picture when it has one. Set X_REPOST to an article URL, id or title fragment to post
+ * that one item to X again (with its picture) even though it was announced before.
  * Usage: node scripts/announce.js [--dry-run]
  */
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { selectNew, telegramMessage, xText, oauthHeader } from './lib/announce.js';
+import { selectNew, telegramMessage, xText, oauthHeader, findRepost } from './lib/announce.js';
 import { previewImage } from './lib/share.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -38,13 +40,44 @@ async function postTelegram(a, site) {
   await call('sendMessage', { chat_id: telegram.chat, text, parse_mode: 'HTML', link_preview_options: { prefer_large_media: true } });
 }
 
+/** Upload the item's picture to X and return its media id, or null when there is none or the upload fails. */
+async function uploadXImage(a, site) {
+  if (!a.image) return null;
+  try {
+    const img = await fetch(previewImage(a, site), { headers: { 'User-Agent': 'GloriousAnchor/1.0' } });
+    if (!img.ok) throw new Error(`image ${img.status}`);
+    const bytes = await img.arrayBuffer();
+    if (bytes.byteLength > 5 * 1024 * 1024) throw new Error('image over 5 MB');
+    const type = img.headers.get('content-type')?.split(';')[0] || 'image/jpeg';
+    const attempt = async (url, extra = {}) => {
+      const form = new FormData();
+      form.append('media', new Blob([bytes], { type }), 'picture.jpg');
+      for (const [k, v] of Object.entries(extra)) form.append(k, v);
+      // OAuth 1.0a signs only the oauth_* parameters for multipart bodies.
+      const res = await fetch(url, { method: 'POST', headers: { authorization: oauthHeader({ method: 'POST', url, ...x }) }, body: form });
+      const text = await res.text();
+      if (!res.ok) throw new Error(`${res.status}: ${text.slice(0, 160)}`);
+      const json = JSON.parse(text);
+      return json.data?.id || json.media_id_string || null;
+    };
+    try { return await attempt('https://api.x.com/2/media/upload', { media_category: 'tweet_image', media_type: type }); }
+    catch (err) { console.warn(`  (v2 media upload failed: ${err.message}; trying v1.1)`); return await attempt('https://upload.twitter.com/1.1/media/upload.json'); }
+  } catch (err) {
+    console.warn(`  (picture skipped for X: ${err.message})`);
+    return null;
+  }
+}
+
 async function postX(a, site) {
   const url = 'https://api.twitter.com/2/tweets';
+  const mediaId = await uploadXImage(a, site);
+  const body = { text: xText(a, site), ...(mediaId ? { media: { media_ids: [mediaId] } } : {}) };
   const res = await fetch(url, {
     method: 'POST', headers: { 'content-type': 'application/json', authorization: oauthHeader({ method: 'POST', url, ...x }) },
-    body: JSON.stringify({ text: xText(a, site) }),
+    body: JSON.stringify(body),
   });
   if (!res.ok) throw new Error(`X ${res.status}: ${(await res.text()).slice(0, 200)}`);
+  if (mediaId) console.log('  (with picture)');
 }
 
 async function main() {
@@ -62,11 +95,21 @@ async function main() {
     console.log(`announce: first run, recorded ${articles.length} existing items without posting.`);
     return;
   }
+  let failures = 0;
+  if (env.X_REPOST) {
+    const a = findRepost(articles, env.X_REPOST);
+    if (!a) { console.warn(`repost: nothing matches "${env.X_REPOST}"`); failures++; }
+    else if (!x) console.warn('repost: X credentials not set');
+    else if (dry) console.log(`  [X repost] ${a.title}`);
+    else {
+      try { await postX(a, site); console.log(`  ✓ X repost: ${a.title}`); }
+      catch (err) { failures++; console.warn(`  ✗ X repost: ${a.title} — ${err.message}`); }
+    }
+  }
   const items = selectNew(articles, announced, { now });
   const xStoryBudget = Number(env.X_STORIES_PER_RUN || 0) || 0;
   let xStoriesUsed = 0;
   console.log(`announce: ${items.length} new item(s) to post${dry ? ' (dry run)' : ''}${telegram ? ' · Telegram' : ''}${x ? ' · X' : ''}`);
-  let failures = 0;
   for (const a of items) {
     const targets = [];
     if (telegram) targets.push(['Telegram', postTelegram]);

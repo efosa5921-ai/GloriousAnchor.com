@@ -11,6 +11,9 @@ on:
       x_stories:
         description: 'Fresh stories to post to X this run (own articles and picks always post)'
         default: '0'
+      x_repost:
+        description: 'Post this item to X again, with its picture (article URL, id or title fragment)'
+        default: ''
 
 permissions:
   contents: read
@@ -62,6 +65,7 @@ jobs:
           X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
           X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
           X_STORIES_PER_RUN: ${{ github.event.inputs.x_stories || '0' }}
+          X_REPOST: ${{ github.event.inputs.x_repost || '' }}
       - name: Check feed health
         id: health
         run: node scripts/health.js --threshold 3
