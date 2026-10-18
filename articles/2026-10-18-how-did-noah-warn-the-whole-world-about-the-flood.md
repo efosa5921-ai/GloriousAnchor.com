@@ -3,7 +3,7 @@ title: How did Noah inform people from Africa, Japan, Europe and America about t
 date: 2026-10-18
 author: Efosa Adun
 summary: In Noah's day there was one landmass, one language and far fewer people. Here is why his warning could reach everyone.
-image: https://pbs.twimg.com/tweet_video_thumb/GzP-UqpXkAEIePf.jpg
+image: images/noah-one-landmass.gif
 pinned: true
 ---
 
