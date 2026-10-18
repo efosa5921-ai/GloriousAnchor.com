@@ -191,6 +191,7 @@ preview data (Open Graph tags), or the public oEmbed endpoint for X, TikTok and 
 - Optional fields `title`, `summary`, `image`, `author`, `source`, `added` (date) override whatever was fetched.
 - **Instagram and Facebook** block automated previews, so give those posts a `title` (and ideally an `image`).
 - `note` shows as an editor's note on the card. `pinned: true` puts the pick at the top of Top Stories.
+- `categories` (a list of tab ids from `feeds.json`, e.g. `["holyspirit"]`) shows the pick in those tabs as well as Picks. Unknown ids are ignored with a warning.
 - Picks never age out; remove the line to remove the card. `"enabled": false` hides one temporarily.
 
 After each build, `dist/data/meta.json` lists every source with `ok: true/false` and an error message, so a wrong

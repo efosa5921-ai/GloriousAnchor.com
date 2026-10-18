@@ -400,8 +400,13 @@ async function buildOwnArticles(site) {
 }
 
 /** Build cards for every URL in picks.json, using a week-long cache of fetched metadata. */
-async function buildPicks(picksConfig, cache, limits, services) {
-  const picks = (picksConfig?.picks || []).filter((p) => p && p.url && p.enabled !== false);
+async function buildPicks(picksConfig, cache, limits, services, catIds = null) {
+  const picks = (picksConfig?.picks || []).filter((p) => p && p.url && p.enabled !== false).map((p) => {
+    if (!catIds || !Array.isArray(p.categories)) return p;
+    const known = p.categories.filter((c) => catIds.has(c));
+    for (const c of p.categories) if (!catIds.has(c)) console.warn(`  ! pick ${p.url}: unknown category "${c}" ignored`);
+    return { ...p, categories: known };
+  });
   const status = { id: PICKS_SOURCE.id, name: PICKS_SOURCE.name, ok: true, count: 0, errors: [] };
   const now = Date.now();
   const articles = await mapWithConcurrency(picks, limits.concurrency, async (pick) => {
@@ -492,7 +497,7 @@ async function main() {
   }
   // Picks are owner-curated: regenerated every build, never aged out, and they win over feed copies of the same URL.
   console.log(`Unfurling ${(picksConfig.picks || []).length} picks...`);
-  const picks = await buildPicks(picksConfig, picksCache, limits, services);
+  const picks = await buildPicks(picksConfig, picksCache, limits, services, new Set(categories.map((c) => c.id)));
   sourceStatus.push(picks.status);
   const pickUrls = new Set(picks.articles.map((a) => a.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/+$/, '')));
   articles = articles.filter((a) => !pickUrls.has(a.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/+$/, '')));

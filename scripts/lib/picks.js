@@ -133,6 +133,7 @@ export function pickToArticle(pick, fetched, firstSeen) {
   if (!pick.title) title = stripSiteSuffix(title, [f.siteName, provider, hostLabel(url)]);
   if (!title) return null;
   const descr = stripHtml(pick.summary ?? f.description ?? '');
+  const extraCats = [...new Set((Array.isArray(pick.categories) ? pick.categories : []).filter((c) => typeof c === 'string' && c && c !== PICKS_SOURCE.category))];
   const dateRaw = pick.added || pick.date || f.publishedAt;
   let publishedAt = dateRaw ? Date.parse(dateRaw) : NaN;
   if (Number.isNaN(publishedAt)) publishedAt = firstSeen || Date.now();
@@ -150,6 +151,7 @@ export function pickToArticle(pick, fetched, firstSeen) {
     sourceId: PICKS_SOURCE.id,
     sourceHome: pick.homepage || null,
     category: PICKS_SOURCE.category,
+    ...(extraCats.length ? { categories: [PICKS_SOURCE.category, ...extraCats] } : {}),
     featured: true,
     pinned: Boolean(pick.pinned),
   };

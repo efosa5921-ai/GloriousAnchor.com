@@ -151,8 +151,10 @@
   async function renderPicks() {
     const data = await loadJson('picks.json');
     data.picks ||= [];
-    view.append(h('h1', {}, 'Picks'), h('p', {}, 'Hand-picked links: articles, X posts, TikToks, videos, Instagram or Facebook posts. They stay on the site until you remove them.'));
-    const form = pickForm(null, (pick) => { data.picks.unshift(pick); markDirty('picks.json'); render(); });
+    const feeds = await loadJson('feeds.json');
+    const pickCats = (feeds.categories || []).filter((c) => !['top', 'picks', 'ours'].includes(c.id));
+    view.append(h('h1', {}, 'Picks'), h('p', {}, 'Hand-picked links: articles, X posts, TikToks, videos, Instagram or Facebook posts. They stay on the site until you remove them. Every pick appears in Picks and Top Stories; tick a tab to show it there too.'));
+    const form = pickForm(null, (pick) => { data.picks.unshift(pick); markDirty('picks.json'); render(); }, pickCats);
     view.append(form);
     view.append(h('h2', {}, `Current picks (${data.picks.length})`));
     view.append(h('ul', { class: 'list' }, data.picks.map((p, i) => h('li', { class: 'item' + (p.enabled === false ? ' item--off' : '') },
@@ -160,14 +162,15 @@
       h('div', { class: 'item__main' }, h('div', { class: 'item__title' }, p.title || p.url), h('div', { class: 'item__sub' }, [p.title ? p.url : null, p.note ? `Note: ${p.note}` : null].filter(Boolean).join(' · '))),
       h('div', { class: 'item__actions' },
         h('button', { title: p.pinned ? 'Unpin' : 'Pin to the top of the front page', 'aria-pressed': String(!!p.pinned), onclick: () => { p.pinned = !p.pinned; if (!p.pinned) delete p.pinned; markDirty('picks.json'); render(); } }, icon(ICONS.star)),
-        h('button', { title: 'Edit', onclick: () => { const f = pickForm(p, (upd) => { Object.keys(p).forEach((k) => delete p[k]); Object.assign(p, upd); markDirty('picks.json'); render(); }); view.querySelector('form.form')?.replaceWith(f); window.scrollTo({ top: 0, behavior: 'smooth' }); } }, icon(ICONS.edit)),
+        h('button', { title: 'Edit', onclick: () => { const f = pickForm(p, (upd) => { Object.keys(p).forEach((k) => delete p[k]); Object.assign(p, upd); markDirty('picks.json'); render(); }, pickCats); view.querySelector('form.form')?.replaceWith(f); window.scrollTo({ top: 0, behavior: 'smooth' }); } }, icon(ICONS.edit)),
         h('button', { title: 'Remove', onclick: () => { if (confirm('Remove this pick from the site?')) { data.picks.splice(i, 1); markDirty('picks.json'); render(); } } }, icon(ICONS.trash)),
       )))));
     view.append(saveBar('picks.json', 'Update picks (admin)'));
     renderSaveBar();
   }
-  function pickForm(existing, onSubmit) {
+  function pickForm(existing, onSubmit, pickCats = []) {
     const p = existing || {};
+    const chosen = new Set(Array.isArray(p.categories) ? p.categories : []);
     const f = h('form', { class: 'form' },
       h('h2', {}, existing ? 'Edit pick' : 'Add a pick'),
       h('label', {}, 'Link', h('input', { name: 'url', type: 'url', required: true, value: p.url || '', placeholder: 'https://…' })),
@@ -179,6 +182,8 @@
           h('label', {}, 'Image URL', h('input', { name: 'image', type: 'url', value: p.image || '' })),
           h('label', {}, 'Source label ', h('span', { class: 'help' }, 'e.g. "Instagram · @yourchurch"'), h('input', { name: 'source', value: p.source || '' })),
           h('label', {}, 'Date', h('input', { name: 'added', type: 'date', value: p.added || '' })))),
+      pickCats.length ? h('fieldset', { class: 'cats' }, h('legend', {}, 'Also show in'),
+        ...pickCats.map((c) => h('label', { class: 'check' }, h('input', { name: 'cat', type: 'checkbox', value: c.id, checked: chosen.has(c.id) }), c.label))) : null,
       h('label', { class: 'check' }, h('input', { name: 'pinned', type: 'checkbox', checked: !!p.pinned }), 'Pin to the top of the front page'),
       h('div', { class: 'row' }, h('button', { class: 'btn', type: 'submit' }, existing ? 'Apply' : 'Add'), existing ? h('button', { class: 'btn btn--ghost', type: 'button', onclick: render }, 'Cancel') : null),
     );
@@ -186,6 +191,8 @@
       e.preventDefault();
       const fd = new FormData(f); const out = {};
       for (const k of ['url', 'note', 'title', 'summary', 'image', 'source', 'added']) { const v = String(fd.get(k) || '').trim(); if (v) out[k] = v; }
+      const cats = fd.getAll('cat').map(String).filter(Boolean);
+      if (cats.length) out.categories = cats;
       if (fd.get('pinned')) out.pinned = true;
       if (p.enabled === false) out.enabled = false;
       if (/instagram\.com|facebook\.com|fb\.watch/.test(out.url) && !out.title) { toast('Instagram and Facebook posts need a title (open the details section).', true); return; }

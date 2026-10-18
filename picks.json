@@ -4,13 +4,22 @@
     "The build fetches the page's title, description and image (Open Graph) or uses the platform's public oEmbed endpoint.",
     "Fields: url (required), title, summary, image, author, source, note, added (date), pinned (true/false), enabled (false hides it).",
     "Anything you type here overrides what was fetched. Instagram and Facebook block bots, so give those a title (and ideally an image).",
+    "Optional \"categories\": a list of tab ids from feeds.json (e.g. [\"holyspirit\"]) to show the pick in those tabs as well as Picks.",
     "Pinned picks lead Top Stories. Examples:",
     "{ \"url\": \"https://www.example.com/some-article\", \"note\": \"Worth your time this week.\", \"pinned\": true }",
     "{ \"url\": \"https://x.com/someone/status/1234567890\" }",
     "{ \"url\": \"https://www.tiktok.com/@someone/video/1234567890\" }",
-    "{ \"url\": \"https://www.instagram.com/p/ABC123/\", \"title\": \"Sunday service highlights\", \"image\": \"https://.../photo.jpg\", \"source\": \"Instagram · @yourchurch\" }"
+    "{ \"url\": \"https://www.instagram.com/p/ABC123/\", \"title\": \"Sunday service highlights\", \"image\": \"https://.../photo.jpg\", \"source\": \"Instagram · @yourchurch\" }",
+    "{ \"url\": \"https://youtu.be/VIDEOID\", \"categories\": [\"holyspirit\"] }"
   ],
   "picks": [
+    {
+      "url": "https://youtu.be/qNwnOfZ5N8A",
+      "categories": [
+        "holyspirit"
+      ],
+      "added": "2026-10-18"
+    },
     {
       "url": "https://www.plough.com/articles/the-asbury-outpouring"
     }

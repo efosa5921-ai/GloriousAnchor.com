@@ -72,6 +72,9 @@ test('pickToArticle merges manual overrides over fetched data and handles dates'
   const b = pickToArticle({ url: 'https://www.instagram.com/p/abc/', title: 'Manual', image: 'https://i/m.jpg', added: '2026-10-10' }, {}, 1000);
   assert.equal(b.title, 'Manual'); assert.equal(b.image, 'https://i/m.jpg'); assert.equal(b.source, 'Instagram');
   assert.equal(b.publishedAt, Date.parse('2026-10-10'));
+  const v = pickToArticle({ url: 'https://youtu.be/qNwnOfZ5N8A', categories: ['holyspirit', 'picks', 'holyspirit', 7] }, { title: 'On the Spirit' }, 1000);
+  assert.deepEqual(v.categories, ['picks', 'holyspirit']); assert.equal(v.category, 'picks');
+  assert.equal(pickToArticle({ url: 'https://x.com/a/status/2' }, { title: 'T' }, 1).categories, undefined);
   const c = pickToArticle({ url: 'https://x.com/a/status/1' }, { title: 'T' }, 1234);
   assert.equal(c.publishedAt, 1234, 'falls back to first-seen time');
   assert.equal(pickToArticle({ url: 'https://www.facebook.com/x/posts/1' }, {}, 1), null, 'no title → no card');
