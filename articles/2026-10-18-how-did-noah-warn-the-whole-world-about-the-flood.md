@@ -29,4 +29,4 @@ Finally, the population of the earth in Noah's day was far smaller than it is to
 
 ---
 
-**Watch:** I answer this question on video on X: [x.com/efosaadun](https://x.com/efosaadun/status/1960190474704036240/video/1).
+*This answer was first written as a reply on X: [x.com/EfosaAdun](https://x.com/EfosaAdun/status/1960190474704036240).*
