@@ -53,7 +53,7 @@ The [Bible Quiz](/quiz/) sets a new quiz of the day, ten questions with four ans
 
 ## Pass it on
 
-Every card has a share button: send a story to a WhatsApp group, post it to X, Facebook or Telegram, email it, or copy the link. Whoever opens it lands on the story here, one tap from the full article at its source, with more from the same section alongside. On a phone it opens your own share sheet. The [daily digest](/digest/), in the tab bar beside Find a church, gathers the day's best stories in one page you can copy straight into a group. Put your email address in the subscribe box and the digest comes to your inbox every morning. If you prefer a feed reader, [/feed.xml](/feed.xml) carries the latest items.
+Every card has a share button: send a story to a WhatsApp group, post it to X, Facebook or Telegram, email it, or copy the link. Whoever opens it lands on the story here, one tap from the full article at its source, with more from the same section alongside. On a phone it opens your own share sheet. The [daily digest](/digest/), in the tab bar beside Find a church, gathers the day's best stories in one page you can copy straight into a group. Put your email address in the subscribe box and the digest comes to your inbox every morning, or follow the [WhatsApp channel](https://whatsapp.com/channel/0029VbDsSvP2Jl86RiDqNe3d) and the [Telegram channel](https://t.me/gloriousanchor), where new stories arrive through the day. If you prefer a feed reader, [/feed.xml](/feed.xml) carries the latest items.
 
 ## On your phone
 

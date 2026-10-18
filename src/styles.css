@@ -193,6 +193,14 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 .subscribe__form input::placeholder { color: rgba(255,255,255,.6); }
 .subscribe__form .btn, .subscribe > .btn { background: var(--gold); color: #0b1f3a; white-space: nowrap; text-decoration: none; }
 .subscribe--compact { margin-top: 36px; }
+.follow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 12px 0 8px; }
+.follow__label { color: var(--muted); font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; margin-right: 4px; }
+.follow__link { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--text); text-decoration: none; font-size: .9rem; font-weight: 600; }
+.follow__link::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--muted); }
+.follow__link--whatsapp::before { background: #25d366; }
+.follow__link--telegram::before { background: #2aabee; }
+.follow__link--x::before { background: var(--text); }
+.follow__link:hover { border-color: var(--gold); }
 .digest__notice { margin: 0 0 14px; padding: 10px 14px; border-radius: 8px; background: var(--gold-soft); color: var(--text); border-left: 3px solid var(--gold); font-weight: 600; }
 .quiz { max-width: 760px; padding-top: 36px; }
 .quiz__progress { display: flex; justify-content: space-between; color: var(--muted); font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; margin-top: 18px; }

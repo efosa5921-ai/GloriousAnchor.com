@@ -486,6 +486,9 @@ Note: Anything extra to show after answering.`;
       h('label', {}, 'Cloudflare Web Analytics token ', h('span', { class: 'help' }, 'Optional alternative: Cloudflare dashboard → Web Analytics → Add a site → copy the token from the snippet.'), h('input', { name: 'cloudflareAnalytics', value: data.site.cloudflareAnalytics || '' })),
       h('label', {}, 'Newsletter sign-up page ', h('span', { class: 'help' }, 'Optional. Your Buttondown page (https://buttondown.com/yourname) puts a subscribe form on the site; any other address becomes a Subscribe button.'), h('input', { name: 'newsletter', type: 'url', value: data.site.newsletter || '' })),
       h('label', {}, 'Contact email ', h('span', { class: 'help' }, 'Shown as a Contact link in the footer.'), h('input', { name: 'contactEmail', type: 'email', value: data.site.contactEmail || '' })),
+      h('div', { class: 'editor__grid' },
+        h('label', {}, 'WhatsApp channel link', h('input', { name: 'whatsappChannel', type: 'url', value: data.site.whatsappChannel || '', placeholder: 'https://whatsapp.com/channel/…' })),
+        h('label', {}, 'Telegram channel link', h('input', { name: 'telegramChannel', type: 'url', value: data.site.telegramChannel || '', placeholder: 'https://t.me/…' }))),
       h('label', {}, 'X (Twitter) handle ', h('span', { class: 'help' }, 'Added as "via @handle" when items are shared or auto-posted.'), h('input', { name: 'xHandle', value: data.site.xHandle || '' })),
       h('h2', {}, 'Feeds'),
       h('label', {}, 'Keep stories for (hours) ', h('span', { class: 'help' }, 'Feed stories older than this drop off. Picks and your articles never expire.'), h('input', { name: 'maxAgeHours', type: 'number', min: 6, max: 720, value: data.limits.maxAgeHours || 96 })),
@@ -494,7 +497,7 @@ Note: Anything extra to show after answering.`;
     );
     f.addEventListener('submit', (e) => {
       e.preventDefault(); const fd = new FormData(f);
-      for (const k of ['name', 'tagline', 'verse', 'url', 'googleSiteVerification', 'goatcounter', 'cloudflareAnalytics', 'xHandle', 'newsletter', 'contactEmail']) { const v = String(fd.get(k) || '').trim(); if (v) data.site[k] = v; else delete data.site[k]; }
+      for (const k of ['name', 'tagline', 'verse', 'url', 'googleSiteVerification', 'goatcounter', 'cloudflareAnalytics', 'xHandle', 'newsletter', 'contactEmail', 'whatsappChannel', 'telegramChannel']) { const v = String(fd.get(k) || '').trim(); if (v) data.site[k] = v; else delete data.site[k]; }
       data.limits.maxAgeHours = Number(fd.get('maxAgeHours')) || 96; data.limits.perSource = Number(fd.get('perSource')) || 25;
       markDirty('feeds.json'); toast('Applied. Click Save changes to publish.');
     });
