@@ -3,6 +3,8 @@
  * Post new items to a Telegram channel and/or X after a build.
  * Needs TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID and/or X_API_KEY + X_API_SECRET + X_ACCESS_TOKEN + X_ACCESS_SECRET.
  * Keeps dist/data/announced.json so nothing is posted twice; the first run only records what exists (no flood).
+ * X charges per post, so by default X receives only our own articles and picks; set X_STORIES_PER_RUN to add
+ * that many fresh stories per build on top (Telegram is free and always gets everything selected).
  * Usage: node scripts/announce.js [--dry-run]
  */
 import { readFile, writeFile } from 'node:fs/promises';
@@ -54,12 +56,15 @@ async function main() {
     return;
   }
   const items = selectNew(articles, announced, { now });
+  const xStoryBudget = Number(env.X_STORIES_PER_RUN || 0) || 0;
+  let xStoriesUsed = 0;
   console.log(`announce: ${items.length} new item(s) to post${dry ? ' (dry run)' : ''}${telegram ? ' · Telegram' : ''}${x ? ' · X' : ''}`);
   let failures = 0;
   for (const a of items) {
     const targets = [];
     if (telegram) targets.push(['Telegram', postTelegram]);
-    if (x) targets.push(['X', postX]);
+    const priority = a.internal || a.kind === 'pick';
+    if (x && (priority || xStoriesUsed < xStoryBudget)) { targets.push(['X', postX]); if (!priority) xStoriesUsed++; }
     let ok = true;
     for (const [name, fn] of targets) {
       if (dry) { console.log(`  [${name}] ${a.title}`); continue; }
