@@ -38,6 +38,12 @@ if (target.startsWith('@')) {
 
 const { body } = await get(target);
 console.log('--- first 700 chars ---\n' + body.slice(0, 700).replace(/\s+/g, ' ') + '\n---');
+// Social/preview metadata and any image or video URLs the page names: handy for finding a thumbnail.
+for (const m of body.matchAll(/<meta[^>]+(?:property|name)=["'](?:og|twitter):[^"']+["'][^>]*>/gi)) console.log('meta:', m[0].replace(/\s+/g, ' ').slice(0, 300));
+const media = new Set();
+for (const m of body.matchAll(/https?:\\?\/\\?\/(?:pbs\.twimg\.com|video\.twimg\.com|i\.ytimg\.com)[^"'\s<>\\]+/g)) media.add(m[0].replace(/\\\//g, '/'));
+for (const m of body.matchAll(/"(?:media_url_https|thumbnail_url|poster|url)":"(https?:[^"]+\.(?:jpg|jpeg|png|webp|mp4)[^"]*)"/g)) media.add(m[1].replace(/\\\//g, '/'));
+if (media.size) console.log('media urls:\n  ' + [...media].slice(0, 40).join('\n  '));
 try {
   const feed = await new Parser().parseString(body);
   console.log(`parsed as feed: title="${feed.title}" items=${feed.items?.length ?? 0}`);
