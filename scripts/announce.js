@@ -11,6 +11,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { selectNew, telegramMessage, xText, oauthHeader } from './lib/announce.js';
+import { previewImage } from './lib/share.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = path.join(ROOT, 'dist', 'data');
@@ -24,11 +25,16 @@ const x = env.X_API_KEY && env.X_API_SECRET && env.X_ACCESS_TOKEN && env.X_ACCES
 const readJson = async (f, fallback) => { try { return JSON.parse(await readFile(f, 'utf8')); } catch { return fallback; } };
 
 async function postTelegram(a, site) {
-  const res = await fetch(`https://api.telegram.org/bot${telegram.token}/sendMessage`, {
-    method: 'POST', headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ chat_id: telegram.chat, text: telegramMessage(a, site), parse_mode: 'HTML', link_preview_options: { prefer_large_media: true } }),
-  });
-  if (!res.ok) throw new Error(`Telegram ${res.status}: ${(await res.text()).slice(0, 200)}`);
+  const call = async (method, body) => {
+    const res = await fetch(`https://api.telegram.org/bot${telegram.token}/${method}`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
+    if (!res.ok) throw new Error(`Telegram ${res.status}: ${(await res.text()).slice(0, 200)}`);
+  };
+  const text = telegramMessage(a, site);
+  if (a.image) {
+    // A photo post with the headline as caption; if Telegram cannot fetch the picture, fall back to a link post.
+    try { await call('sendPhoto', { chat_id: telegram.chat, photo: previewImage(a, site), caption: text, parse_mode: 'HTML' }); return; } catch (err) { console.warn(`  (photo failed, sending link instead: ${err.message})`); }
+  }
+  await call('sendMessage', { chat_id: telegram.chat, text, parse_mode: 'HTML', link_preview_options: { prefer_large_media: true } });
 }
 
 async function postX(a, site) {

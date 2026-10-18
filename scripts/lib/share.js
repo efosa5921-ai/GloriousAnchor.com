@@ -11,6 +11,12 @@ const KIND_LABEL = { news: 'News', article: 'Article', video: 'Video', audio: 'A
 const fmtDate = (ts) => new Date(ts).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
 
 /** Our own pages are shared as themselves; everything else goes through the story page. */
+/** Picture for link previews (WhatsApp, Telegram, X): resized JPEG, since preview fetchers often reject WebP. */
+export function previewImage(a, site) {
+  const b = base(site);
+  if (!a.image) return `${b}/assets/social.jpg`;
+  return proxied(site.imageProxy, a.image, 1200).replace(/output=webp/, 'output=jpg');
+}
 export function shareUrl(a, site) {
   return a.internal ? a.url : `${base(site)}/s/${encodeURIComponent(a.id)}/`;
 }
@@ -30,7 +36,7 @@ export function renderSharePage(a, site, more = [], categoryLabel = '') {
   const b = base(site);
   const who = a.source || site.name;
   const description = `${who}${a.summary ? ` · ${a.summary}` : ''}`;
-  const image = a.image ? proxied(site.imageProxy, a.image, 1200) : `${b}/assets/social.jpg`;
+  const image = previewImage(a, site);
   const hero = a.image ? `<a class="story__media" href="${esc(a.url)}" rel="noopener"><img class="article__hero" src="${esc(proxied(site.imageProxy, a.image, 960))}" data-alt="${esc(a.image)}" alt="" fetchpriority="high" onerror="if(this.dataset.alt&amp;&amp;this.src!==this.dataset.alt){this.src=this.dataset.alt}else{this.parentNode.remove()}"></a>` : '';
   const cta = a.kind === 'audio' && a.audio
     ? `<audio class="story__audio" controls preload="none" src="${esc(a.audio)}"></audio>\n      <a class="btn btn--ghost story__cta" href="${esc(a.url)}" rel="noopener">Episode page at ${esc(who)} →</a>`

@@ -51,3 +51,10 @@ test('cards without a picture get a branded cover; social posts keep the quote s
   assert.match(html, /<article class="card card--news card--cover" data-cover="[^"]*">\s*<a class="card__media" href="https:\/\/gloriousanchor\.com\/s\/c2\/"><span class="cover cover--\d" aria-hidden="true"><svg[^]*?<b>Religion News Service<\/b><\/span><\/a>/);
   assert.match(html, /<article class="card card--social card--noimg" data-cover="">\s*<div class="card__body">/);
 });
+
+test('previewImage is a JPEG from the proxy, or the site card when there is no picture', async () => {
+  const { previewImage } = await import('../scripts/lib/share.js');
+  const s = { url: 'https://gloriousanchor.com', imageProxy: 'https://wsrv.nl/?url={url}&w={w}&output=webp&q=75' };
+  assert.equal(previewImage({ image: 'https://ex.com/p.jpg' }, s), 'https://wsrv.nl/?url=https%3A%2F%2Fex.com%2Fp.jpg&w=1200&output=jpg&q=75');
+  assert.equal(previewImage({}, s), 'https://gloriousanchor.com/assets/social.jpg');
+});
