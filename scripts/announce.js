@@ -16,7 +16,8 @@ import { previewImage } from './lib/share.js';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = path.join(ROOT, 'dist', 'data');
 const dry = process.argv.includes('--dry-run');
-const env = process.env;
+// Trim every secret: a stray newline or space pasted into a GitHub secret breaks the OAuth signature (X answers 401).
+const env = Object.fromEntries(Object.entries(process.env).map(([k, v]) => [k, typeof v === 'string' ? v.trim() : v]));
 
 const telegram = env.TELEGRAM_BOT_TOKEN && env.TELEGRAM_CHAT_ID ? { token: env.TELEGRAM_BOT_TOKEN, chat: env.TELEGRAM_CHAT_ID } : null;
 const x = env.X_API_KEY && env.X_API_SECRET && env.X_ACCESS_TOKEN && env.X_ACCESS_SECRET
