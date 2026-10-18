@@ -34,3 +34,12 @@ test('oauthHeader reproduces the signature from the OAuth 1.0a worked example', 
   assert.match(header, /^OAuth oauth_consumer_key="xvz1evFS4wEEPTGEFPHBog", oauth_nonce=/);
   assert.match(header, /oauth_signature="hCtSmYh%2BiHYCEqBWrE7C7hYmtUk%3D"/);
 });
+
+test('date-only or numbered episode titles get the show name in front', async () => {
+  const { postTitle } = await import('../scripts/lib/announce.js');
+  assert.equal(postTitle({ title: '23.10.26', source: 'The Briefing' }), 'The Briefing: 23.10.26');
+  assert.equal(postTitle({ title: 'Episode 412', source: 'Holy Post' }), 'Holy Post: Episode 412');
+  assert.equal(postTitle({ title: '#88', source: 'Show' }), 'Show: #88');
+  assert.equal(postTitle({ title: 'A real headline', source: 'RNS' }), 'A real headline');
+  assert.match(telegramMessage({ id: 'd', title: '18.10.26', url: 'https://ex.com/d', source: 'The Briefing', kind: 'audio', publishedAt: 0 }, site), /^<b>The Briefing: 18\.10\.26<\/b>/);
+});

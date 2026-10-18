@@ -23,11 +23,16 @@ export function selectNew(articles, announced, { maxStories = 3, maxAgeHours = 2
   return [...priority, ...picked];
 }
 
+/** Podcast feeds often title episodes by date or number alone; prefix the show name so a post never reads "23.10.26". */
+export function postTitle(a) {
+  const bare = /^[\d\s.,/:#-]+$|^(ep(isode)?\.?\s*\d+|#\d+)$/i.test(a.title.trim());
+  return bare && a.source ? `${a.source}: ${a.title.trim()}` : a.title;
+}
 export function telegramMessage(a, site) {
   const esc = (s) => String(s ?? '').replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
   const who = a.internal ? site.name : a.source;
   const tag = a.internal ? 'New on' : a.kind === 'pick' ? 'Our pick, via' : a.kind === 'video' ? 'Video via' : a.kind === 'audio' ? 'Listen via' : 'Via';
-  return `<b>${esc(a.title)}</b>\n${esc(who)} · ${tag} ${esc(site.name)}\n${esc(shareUrl(a, site))}`;
+  return `<b>${esc(postTitle(a))}</b>\n${esc(who)} · ${tag} ${esc(site.name)}\n${esc(shareUrl(a, site))}`;
 }
 
 export function xText(a, site) {
@@ -36,7 +41,8 @@ export function xText(a, site) {
   const link = shareUrl(a, site);
   const tail = `${who}${handle}\n${link}`;
   const room = X_MAX - (tail.length - link.length + URL_LEN) - 1;
-  const title = a.title.length > room ? `${a.title.slice(0, Math.max(0, room - 1)).trimEnd()}…` : a.title;
+  const full = postTitle(a);
+  const title = full.length > room ? `${full.slice(0, Math.max(0, room - 1)).trimEnd()}…` : full;
   return `${title}${tail}`;
 }
 
