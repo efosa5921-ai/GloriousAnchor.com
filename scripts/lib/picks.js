@@ -24,6 +24,15 @@ export function providerFor(url) {
   return host;
 }
 
+/** What a pick is to the reader: "video" or "audio" for players, else null (read / see the post). */
+export function mediaFor(url) {
+  let host, p;
+  try { const u = new URL(url); host = u.hostname.replace(/^www\.|^m\.|^mobile\./, ''); p = u.pathname; } catch { return null; }
+  if (host.endsWith('youtube.com') || host === 'youtu.be' || host.endsWith('tiktok.com') || host.endsWith('vimeo.com') || host === 'fb.watch' || host.endsWith('rumble.com') || /\.(mp4|webm)$/i.test(p)) return 'video';
+  if ((host.endsWith('spotify.com') && /^\/(episode|show)\//.test(p)) || host.endsWith('soundcloud.com') || host.startsWith('podcasts.apple.com') || host.endsWith('anchor.fm') || /\.(mp3|m4a)$/i.test(p)) return 'audio';
+  return null;
+}
+
 export function strategyFor(url) {
   const p = providerFor(url);
   if (p === 'X') return 'twitter';
@@ -147,6 +156,7 @@ export function pickToArticle(pick, fetched, firstSeen) {
     author: stripHtml(pick.author || f.author || '') || null,
     publishedAt,
     kind: 'pick',
+    ...(mediaFor(url) ? { media: mediaFor(url) } : {}),
     source: pick.source || (PLATFORMS.has(provider) ? provider : (f.siteName || provider)),
     sourceId: PICKS_SOURCE.id,
     sourceHome: pick.homepage || null,

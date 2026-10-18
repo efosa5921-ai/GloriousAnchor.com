@@ -34,6 +34,8 @@ test('renderSharePage shows the story, the brand, the read button and related st
   assert.match(pod, /<audio class="story__audio" controls preload="none" src="https:\/\/ex\.com\/ep\.mp3">/);
   assert.match(pod, /og:image" content="https:\/\/gloriousanchor\.com\/assets\/social\.jpg"/);
   assert.doesNotMatch(pod, /story__more/);
+  const vid = renderSharePage({ ...a, kind: 'pick', media: 'video', source: 'YouTube' }, site, [], '');
+  assert.match(vid, />Watch at YouTube →<\/a>/);
 });
 
 test('story page pictures fall back to the original, then hide, when the proxy fails', () => {

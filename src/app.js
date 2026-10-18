@@ -92,7 +92,7 @@
     else if (state.category !== 'top') list = list.filter((a) => (a.categories || [a.category]).includes(state.category));
     else if (!state.query && !state.source) list = topMix(list);
     if (state.source) list = list.filter((a) => a.sourceId === state.source);
-    if (['video', 'audio', 'social'].includes(state.sort)) list = list.filter((a) => a.kind === state.sort);
+    if (['video', 'audio', 'social'].includes(state.sort)) list = list.filter((a) => (a.media || a.kind) === state.sort);
     else if (state.sort === 'news') list = list.filter((a) => a.kind === 'news' || a.kind === 'article');
     if (state.sort === 'newest' && !state.query && ['top', 'picks', 'ours'].includes(state.category)) {
       list = [...list.filter((a) => a.pinned), ...list.filter((a) => !a.pinned)];

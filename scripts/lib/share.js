@@ -30,7 +30,7 @@ export function relatedStories(a, articles, n = 6) {
   return pool.sort((x, y) => y.publishedAt - x.publishedAt).slice(0, n);
 }
 
-function verb(a) { return a.kind === 'video' ? 'Watch' : a.kind === 'audio' ? 'Listen' : a.kind === 'social' ? 'See the post' : 'Read the full story'; }
+function verb(a) { const k = a.media || a.kind; return k === 'video' ? 'Watch' : k === 'audio' ? 'Listen' : k === 'social' ? 'See the post' : 'Read the full story'; }
 
 export function renderSharePage(a, site, more = [], categoryLabel = '') {
   const b = base(site);
