@@ -4,6 +4,10 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 18 October 2026
+
+- **The Holy Spirit** tab: news and teaching on the Spirit-filled life from Charisma News, Charisma Magazine, The Pneuma Review and Influence Magazine.
+
 ## 17 October 2026
 
 - New Bible quiz: **The Holy Spirit**, ten referenced questions, with its video.

@@ -44,6 +44,10 @@
       "label": "Eschatology"
     },
     {
+      "id": "holyspirit",
+      "label": "The Holy Spirit"
+    },
+    {
       "id": "articles",
       "label": "Writers & Blogs"
     },
@@ -693,6 +697,48 @@
       "url": "https://christinprophecy.org/feed/",
       "homepage": "https://christinprophecy.org",
       "category": "eschatology",
+      "kind": "article"
+    },
+    {
+      "id": "charisma-news",
+      "name": "Charisma News",
+      "url": "https://charismanews.com/feed/",
+      "homepage": "https://charismanews.com",
+      "category": "holyspirit",
+      "categories": [
+        "holyspirit",
+        "news"
+      ],
+      "kind": "news"
+    },
+    {
+      "id": "charisma-mag",
+      "name": "Charisma Magazine",
+      "url": "https://charismamag.com/feed/",
+      "homepage": "https://charismamag.com",
+      "category": "holyspirit",
+      "kind": "article",
+      "featured": true
+    },
+    {
+      "id": "pneuma-review",
+      "name": "The Pneuma Review",
+      "url": "https://pneumareview.com/feed/",
+      "homepage": "https://pneumareview.com",
+      "category": "holyspirit",
+      "kind": "article",
+      "featured": true
+    },
+    {
+      "id": "influence-mag",
+      "name": "Influence Magazine",
+      "url": "https://influencemagazine.com/rss",
+      "homepage": "https://influencemagazine.com",
+      "category": "holyspirit",
+      "categories": [
+        "holyspirit",
+        "teaching"
+      ],
       "kind": "article"
     },
     {
