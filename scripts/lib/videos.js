@@ -12,9 +12,12 @@ export const OEMBED = (id) => `https://www.youtube.com/oembed?url=${encodeURICom
 const HOUR = 3600 * 1000;
 const RECHECK_MS = 12 * HOUR, FRESH_MS = 3 * 24 * HOUR, GONE_MS = 14 * 24 * HOUR, STALE_MS = 30 * 24 * HOUR;
 
+const YT_THUMB = /^https?:\/\/i\d?\.ytimg\.com\//i;
+
 export function needsCheck(entry, article, now) {
   if (!entry) return true;
   if (!entry.ok) return now - entry.at > GONE_MS;
+  if (entry.thumb === undefined && article.image && YT_THUMB.test(article.image)) return true; // thumbnail never checked
   const fresh = (article.publishedAt || 0) > now - FRESH_MS;
   return fresh ? now - entry.at > RECHECK_MS : now - entry.at > STALE_MS;
 }
@@ -24,7 +27,6 @@ export function needsCheck(entry, article, now) {
  * @param cache     mutable map videoId -> { ok, status, at }
  * @param fetchStatus async (url, method) => HTTP status number (throws on network failure)
  */
-const YT_THUMB = /^https?:\/\/i\d?\.ytimg\.com\//i;
 
 export async function dropGoneVideos(articles, cache, { fetchStatus, now = Date.now(), concurrency = 6, maxChecks = 150 } = {}) {
   const candidates = articles.filter((a) => a.kind === 'video' && a.videoId);
