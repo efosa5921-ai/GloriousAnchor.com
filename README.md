@@ -178,7 +178,7 @@ the top whenever a feature ships; the welcome article should keep describing the
 
 ## Gone videos
 
-Churches often stream a service and then hide or delete the recording, while the feed entry lingers and YouTube serves a grey placeholder thumbnail. `scripts/lib/videos.js` asks YouTube's oEmbed endpoint about each video (401 = private, 404 = deleted) and drops those; results are cached in `dist/data/video-cache.json`, re-checking fresh videos every 12 hours for three days.
+Churches often stream a service and then hide or delete the recording, while the feed entry lingers and YouTube serves a grey placeholder thumbnail. `scripts/lib/videos.js` asks YouTube's oEmbed endpoint about each video (401 = private, 404 = deleted) and drops those; results are cached in `dist/data/video-cache.json`, re-checking fresh videos every 12 hours for three days. The thumbnail is checked as well: YouTube answers 404 with a grey placeholder image for a video that has no picture yet (browsers display it regardless), so such videos keep their card but get the cover tile.
 
 ## Picks: single links you choose
 

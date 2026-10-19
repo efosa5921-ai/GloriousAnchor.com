@@ -494,15 +494,15 @@ async function main() {
 
   // Videos that were made private or deleted since the feed listed them (ended livestreams, mostly).
   if (!fixturesDir) {
-    const fetchStatus = async (url) => {
+    const fetchStatus = async (url, method = 'GET') => {
       const controller = new AbortController();
       const timer = setTimeout(() => controller.abort(), 8000);
-      try { return (await fetch(url, { signal: controller.signal, redirect: 'follow', headers: HEADERS })).status; } finally { clearTimeout(timer); }
+      try { return (await fetch(url, { method, signal: controller.signal, redirect: 'follow', headers: HEADERS })).status; } finally { clearTimeout(timer); }
     };
     const v = await dropGoneVideos(articles, videoCache, { fetchStatus, concurrency: limits.concurrency });
     articles = v.kept;
     for (const a of v.dropped) if (verbose) console.log(`  ✗ video gone (${videoCache[a.videoId]?.status}): ${a.source}: ${a.title.slice(0, 70)}`);
-    if (verbose) console.log(`  ✓ videos: ${v.checked} checked with YouTube, ${v.dropped.length} private or deleted removed`);
+    if (verbose) console.log(`  ✓ videos: ${v.checked} checked with YouTube, ${v.dropped.length} private or deleted removed, ${v.placeholders} grey placeholder thumbnails replaced by cover tiles`);
   }
   // Stories without a picture: ask the article page for its sharing image (cached a week, limited per build).
   if (limits.pageImages !== false) {

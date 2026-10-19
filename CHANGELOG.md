@@ -6,7 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 19 October 2026
 
-- Videos that a channel has since made private or deleted (usually a livestream after it ended) no longer linger on the site with a grey placeholder.
+- Videos that a channel has since made private or deleted (usually a livestream after it ended) no longer linger on the site, and a video that has no picture yet shows the branded cover tile instead of YouTube's grey placeholder.
 
 ## 18 October 2026
 
