@@ -47,6 +47,10 @@
       "label": "Eschatology"
     },
     {
+      "id": "pitn",
+      "label": "Prophecy in the News"
+    },
+    {
       "id": "holyspirit",
       "label": "The Holy Spirit"
     },
@@ -700,7 +704,11 @@
       "url": "https://christinprophecy.org/feed/",
       "homepage": "https://christinprophecy.org",
       "category": "eschatology",
-      "kind": "article"
+      "kind": "article",
+      "categories": [
+        "eschatology",
+        "pitn"
+      ]
     },
     {
       "id": "charisma-news",

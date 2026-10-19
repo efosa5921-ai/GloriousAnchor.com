@@ -17,6 +17,7 @@ every hour and publishes it to GitHub Pages, so there is no server to run and no
 | Faith & Culture | article | RELEVANT, The Gospel Coalition, Mere Orthodoxy, First Things, Plough, Crossway |
 | Teaching & Devotional | article | Desiring God, Ligonier, Our Daily Bread, Bible Gateway Blog, Got Questions |
 | Writers & Blogs | article | Tim Challies, Kevin DeYoung, Ann Voskamp, Trevin Wax, Scot McKnight, Jemar Tisby, Kristin Du Mez |
+| Prophecy in the News | article | Our own articles on current events read in the light of Scripture, plus Lamb & Lion Ministries |
 | The Holy Spirit | news, article | Charisma News, Charisma Magazine, The Pneuma Review, Influence Magazine |
 | YouTube | video | BibleProject, Desiring God, Ligonier, Mike Winger, Cliffe Knechtle, Elevation Worship, Bethel Music |
 | Radio | audio | The Briefing, BibleProject Podcast, Truth for Life, Renewing Your Mind, The Holy Post, Gospelbound, Focus on the Family |
@@ -195,7 +196,7 @@ preview data (Open Graph tags), or the public oEmbed endpoint for X, TikTok and 
 - Optional fields `title`, `summary`, `image`, `author`, `source`, `added` (date) override whatever was fetched.
 - **Instagram and Facebook** block automated previews, so give those posts a `title` (and ideally an `image`).
 - `note` shows as an editor's note on the card. `pinned: true` puts the pick at the top of Top Stories.
-- `categories` (a list of tab ids from `feeds.json`, e.g. `["holyspirit"]`) shows the pick in those tabs as well as Picks. Unknown ids are ignored with a warning.
+- `categories` (a list of tab ids from `feeds.json`, e.g. `["holyspirit"]`) shows the pick in those tabs as well as Picks. Unknown ids are ignored with a warning. Own articles take the same field in their front matter (`categories: eschatology, pitn`).
 - Picks never age out; remove the line to remove the card. `"enabled": false` hides one temporarily.
 
 After each build, `dist/data/meta.json` lists every source with `ok: true/false` and an error message, so a wrong

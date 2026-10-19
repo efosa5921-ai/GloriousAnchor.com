@@ -21,6 +21,7 @@ Glorious Anchor gathers it into one calm page. Nothing here is written by an alg
 - **Teaching & Devotional** brings daily teaching and devotionals from trusted ministries.
 - **Apologetics** gathers writers and channels that explain and defend the faith.
 - **Eschatology** follows teaching on the end times and biblical prophecy.
+- **Prophecy in the News** reads current events in the light of Scripture: our own articles on what is happening in the world and what the Bible says about it, alongside prophecy ministries.
 - **The Holy Spirit** brings news and teaching on the Spirit-filled life, from Pentecostal and charismatic publishers.
 - **Writers & Blogs** collects individual authors, including their newsletters.
 - **YouTube** shows new videos from teaching, apologetics and worship channels.

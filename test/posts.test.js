@@ -26,6 +26,10 @@ test('compilePost renders markdown, derives metadata and skips drafts', () => {
   assert.equal(p.publishedAt, Date.parse('2026-10-15T12:00:00Z'));
   assert.equal(p.author, 'Team');
   assert.equal(compilePost('x.md', '---\ndraft: true\ntitle: X\n---\nbody', site), null);
+  const c = compilePost('2026-10-19-c.md', '---\ntitle: C\ncategories: eschatology, pitn, ours, eschatology\n---\nbody', site);
+  assert.deepEqual(c.categories, ['eschatology', 'pitn']);
+  assert.deepEqual(postToArticle(c, site).categories, ['ours', 'eschatology', 'pitn']);
+  assert.equal(compilePost('2026-10-19-d.md', '---\ntitle: D\n---\nbody', site).categories, undefined);
   assert.equal(compilePost('x.md', 'no title anywhere', site), null);
   assert.equal(compilePost('x.md', '# From heading\n\nbody', site).title, 'From heading', 'title falls back to first heading');
   const card = postToArticle(p);

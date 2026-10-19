@@ -10,6 +10,7 @@
  *   summary: One or two sentences shown on the card.
  *   image: images/anchor-sunrise.jpg        (a file in articles/images/, or a full URL; optional)
  *   pinned: true                            (optional: lead the front page)
+ *   categories: eschatology, pitn           (optional: tabs from feeds.json to show it in, besides Our Articles)
  *   draft: true                             (optional: build ignores the file)
  *   ---
  *   Body in Markdown. **Bold**, *italic*, headings, lists, links, images, quotes.
@@ -67,8 +68,10 @@ export function compilePost(filename, text, site) {
   let image = meta.image ? String(meta.image) : null;
   if (image && !/^https?:\/\//i.test(image)) image = `${site.url.replace(/\/$/, '')}/articles/${image.replace(/^\/?(articles\/)?/, '')}`;
   const words = text_.split(/\s+/).filter(Boolean).length;
+  const categories = [...new Set(String(meta.categories || '').replace(/^\[|\]$/g, '').split(/[,\s]+/).map((c) => c.trim().toLowerCase()).filter((c) => c && c !== OWN_SOURCE.category))];
   return {
     slug, title, html, summary, image,
+    ...(categories.length ? { categories } : {}),
     author: stripHtml(meta.author || site.name),
     publishedAt,
     pinned: meta.pinned === true,
@@ -94,6 +97,7 @@ export function postToArticle(post, site) {
     sourceId: OWN_SOURCE.id,
     sourceHome: OWN_SOURCE.homepage,
     category: OWN_SOURCE.category,
+    ...(post.categories?.length ? { categories: [OWN_SOURCE.category, ...post.categories] } : {}),
     featured: true,
     pinned: post.pinned,
     internal: true,

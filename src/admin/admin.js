@@ -277,6 +277,7 @@
 
   /* Articles */
   async function renderArticles() {
+    if (!state.articleCats) { const feeds = await loadJson('feeds.json'); state.articleCats = (feeds.categories || []).filter((c) => !['top', 'picks', 'ours'].includes(c.id)); }
     if (state.editing) return renderArticleEditor();
     view.append(h('h1', {}, 'Articles'), h('p', {}, 'Your own writing, published at gloriousanchor.com/articles/. Each article is a file; edits go live with the next build.'));
     view.append(h('div', { class: 'row' }, h('button', { class: 'btn', onclick: () => { state.editing = { isNew: true, meta: { date: today(), author: '' }, body: '' }; render(); } }, 'New article')));
@@ -320,6 +321,8 @@
       h('div', { class: 'editor__grid' }, field('Date', 'date', { type: 'date', required: true }), field('Author', 'author', { placeholder: 'The Glorious Anchor team' })),
       field('Summary', 'summary', {}, 'One or two sentences for the card. Taken from the text if empty.'),
       h('div', { class: 'row' }, field('Image', 'image', { placeholder: 'images/photo.jpg or https://…' }), h('button', { class: 'btn btn--ghost', type: 'button', onclick: () => imgInput.click() }, 'Upload image'), imgInput),
+      (state.articleCats || []).length ? h('fieldset', { class: 'cats' }, h('legend', {}, 'Also show in'),
+        ...state.articleCats.map((c) => h('label', { class: 'check' }, h('input', { name: 'cat', type: 'checkbox', value: c.id, checked: String(m.categories || '').split(/[,\s]+/).includes(c.id) }), c.label))) : null,
       h('div', { class: 'row' }, h('label', { class: 'check' }, h('input', { name: 'pinned', type: 'checkbox', checked: m.pinned === true }), 'Pin to the top of the front page'), h('label', { class: 'check' }, h('input', { name: 'draft', type: 'checkbox', checked: m.draft === true }), 'Draft (not published)')),
       h('div', { class: 'row row--between' }, h('span', { class: 'muted' }, 'Body'), h('button', { class: 'btn btn--ghost btn--small', type: 'button', onclick: () => { preview.hidden = !preview.hidden; if (!preview.hidden) preview.innerHTML = window.marked ? window.marked.parse(body.value) : '<p>Preview unavailable (offline).</p>'; } }, 'Preview')),
       body, preview,
@@ -331,9 +334,11 @@
       const fd = new FormData(form);
       const meta = {};
       for (const k of ['title', 'date', 'author', 'summary', 'image']) { const v = String(fd.get(k) || '').trim(); if (v) meta[k] = v; }
+      const cats = fd.getAll('cat').map(String).filter(Boolean);
+      if (cats.length) meta.categories = cats.join(', ');
       if (fd.get('pinned')) meta.pinned = true;
       if (fd.get('draft')) meta.draft = true;
-      for (const k of Object.keys(m)) if (!(k in meta) && !['pinned', 'draft', 'title', 'date', 'author', 'summary', 'image'].includes(k)) meta[k] = m[k]; // keep unknown keys (slug, tags…)
+      for (const k of Object.keys(m)) if (!(k in meta) && !['pinned', 'draft', 'title', 'date', 'author', 'summary', 'image', 'categories'].includes(k)) meta[k] = m[k]; // keep unknown keys (slug, tags…)
       const text = `---\n${Object.entries(meta).map(([k, v]) => `${k}: ${yamlValue(v)}`).join('\n')}\n---\n\n${String(fd.get('body')).replace(/\r\n/g, '\n').trim()}\n`;
       const name = ed.name || `${meta.date}-${slugify(meta.title)}.md`;
       try {

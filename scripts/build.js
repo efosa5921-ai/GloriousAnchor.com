@@ -366,13 +366,17 @@ async function finalizeSeo({ site, articles, posts, churches }) {
 }
 
 /** Compile articles/*.md into pages under dist/articles/, an index, an RSS feed, and front-page cards. */
-async function buildOwnArticles(site) {
+async function buildOwnArticles(site, catIds = null) {
   const dir = path.join(ROOT, 'articles');
   let files = [];
   try { files = (await readdir(dir)).filter((f) => /\.(md|markdown)$/i.test(f)).sort(); } catch { return { posts: [], articles: [] }; }
   const posts = [];
   for (const f of files) {
     const post = compilePost(f, await readFile(path.join(dir, f), 'utf8'), site);
+    if (post && catIds && post.categories) {
+      for (const c of post.categories) if (!catIds.has(c)) console.warn(`  ! article ${f}: unknown category "${c}" ignored`);
+      post.categories = post.categories.filter((c) => catIds.has(c));
+    }
     if (post) posts.push(post);
     else if (verbose) console.log(`  · article ${f}: skipped (draft or no title)`);
   }
@@ -521,7 +525,7 @@ async function main() {
   sourceStatus.push({ id: 'churches', name: 'Church directory', ok: true, count: directory.churches.length, ...(directory.problems.length ? { errors: directory.problems } : {}) });
 
   // Our own articles: Markdown in articles/ → pages on this site, never aged out.
-  const own = await buildOwnArticles(site);
+  const own = await buildOwnArticles(site, new Set(categories.map((c) => c.id)));
   sourceStatus.push({ id: OWN_SOURCE.id, name: OWN_SOURCE.name, ok: true, count: own.articles.length });
   articles = [...own.articles, ...picks.articles, ...articles].sort((a, b) => b.publishedAt - a.publishedAt);
 

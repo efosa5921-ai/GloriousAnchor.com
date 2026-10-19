@@ -55,5 +55,5 @@
 @media (max-width: 640px) { .editor__grid { grid-template-columns: 1fr; } .item { grid-template-columns: 1fr auto; } .item > .check { grid-column: 1 / -1; } }
 
 /* Pick form: "Also show in" tab checkboxes */
-.form .cats { border: 1px solid var(--line, #d7d2c8); border-radius: 10px; padding: .5rem .75rem .25rem; display: flex; flex-wrap: wrap; gap: .25rem 1rem; }
-.form .cats legend { font-size: .85rem; color: var(--muted, #6b665c); padding: 0 .25rem; }
+.form .cats, .editor .cats { border: 1px solid var(--line, #d7d2c8); border-radius: 10px; padding: .5rem .75rem .25rem; display: flex; flex-wrap: wrap; gap: .25rem 1rem; }
+.form .cats legend, .editor .cats legend { font-size: .85rem; color: var(--muted, #6b665c); padding: 0 .25rem; }
