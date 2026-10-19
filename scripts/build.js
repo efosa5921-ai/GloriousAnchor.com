@@ -26,6 +26,7 @@ import { subscribeHtml, followHtml, sitemapXml, homeJsonLd, churchJsonLd, preren
 import { readdir } from 'node:fs/promises';
 import { shareUrl, renderSharePage, relatedStories } from './lib/share.js';
 import { fillMissingImages } from './lib/images.js';
+import { dropGoneVideos } from './lib/videos.js';
 import { validateQuizzes, renderQuizPage } from './lib/quiz.js';
 import { pickDigest, digestDate, digestText, digestHtml, renderDigestPage, renderDigestFeed, renderTopFeed } from './lib/digest.js';
 
@@ -458,6 +459,7 @@ async function main() {
   const previousHealth = await readJson(path.join(DATA_DIR, 'health.json'), {});
   const geocodeCache = await readJson(path.join(DATA_DIR, 'geocode-cache.json'), {});
   const ogCache = await readJson(path.join(DATA_DIR, 'og-cache.json'), {});
+  const videoCache = await readJson(path.join(DATA_DIR, 'video-cache.json'), {});
 
   console.log(`Fetching ${sources.length} feeds${fixturesDir ? ' from fixtures' : ''}...`);
   const results = await mapWithConcurrency(sources, limits.concurrency, (s) => fetchFeed(s, limits, resolved, services));
@@ -490,6 +492,18 @@ async function main() {
   const merged = mergeWithPrevious(fresh, previous.filter((p) => p?.sourceId !== PICKS_SOURCE.id && p?.sourceId !== OWN_SOURCE.id), sourceStatus, cutoff);
   let articles = dedupe(merged);
 
+  // Videos that were made private or deleted since the feed listed them (ended livestreams, mostly).
+  if (!fixturesDir) {
+    const fetchStatus = async (url) => {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 8000);
+      try { return (await fetch(url, { signal: controller.signal, redirect: 'follow', headers: HEADERS })).status; } finally { clearTimeout(timer); }
+    };
+    const v = await dropGoneVideos(articles, videoCache, { fetchStatus, concurrency: limits.concurrency });
+    articles = v.kept;
+    for (const a of v.dropped) if (verbose) console.log(`  ✗ video gone (${videoCache[a.videoId]?.status}): ${a.source}: ${a.title.slice(0, 70)}`);
+    if (verbose) console.log(`  ✓ videos: ${v.checked} checked with YouTube, ${v.dropped.length} private or deleted removed`);
+  }
   // Stories without a picture: ask the article page for its sharing image (cached a week, limited per build).
   if (limits.pageImages !== false) {
     const og = await fillMissingImages(articles, ogCache, { fetchText: (u, t) => fetchText(u, t, services), maxFetches: limits.pageImagesPerBuild || 60, concurrency: limits.concurrency });
@@ -532,6 +546,7 @@ async function main() {
   await writeFile(path.join(DATA_DIR, 'picks-cache.json'), JSON.stringify(picksCache, null, 2));
   await writeFile(path.join(DATA_DIR, 'geocode-cache.json'), JSON.stringify(geocodeCache, null, 2));
   await writeFile(path.join(DATA_DIR, 'og-cache.json'), JSON.stringify(ogCache));
+  await writeFile(path.join(DATA_DIR, 'video-cache.json'), JSON.stringify(videoCache));
   await writeFile(path.join(DATA_DIR, 'churches.json'), JSON.stringify({ generatedAt: new Date().toISOString(), churches: directory.churches, problems: directory.problems }));
   const health = computeHealth(previousHealth, sourceStatus);
   await writeFile(path.join(DATA_DIR, 'health.json'), JSON.stringify(health, null, 2));

@@ -176,6 +176,10 @@ Write the article here in Markdown. **Bold**, *italic*, ## headings, lists, quot
 `CHANGELOG.md` is published as the article at `/articles/whats-new/`, dated by its newest heading. Add a dated entry at
 the top whenever a feature ships; the welcome article should keep describing the whole site.
 
+## Gone videos
+
+Churches often stream a service and then hide or delete the recording, while the feed entry lingers and YouTube serves a grey placeholder thumbnail. `scripts/lib/videos.js` asks YouTube's oEmbed endpoint about each video (401 = private, 404 = deleted) and drops those; results are cached in `dist/data/video-cache.json`, re-checking fresh videos every 12 hours for three days.
+
 ## Picks: single links you choose
 
 [`picks.json`](picks.json) holds hand-picked URLs. Paste any link and the build turns it into a card using the page's own
