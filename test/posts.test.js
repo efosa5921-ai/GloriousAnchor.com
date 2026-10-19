@@ -40,6 +40,8 @@ test('renderPostPage and renderFeed escape text and include the essentials', () 
   const p = compilePost('2026-10-15-a.md', '---\ntitle: A <b>title</b> & more\nsummary: Sum "quoted"\n---\nBody', site);
   const q = compilePost('2026-10-14-b.md', '---\ntitle: Other\n---\nBody', site);
   const html = renderPostPage('<title>{{title}}</title>{{body}}{{more}}', p, site, [p, q]);
+  const withPic = compilePost('2026-10-15-c.md', '---\ntitle: Welcome\nimage: images/a.jpg\n---\nBody', site);
+  assert.match(renderPostPage('{{hero}}', withPic, site, [withPic]), /class="article__hero"[^>]*alt="Welcome"/);
   const withShare = renderPostPage('{{share}}', p, site, [p]);
   assert.match(withShare, /class="sharebar"/); assert.match(withShare, /wa\.me\/\?text=/); assert.match(withShare, /data-copy/);
   assert.ok(html.includes('<title>A title &amp; more</title>'));

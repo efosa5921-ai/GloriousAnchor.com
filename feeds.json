@@ -24,39 +24,49 @@
     },
     {
       "id": "picks",
-      "label": "Picks"
+      "label": "Picks",
+      "description": "Links worth your time: articles, videos and posts hand-picked by the Glorious Anchor team."
     },
     {
       "id": "news",
-      "label": "News"
+      "label": "News",
+      "description": "Christian news from around the world: churches, persecution, faith in public life and the global church, refreshed every hour from trusted publishers."
     },
     {
       "id": "culture",
-      "label": "Faith & Culture"
+      "label": "Faith & Culture",
+      "description": "Essays and commentary on faith and culture from Christian magazines and journals."
     },
     {
       "id": "teaching",
-      "label": "Teaching & Devotional"
+      "label": "Teaching & Devotional",
+      "description": "Daily teaching and devotionals from trusted ministries, to feed your walk with God."
     },
     {
       "id": "apologetics",
-      "label": "Apologetics"
+      "label": "Apologetics",
+      "description": "Writers and channels that explain and defend the Christian faith, with clear answers to hard questions."
     },
     {
       "id": "eschatology",
-      "label": "Eschatology"
+      "label": "Eschatology",
+      "description": "Teaching on the end times and Bible prophecy from ministries that study it seriously."
     },
     {
       "id": "pitn",
-      "label": "Prophecy in the News"
+      "label": "Prophecy in the News",
+      "description": "Current events read in the light of Scripture: what is happening in the world and what the Bible says about it."
     },
     {
       "id": "holyspirit",
-      "label": "The Holy Spirit"
+      "label": "The Holy Spirit",
+      "description": "News and teaching on the Spirit-filled life from Pentecostal and charismatic publishers."
     },
     {
       "id": "articles",
-      "label": "Writers & Blogs"
+      "label": "Writers & Blogs",
+      "description": "Individual Christian writers, bloggers and newsletters, collected in one place.",
+      "slug": "writers"
     },
     {
       "id": "video",
@@ -68,7 +78,8 @@
     },
     {
       "id": "social",
-      "label": "Social"
+      "label": "Social",
+      "description": "Christian conversation from Reddit communities and social accounts, in one calm feed."
     }
   ],
   "brands": {

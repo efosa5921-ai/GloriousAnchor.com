@@ -72,3 +72,12 @@ test('followHtml lists only the channels that are set and rides along with the s
   assert.match(f, /follow__link--x" href="https:\/\/x\.com\/ga"[^>]*>@ga on X</);
   assert.match(subscribeHtml({ name: 'GA', newsletter: 'https://buttondown.com/ga', telegramChannel: 'https://t.me/ga' }), /<\/section><nav class="follow"/);
 });
+
+test('sectionJsonLd and sectionLinksHtml describe a section landing page', async () => {
+  const { sectionJsonLd, sectionLinksHtml } = await import('../scripts/lib/seo.js');
+  const site = { name: 'Glorious Anchor', url: 'https://gloriousanchor.com' };
+  const ld = sectionJsonLd({ site, url: 'https://gloriousanchor.com/eschatology/', name: 'Eschatology', description: 'End times', items: [{ title: 'T1', url: 'https://ex.com/1' }] });
+  assert.match(ld, /"@type":"CollectionPage"/); assert.match(ld, /"ItemList"/); assert.match(ld, /"name":"T1"/); assert.match(ld, /BreadcrumbList/);
+  assert.equal(sectionLinksHtml([{ slug: 'news', label: 'News' }, { slug: 'writers', label: 'Writers & Blogs' }], '../'), 'Sections: <a href="../news/">News</a> · <a href="../writers/">Writers &amp; Blogs</a>');
+  assert.equal(sectionLinksHtml([]), '');
+});

@@ -10,6 +10,22 @@ export function sitemapXml(entries) {
 /** Serialise JSON-LD safely inside a <script> tag. */
 export const jsonLd = (obj) => `<script type="application/ld+json">${JSON.stringify(obj).replace(/</g, '\\u003c')}</script>`;
 
+/** CollectionPage + ItemList for a section landing page: tells search engines what the page gathers. */
+export function sectionJsonLd({ site, url, name, description, items }) {
+  const b = base(site);
+  return jsonLd({ '@context': 'https://schema.org', '@graph': [
+    { '@type': 'CollectionPage', '@id': `${url}#page`, name: `${name} — ${site.name}`, url, description, isPartOf: { '@id': `${b}/#site` },
+      mainEntity: { '@type': 'ItemList', itemListElement: items.slice(0, 12).map((a, i) => ({ '@type': 'ListItem', position: i + 1, name: a.title, url: a.url })) } },
+    { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: site.name, item: `${b}/` }, { '@type': 'ListItem', position: 2, name, item: url }] },
+  ] });
+}
+
+/** Static links to every section page (plain HTML, so crawlers can follow them). prefix is '' on the home page and '../' on sub-pages. */
+export function sectionLinksHtml(sections, prefix = '') {
+  if (!sections.length) return '';
+  return `Sections: ${sections.map((s) => `<a href="${esc(prefix)}${esc(s.slug)}/">${esc(s.label)}</a>`).join(' · ')}`;
+}
+
 export function homeJsonLd(site) {
   const b = base(site);
   return jsonLd({ '@context': 'https://schema.org', '@graph': [

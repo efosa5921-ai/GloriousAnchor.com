@@ -28,6 +28,10 @@ every hour and publishes it to GitHub Pages, so there is no server to run and no
 
 **Top Stories** mixes every section, capped per source so a busy channel or subreddit cannot crowd out the rest.
 
+## Section landing pages
+
+Every category except Top Stories and Our Articles is also built as a page of its own at `/<slug>/` (`/news/`, `/eschatology/`, `/writers/` for Writers & Blogs, …): the same app opening on that category, with its own title, description, an intro heading, the category's latest cards prerendered, CollectionPage + ItemList + breadcrumb JSON-LD, and a sitemap entry. A category's `slug` in `feeds.json` overrides its id (needed when the id is a fixed path such as `articles`); categories covered by a brand page (`/tv/`, `/radio/`) use that page. Every page's footer links all sections.
+
 ## Features
 
 - Search across headlines, summaries, video descriptions and posts, with highlighting (press `/` to focus)

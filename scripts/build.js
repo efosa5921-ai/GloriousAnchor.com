@@ -22,7 +22,7 @@ import { fetchWithFallbacks } from './lib/fallbacks.js';
 import { computeHealth } from './lib/health.js';
 import { compilePost, postToArticle, renderPostPage, renderIndexPage, renderFeed, OWN_SOURCE } from './lib/posts.js';
 import { normaliseChurch, geocodeKey, nominatimUrl, parseNominatim } from './lib/churches.js';
-import { subscribeHtml, followHtml, sitemapXml, homeJsonLd, churchJsonLd, prerenderCards, metaTags, churchSlug, base as siteBase } from './lib/seo.js';
+import { subscribeHtml, followHtml, sitemapXml, homeJsonLd, churchJsonLd, sectionJsonLd, sectionLinksHtml, prerenderCards, metaTags, churchSlug, base as siteBase } from './lib/seo.js';
 import { readdir } from 'node:fs/promises';
 import { shareUrl, renderSharePage, relatedStories } from './lib/share.js';
 import { fillMissingImages } from './lib/images.js';
@@ -246,6 +246,12 @@ function validate(config) {
     if (s.type === 'instagram' && !(s.username || s.handle)) throw new Error(`feeds.json: instagram source "${s.id}" needs a "username"`);
     if (s.fallbacks !== undefined && !Array.isArray(s.fallbacks)) throw new Error(`feeds.json: "fallbacks" on "${s.id}" must be a list`);
   }
+  // Section landing pages live at /<slug>/, so a category's slug may not be one of the site's fixed paths.
+  const reserved = new Set(['articles', 'churches', 'digest', 'quiz', 's', 'data', 'assets', 'admin', 'videos']);
+  for (const c of config.categories) {
+    const slug = c.slug || c.id;
+    if (!['top', 'ours'].includes(c.id) && reserved.has(slug) && !Object.values(config.site?.brands || {}).some((br) => br?.category === c.id)) throw new Error(`feeds.json: category "${c.id}" needs a "slug" that is not a fixed path (${slug} is taken)`);
+  }
 }
 
 /** The curated church directory: locate addresses once (OpenStreetMap Nominatim, cached) and write data/churches.json. */
@@ -295,7 +301,7 @@ async function walkHtml(dir) {
   return out;
 }
 
-async function finalizeSeo({ site, articles, posts, churches }) {
+async function finalizeSeo({ site, articles, posts, churches, categories = [] }) {
   const b = siteBase(site);
   const social = `${b}/assets/social.jpg`;
   // Home page
@@ -304,27 +310,45 @@ async function finalizeSeo({ site, articles, posts, churches }) {
   const verification = site.googleSiteVerification ? `<meta name="google-site-verification" content="${escHtml(site.googleSiteVerification)}">` : '';
   index = index.replace('<!--seo:head-->', [metaTags({ title: `${site.name} — Christian News, Voices & Video`, description: site.tagline, url: `${b}/`, image: social, site }), verification, homeJsonLd(site)].filter(Boolean).join('\n  '));
   const footerFollow = [site.whatsappChannel && `<a href="${escHtml(site.whatsappChannel)}" target="_blank" rel="noopener">WhatsApp</a> · `, site.telegramChannel && `<a href="${escHtml(site.telegramChannel)}" target="_blank" rel="noopener">Telegram</a> · `].filter(Boolean).join('');
-  index = index.replace('<!--prerender-->', prerenderCards(articles, 24, site.imageProxy)).replace('<!--subscribe-->', subscribeHtml(site)).replace('<!--followlinks-->', footerFollow);
+  // Section landing pages: every category gets its own address (brand pages cover their categories, /articles/ covers ours).
+  const brandByCategory = Object.fromEntries(Object.entries(site.brands || {}).filter(([k, v]) => !k.startsWith('_') && v?.category).map(([k, v]) => [v.category, k]));
+  const sections = categories.filter((c) => !['top', 'ours'].includes(c.id))
+    .map((c) => ({ ...c, slug: brandByCategory[c.id] || c.slug || c.id, isBrand: Boolean(brandByCategory[c.id]) }));
+  const sectionLinks = (prefix) => sectionLinksHtml([{ slug: 'articles', label: 'Our Articles' }, ...sections], prefix);
+  index = index.replace('<!--prerender-->', prerenderCards(articles, 24, site.imageProxy)).replace('<!--subscribe-->', subscribeHtml(site)).replace('<!--followlinks-->', footerFollow)
+    .replace('<!--section-->', '').replace('<!--sections-->', sectionLinks(''));
   await writeFile(indexPath, index);
 
-  // Branded entry pages (/tv/, /radio/): the same app, opening on a category, with their own name and meta.
-  for (const [slug, brand] of Object.entries(site.brands || {})) {
-    if (slug.startsWith('_') || !brand?.category) continue;
+  // Entry pages: the same app opening on a category, with its own title, description, intro and prerendered cards.
+  // Brand pages (/tv/, /radio/) carry their brand name; section pages (/news/, /eschatology/, …) keep the site name.
+  const entryPage = async ({ slug, title, name, tagline, description, category, intro }) => {
+    const url = `${b}/${slug}/`;
+    const inCategory = articles.filter((a) => (a.categories || [a.category]).includes(category));
     let page = await readFile(path.join(SRC, 'index.html'), 'utf8');
-    page = page.replace(/<title>[^<]*<\/title>/, `<title>${escHtml(brand.name)} — ${escHtml(site.name)}</title>`)
-      .replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${escHtml(brand.description || brand.tagline || '')}">`)
-      .replace('<!--seo:head-->', [metaTags({ title: brand.name, description: brand.description || brand.tagline, url: `${b}/${slug}/`, image: social, site }), `<meta name="ga-brand" content="${escHtml(slug)}">`, `<meta name="ga-category" content="${escHtml(brand.category)}">`].join('\n  '))
-      .replace('<!--prerender-->', prerenderCards(articles.filter((a) => (a.categories || [a.category]).includes(brand.category)), 24, site.imageProxy))
+    page = page.replace(/<title>[^<]*<\/title>/, `<title>${escHtml(title)} — ${escHtml(site.name)}</title>`)
+      .replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${escHtml(description || tagline || '')}">`)
+      .replace('<!--seo:head-->', [metaTags({ title, description: description || tagline, url, image: social, site }), `<meta name="ga-brand" content="${escHtml(slug)}">`, `<meta name="ga-category" content="${escHtml(category)}">`, sectionJsonLd({ site, url, name: title, description: description || tagline, items: inCategory })].join('\n  '))
+      .replace('<!--section-->', intro ? `<section class="section-intro"><h1 class="section-intro__h1">${escHtml(intro.h1)}</h1><p class="section-intro__p">${escHtml(intro.p)}</p></section>` : '')
+      .replace('<!--sections-->', sectionLinks('../'))
+      .replace('<!--prerender-->', prerenderCards(inCategory, 24, site.imageProxy))
       .replace('<!--subscribe-->', subscribeHtml(site)).replace('<!--followlinks-->', footerFollow)
-      .replace(/<span class="brand__name">[^<]*<\/span>/, `<span class="brand__name">${escHtml(brand.name)}</span>`)
-      .replace(/<span class="brand__tag">[^<]*<\/span>/, `<span class="brand__tag">${escHtml(brand.tagline || '')}</span>`)
+      .replace(/<span class="brand__name">[^<]*<\/span>/, `<span class="brand__name">${escHtml(name)}</span>`)
+      .replace(/<span class="brand__tag">[^<]*<\/span>/, `<span class="brand__tag">${escHtml(tagline || '')}</span>`)
       .replaceAll('href="assets/', 'href="../assets/').replaceAll('src="assets/', 'src="../assets/').replaceAll('href="styles.css"', 'href="../styles.css"').replaceAll('src="app.js"', 'src="../app.js"')
-      .replaceAll('href="data/', 'href="../data/').replaceAll('href="feed.xml"', 'href="../feed.xml"').replaceAll('href="digest/', 'href="../digest/').replaceAll('href="quiz/', 'href="../quiz/').replaceAll('href="articles/', 'href="../articles/').replaceAll('href="churches/', 'href="../churches/').replaceAll('href="admin/', 'href="../admin/')
-      .replace('<a class="brand" href="./"', '<a class="brand" href="./"');
+      .replaceAll('href="data/', 'href="../data/').replaceAll('href="feed.xml"', 'href="../feed.xml"').replaceAll('href="digest/', 'href="../digest/').replaceAll('href="quiz/', 'href="../quiz/').replaceAll('href="articles/', 'href="../articles/').replaceAll('href="churches/', 'href="../churches/').replaceAll('href="admin/', 'href="../admin/');
     await mkdir(path.join(DIST, slug), { recursive: true });
     await writeFile(path.join(DIST, slug, 'index.html'), page);
+  };
+  for (const [slug, brand] of Object.entries(site.brands || {})) {
+    if (slug.startsWith('_') || !brand?.category) continue;
+    await entryPage({ slug, title: brand.name, name: brand.name, tagline: brand.tagline, description: brand.description, category: brand.category });
+  }
+  for (const s of sections) {
+    if (s.isBrand) continue;
+    await entryPage({ slug: s.slug, title: s.label, name: site.name, tagline: s.label, description: s.description, category: s.id, intro: { h1: s.label, p: s.description || `${s.label} on ${site.name}.` } });
   }
   const brandSlugs = Object.keys(site.brands || {}).filter((k) => !k.startsWith('_') && site.brands[k]?.category);
+  const sectionSlugs = sections.filter((s) => !s.isBrand).map((s) => s.slug);
 
   // Bible quiz page
   const quizData = validateQuizzes(await readJson(path.join(ROOT, 'quizzes.json'), { quizzes: [] }));
@@ -370,6 +394,7 @@ async function finalizeSeo({ site, articles, posts, churches }) {
     { url: `${b}/digest/`, changefreq: 'daily', priority: 0.8 },
     { url: `${b}/quiz/`, changefreq: 'daily', priority: 0.8 },
     ...brandSlugs.map((s) => ({ url: `${b}/${s}/`, changefreq: 'hourly', priority: 0.9 })),
+    ...sectionSlugs.map((s) => ({ url: `${b}/${s}/`, changefreq: 'hourly', priority: 0.8 })),
     ...located.map((c) => ({ url: c.url, changefreq: 'monthly', priority: 0.7 })),
   ];
   await writeFile(path.join(DIST, 'sitemap.xml'), sitemapXml(entries));
@@ -610,7 +635,7 @@ async function main() {
   await writeFile(path.join(DIST, 'digest', 'feed.xml'), renderDigestFeed(digests, site));
   await writeFile(path.join(DIST, 'feed.xml'), renderTopFeed(published, site));
   await writeFile(path.join(DIST, '.nojekyll'), ''); // tell GitHub Pages not to run Jekyll
-  const seo = await finalizeSeo({ site, articles, posts: own.posts, churches: directory.churches });
+  const seo = await finalizeSeo({ site, articles, posts: own.posts, churches: directory.churches, categories: metaCategories });
   if (verbose) console.log(`  ✓ seo: ${seo.sitemapEntries} sitemap entries, ${seo.pages} church pages, headlines pre-rendered`);
   // Stamp the service worker so every deploy invalidates the cached app shell.
   const swPath = path.join(DIST, 'sw.js');

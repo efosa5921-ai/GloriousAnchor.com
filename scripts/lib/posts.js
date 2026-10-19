@@ -116,7 +116,7 @@ export function renderPostPage(template, post, site, others) {
     author: esc(post.author), date: esc(fmtDate(post.publishedAt)), isoDate: new Date(post.publishedAt).toISOString(),
     minutes: String(post.readingMinutes), body: post.html, more: more ? `<ul class="article__more">${more}</ul>` : '',
     site: esc(site.name), verse: esc(site.verse || ''),
-    hero: post.image ? `<img class="article__hero" src="${esc(post.image)}" alt="">` : '',
+    hero: post.image ? `<img class="article__hero" src="${esc(post.image)}" alt="${esc(post.title)}">` : '',
     meta: metaTags({ title: post.title, description: post.summary, url: post.url, image: post.image || `${site.url.replace(/\/$/, '')}/assets/social.jpg`, type: 'article', site }),
     jsonld: articleJsonLd(post, site),
     share: shareBarHtml({ url: post.url, title: post.title, site, label: 'Share this article' }),
