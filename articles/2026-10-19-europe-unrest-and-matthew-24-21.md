@@ -5,6 +5,7 @@ author: The Glorious Anchor team
 summary: A weekend of riots in France and clashes in Italy, Albania and Belgium has many Christians reaching for Matthew 24. Here is what happened, what Jesus actually said, and how he told us to live in days like these.
 image: images/europe-unrest-matthew-24.jpg
 categories: eschatology, pitn
+draft: true
 ---
 
 > *For then there will be great tribulation, such as has not been from the beginning of the world until now, no, and never will be.* (Matthew 24:21)
