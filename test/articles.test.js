@@ -29,6 +29,14 @@ test('extractImage prefers largest media:thumbnail, falls back to enclosure/html
   assert.equal(extractImage({ content: '<img src="https://i/c.png">' }), 'https://i/c.png');
   assert.equal(extractImage({ content: '<img src="https://i/pixel.gif">' }), null);
   assert.equal(extractImage({}), null);
+  // Adverts, banners, logos and tiny images in the article HTML are skipped; the first real picture wins.
+  const html = '<p><img src="https://cdn.ex.com/ads/728x90-banner.jpg"></p><img width="150" height="40" src="https://ex.com/small.jpg"><img alt="Subscribe now" src="https://ex.com/sub.jpg"><img class="site-logo" src="https://ex.com/l.jpg"><img src="https://ex.com/wp-content/uploads/2026/10/church.jpg" alt="The church">';
+  assert.equal(extractImage({ content: html }), 'https://ex.com/wp-content/uploads/2026/10/church.jpg');
+  assert.equal(extractImage({ content: '<img src="https://ex.com/promo/spring-sale.jpg">' }), null);
+  const info = {};
+  assert.equal(extractImage({ content: '<img src="https://ex.com/photo.jpg">' }, info), 'https://ex.com/photo.jpg'); assert.equal(info.body, true);
+  const info2 = {};
+  extractImage({ mediaThumbnail: [{ $: { url: 'https://i/t.jpg', width: '400' } }], content: '<img src="https://ex.com/photo.jpg">' }, info2); assert.equal(info2.body, false);
 });
 
 test('normaliseItem builds a complete article and skips invalid items', () => {

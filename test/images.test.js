@@ -25,6 +25,11 @@ test('fillMissingImages fetches once, caches hits and misses, skips logos and re
   const cache = {};
   const r1 = await fillMissingImages(arts, cache, { fetchText, now });
   assert.deepEqual(r1, { fetched: 3, filled: 1 });
+  // A body-scraped picture is upgraded to the page's og:image when one exists, and kept when the page has none.
+  const scraped = [{ url: 'https://ex.com/up', kind: 'news', image: 'https://ex.com/maybe-ad.jpg', imageFromBody: true }, { url: 'https://ex.com/logo', kind: 'news', image: 'https://ex.com/body.jpg', imageFromBody: true }];
+  await fillMissingImages(scraped, {}, { fetchText: async (u) => (u.endsWith('/logo') ? page('https://ex.com/logo.png') : page('https://ex.com/img/up.jpg')), now });
+  assert.equal(scraped[0].image, 'https://ex.com/img/up.jpg'); assert.equal(scraped[0].imageFromBody, undefined);
+  assert.equal(scraped[1].image, 'https://ex.com/body.jpg');
   assert.equal(arts[0].image, 'https://ex.com/img/a.jpg');
   assert.equal(arts[1].image, undefined);
   assert.equal(cache['https://ex.com/logo'].image, null);

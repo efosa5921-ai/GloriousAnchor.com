@@ -48,10 +48,29 @@ export function truncate(text, max = 220) {
   return (lastSpace > max * 0.6 ? cut.slice(0, lastSpace) : cut).replace(/[,;:\-–—]$/, '') + '…';
 }
 
-function firstImageFromHtml(html) {
+/** Pictures that are not the story: adverts, banners, buttons, badges, logos, avatars, tracking pixels. */
+export const AD_IMAGE_RE = /(^|[^a-z])(ads?|advert\w*|adserver|adsystem|banner\w*|promo\w*|sponsor\w*|affiliate|doubleclick|googlesyndication|taboola|outbrain|widget|button|badge|icon|logo|avatar|gravatar|share|social|subscribe|donate|newsletter|signup|sign-up|cta|pixel|tracker|counter|1x1|feedburner|emoji|spacer|blank|placeholder)([^a-z]|$)/i;
+const AD_TEXT_RE = /\b(ad|ads|advert\w*|advertisement|banner|sponsor\w*|promo\w*|subscribe|donate|logo|avatar|badge|button|icon)\b/i;
+
+/** The first <img> in article HTML that looks like a real picture: not an ad, banner, logo or tiny decoration. */
+export function firstImageFromHtml(html) {
   if (!html) return null;
-  const m = String(html).match(/<img[^>]+src=["']([^"']+)["']/i);
-  return m ? m[1] : null;
+  for (const m of String(html).matchAll(/<img\b([^>]*)>/gi)) {
+    const attrs = m[1];
+    const src = attrs.match(/\ssrc=["']([^"']+)["']/i)?.[1];
+    if (!src || /^data:/i.test(src)) continue;
+    const num = (name) => { const v = attrs.match(new RegExp(`\\s${name}=["']?(\\d+)`, 'i'))?.[1]; return v ? Number(v) : null; };
+    const w = num('width'), h = num('height');
+    if ((w !== null && w < 200) || (h !== null && h < 120)) continue; // thumbnails, icons, pixels, skyscraper ads
+    const alt = attrs.match(/\salt=["']([^"']*)["']/i)?.[1] || '';
+    const cls = attrs.match(/\sclass=["']([^"']*)["']/i)?.[1] || '';
+    if (AD_TEXT_RE.test(alt) || AD_TEXT_RE.test(cls)) continue;
+    let path = src;
+    try { path = decodeURIComponent(new URL(src, 'https://x/').pathname); } catch { /* keep raw */ }
+    if (AD_IMAGE_RE.test(path) || /\b\d{2,4}x\d{2,4}\b/.test(path) && /\b(728x90|300x250|320x50|160x600|970x250|300x600|468x60)\b/.test(path)) continue;
+    return src;
+  }
+  return null;
 }
 
 function mediaAttrs(m) {
@@ -62,7 +81,7 @@ function mediaAttrs(m) {
   return null;
 }
 
-export function extractImage(item) {
+export function extractImage(item, info = null) {
   const candidates = [];
   const pushMedia = (arr) => {
     for (const m of [].concat(arr || [])) {
@@ -84,7 +103,7 @@ export function extractImage(item) {
   }
   if (item.itunes?.image) candidates.push({ url: item.itunes.image, width: 0 });
   const fromHtml = firstImageFromHtml(item.contentEncoded) || firstImageFromHtml(item.content) || firstImageFromHtml(item.description);
-  if (fromHtml) candidates.push({ url: fromHtml, width: 0 });
+  if (fromHtml) candidates.push({ url: fromHtml, width: 0, body: true });
 
   // YouTube: derive a thumbnail from the video id if the feed carried none.
   const vid = youtubeVideoId(item);
@@ -93,7 +112,10 @@ export function extractImage(item) {
   candidates.sort((a, b) => b.width - a.width);
   for (const c of candidates) {
     const url = cleanUrl(c.url);
-    if (url && !/\.(gif|svg)(\?|$)/i.test(url) && !/pixel|tracker|1x1|feedburner|doubleclick|emoji/i.test(url)) return url;
+    if (url && !/\.(gif|svg)(\?|$)/i.test(url) && !/pixel|tracker|1x1|feedburner|doubleclick|emoji/i.test(url)) {
+      if (info) info.body = Boolean(c.body);
+      return url;
+    }
   }
   return null;
 }
@@ -161,12 +183,16 @@ export function normaliseItem(item, source, feed) {
 
   const author = stripHtml(item.creator || item.dcCreator || item.author?.name || item.author || '') || null;
 
+  const imageInfo = {};
+  const image = extractImage(item, imageInfo);
   return {
     id: makeId(url, title),
     title,
     url,
     summary,
-    image: extractImage(item),
+    image,
+    // A picture scraped from the article's own HTML may be an advert or a banner; the page's og:image is preferred when it can be fetched.
+    ...(image && imageInfo.body ? { imageFromBody: true } : {}),
     author,
     publishedAt,
     kind,
