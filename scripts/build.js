@@ -173,13 +173,24 @@ async function fetchCandidate(candidate, index, limits, resolved, services) {
   if (candidate.type === 'discover') return discoverFeed(candidate, text, resolved);
   const feedUrl = await resolveFeedUrl(candidate, resolved, text, services);
   try {
-    const feed = await parser.parseString(await text(feedUrl));
+    // YouTube's feed server answers GitHub's runners with sporadic 404s and 500s for perfectly good channels;
+    // a second or third try a moment later usually succeeds.
+    const flakyYouTube = /youtube\.com\/feeds\/videos\.xml/i.test(feedUrl);
+    let body;
+    for (let attempt = 1; ; attempt++) {
+      try { body = await text(feedUrl); break; } catch (err) {
+        if (!flakyYouTube || attempt >= 3 || !/HTTP (404|5\d\d)/.test(err.message)) throw err;
+        await new Promise((r) => setTimeout(r, 1500 * attempt));
+      }
+    }
+    const feed = await parser.parseString(body);
     if (!feed.items?.length) throw new Error('feed has no items'); // treat an empty feed as a failure so fallbacks run
     return feed;
   } catch (err) {
     // A cached YouTube handle → channel id that yields nothing is probably wrong: forget it so the next build re-resolves.
+    // A 5xx is YouTube's problem, not a wrong id, so the cached id is kept in that case.
     const key = youtubeCacheKey(candidate);
-    if (key && resolved[key]) { delete resolved[key]; err.message += ' (cached channel id discarded; will re-resolve next build)'; }
+    if (key && resolved[key] && !/HTTP 5\d\d/.test(err.message)) { delete resolved[key]; err.message += ' (cached channel id discarded; will re-resolve next build)'; }
     throw err;
   }
 }
