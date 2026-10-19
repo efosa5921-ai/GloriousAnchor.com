@@ -27,6 +27,7 @@ import { readdir } from 'node:fs/promises';
 import { shareUrl, renderSharePage, relatedStories } from './lib/share.js';
 import { fillMissingImages } from './lib/images.js';
 import { dropGoneVideos } from './lib/videos.js';
+import { youtubeApiUrl, apiToFeed } from './lib/youtube.js';
 import { validateQuizzes, renderQuizPage } from './lib/quiz.js';
 import { pickDigest, digestDate, digestText, digestHtml, renderDigestPage, renderDigestFeed, renderTopFeed } from './lib/digest.js';
 
@@ -187,6 +188,15 @@ async function fetchCandidate(candidate, index, limits, resolved, services) {
     if (!feed.items?.length) throw new Error('feed has no items'); // treat an empty feed as a failure so fallbacks run
     return feed;
   } catch (err) {
+    // YouTube Data API fallback (secret YOUTUBE_API_KEY): the channel's uploads playlist, 1 quota unit per call.
+    const channelId = /youtube\.com\/feeds\/videos\.xml/i.test(feedUrl) ? new URL(feedUrl).searchParams.get('channel_id') : null;
+    const apiUrl = channelId ? youtubeApiUrl(channelId, (process.env.YOUTUBE_API_KEY || '').trim(), limits.perSource || 25) : null;
+    if (apiUrl) {
+      try {
+        const feed = apiToFeed(JSON.parse(await text(apiUrl)), channelId);
+        if (feed.items.length) { feed.viaApi = true; return feed; }
+      } catch (apiErr) { err.message += ` | Data API: ${String(apiErr.message).replace(/key=[\w-]+/g, 'key=…').slice(0, 80)}`; }
+    }
     // A cached YouTube handle → channel id that yields nothing is probably wrong: forget it so the next build re-resolves.
     // A 5xx is YouTube's problem, not a wrong id, so the cached id is kept in that case.
     const key = youtubeCacheKey(candidate);
@@ -499,7 +509,7 @@ async function main() {
     const st = { id: r.source.id, name: r.source.name, ok: true, count: kept };
     if (r.via) { st.via = r.via; st.warning = r.warnings.join(' | '); }
     sourceStatus.push(st);
-    if (verbose) console.log(`  ✓ ${r.source.id}: ${kept} items${r.via ? ` (via fallback ${r.via}; ${r.warnings.join(' | ')})` : ''}`);
+    if (verbose) console.log(`  ✓ ${r.source.id}: ${kept} items${r.feed?.viaApi ? ' (via YouTube Data API)' : ''}${r.via ? ` (via fallback ${r.via}; ${r.warnings.join(' | ')})` : ''}`);
   }
   for (const s of disabled) sourceStatus.push({ id: s.id, name: s.name, ok: false, skipped: true, error: 'disabled in feeds.json' });
 

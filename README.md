@@ -177,6 +177,10 @@ Write the article here in Markdown. **Bold**, *italic*, ## headings, lists, quot
 `CHANGELOG.md` is published as the article at `/articles/whats-new/`, dated by its newest heading. Add a dated entry at
 the top whenever a feature ships; the welcome article should keep describing the whole site.
 
+## YouTube reliability
+
+YouTube's RSS feed server (`youtube.com/feeds/videos.xml`) answers GitHub's runners with sporadic 404s and 500s, at times for most channels in a build. The build retries each channel up to three times, and when a `YOUTUBE_API_KEY` secret is set it falls back to the YouTube Data API (`scripts/lib/youtube.js`): the channel's uploads playlist, 1 quota unit per call against a free 10,000-unit daily quota. Create the key in Google Cloud Console (APIs & Services → Credentials → API key, with "YouTube Data API v3" enabled) and add it under Settings → Secrets and variables → Actions.
+
 ## Gone videos
 
 Churches often stream a service and then hide or delete the recording, while the feed entry lingers and YouTube serves a grey placeholder thumbnail. `scripts/lib/videos.js` asks YouTube's oEmbed endpoint about each video (401 = private, 404 = deleted) and drops those; results are cached in `dist/data/video-cache.json`, re-checking fresh videos every 12 hours for three days. The thumbnail is checked as well: YouTube answers 404 with a grey placeholder image for a video that has no picture yet (browsers display it regardless), so such videos keep their card but get the cover tile.

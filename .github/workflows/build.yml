@@ -50,6 +50,8 @@ jobs:
           FEEDS_SERVER_URL: ${{ secrets.FEEDS_SERVER_URL }}
           RSSHUB_ACCESS_KEY: ${{ secrets.RSSHUB_ACCESS_KEY }}
           FEEDS_BASIC_AUTH: ${{ secrets.FEEDS_BASIC_AUTH }}
+          # Optional: YouTube Data API key, used when YouTube's RSS feed server fails (see README)
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           # Optional: Instagram via the official Graph API (run scripts/instagram-setup.js once)
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
