@@ -17,7 +17,7 @@ every hour and publishes it to GitHub Pages, so there is no server to run and no
 | Faith & Culture | article | RELEVANT, The Gospel Coalition, Mere Orthodoxy, First Things, Plough, Crossway |
 | Teaching & Devotional | article | Desiring God, Ligonier, Our Daily Bread, Bible Gateway Blog, Got Questions |
 | Writers & Blogs | article | Tim Challies, Kevin DeYoung, Ann Voskamp, Trevin Wax, Scot McKnight, Jemar Tisby, Kristin Du Mez |
-| Prophecy in the News | article | Our own articles on current events read in the light of Scripture, plus Lamb & Lion Ministries |
+| Prophecy in the News | article, video | Our own articles on current events read in the light of Scripture, plus Lamb & Lion Ministries, Prophecy Watchers, Prophecy News Watch and Endtime Ministries |
 | The Holy Spirit | news, article | Charisma News, Charisma Magazine, The Pneuma Review, Influence Magazine |
 | YouTube | video | BibleProject, Desiring God, Ligonier, Mike Winger, Cliffe Knechtle, Elevation Worship, Bethel Music |
 | Radio | audio | The Briefing, BibleProject Podcast, Truth for Life, Renewing Your Mind, The Holy Post, Gospelbound, Focus on the Family |

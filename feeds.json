@@ -711,6 +711,70 @@
       ]
     },
     {
+      "id": "yt-prophecy-watchers",
+      "name": "Prophecy Watchers",
+      "type": "youtube",
+      "handle": "@prophecywatchers",
+      "channelId": "UC3X8sYjKJuDefK1kiY9H4LA",
+      "homepage": "https://prophecywatchers.com",
+      "category": "pitn",
+      "kind": "video",
+      "categories": [
+        "pitn",
+        "video"
+      ]
+    },
+    {
+      "id": "prophecy-watchers",
+      "name": "Prophecy Watchers (website)",
+      "url": "https://prophecywatchers.com/feed/",
+      "homepage": "https://prophecywatchers.com",
+      "category": "pitn",
+      "kind": "article",
+      "enabled": false,
+      "_note": "The website feed sits behind a bot check (SiteGround captcha) from GitHub's servers; the YouTube channel is used instead."
+    },
+    {
+      "id": "yt-prophecy-news-watch",
+      "name": "Prophecy News Watch",
+      "type": "youtube",
+      "channelId": "UCGYFXldjRXJ4VIwWZDos2hQ",
+      "homepage": "https://www.prophecynewswatch.com",
+      "category": "pitn",
+      "kind": "video",
+      "categories": [
+        "pitn",
+        "video"
+      ]
+    },
+    {
+      "id": "yt-endtime",
+      "name": "Endtime (YouTube)",
+      "type": "youtube",
+      "handle": "@endtimeinc",
+      "channelId": "UCKCDoXR2lbTl9tFyq3gwWhA",
+      "homepage": "https://www.endtime.com",
+      "category": "pitn",
+      "kind": "video",
+      "categories": [
+        "pitn",
+        "video"
+      ]
+    },
+    {
+      "id": "endtime",
+      "name": "Endtime Ministries",
+      "url": "https://www.endtime.com/feed/",
+      "homepage": "https://www.endtime.com",
+      "category": "pitn",
+      "kind": "article",
+      "categories": [
+        "pitn",
+        "eschatology"
+      ],
+      "featured": true
+    },
+    {
       "id": "charisma-news",
       "name": "Charisma News",
       "url": "https://charismanews.com/feed/",
@@ -760,7 +824,7 @@
       "category": "eschatology",
       "kind": "news",
       "enabled": false,
-      "_note": "No feed found at the usual addresses; fix the URL or remove."
+      "_note": "The website has no RSS feed (checked Oct 2026); the YouTube channel is used instead."
     },
     {
       "id": "pod-briefing",

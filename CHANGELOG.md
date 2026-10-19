@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 19 October 2026
 
+- **Prophecy Watchers**, **Prophecy News Watch** and **Endtime Ministries** join the Prophecy in the News tab: Endtime's articles and all three YouTube channels (the videos also appear under YouTube).
 - New tab, **Prophecy in the News**: current events read in the light of Scripture, starting with [Fires in France, unrest across Europe: is this the "great tribulation" of Matthew 24:21?](/articles/europe-unrest-and-matthew-24-21/).
 - Our own articles can now appear in other tabs too (for example Eschatology), chosen in the admin's article editor.
 - Videos that a channel has since made private or deleted (usually a livestream after it ended) no longer linger on the site, and a video that has no picture yet shows the branded cover tile instead of YouTube's grey placeholder.
