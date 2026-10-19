@@ -461,3 +461,11 @@ mark { background: var(--gold-soft); color: inherit; border-radius: 2px; padding
 .sharebar__link--native { background: var(--navy); color: var(--navy-ink); border-color: var(--navy); }
 .sharebar__link--native::before { background: var(--gold); }
 .sharebar__link:hover { border-color: var(--gold); }
+
+/* Digest: post story by story */
+.digest__onebyone { margin: 14px 0 0; }
+.digest__onebyone summary { cursor: pointer; font-weight: 600; color: var(--navy); }
+.digest__steps { margin: 8px 0 0; padding-left: 1.2em; display: grid; gap: 10px; }
+.digest__steps li { line-height: 1.4; }
+.digest__step { display: block; margin-top: 4px; font-size: .95rem; }
+.btn--small { padding: 5px 12px; font-size: .85rem; }

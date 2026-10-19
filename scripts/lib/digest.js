@@ -117,6 +117,13 @@ export function renderDigestPage(items, site, date, text) {
         <button class="btn btn--ghost" id="shareCard" type="button" title="A picture of today's headlines to post on WhatsApp, Instagram or Facebook">Share as picture</button>
       </div>
       <p class="digest__hint" id="cardHint" hidden></p>
+      <details class="digest__onebyone">
+        <summary>Post story by story (each with its own picture)</summary>
+        <p class="digest__lede">WhatsApp shows one picture per message, for the first link. To give every story its picture, post them one at a time: copy, paste into the channel, send, next.</p>
+        <ol class="digest__steps">
+${items.map((a, i) => `          <li><button class="btn btn--ghost btn--small" type="button" data-copy-item="${i}">Copy ${i + 1}</button> <a class="btn btn--ghost btn--small" href="https://wa.me/?text=${encodeURIComponent(`${a.title} — ${a.internal ? site.name : a.source}\n${shareUrl(a, site)}\n\nvia ${site.name}`)}" target="_blank" rel="noopener">WhatsApp</a> <span class="digest__step">${esc(a.title)}</span></li>`).join('\n')}
+        </ol>
+      </details>
     </section>
     <section class="digest__stories grid">
 ${items.map((a, i) => cardHtml(a, { href: shareUrl(a, site), imageProxy: site.imageProxy, site, summary: true, date: false, extra: i === 0 ? 'card--lead' : '' })).join('\n')}
@@ -127,7 +134,7 @@ ${items.map((a, i) => cardHtml(a, { href: shareUrl(a, site), imageProxy: site.im
       <p class="footer__meta">Feed readers and automation: <code>${esc(b)}/digest/feed.xml</code> carries one digest a day; <code>${esc(b)}/feed.xml</code> carries every new item.</p>
     </section>
     <pre id="digestText" hidden>${esc(text)}</pre>
-    <script type="application/json" id="digestData">${JSON.stringify({ site: site.name, date: longDate(date), url: b.replace(/^https?:\/\//, ''), items: items.map((a) => ({ title: a.title, source: a.internal ? site.name : a.source, image: a.image ? previewImage(a, site) : null })) }).replace(/</g, '\\u003c')}</script>
+    <script type="application/json" id="digestData">${JSON.stringify({ site: site.name, date: longDate(date), url: b.replace(/^https?:\/\//, ''), items: items.map((a) => ({ title: a.title, source: a.internal ? site.name : a.source, image: a.image ? previewImage(a, site) : null, url: shareUrl(a, site) })) }).replace(/</g, '\\u003c')}</script>
     <pre id="digestMd" hidden>${esc(md)}</pre>
   </main>
   <footer class="footer"><div class="wrap"><p class="footer__meta"><a href="../">${esc(site.name)}</a> · <a href="../articles/">Our articles</a> · <a href="../churches/">Find a church</a></p></div></footer>
@@ -139,12 +146,36 @@ ${items.map((a, i) => cardHtml(a, { href: shareUrl(a, site), imageProxy: site.im
     });
     copier('copyWa', 'digestText', 'Copy for WhatsApp');
     copier('copyMd', 'digestMd', 'Copy for email');
+    const data = JSON.parse(document.getElementById('digestData').textContent);
+    for (const b of document.querySelectorAll('[data-copy-item]')) b.addEventListener('click', async () => {
+      const it = data.items[Number(b.dataset.copyItem)]; const t = it.title + ' — ' + it.source + '\\n' + it.url + '\\n\\nvia ' + data.site;
+      try { await navigator.clipboard.writeText(t); b.textContent = 'Copied!'; } catch { window.prompt('Copy this text', t); }
+      setTimeout(() => { b.textContent = 'Copy ' + (Number(b.dataset.copyItem) + 1); }, 2000);
+    });
     // "Share as picture": draw a branded card of today's headlines and hand it to the phone's share sheet (or download it).
     const cardBtn = document.getElementById('shareCard'), hint = document.getElementById('cardHint');
+    const loadImg = (src) => new Promise((res) => { if (!src) return res(null); const im = new Image(); im.crossOrigin = 'anonymous'; im.onload = () => res(im); im.onerror = () => res(null); im.src = src; });
+    const TILES = [['#1f3f6e', '#0b1f3a'], ['#6b3a1e', '#2a1407'], ['#1f5a4a', '#0b2a22'], ['#4a2a6b', '#1d1030'], ['#6b1f2f', '#2a0b12'], ['#3a4a1f', '#141d08']];
     async function digestCard() {
       const d = JSON.parse(document.getElementById('digestData').textContent);
-      const W = 1080, H = 1350, c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d');
+      const items = d.items.slice(0, 8);
+      const pics = await Promise.all(items.map((i) => loadImg(i.image)));
+      // Layout: header, the lead story with a big picture, then one row per story with its own thumbnail.
+      const W = 1080, PAD = 72, ROW = 212, LEAD_H = 520;
+      const H = 200 + (items.length ? LEAD_H + 40 : 0) + Math.max(0, items.length - 1) * ROW + 120;
+      const c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d');
       const g = x.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#1f3f6e'); g.addColorStop(.6, '#0b1f3a'); g.addColorStop(1, '#07142a'); x.fillStyle = g; x.fillRect(0, 0, W, H);
+      const cover = (px, py, w, h, idx, text) => { // branded tile when a story has no usable picture
+        const t = TILES[idx % TILES.length], cg = x.createLinearGradient(px, py, px + w, py + h); cg.addColorStop(0, t[0]); cg.addColorStop(1, t[1]);
+        x.fillStyle = cg; x.fillRect(px, py, w, h);
+        x.fillStyle = 'rgba(232,184,74,.9)'; x.font = '700 ' + Math.round(h * .5) + 'px Georgia, serif'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText((text || '?').trim().charAt(0).toUpperCase(), px + w / 2, py + h / 2 + h * .04); x.textAlign = 'left'; x.textBaseline = 'alphabetic';
+      };
+      const picture = (img, px, py, w, h, idx, text) => {
+        x.save(); x.beginPath(); x.roundRect(px, py, w, h, 20); x.clip();
+        if (img) { const r = Math.max(w / img.width, h / img.height), sw = w / r, sh = h / r; x.drawImage(img, (img.width - sw) / 2, (img.height - sh) / 2, sw, sh, px, py, w, h); }
+        else cover(px, py, w, h, idx, text);
+        x.restore();
+      };
       // anchor mark
       x.save(); x.translate(72, 64); x.scale(2.6, 2.6); x.fillStyle = '#0b1f3a'; x.beginPath(); x.arc(16, 16, 15, 0, Math.PI * 2); x.fill();
       x.strokeStyle = '#e8b84a'; x.lineWidth = 2.2; x.lineCap = 'round'; x.lineJoin = 'round';
@@ -153,28 +184,26 @@ ${items.map((a, i) => cardHtml(a, { href: shareUrl(a, site), imageProxy: site.im
       x.beginPath(); x.moveTo(7, 19); x.lineTo(5, 17.5); x.moveTo(7, 19); x.lineTo(9.5, 18.5); x.moveTo(25, 19); x.lineTo(27, 17.5); x.moveTo(25, 19); x.lineTo(22.5, 18.5); x.stroke(); x.restore();
       x.fillStyle = '#fff'; x.font = '700 44px Georgia, "Times New Roman", serif'; x.fillText(d.site, 172, 100);
       x.fillStyle = '#e8b84a'; x.font = '700 26px Inter, Arial, sans-serif'; x.fillText('DAILY DIGEST · ' + d.date.toUpperCase(), 172, 138);
-      // lead picture (if the proxy allows cross-origin drawing)
-      let y = 200;
-      const lead = d.items.find((i) => i.image);
-      if (lead) {
-        try {
-          const img = await new Promise((res, rej) => { const im = new Image(); im.crossOrigin = 'anonymous'; im.onload = () => res(im); im.onerror = rej; im.src = lead.image; });
-          const bw = W - 144, bh = 380, r = Math.max(bw / img.width, bh / img.height), sw = bw / r, sh = bh / r;
-          x.save(); x.beginPath(); x.roundRect(72, y, bw, bh, 24); x.clip(); x.drawImage(img, (img.width - sw) / 2, (img.height - sh) / 2, sw, sh, 72, y, bw, bh); x.restore();
-          y += bh + 40;
-        } catch { /* no picture, headlines only */ }
-      }
-      x.fillStyle = '#fff'; x.font = '700 56px Georgia, "Times New Roman", serif'; x.fillText('Today on ' + d.site, 72, y + 50); y += 110;
       const wrap = (t, max) => { const words = t.split(' '), lines = []; let line = ''; for (const w of words) { const test = line ? line + ' ' + w : w; if (x.measureText(test).width > max && line) { lines.push(line); line = w; } else line = test; } if (line) lines.push(line); return lines; };
-      const slotsAvail = Math.floor((H - 120 - y) / 118);
-      for (const it of d.items.slice(0, Math.max(3, Math.min(8, slotsAvail)))) {
-        x.fillStyle = '#e8b84a'; x.beginPath(); x.arc(84, y + 14, 7, 0, Math.PI * 2); x.fill();
-        x.fillStyle = '#fff'; x.font = '600 36px Inter, Arial, sans-serif';
-        const lines = wrap(it.title, W - 190).slice(0, 2); if (lines.length === 2 && wrap(it.title, W - 190).length > 2) lines[1] = lines[1].replace(/\s?\S*$/, '…');
-        lines.forEach((l, i) => x.fillText(l, 110, y + 26 + i * 44));
-        x.fillStyle = 'rgba(255,255,255,.65)'; x.font = '400 26px Inter, Arial, sans-serif'; x.fillText(it.source, 110, y + 26 + lines.length * 44 - 6);
-        y += 40 + lines.length * 44 + 18;
+      const clamp = (t, max, n) => { const all = wrap(t, max), lines = all.slice(0, n); if (all.length > n) lines[n - 1] = lines[n - 1].replace(/\s?\S*$/, '…'); return lines; };
+      let y = 200;
+      if (items.length) { // lead story: big picture with the headline over its lower edge
+        const bw = W - PAD * 2, bh = LEAD_H;
+        picture(pics[0], PAD, y, bw, bh, 0, items[0].title);
+        const sh = x.createLinearGradient(0, y + bh * .35, 0, y + bh); sh.addColorStop(0, 'rgba(5,15,30,0)'); sh.addColorStop(1, 'rgba(5,15,30,.92)');
+        x.save(); x.beginPath(); x.roundRect(PAD, y, bw, bh, 20); x.clip(); x.fillStyle = sh; x.fillRect(PAD, y, bw, bh); x.restore();
+        x.font = '700 46px Georgia, "Times New Roman", serif'; const ll = clamp(items[0].title, bw - 64, 3);
+        x.fillStyle = '#fff'; ll.forEach((l, i) => x.fillText(l, PAD + 32, y + bh - 44 - (ll.length - 1 - i) * 54));
+        x.fillStyle = '#e8b84a'; x.font = '600 26px Inter, Arial, sans-serif'; x.fillText(items[0].source.toUpperCase(), PAD + 32, y + bh - 44 - ll.length * 54 + 6);
+        y += bh + 40;
       }
+      items.slice(1).forEach((it, i) => { // the rest: thumbnail on the left, headline and source on the right
+        const tw = 260, th = 172; picture(pics[i + 1], PAD, y, tw, th, i + 1, it.title);
+        x.fillStyle = '#fff'; x.font = '600 34px Inter, Arial, sans-serif';
+        const lines = clamp(it.title, W - PAD * 2 - tw - 28, 3); lines.forEach((l, j) => x.fillText(l, PAD + tw + 28, y + 40 + j * 42));
+        x.fillStyle = 'rgba(255,255,255,.65)'; x.font = '400 24px Inter, Arial, sans-serif'; x.fillText(it.source, PAD + tw + 28, y + 40 + lines.length * 42 + 2);
+        y += ROW;
+      });
       x.fillStyle = '#e8b84a'; x.font = '700 32px Inter, Arial, sans-serif'; x.fillText(d.url + '/digest', 72, H - 60);
       x.fillStyle = 'rgba(255,255,255,.6)'; x.font = '400 26px Inter, Arial, sans-serif'; x.textAlign = 'right'; x.fillText('Follow for more every day', W - 72, H - 60); x.textAlign = 'left';
       return new Promise((res) => c.toBlob(res, 'image/png'));

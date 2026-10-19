@@ -84,5 +84,7 @@ test('digest page carries the data and button for the shareable picture', () => 
   const page = renderDigestPage([mk('a', { image: 'https://ex.com/p.jpg' })], site, '2026-10-17', 'T');
   assert.match(page, /id="shareCard"/);
   assert.match(page, /<script type="application\/json" id="digestData">\{"site":"Glorious Anchor"/);
+  assert.match(page, /"url":"https:\/\/gloriousanchor\.com\//);
+  assert.match(page, /data-copy-item="0"/); assert.match(page, /Post story by story/);
   assert.match(page, /"image":"https:\/\/ex\.com\/p\.jpg"/);
 });

@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 19 October 2026
 
+- **Digest for WhatsApp, with pictures**: "Share as picture" now makes one tall picture with every story's photo and headline, and a new "Post story by story" list copies each story on its own so every WhatsApp post gets its own preview picture.
 - **No more adverts as story pictures**: pictures scraped from an article's own text are filtered for ads, banners and logos, and replaced by the picture the publisher chose for sharing whenever the page offers one.
 - **Share buttons on every article and story page**: WhatsApp, X, Facebook, Telegram, email, copy link, and your phone's own share sheet.
 - YouTube channels load more reliably: the build retries when YouTube's feed server stumbles, which it has been doing often, and can fall back to YouTube's official data service once a free key is added.
