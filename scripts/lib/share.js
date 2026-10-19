@@ -3,7 +3,7 @@
  * Glorious Anchor preview card; opened, it shows the story card on our site with a clear "read the full story" button
  * and more stories from the same section, so a shared link always introduces the site before sending readers on.
  */
-import { proxied, cardHtml, subscribeHtml } from './seo.js';
+import { proxied, cardHtml, subscribeHtml, shareBarHtml } from './seo.js';
 
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const base = (site) => (site.url || '').replace(/\/$/, '');
@@ -84,6 +84,7 @@ export function renderSharePage(a, site, more = [], categoryLabel = '') {
       ${hero}
       ${a.summary ? `<p class="story__summary">${esc(a.summary)}</p>` : ''}
       ${cta}
+      ${shareBarHtml({ url: shareUrl(a, site), title: a.title, site })}
       <p class="story__note">Found on ${esc(site.name)}. We link to the original; the full story belongs to ${esc(who)}.</p>
     </article>
     ${more.length ? `<aside class="article__aside story__more">

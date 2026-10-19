@@ -447,3 +447,17 @@ mark { background: var(--gold-soft); color: inherit; border-radius: 2px; padding
 .pill--gold { background: var(--gold); color: #0b1f3a; }
 .churches__foot { color: var(--muted); font-size: .85rem; margin-top: 28px; }
 @media (min-width: 900px) { .churches__layout { grid-template-columns: 1fr 1fr; align-items: start; } .churches__map { position: sticky; top: 120px; height: 520px; } }
+
+/* Share bar on article and story pages */
+.sharebar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 28px 0 8px; padding-top: 18px; border-top: 1px solid var(--line); }
+.sharebar__label { color: var(--muted); font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; margin-right: 4px; }
+.sharebar__link { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--text); text-decoration: none; font: inherit; font-size: .9rem; font-weight: 600; cursor: pointer; }
+.sharebar__link::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--muted); }
+.sharebar__link--whatsapp::before { background: #25d366; }
+.sharebar__link--telegram::before { background: #2aabee; }
+.sharebar__link--facebook::before { background: #1877f2; }
+.sharebar__link--x::before { background: var(--text); }
+.sharebar__link--email::before { background: var(--gold); }
+.sharebar__link--native { background: var(--navy); color: var(--navy-ink); border-color: var(--navy); }
+.sharebar__link--native::before { background: var(--gold); }
+.sharebar__link:hover { border-color: var(--gold); }

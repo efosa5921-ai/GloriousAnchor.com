@@ -78,6 +78,26 @@ export function cardHtml(a, { href = a.url, imageProxy = '', site = null, summar
  * pages get an inline form posting to their embed endpoint, anything else gets a button to the page.
  */
 /** "Follow us" links: WhatsApp channel, Telegram channel, X. Only the ones set in feeds.json → site appear. */
+/** A row of share buttons for a page: WhatsApp, X, Facebook, Telegram, email, copy link, and the phone's own share sheet. */
+export function shareBarHtml({ url, title, site, label = 'Share' }) {
+  const via = `via ${site?.name || 'Glorious Anchor'}`;
+  const e = encodeURIComponent;
+  const links = [
+    ['WhatsApp', `https://wa.me/?text=${e(`${title}\n${url}\n\n${via}`)}`, 'whatsapp'],
+    ['X', `https://twitter.com/intent/tweet?text=${e(`${title} ${via}`)}&url=${e(url)}`, 'x'],
+    ['Facebook', `https://www.facebook.com/sharer/sharer.php?u=${e(url)}`, 'facebook'],
+    ['Telegram', `https://t.me/share/url?url=${e(url)}&text=${e(`${title}\n${via}`)}`, 'telegram'],
+    ['Email', `mailto:?subject=${e(title)}&body=${e(`${url}\n\n${via}`)}`, 'email'],
+  ];
+  return `<nav class="sharebar" aria-label="${esc(label)} this page" data-url="${esc(url)}" data-title="${esc(title)}" data-via="${esc(via)}">
+  <span class="sharebar__label">${esc(label)}</span>
+  ${links.map(([text, href, k]) => `<a class="sharebar__link sharebar__link--${k}" href="${esc(href)}" target="_blank" rel="noopener">${esc(text)}</a>`).join('\n  ')}
+  <button class="sharebar__link sharebar__link--copy" type="button" data-copy>Copy link</button>
+  <button class="sharebar__link sharebar__link--native" type="button" data-share hidden>Share…</button>
+</nav>
+<script>(function(){var b=document.querySelector('.sharebar');if(!b)return;var u=b.dataset.url,t=b.dataset.title,v=b.dataset.via;var c=b.querySelector('[data-copy]');c.addEventListener('click',function(){(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){c.textContent='Copied!';setTimeout(function(){c.textContent='Copy link';},1500);},function(){window.prompt('Copy this link',u);});});var n=b.querySelector('[data-share]');if(navigator.share){n.hidden=false;n.addEventListener('click',function(){navigator.share({title:t,text:t+' — '+v,url:u}).catch(function(){});});}})();</script>`;
+}
+
 export function followHtml(site, { label = 'Follow us' } = {}) {
   const links = [];
   if (site.whatsappChannel) links.push(['WhatsApp channel', site.whatsappChannel, 'whatsapp']);

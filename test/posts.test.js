@@ -40,6 +40,8 @@ test('renderPostPage and renderFeed escape text and include the essentials', () 
   const p = compilePost('2026-10-15-a.md', '---\ntitle: A <b>title</b> & more\nsummary: Sum "quoted"\n---\nBody', site);
   const q = compilePost('2026-10-14-b.md', '---\ntitle: Other\n---\nBody', site);
   const html = renderPostPage('<title>{{title}}</title>{{body}}{{more}}', p, site, [p, q]);
+  const withShare = renderPostPage('{{share}}', p, site, [p]);
+  assert.match(withShare, /class="sharebar"/); assert.match(withShare, /wa\.me\/\?text=/); assert.match(withShare, /data-copy/);
   assert.ok(html.includes('<title>A title &amp; more</title>'));
   assert.ok(html.includes('<p>Body</p>'));
   assert.ok(html.includes('href="../b/"'), 'links to the other post by slug');

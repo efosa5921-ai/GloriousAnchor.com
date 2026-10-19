@@ -17,7 +17,7 @@
  */
 import { marked } from 'marked';
 import { stripHtml, truncate, makeId } from './articles.js';
-import { articleJsonLd, metaTags } from './seo.js';
+import { articleJsonLd, metaTags, shareBarHtml } from './seo.js';
 
 export const OWN_SOURCE = { id: 'ours', name: 'Glorious Anchor', category: 'ours', kind: 'article', featured: true, homepage: '/articles/' };
 
@@ -107,7 +107,7 @@ export function postToArticle(post, site) {
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const fmtDate = (t) => new Date(t).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 
-/** Fill the article page template. Placeholders: {{title}} {{description}} {{url}} {{image}} {{author}} {{date}} {{isoDate}} {{minutes}} {{body}} {{more}} {{site}} {{verse}} */
+/** Fill the article page template. Placeholders: {{title}} {{description}} {{url}} {{image}} {{author}} {{date}} {{isoDate}} {{minutes}} {{body}} {{share}} {{more}} {{site}} {{verse}} */
 export function renderPostPage(template, post, site, others) {
   const more = others.filter((p) => p.slug !== post.slug).slice(0, 4)
     .map((p) => `<li><a href="../${esc(p.slug)}/">${esc(p.title)}</a> <span class="muted">${esc(fmtDate(p.publishedAt))}</span></li>`).join('');
@@ -119,6 +119,7 @@ export function renderPostPage(template, post, site, others) {
     hero: post.image ? `<img class="article__hero" src="${esc(post.image)}" alt="">` : '',
     meta: metaTags({ title: post.title, description: post.summary, url: post.url, image: post.image || `${site.url.replace(/\/$/, '')}/assets/social.jpg`, type: 'article', site }),
     jsonld: articleJsonLd(post, site),
+    share: shareBarHtml({ url: post.url, title: post.title, site, label: 'Share this article' }),
   };
   return template.replace(/\{\{(\w+)\}\}/g, (_, k) => vars[k] ?? '');
 }

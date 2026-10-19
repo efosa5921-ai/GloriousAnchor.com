@@ -36,6 +36,7 @@ test('renderSharePage shows the story, the brand, the read button and related st
   assert.doesNotMatch(pod, /story__more/);
   const vid = renderSharePage({ ...a, kind: 'pick', media: 'video', source: 'YouTube' }, site, [], '');
   assert.match(vid, />Watch at YouTube →<\/a>/);
+  assert.match(vid, /class="sharebar"[^>]*data-url="https:\/\/gloriousanchor\.com\/s\//);
 });
 
 test('story page pictures fall back to the original, then hide, when the proxy fails', () => {
