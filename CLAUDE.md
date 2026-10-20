@@ -12,6 +12,13 @@ GitHub Actions to GitHub Pages at gloriousanchor.com. Read `README.md` for the a
 3. Run `npm test` and `npm run build:offline`; verify in headless Chromium when the change touches the frontend.
 4. Commit on `claude/christian-news-aggregator`, fast-forward `main`, and push both. Pushing `main` deploys.
 
+## Articles: the owner reads before anything goes public
+
+- A new article Claude writes starts with `draft: true`. The build renders it as an unlisted preview at
+  `/drafts/<slug>/` (noindex, not in cards, feeds or the sitemap). Send the owner that link and wait for approval.
+- Remove `draft: true` only when the owner says to publish. Publishing announces the article to Telegram and X.
+- Edits to an already published article may go straight out, unless they change its substance.
+
 ## Conventions
 
 - Vanilla HTML/CSS/JS in `src/`; no frameworks. Keep pages fast: no new third-party scripts without a reason.

@@ -25,7 +25,10 @@ test('compilePost renders markdown, derives metadata and skips drafts', () => {
   assert.equal(p.summary, 'First para. Section More.');
   assert.equal(p.publishedAt, Date.parse('2026-10-15T12:00:00Z'));
   assert.equal(p.author, 'Team');
-  assert.equal(compilePost('x.md', '---\ndraft: true\ntitle: X\n---\nbody', site), null);
+  const d = compilePost('2026-10-19-x.md', '---\ndraft: true\ntitle: X\n---\nbody', site);
+  assert.equal(d.draft, true); assert.equal(d.url, 'https://gloriousanchor.com/drafts/x/'); assert.equal(d.path, 'drafts/x/index.html');
+  const dp = renderPostPage('{{robots}}|{{draftBanner}}|{{share}}', d, site, []);
+  assert.match(dp, /noindex/); assert.match(dp, /Draft preview/); assert.doesNotMatch(dp, /sharebar/);
   const c = compilePost('2026-10-19-c.md', '---\ntitle: C\ncategories: eschatology, pitn, ours, eschatology\n---\nbody', site);
   assert.deepEqual(c.categories, ['eschatology', 'pitn']);
   assert.deepEqual(postToArticle(c, site).categories, ['ours', 'eschatology', 'pitn']);

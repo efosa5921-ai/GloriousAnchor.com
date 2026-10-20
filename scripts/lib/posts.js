@@ -11,7 +11,7 @@
  *   image: images/anchor-sunrise.jpg        (a file in articles/images/, or a full URL; optional)
  *   pinned: true                            (optional: lead the front page)
  *   categories: eschatology, pitn           (optional: tabs from feeds.json to show it in, besides Our Articles)
- *   draft: true                             (optional: build ignores the file)
+ *   draft: true                             (optional: not published; rendered only as an unlisted preview at /drafts/<slug>/)
  *   ---
  *   Body in Markdown. **Bold**, *italic*, headings, lists, links, images, quotes.
  */
@@ -54,10 +54,10 @@ function parseDate(meta, filename) {
   return Number.isNaN(t) ? null : t;
 }
 
-/** Turn one Markdown file into a post object (or null for drafts/invalid files). */
+/** Turn one Markdown file into a post object (or null for invalid files). Drafts come back with draft: true and a /drafts/ URL. */
 export function compilePost(filename, text, site) {
   const { meta, body } = parseFrontMatter(text);
-  if (meta.draft === true) return null;
+  const draft = meta.draft === true;
   const html = marked.parse(body, { gfm: true, breaks: false });
   const title = stripHtml(meta.title || (body.match(/^#\s+(.+)$/m) || [])[1] || '');
   if (!title) return null;
@@ -76,8 +76,9 @@ export function compilePost(filename, text, site) {
     publishedAt,
     pinned: meta.pinned === true,
     readingMinutes: Math.max(1, Math.round(words / 220)),
-    url: `${site.url.replace(/\/$/, '')}/articles/${slug}/`,
-    path: `articles/${slug}/index.html`,
+    url: `${site.url.replace(/\/$/, '')}/${draft ? 'drafts' : 'articles'}/${slug}/`,
+    path: `${draft ? 'drafts' : 'articles'}/${slug}/index.html`,
+    ...(draft ? { draft: true } : {}),
   };
 }
 
@@ -107,7 +108,7 @@ export function postToArticle(post, site) {
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const fmtDate = (t) => new Date(t).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 
-/** Fill the article page template. Placeholders: {{title}} {{description}} {{url}} {{image}} {{author}} {{date}} {{isoDate}} {{minutes}} {{body}} {{share}} {{more}} {{site}} {{verse}} */
+/** Fill the article page template. Placeholders: {{title}} {{description}} {{url}} {{image}} {{author}} {{date}} {{isoDate}} {{minutes}} {{body}} {{share}} {{more}} {{site}} {{verse}} {{robots}} {{draftBanner}} */
 export function renderPostPage(template, post, site, others) {
   const more = others.filter((p) => p.slug !== post.slug).slice(0, 4)
     .map((p) => `<li><a href="../${esc(p.slug)}/">${esc(p.title)}</a> <span class="muted">${esc(fmtDate(p.publishedAt))}</span></li>`).join('');
@@ -119,7 +120,9 @@ export function renderPostPage(template, post, site, others) {
     hero: post.image ? `<img class="article__hero" src="${esc(post.image)}" alt="${esc(post.title)}">` : '',
     meta: metaTags({ title: post.title, description: post.summary, url: post.url, image: post.image || `${site.url.replace(/\/$/, '')}/assets/social.jpg`, type: 'article', site }),
     jsonld: articleJsonLd(post, site),
-    share: shareBarHtml({ url: post.url, title: post.title, site, label: 'Share this article' }),
+    share: post.draft ? '' : shareBarHtml({ url: post.url, title: post.title, site, label: 'Share this article' }),
+    robots: post.draft ? '<meta name="robots" content="noindex, nofollow">' : '',
+    draftBanner: post.draft ? `<div class="banner banner--draft" role="status"><strong>Draft preview.</strong> This article is not published: it is not listed anywhere, not in the feeds, and search engines are asked to ignore it. Read it through, then tell Claude to publish it or edit it in the admin and untick <em>Draft</em>.</div>` : '',
   };
   return template.replace(/\{\{(\w+)\}\}/g, (_, k) => vars[k] ?? '');
 }

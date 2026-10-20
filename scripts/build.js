@@ -416,15 +416,16 @@ async function buildOwnArticles(site, catIds = null) {
   const dir = path.join(ROOT, 'articles');
   let files = [];
   try { files = (await readdir(dir)).filter((f) => /\.(md|markdown)$/i.test(f)).sort(); } catch { return { posts: [], articles: [] }; }
-  const posts = [];
+  const posts = [], drafts = [];
   for (const f of files) {
     const post = compilePost(f, await readFile(path.join(dir, f), 'utf8'), site);
     if (post && catIds && post.categories) {
       for (const c of post.categories) if (!catIds.has(c)) console.warn(`  ! article ${f}: unknown category "${c}" ignored`);
       post.categories = post.categories.filter((c) => catIds.has(c));
     }
-    if (post) posts.push(post);
-    else if (verbose) console.log(`  · article ${f}: skipped (draft or no title)`);
+    if (post && post.draft) drafts.push(post);
+    else if (post) posts.push(post);
+    else if (verbose) console.log(`  · article ${f}: skipped (no title)`);
   }
   // CHANGELOG.md becomes the "What's new" article, dated by its newest entry.
   try {
@@ -436,8 +437,15 @@ async function buildOwnArticles(site, catIds = null) {
     if (post) posts.push(post);
   } catch { /* no changelog */ }
   posts.sort((a, b) => b.publishedAt - a.publishedAt);
-  if (!posts.length) return { posts, articles: [] };
   const template = await readFile(path.join(SRC, 'article.html'), 'utf8');
+  // Drafts: rendered as unlisted previews under /drafts/ so the owner can read them on any device before publishing.
+  for (const p of drafts) {
+    const out = path.join(DIST, p.path);
+    await mkdir(path.dirname(out), { recursive: true });
+    await writeFile(out, renderPostPage(template, p, site, posts));
+    if (verbose) console.log(`  · draft preview: ${p.title} → /drafts/${p.slug}/`);
+  }
+  if (!posts.length) return { posts, articles: [] };
   for (const p of posts) {
     const out = path.join(DIST, p.path);
     await mkdir(path.dirname(out), { recursive: true });
