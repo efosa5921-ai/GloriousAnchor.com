@@ -12,7 +12,7 @@ updated: 2026-10-20
 
 > *Now concerning spiritual gifts, brethren, I would not have you ignorant.* (1 Corinthians 12:1)
 
-These notes are from **The Holy Spirit Connection**, the October special of the Leadership Certificate Course of the [Word of Faith Bible Institute (WOFBI)](https://wofbi.lfcww.org), taught at Winners' Chapel International, Atlanta. The teaching and its outline belong to WOFBI; Glorious Anchor shares these notes so that readers can study along. Read them with your Bible open, because the notes are only a map to the verses.
+These notes are from **The Holy Spirit Connection**, the October special of the Leadership Certificate Course of the [Word of Faith Bible Institute (WOFBI)](https://wofbi.lfcww.org), taught at [Winners' Chapel International, Atlanta](https://www.winnerschapelga.org). The teaching and its outline belong to WOFBI; Glorious Anchor shares these notes so that readers can study along. Read them with your Bible open, because the notes are only a map to the verses.
 
 *This is part 3 of three: [Part 1: the seven Spirits of Christ](/articles/the-holy-spirit-connection/) · [Part 2: seven operations, from prayer to servanthood](/articles/the-holy-spirit-connection-part-2/) · [Part 3: seven more operations, from the fear of the Lord to glory](/articles/the-holy-spirit-connection-part-3/).*
 
@@ -115,4 +115,4 @@ Prayer and supplication, wisdom and revelation, faith, love, obedience, might, s
 
 ---
 
-*Teaching notes from the Leadership Certificate Course of the [Word of Faith Bible Institute (WOFBI)](https://wofbi.lfcww.org), October 2026 special, Winners' Chapel International, Atlanta. All credit to WOFBI for the teaching; learn more or enrol at [wofbi.lfcww.org](https://wofbi.lfcww.org). Scripture quotations are from the King James Version.*
+*Teaching notes from the Leadership Certificate Course of the [Word of Faith Bible Institute (WOFBI)](https://wofbi.lfcww.org), October 2026 special, [Winners' Chapel International, Atlanta](https://www.winnerschapelga.org). All credit to WOFBI for the teaching; learn more or enrol at [wofbi.lfcww.org](https://wofbi.lfcww.org). Scripture quotations are from the King James Version.*
