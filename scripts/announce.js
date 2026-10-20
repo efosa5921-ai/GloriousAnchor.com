@@ -5,8 +5,8 @@
  * Keeps dist/data/announced.json so nothing is posted twice; the first run only records what exists (no flood).
  * X charges per post, so by default X receives only our own articles and picks; set X_STORIES_PER_RUN to add
  * that many fresh stories per build on top (Telegram is free and always gets everything selected).
- * X posts carry the item's picture when it has one. Set X_REPOST to an article URL, id or title fragment to post
- * that one item to X again (with its picture) even though it was announced before.
+ * X posts carry the item's picture when it has one. Set REPOST (or X_REPOST) to an article URL, id or title fragment
+ * to post that one item again, to Telegram and X, even though it was announced before.
  * Usage: node scripts/announce.js [--dry-run]
  */
 import { readFile, writeFile } from 'node:fs/promises';
@@ -96,14 +96,20 @@ async function main() {
     return;
   }
   let failures = 0;
-  if (env.X_REPOST) {
-    const a = findRepost(articles, env.X_REPOST);
-    if (!a) { console.warn(`repost: nothing matches "${env.X_REPOST}"`); failures++; }
-    else if (!x) console.warn('repost: X credentials not set');
-    else if (dry) console.log(`  [X repost] ${a.title}`);
+  const repost = env.REPOST || env.X_REPOST;
+  if (repost) {
+    const a = findRepost(articles, repost);
+    if (!a) { console.warn(`repost: nothing matches "${repost}"`); failures++; }
     else {
-      try { await postX(a, site); console.log(`  ✓ X repost: ${a.title}`); }
-      catch (err) { failures++; console.warn(`  ✗ X repost: ${a.title} — ${err.message}`); }
+      const targets = [];
+      if (telegram) targets.push(['Telegram', postTelegram]);
+      if (x) targets.push(['X', postX]);
+      if (!targets.length) console.warn('repost: no Telegram or X credentials set');
+      for (const [name, fn] of targets) {
+        if (dry) { console.log(`  [${name} repost] ${a.title}`); continue; }
+        try { await fn(a, site); console.log(`  ✓ ${name} repost: ${a.title}`); }
+        catch (err) { failures++; console.warn(`  ✗ ${name} repost: ${a.title} — ${err.message}`); }
+      }
     }
   }
   const items = selectNew(articles, announced, { now });
