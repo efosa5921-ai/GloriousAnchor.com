@@ -34,8 +34,21 @@ async function postTelegram(a, site) {
   };
   const text = telegramMessage(a, site);
   if (a.image) {
-    // A photo post with the headline as caption; if Telegram cannot fetch the picture, fall back to a link post.
-    try { await call('sendPhoto', { chat_id: telegram.chat, photo: previewImage(a, site), caption: text, parse_mode: 'HTML' }); return; } catch (err) { console.warn(`  (photo failed, sending link instead: ${err.message})`); }
+    // A photo post with the headline as caption. Telegram fetches the picture itself; when that fails ("failed to get
+    // HTTP URL content"), fetch the bytes here and upload them instead; only then fall back to a link post.
+    try { await call('sendPhoto', { chat_id: telegram.chat, photo: previewImage(a, site), caption: text, parse_mode: 'HTML' }); return; } catch (err) { console.warn(`  (photo by URL failed: ${err.message.slice(0, 120)}; uploading it instead)`); }
+    try {
+      const img = await fetch(previewImage(a, site), { headers: { 'User-Agent': 'GloriousAnchor/1.0' } });
+      if (!img.ok) throw new Error(`image ${img.status}`);
+      const bytes = await img.arrayBuffer();
+      if (bytes.byteLength > 10 * 1024 * 1024) throw new Error('image over 10 MB');
+      const form = new FormData();
+      form.append('chat_id', telegram.chat); form.append('caption', text); form.append('parse_mode', 'HTML');
+      form.append('photo', new Blob([bytes], { type: img.headers.get('content-type')?.split(';')[0] || 'image/jpeg' }), 'picture.jpg');
+      const res = await fetch(`https://api.telegram.org/bot${telegram.token}/sendPhoto`, { method: 'POST', body: form });
+      if (!res.ok) throw new Error(`Telegram ${res.status}: ${(await res.text()).slice(0, 200)}`);
+      return;
+    } catch (err) { console.warn(`  (photo failed, sending link instead: ${err.message})`); }
   }
   await call('sendMessage', { chat_id: telegram.chat, text, parse_mode: 'HTML', link_preview_options: { prefer_large_media: true } });
 }
