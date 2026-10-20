@@ -1,7 +1,7 @@
 ---
 title: The Holy Spirit Connection: the seven Spirits of Christ and the diverse operations of the Holy Ghost
 date: 2026-10-20
-author: Efosa Adun
+author: Glorious Anchor
 summary: Notes from the WOFBI Leadership Certificate Course at Winners' Chapel International, Atlanta. Why the Holy Ghost is not optional, the seven Spirits upon Christ, and all fourteen operations of the Spirit, from prayer to glory, with every scripture to study.
 image: images/holy-spirit-connection.jpg
 categories: holyspirit, teaching
@@ -9,7 +9,7 @@ categories: holyspirit, teaching
 
 > *Now concerning spiritual gifts, brethren, I would not have you ignorant.* (1 Corinthians 12:1)
 
-These are my notes from **The Holy Spirit Connection**, the October special of the Leadership Certificate Course of the Word of Faith Bible Institute (WOFBI) at Winners' Chapel International, Atlanta. The course theme is "espousing diversities of operation of the Holy Spirit for impactful stewardship," taught in three modules covering fourteen operations of the Spirit. This article covers all three modules. The references are the ones given in class; read them with your Bible open, because the notes are only a map to the verses.
+These notes are from **The Holy Spirit Connection**, the October special of the Leadership Certificate Course of the [Word of Faith Bible Institute (WOFBI)](https://wofbi.lfcww.org), taught at Winners' Chapel International, Atlanta. The teaching and its outline belong to WOFBI; Glorious Anchor shares these notes so that readers can study along. The course theme is "espousing diversities of operation of the Holy Spirit for impactful stewardship," taught in three modules covering fourteen operations of the Spirit. This article covers all three modules. The references are the ones given in class; read them with your Bible open, because the notes are only a map to the verses.
 
 ## The course at a glance
 
@@ -189,4 +189,4 @@ Engage them all. This is the Holy Spirit connection.
 
 ---
 
-*Teaching notes from the WOFBI Leadership Certificate Course, October 2026 special, Winners' Chapel International, Atlanta. Scripture quotations are from the King James Version.*
+*Teaching notes from the Leadership Certificate Course of the [Word of Faith Bible Institute (WOFBI)](https://wofbi.lfcww.org), October 2026 special, Winners' Chapel International, Atlanta. All credit to WOFBI for the teaching; learn more or enrol at [wofbi.lfcww.org](https://wofbi.lfcww.org). Scripture quotations are from the King James Version.*
