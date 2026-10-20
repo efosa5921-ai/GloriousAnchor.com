@@ -3,7 +3,7 @@ title: How did Noah inform people from Africa, Japan, Europe and America about t
 searchTitle: How Did Noah Warn the Whole World About the Flood?
 date: 2026-10-18
 author: Efosa Adun
-summary: In Noah's day the earth had one landmass, one language and far fewer people, so his warning could reach everyone. Genesis 10:25, Genesis 11 and Pangaea explained.
+summary: In Noah's day the earth had one landmass, one language and far fewer people, so his warning could reach everyone. Genesis 10:25, Babel and Pangaea explained.
 image: images/noah-one-landmass.jpg
 categories: apologetics
 keywords: how did Noah warn the world, Noah's flood, Pangaea and the Bible, days of Peleg earth divided, Genesis 10:25, Tower of Babel one language, Noah's Ark, Genesis 6
