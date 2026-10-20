@@ -3,7 +3,7 @@ title: Seven Operations of the Holy Spirit, from Prayer to Servanthood (Part 2)
 date: 2026-10-20T12:10:00Z
 author: Glorious Anchor
 summary: The Spirit of prayer, wisdom and revelation, faith, love, obedience, might and servanthood: what each operation of the Holy Spirit does, with scriptures.
-image: images/holy-spirit-connection-2.jpg
+image: images/holy-spirit-dove.jpg
 categories: holyspirit, teaching
 keywords: operations of the Holy Spirit, spirit of prayer and supplication, spirit of wisdom and revelation, spirit of faith, spirit of love, spirit of obedience, spirit of might, spirit of servanthood, Zechariah 12:10, Ephesians 1:17, 2 Corinthians 4:13
 updated: 2026-10-20

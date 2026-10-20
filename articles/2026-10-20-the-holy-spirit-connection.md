@@ -3,7 +3,7 @@ title: The Seven Spirits of Christ: The Holy Spirit Connection, Part 1
 date: 2026-10-20
 author: Glorious Anchor
 summary: What the seven Spirits of God in Isaiah 11:2 and Revelation 5:6 are, why the Comforter means Helper, and why no believer can do without the Holy Ghost.
-image: images/holy-spirit-connection.jpg
+image: images/holy-spirit-dove.jpg
 categories: holyspirit, teaching
 keywords: seven Spirits of God, seven Spirits of Christ, Isaiah 11:2, Revelation 5:6, the Comforter, baptism in the Holy Ghost, Holy Spirit connection, WOFBI
 updated: 2026-10-20
