@@ -20,7 +20,7 @@ import { unfurl, pickToArticle, needsManualFields, PICKS_SOURCE, PICKS_TTL_MS } 
 import { fetchInstagramItems } from './lib/instagram.js';
 import { fetchWithFallbacks } from './lib/fallbacks.js';
 import { computeHealth } from './lib/health.js';
-import { compilePost, postToArticle, renderPostPage, renderIndexPage, renderFeed, OWN_SOURCE } from './lib/posts.js';
+import { compilePost, postToArticle, renderPostPage, renderIndexPage, renderFeed, seoWarnings, OWN_SOURCE } from './lib/posts.js';
 import { normaliseChurch, geocodeKey, nominatimUrl, parseNominatim } from './lib/churches.js';
 import { subscribeHtml, followHtml, sitemapXml, homeJsonLd, churchJsonLd, sectionJsonLd, sectionLinksHtml, prerenderCards, metaTags, churchSlug, base as siteBase } from './lib/seo.js';
 import { readdir } from 'node:fs/promises';
@@ -426,6 +426,7 @@ async function buildOwnArticles(site, catIds = null) {
     if (post && post.draft) drafts.push(post);
     else if (post) posts.push(post);
     else if (verbose) console.log(`  · article ${f}: skipped (no title)`);
+    if (post) for (const warning of seoWarnings(post)) console.warn(`  ⚠ article ${f}: ${warning}`);
   }
   // CHANGELOG.md becomes the "What's new" article, dated by its newest entry.
   try {

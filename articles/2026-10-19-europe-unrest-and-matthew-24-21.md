@@ -1,10 +1,12 @@
 ---
 title: Fires in France, unrest across Europe: is this the "great tribulation" of Matthew 24:21?
+searchTitle: France Riots and Matthew 24:21: Is This the Great Tribulation?
 date: 2026-10-19
 author: The Glorious Anchor team
-summary: A weekend of riots in France and clashes in Italy, Albania and Belgium has many Christians reaching for Matthew 24. Here is what happened, what Jesus actually said, and how he told us to live in days like these.
+summary: Riots in France and clashes in Italy, Albania and Belgium have Christians asking about Matthew 24:21. What happened, what Jesus said, and how to live now.
 image: images/europe-unrest-matthew-24.jpg
 categories: eschatology, pitn
+keywords: Matthew 24:21 great tribulation, France riots 2026, Europe unrest, signs of the end times, Matthew 24 explained, birth pains, abomination of desolation, Christian response to riots
 draft: true
 ---
 

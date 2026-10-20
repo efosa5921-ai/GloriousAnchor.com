@@ -12,6 +12,8 @@
  *   pinned: true                            (optional: lead the front page)
  *   categories: eschatology, pitn           (optional: tabs from feeds.json to show it in, besides Our Articles)
  *   keywords: seven spirits of God, Isaiah 11:2   (optional: search terms, carried into the article's structured data)
+ *   searchTitle: How Did Noah Warn the World?   (optional: a shorter title for the browser tab, search results and previews; the
+ *                                               page heading keeps the full title)
  *   updated: 2026-10-21                     (optional: last substantive edit; structured data dateModified)
  *   draft: true                             (optional: not published; rendered only as an unlisted preview at /drafts/<slug>/)
  *   ---
@@ -71,12 +73,14 @@ export function compilePost(filename, text, site) {
   if (image && !/^https?:\/\//i.test(image)) image = `${site.url.replace(/\/$/, '')}/articles/${image.replace(/^\/?(articles\/)?/, '')}`;
   const words = text_.split(/\s+/).filter(Boolean).length;
   const keywords = String(meta.keywords || '').split(',').map((k) => k.trim()).filter(Boolean);
+  const searchTitle = stripHtml(meta.searchtitle || meta.search_title || '') || null;
   const updatedAt = meta.updated ? Date.parse(/^\d{4}-\d{2}-\d{2}$/.test(meta.updated) ? `${meta.updated}T12:00:00Z` : meta.updated) : NaN;
   const categories = [...new Set(String(meta.categories || '').replace(/^\[|\]$/g, '').split(/[,\s]+/).map((c) => c.trim().toLowerCase()).filter((c) => c && c !== OWN_SOURCE.category))];
   return {
     slug, title, html, summary, image,
     ...(categories.length ? { categories } : {}),
     ...(keywords.length ? { keywords } : {}),
+    ...(searchTitle ? { searchTitle } : {}),
     ...(Number.isNaN(updatedAt) ? {} : { updatedAt }),
     author: stripHtml(meta.author || site.name),
     publishedAt,
@@ -119,12 +123,12 @@ export function renderPostPage(template, post, site, others) {
   const more = others.filter((p) => p.slug !== post.slug).slice(0, 4)
     .map((p) => `<li><a href="../${esc(p.slug)}/">${esc(p.title)}</a> <span class="muted">${esc(fmtDate(p.publishedAt))}</span></li>`).join('');
   const vars = {
-    title: esc(post.title), description: esc(post.summary), url: esc(post.url), image: esc(post.image || ''),
+    title: esc(post.title), pageTitle: esc(post.searchTitle || post.title), description: esc(post.summary), url: esc(post.url), image: esc(post.image || ''),
     author: esc(post.author), date: esc(fmtDate(post.publishedAt)), isoDate: new Date(post.publishedAt).toISOString(),
     minutes: String(post.readingMinutes), body: post.html, more: more ? `<ul class="article__more">${more}</ul>` : '',
     site: esc(site.name), verse: esc(site.verse || ''),
     hero: post.image ? `<img class="article__hero" src="${esc(post.image)}" alt="${esc(post.title)}">` : '',
-    meta: metaTags({ title: post.title, description: post.summary, url: post.url, image: post.image || `${site.url.replace(/\/$/, '')}/assets/social.jpg`, type: 'article', site }),
+    meta: metaTags({ title: post.searchTitle || post.title, description: post.summary, url: post.url, image: post.image || `${site.url.replace(/\/$/, '')}/assets/social.jpg`, type: 'article', site }),
     jsonld: articleJsonLd(post, site),
     share: post.draft ? '' : shareBarHtml({ url: post.url, title: post.title, site, label: 'Share this article' }),
     robots: post.draft ? '<meta name="robots" content="noindex, nofollow">' : '',
@@ -166,4 +170,23 @@ ${items}
   </channel>
 </rss>
 `;
+}
+
+/**
+ * Search-readiness checks for an article: the things that decide how it shows in Google and in link previews.
+ * Returns plain-language warnings (empty when the article is in good shape). Run by the build and shown in its log.
+ */
+export function seoWarnings(post) {
+  const w = [];
+  const title = post.searchTitle || post.title || '';
+  if (title.length > 65) w.push(`title shown in search is ${title.length} characters; keep it under 65 (add a shorter "searchTitle" if the heading must stay long)`);
+  if (!post.summary) w.push('no summary: search results and previews need one');
+  else if (post.summary.length > 160) w.push(`summary is ${post.summary.length} characters; search engines cut it at about 155`);
+  else if (post.summary.length < 70) w.push(`summary is only ${post.summary.length} characters; aim for 120 to 155`);
+  if (!post.keywords?.length) w.push('no keywords: list the phrases people would search for');
+  if (!post.image) w.push('no picture: cards and link previews fall back to the site image');
+  const words = stripHtml(post.html || '').split(/\s+/).filter(Boolean).length;
+  if (words < 300 && post.slug !== 'whats-new') w.push(`only ${words} words; articles under about 300 words rarely rank`);
+  if (post.html && !/<h2|<h3/i.test(post.html) && words > 400) w.push('no subheadings: break the text with ## headings that use the key phrases');
+  return w;
 }

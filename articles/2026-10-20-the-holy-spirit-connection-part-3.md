@@ -1,5 +1,6 @@
 ---
 title: Seven More Operations of the Holy Spirit, and All Fourteen (Part 3)
+searchTitle: Seven More Operations of the Holy Spirit, and All Fourteen
 date: 2026-10-20T12:20:00Z
 author: Glorious Anchor
 summary: The Spirit of the fear of the Lord, truth, power, endurance, joy, grace and glory, plus the full list of fourteen operations of the Holy Spirit.

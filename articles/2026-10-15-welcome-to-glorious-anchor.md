@@ -2,8 +2,9 @@
 title: Welcome to Glorious Anchor
 date: 2026-10-15
 author: The Glorious Anchor team
-summary: One calm page for Christian news, teaching, writing, video and conversation, a finder for churches near you, and a feed you shape yourself. Here is how it all works.
+summary: One calm page for Christian news, teaching, video, podcasts and prophecy, a church finder near you, a daily digest and a Bible quiz. Here is how it works.
 image: https://gloriousanchor.com/assets/social.jpg
+keywords: Christian news aggregator, Christian news app, Christian teaching online, Christian podcasts, Bible quiz, find a church near me, Glorious Anchor, GAIN TV, GAIN Radio
 pinned: true
 ---
 

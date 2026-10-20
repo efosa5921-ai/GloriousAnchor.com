@@ -4,6 +4,7 @@ date: 2026-10-18
 author: The Glorious Anchor team
 summary: The GAIN TV WhatsApp channel was closed. Here is where to find GAIN TV now, and how to keep getting new Christian videos every day.
 image: images/gain-tv-moved.jpg
+keywords: GAIN TV, GAIN TV WhatsApp channel, Christian video channel, Glorious Anchor WhatsApp channel, Christian videos daily, gaintv.app, GAIN Radio
 ---
 
 If you followed **GAIN TV on WhatsApp**, you may have noticed that the channel is gone. WhatsApp closed it, and we cannot post there or message its followers any more. Nothing else has changed: GAIN TV continues, with more than before.

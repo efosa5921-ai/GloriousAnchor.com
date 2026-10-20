@@ -205,6 +205,7 @@ preview data (Open Graph tags), or the public oEmbed endpoint for X, TikTok and 
 - **Instagram and Facebook** block automated previews, so give those posts a `title` (and ideally an `image`).
 - `note` shows as an editor's note on the card. `pinned: true` puts the pick at the top of Top Stories.
 - `categories` (a list of tab ids from `feeds.json`, e.g. `["holyspirit"]`) shows the pick in those tabs as well as Picks. Unknown ids are ignored with a warning. Own articles take the same field in their front matter (`categories: eschatology, pitn`).
+- Search readiness: every article is checked at build time (`seoWarnings` in `scripts/lib/posts.js`): title length as shown in search (a shorter `searchTitle` may stand in for a long heading), summary length, keywords, picture, word count and subheadings; shortfalls print as ⚠ lines in the build log. `keywords`, `searchTitle` and `updated` are optional front-matter fields.
 - An article with `draft: true` is not published, but the build renders it as an unlisted preview at `/drafts/<slug>/` (noindex, no share bar, a yellow banner, blocked in robots.txt, absent from cards, feeds and the sitemap) so the owner can read it on any device before it goes live.
 - Picks never age out; remove the line to remove the card. `"enabled": false` hides one temporarily.
 

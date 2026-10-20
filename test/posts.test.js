@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { parseFrontMatter, slugFromFilename, compilePost, postToArticle, renderPostPage, renderFeed } from '../scripts/lib/posts.js';
+import { parseFrontMatter, slugFromFilename, compilePost, postToArticle, renderPostPage, renderFeed, seoWarnings } from '../scripts/lib/posts.js';
 
 const site = { name: 'Glorious Anchor', url: 'https://gloriousanchor.com', verse: 'Hebrews 6:19' };
 
@@ -57,4 +57,16 @@ test('renderPostPage and renderFeed escape text and include the essentials', () 
   assert.ok(xml.includes('<title>A title &amp; more</title>'));
   assert.ok(xml.includes('<link>https://gloriousanchor.com/articles/a/</link>'));
   assert.ok(xml.includes('<![CDATA[<p>Body</p>'));
+});
+
+test('searchTitle drives the tab and meta title while the heading keeps the full title; seoWarnings flags gaps', () => {
+  const long = compilePost('2026-10-18-noah.md', '---\ntitle: How did Noah inform people from Africa, Japan, Europe and America about the great flood and Ark?\nsearchTitle: How Did Noah Warn the Whole World About the Flood?\nsummary: ' + 'x'.repeat(140) + '\nkeywords: Noah, flood\nimage: images/n.jpg\n---\n' + 'word '.repeat(350), site);
+  const page = renderPostPage('<title>{{pageTitle}}</title><h1>{{title}}</h1>{{meta}}', long, site, [long]);
+  assert.match(page, /<title>How Did Noah Warn the Whole World About the Flood\?<\/title>/);
+  assert.match(page, /<h1>How did Noah inform people/);
+  assert.match(page, /og:title" content="How Did Noah Warn the Whole World About the Flood\?"/);
+  assert.deepEqual(seoWarnings(long), []);
+  const bare = compilePost('2026-10-18-b.md', '---\ntitle: ' + 'T'.repeat(70) + '\nsummary: short\n---\nfew words', site);
+  const w = seoWarnings(bare).join(' | ');
+  assert.match(w, /under 65/); assert.match(w, /only 5 characters/); assert.match(w, /no keywords/); assert.match(w, /no picture/); assert.match(w, /words/);
 });
