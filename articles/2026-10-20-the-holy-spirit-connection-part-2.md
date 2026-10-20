@@ -1,10 +1,12 @@
 ---
-title: The Holy Spirit Connection, part 2: seven operations of the Holy Ghost, from prayer to servanthood
+title: Seven Operations of the Holy Spirit, from Prayer to Servanthood (Part 2)
 date: 2026-10-20T12:10:00Z
 author: Glorious Anchor
-summary: Notes from the WOFBI Leadership Certificate Course, part 2 of 3. The Spirit of prayer and supplication, wisdom and revelation, faith, love, obedience, might and servanthood, with every scripture to study.
+summary: The Spirit of prayer, wisdom and revelation, faith, love, obedience, might and servanthood: what each operation of the Holy Spirit does, with scriptures.
 image: images/holy-spirit-connection-2.jpg
 categories: holyspirit, teaching
+keywords: operations of the Holy Spirit, spirit of prayer and supplication, spirit of wisdom and revelation, spirit of faith, spirit of love, spirit of obedience, spirit of might, spirit of servanthood, Zechariah 12:10, Ephesians 1:17, 2 Corinthians 4:13
+updated: 2026-10-20
 ---
 
 > *Now concerning spiritual gifts, brethren, I would not have you ignorant.* (1 Corinthians 12:1)
@@ -71,6 +73,20 @@ Key texts: Isaiah 42:1-4; 1 Corinthians 15:58.
 2. **It is the Spirit of servanthood that determines our ultimate accomplishments in life.** Christ "took upon him the form of a servant... wherefore God also hath highly exalted him" (Philippians 2:5-11).
 3. **This Spirit keeps us going in our stewardship without giving up,** in spite of any form of shame or mockery. "Let us not be weary in well doing: for in due season we shall reap, if we faint not" (Galatians 6:7-9).
 
+
+## Questions this part answers
+
+### What is the spirit of prayer and supplication?
+
+An operation of the Holy Spirit promised in Zechariah 12:10. The Spirit keeps believers spiritually alive and fervent in prayer, helps them pray according to the will of God (Romans 8:26-27), and praying in the Holy Ghost connects them to the word in season (Jude 20; 1 Corinthians 14:14-15).
+
+### What is the spirit of wisdom and revelation?
+
+Paul prayed that the Ephesians would receive "the spirit of wisdom and revelation in the knowledge of him" (Ephesians 1:17-20). It is the Spirit's move within our spirit that opens the deep things of God (1 Corinthians 2:9-10) and sharpens the insight we draw from what we see, hear, read or study (Proverbs 24:27-30; Daniel 9:2).
+
+### What is the spirit of faith?
+
+"We having the same spirit of faith... we also believe, and therefore speak" (2 Corinthians 4:13). The Holy Ghost deepens our insight into the word so that faith stays on fire, and living faith commands signs and wonders (John 6:28-29; 1 John 5:4).
 
 *Continue with part 3: [Part 1: the seven Spirits of Christ](/articles/the-holy-spirit-connection/) · [Part 2: seven operations, from prayer to servanthood](/articles/the-holy-spirit-connection-part-2/) · [Part 3: seven more operations, from the fear of the Lord to glory](/articles/the-holy-spirit-connection-part-3/).*
 

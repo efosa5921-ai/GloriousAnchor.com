@@ -11,6 +11,8 @@
  *   image: images/anchor-sunrise.jpg        (a file in articles/images/, or a full URL; optional)
  *   pinned: true                            (optional: lead the front page)
  *   categories: eschatology, pitn           (optional: tabs from feeds.json to show it in, besides Our Articles)
+ *   keywords: seven spirits of God, Isaiah 11:2   (optional: search terms, carried into the article's structured data)
+ *   updated: 2026-10-21                     (optional: last substantive edit; structured data dateModified)
  *   draft: true                             (optional: not published; rendered only as an unlisted preview at /drafts/<slug>/)
  *   ---
  *   Body in Markdown. **Bold**, *italic*, headings, lists, links, images, quotes.
@@ -68,10 +70,14 @@ export function compilePost(filename, text, site) {
   let image = meta.image ? String(meta.image) : null;
   if (image && !/^https?:\/\//i.test(image)) image = `${site.url.replace(/\/$/, '')}/articles/${image.replace(/^\/?(articles\/)?/, '')}`;
   const words = text_.split(/\s+/).filter(Boolean).length;
+  const keywords = String(meta.keywords || '').split(',').map((k) => k.trim()).filter(Boolean);
+  const updatedAt = meta.updated ? Date.parse(/^\d{4}-\d{2}-\d{2}$/.test(meta.updated) ? `${meta.updated}T12:00:00Z` : meta.updated) : NaN;
   const categories = [...new Set(String(meta.categories || '').replace(/^\[|\]$/g, '').split(/[,\s]+/).map((c) => c.trim().toLowerCase()).filter((c) => c && c !== OWN_SOURCE.category))];
   return {
     slug, title, html, summary, image,
     ...(categories.length ? { categories } : {}),
+    ...(keywords.length ? { keywords } : {}),
+    ...(Number.isNaN(updatedAt) ? {} : { updatedAt }),
     author: stripHtml(meta.author || site.name),
     publishedAt,
     pinned: meta.pinned === true,

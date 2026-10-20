@@ -29,6 +29,9 @@ test('compilePost renders markdown, derives metadata and skips drafts', () => {
   assert.equal(d.draft, true); assert.equal(d.url, 'https://gloriousanchor.com/drafts/x/'); assert.equal(d.path, 'drafts/x/index.html');
   const dp = renderPostPage('{{robots}}|{{draftBanner}}|{{share}}', d, site, []);
   assert.match(dp, /noindex/); assert.match(dp, /Draft preview/); assert.doesNotMatch(dp, /sharebar/);
+  const k = compilePost('2026-10-19-k.md', '---\ntitle: K\nkeywords: seven spirits of God, Isaiah 11:2\nupdated: 2026-10-21\n---\nbody', site);
+  assert.deepEqual(k.keywords, ['seven spirits of God', 'Isaiah 11:2']); assert.equal(k.updatedAt, Date.parse('2026-10-21T12:00:00Z'));
+  assert.match(renderPostPage('{{jsonld}}', k, site, [k]), /"keywords":"seven spirits of God, Isaiah 11:2".*"dateModified":"2026-10-21T12:00:00.000Z"|"dateModified":"2026-10-21T12:00:00.000Z".*"keywords":"seven spirits of God, Isaiah 11:2"/);
   const c = compilePost('2026-10-19-c.md', '---\ntitle: C\ncategories: eschatology, pitn, ours, eschatology\n---\nbody', site);
   assert.deepEqual(c.categories, ['eschatology', 'pitn']);
   assert.deepEqual(postToArticle(c, site).categories, ['ours', 'eschatology', 'pitn']);

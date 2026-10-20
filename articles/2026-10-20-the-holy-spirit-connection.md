@@ -1,10 +1,12 @@
 ---
-title: The Holy Spirit Connection, part 1: the seven Spirits of Christ
+title: The Seven Spirits of Christ: The Holy Spirit Connection, Part 1
 date: 2026-10-20
 author: Glorious Anchor
-summary: Notes from the WOFBI Leadership Certificate Course, part 1 of 3. Why the Holy Ghost is not optional, the Comforter as our Helper, from new birth to the gifts, and the seven Spirits upon Christ, with every scripture to study.
+summary: What the seven Spirits of God in Isaiah 11:2 and Revelation 5:6 are, why the Comforter means Helper, and why no believer can do without the Holy Ghost.
 image: images/holy-spirit-connection.jpg
 categories: holyspirit, teaching
+keywords: seven Spirits of God, seven Spirits of Christ, Isaiah 11:2, Revelation 5:6, the Comforter, baptism in the Holy Ghost, Holy Spirit connection, WOFBI
+updated: 2026-10-20
 ---
 
 > *Now concerning spiritual gifts, brethren, I would not have you ignorant.* (1 Corinthians 12:1)
@@ -51,6 +53,20 @@ Isaiah saw the Spirit of the Lord resting on the Branch from the stem of Jesse, 
 
 It is high time we began to crave the enduement of the diverse ministries of the Holy Spirit in our lives, in order to make the most of our adventure in the Kingdom (1 Corinthians 12:4-7). Beyond the nine gifts, Scripture names other operations of the Holy Spirit here and there, and the course looks at fourteen of them. This is the bridge into Module 2.
 
+
+## Questions this part answers
+
+### What are the seven Spirits of God?
+
+Isaiah 11:2 names them as they rest on the Branch from the stem of Jesse: the Spirit of the LORD, the Spirit of wisdom, of understanding, of counsel, of might, of knowledge, and of the fear of the LORD. Revelation 5:6 shows the Lamb with "seven Spirits of God sent forth into all the earth." The course groups them as the Spirit of the Lord (power), the Spirit of wisdom, knowledge, understanding and counsel, the Spirit of might, and the Spirit of the fear of the Lord.
+
+### What does "Comforter" mean in John 14:16?
+
+The word literally means helper. Jesus promised another Helper who would abide with believers, teach them and bring his words to remembrance (John 14:16-18, 26; John 16:7-14).
+
+### Must a person be born again before being baptised in the Holy Ghost?
+
+Yes. In Acts the pattern is the same at Pentecost, at the house of Cornelius and at Ephesus: people believed and were then baptised in the Holy Ghost with the evidence of speaking with new tongues (Acts 2:37-41; 10:44-47; 19:1-6). And until one is baptised in the Holy Ghost, one cannot demand the gifts of the Spirit (1 Corinthians 12:31).
 
 *Continue with part 2: [Part 1: the seven Spirits of Christ](/articles/the-holy-spirit-connection/) · [Part 2: seven operations, from prayer to servanthood](/articles/the-holy-spirit-connection-part-2/) · [Part 3: seven more operations, from the fear of the Lord to glory](/articles/the-holy-spirit-connection-part-3/).*
 

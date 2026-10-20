@@ -1,10 +1,12 @@
 ---
-title: The Holy Spirit Connection, part 3: seven more operations, from the fear of the Lord to glory
+title: Seven More Operations of the Holy Spirit, and All Fourteen (Part 3)
 date: 2026-10-20T12:20:00Z
 author: Glorious Anchor
-summary: Notes from the WOFBI Leadership Certificate Course, part 3 of 3. The Spirit of the fear of the Lord, truth, power, endurance, joy, grace and glory, and the fourteen operations together, with every scripture to study.
+summary: The Spirit of the fear of the Lord, truth, power, endurance, joy, grace and glory, plus the full list of fourteen operations of the Holy Spirit.
 image: images/holy-spirit-connection-3.jpg
 categories: holyspirit, teaching
+keywords: fourteen operations of the Holy Spirit, spirit of the fear of the Lord, spirit of truth, spirit of power, spirit of endurance, spirit of joy, spirit of grace, spirit of glory, 1 Peter 4:14, Isaiah 11:3, Zechariah 4:6
+updated: 2026-10-20
 ---
 
 > *Now concerning spiritual gifts, brethren, I would not have you ignorant.* (1 Corinthians 12:1)
@@ -93,6 +95,20 @@ Engage them all. This is the Holy Spirit connection.
 
 "Now concerning spiritual gifts, brethren, I would not have you ignorant." The course began there, and it ends with an invitation: crave the enduement, engage every operation, and make the most of your adventure in the Kingdom.
 
+
+## Questions this part answers
+
+### What is the spirit of the fear of the Lord?
+
+One of the seven Spirits resting on Christ (Isaiah 11:2-3). It is the beginning of wisdom (Psalm 111:10; Proverbs 9:10), the foundation of a glorious destiny (2 Timothy 2:19-21), and it quickens our understanding of the deep things of God (Psalm 25:14).
+
+### What are the fourteen operations of the Holy Spirit?
+
+Prayer and supplication, wisdom and revelation, faith, love, obedience, might, servanthood, the fear of the Lord, truth, power, endurance, joy, grace and glory. The first seven are in [part 2](/articles/the-holy-spirit-connection-part-2/); the seven Spirits of Christ that stand behind them are in [part 1](/articles/the-holy-spirit-connection/).
+
+### What is the Spirit of glory?
+
+"The spirit of glory and of God resteth upon you" (1 Peter 4:14). Believers are called to glory and justified to be glorified (Romans 8:29-30), but ride the waves of glory only by engaging the diverse operations of the Holy Spirit, "not by might, nor by power, but by my Spirit" (Zechariah 4:6).
 
 *Start again from part 1: [Part 1: the seven Spirits of Christ](/articles/the-holy-spirit-connection/) · [Part 2: seven operations, from prayer to servanthood](/articles/the-holy-spirit-connection-part-2/) · [Part 3: seven more operations, from the fear of the Lord to glory](/articles/the-holy-spirit-connection-part-3/).*
 

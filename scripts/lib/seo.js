@@ -38,8 +38,10 @@ export function articleJsonLd(post, site) {
   const b = base(site);
   return jsonLd({ '@context': 'https://schema.org', '@graph': [
     { '@type': 'Article', '@id': `${post.url}#article`, headline: post.title, description: post.summary, url: post.url, mainEntityOfPage: post.url,
-      datePublished: new Date(post.publishedAt).toISOString(), dateModified: new Date(post.publishedAt).toISOString(),
-      author: { '@type': 'Person', name: post.author }, publisher: { '@id': `${b}/#org` }, ...(post.image ? { image: [post.image] } : {}), wordCount: post.readingMinutes * 220 },
+      datePublished: new Date(post.publishedAt).toISOString(), dateModified: new Date(post.updatedAt || post.publishedAt).toISOString(), inLanguage: 'en',
+      author: post.author && post.author !== site.name ? { '@type': 'Person', name: post.author } : { '@id': `${b}/#org` },
+      publisher: { '@id': `${b}/#org` }, ...(post.image ? { image: [post.image] } : {}), wordCount: post.readingMinutes * 220,
+      ...(post.keywords?.length ? { keywords: post.keywords.join(', ') } : {}), ...(post.categories?.length ? { articleSection: post.categories.join(', ') } : {}) },
     { '@type': 'Organization', '@id': `${b}/#org`, name: site.name, url: `${b}/`, logo: `${b}/assets/icon-512.png` },
     { '@type': 'BreadcrumbList', itemListElement: [
       { '@type': 'ListItem', position: 1, name: site.name, item: `${b}/` },
