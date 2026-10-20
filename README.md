@@ -189,6 +189,10 @@ YouTube's RSS feed server (`youtube.com/feeds/videos.xml`) answers GitHub's runn
 
 Churches often stream a service and then hide or delete the recording, while the feed entry lingers and YouTube serves a grey placeholder thumbnail. `scripts/lib/videos.js` asks YouTube's oEmbed endpoint about each video (401 = private, 404 = deleted) and drops those; results are cached in `dist/data/video-cache.json`, re-checking fresh videos every 12 hours for three days. The thumbnail is checked as well: YouTube answers 404 with a grey placeholder image for a video that has no picture yet (browsers display it regardless), so such videos keep their card but get the cover tile.
 
+## Hiding a story
+
+`feeds.json` → `"hidden"`: a list of story ids (the part after `/s/` in a story link) or links; a link hides every story whose address starts with it (a publisher section, say). Applied after dedupe on every build (`applyHidden` in `scripts/lib/articles.js`), so the story leaves the cards, the digest, the feeds and its `/s/` page. Editable in the admin under Settings → Hidden stories.
+
 ## Picks: single links you choose
 
 [`picks.json`](picks.json) holds hand-picked URLs. Paste any link and the build turns it into a card using the page's own

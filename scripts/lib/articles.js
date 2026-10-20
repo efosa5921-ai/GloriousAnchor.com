@@ -295,3 +295,17 @@ export function capOutput(articles, perSource = 15, max = 700) {
   const rest = out.filter((a) => !(a.sourceId === 'picks' || a.sourceId === 'ours')).slice(0, Math.max(0, max - exempt.length));
   return [...exempt, ...rest].sort((a, b) => b.publishedAt - a.publishedAt);
 }
+
+/**
+ * Drop stories the owner has hidden: each entry in the list is a story id (as in /s/<id>/) or a link; a link matches
+ * when the story's address starts with it (so a whole section of a site can be hidden with one entry).
+ */
+export function applyHidden(articles, hidden) {
+  const list = (Array.isArray(hidden) ? hidden : []).map((h) => String(h || '').trim()).filter(Boolean);
+  if (!list.length) return articles;
+  const norm = (u) => String(u || '').toLowerCase().replace(/^https?:\/\/(www\.)?/, '').replace(/\/+$/, '');
+  const ids = new Set(list.filter((h) => !/[./]/.test(h)));
+  const prefixes = list.filter((h) => /[./]/.test(h)).map((h) => norm(h.replace(/^https?:\/\/(www\.)?gloriousanchor\.com\/s\/([^/]+)\/?$/i, '$2')));
+  const ids2 = new Set(prefixes.filter((p) => !/[./]/.test(p)));
+  return articles.filter((a) => !ids.has(a.id) && !ids2.has(a.id) && !prefixes.some((p) => /[./]/.test(p) && norm(a.url).startsWith(p)));
+}

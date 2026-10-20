@@ -960,5 +960,9 @@
     },
     "outputPerSource": 15,
     "outputMax": 700
-  }
+  },
+  "hidden": [
+    "1viixrk"
+  ],
+  "_hidden_help": "story ids (the part after /s/ in a story link) or links; a link hides every story whose address starts with it. Edit in admin → Settings → Hidden stories."
 }

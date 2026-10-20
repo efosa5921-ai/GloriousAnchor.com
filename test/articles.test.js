@@ -150,3 +150,16 @@ test('audioEnclosure accepts audio types or audio file extensions, parseDuration
   assert.equal(parseDuration(undefined), undefined);
   assert.equal(parseDuration('n/a'), undefined);
 });
+
+test('applyHidden drops stories by id, by story link and by publisher link prefix', async () => {
+  const { applyHidden } = await import('../scripts/lib/articles.js');
+  const list = [
+    { id: '1viixrk', url: 'https://baptistnews.com/article/one/' }, { id: 'abc', url: 'https://www.example.com/news/two' },
+    { id: 'def', url: 'https://example.com/other/three' }, { id: 'ghi', url: 'https://keep.com/x' },
+  ];
+  assert.deepEqual(applyHidden(list, ['1viixrk']).map((a) => a.id), ['abc', 'def', 'ghi']);
+  assert.deepEqual(applyHidden(list, ['https://gloriousanchor.com/s/abc/']).map((a) => a.id), ['1viixrk', 'def', 'ghi']);
+  assert.deepEqual(applyHidden(list, ['https://example.com/news/']).map((a) => a.id), ['1viixrk', 'def', 'ghi']);
+  assert.deepEqual(applyHidden(list, ['example.com']).map((a) => a.id), ['1viixrk', 'ghi']);
+  assert.equal(applyHidden(list, []).length, 4); assert.equal(applyHidden(list, undefined).length, 4);
+});

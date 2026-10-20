@@ -27,6 +27,7 @@ import { readdir } from 'node:fs/promises';
 import { shareUrl, renderSharePage, relatedStories } from './lib/share.js';
 import { fillMissingImages } from './lib/images.js';
 import { dropGoneVideos } from './lib/videos.js';
+import { applyHidden } from './lib/articles.js';
 import { youtubeApiUrl, apiToFeed } from './lib/youtube.js';
 import { validateQuizzes, renderQuizPage } from './lib/quiz.js';
 import { pickDigest, digestDate, digestText, digestHtml, renderDigestPage, renderDigestFeed, renderTopFeed } from './lib/digest.js';
@@ -550,6 +551,11 @@ async function main() {
   const cutoff = fixturesDir ? 0 : Date.now() - limits.maxAgeHours * 3600 * 1000; // fixtures never age out
   const merged = mergeWithPrevious(fresh, previous.filter((p) => p?.sourceId !== PICKS_SOURCE.id && p?.sourceId !== OWN_SOURCE.id), sourceStatus, cutoff);
   let articles = dedupe(merged);
+  if (config.hidden?.length) {
+    const before = articles.length;
+    articles = applyHidden(articles, config.hidden);
+    if (verbose && before !== articles.length) console.log(`  · hidden: ${before - articles.length} story(ies) removed by the hidden list in feeds.json`);
+  }
 
   // Videos that were made private or deleted since the feed listed them (ended livestreams, mostly).
   if (!fixturesDir) {

@@ -503,6 +503,7 @@ Note: Anything extra to show after answering.`;
         h('label', {}, 'Telegram channel link', h('input', { name: 'telegramChannel', type: 'url', value: data.site.telegramChannel || '', placeholder: 'https://t.me/…' }))),
       h('label', {}, 'X (Twitter) handle ', h('span', { class: 'help' }, 'Added as "via @handle" when items are shared or auto-posted.'), h('input', { name: 'xHandle', value: data.site.xHandle || '' })),
       h('h2', {}, 'Feeds'),
+      h('label', {}, 'Hidden stories ', h('span', { class: 'help' }, 'One per line: a story id (the part after /s/ in a story link, e.g. 1viixrk), a full story link, or a publisher link to hide everything under it. Hidden stories vanish from the site at the next build.'), h('textarea', { name: 'hidden', rows: 4, placeholder: '1viixrk\nhttps://example.com/section/' }, (data.hidden || []).join('\n'))),
       h('label', {}, 'Keep stories for (hours) ', h('span', { class: 'help' }, 'Feed stories older than this drop off. Picks and your articles never expire.'), h('input', { name: 'maxAgeHours', type: 'number', min: 6, max: 720, value: data.limits.maxAgeHours || 96 })),
       h('label', {}, 'Items per feed', h('input', { name: 'perSource', type: 'number', min: 5, max: 100, value: data.limits.perSource || 25 })),
       h('div', { class: 'row' }, h('button', { class: 'btn', type: 'submit' }, 'Apply')),
@@ -511,6 +512,8 @@ Note: Anything extra to show after answering.`;
       e.preventDefault(); const fd = new FormData(f);
       for (const k of ['name', 'tagline', 'verse', 'url', 'googleSiteVerification', 'goatcounter', 'cloudflareAnalytics', 'xHandle', 'newsletter', 'contactEmail', 'whatsappChannel', 'telegramChannel']) { const v = String(fd.get(k) || '').trim(); if (v) data.site[k] = v; else delete data.site[k]; }
       data.limits.maxAgeHours = Number(fd.get('maxAgeHours')) || 96; data.limits.perSource = Number(fd.get('perSource')) || 25;
+      const hidden = String(fd.get('hidden') || '').split(/\r?\n/).map((x) => x.trim()).filter(Boolean);
+      if (hidden.length) data.hidden = hidden; else delete data.hidden;
       markDirty('feeds.json'); toast('Applied. Click Save changes to publish.');
     });
     view.append(f);
