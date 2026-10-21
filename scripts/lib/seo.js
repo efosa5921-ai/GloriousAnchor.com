@@ -97,8 +97,11 @@ export function cardHtml(a, { href = a.url, imageProxy = '', site = null, summar
  */
 /** "Follow us" links: WhatsApp channel, Telegram channel, X. Only the ones set in feeds.json → site appear. */
 /** A row of share buttons for a page: WhatsApp, X, Facebook, Telegram, email, copy link, and the phone's own share sheet. */
-export function shareBarHtml({ url, title, site, label = 'Share' }) {
+export function shareBarHtml({ url, title, summary = '', site, label = 'Share' }) {
   const via = `via ${site?.name || 'Glorious Anchor'}`;
+  // Whole post for pasting into a WhatsApp channel or group: headline, summary, link. Typing the headline by hand
+  // in WhatsApp's channel composer loses everything above the link preview, so give the owner the text ready-made.
+  const post = [title, summary, url].filter(Boolean).join('\n\n');
   const e = encodeURIComponent;
   const links = [
     ['WhatsApp', `https://wa.me/?text=${e(`${title}\n${url}\n\n${via}`)}`, 'whatsapp'],
@@ -107,13 +110,14 @@ export function shareBarHtml({ url, title, site, label = 'Share' }) {
     ['Telegram', `https://t.me/share/url?url=${e(url)}&text=${e(`${title}\n${via}`)}`, 'telegram'],
     ['Email', `mailto:?subject=${e(title)}&body=${e(`${url}\n\n${via}`)}`, 'email'],
   ];
-  return `<nav class="sharebar" aria-label="${esc(label)} this page" data-url="${esc(url)}" data-title="${esc(title)}" data-via="${esc(via)}">
+  return `<nav class="sharebar" aria-label="${esc(label)} this page" data-url="${esc(url)}" data-title="${esc(title)}" data-via="${esc(via)}" data-post="${esc(post)}">
   <span class="sharebar__label">${esc(label)}</span>
   ${links.map(([text, href, k]) => `<a class="sharebar__link sharebar__link--${k}" href="${esc(href)}" target="_blank" rel="noopener">${esc(text)}</a>`).join('\n  ')}
   <button class="sharebar__link sharebar__link--copy" type="button" data-copy>Copy link</button>
+  <button class="sharebar__link sharebar__link--copy" type="button" data-copy-post title="Headline, summary and link, ready to paste into WhatsApp">Copy post</button>
   <button class="sharebar__link sharebar__link--native" type="button" data-share hidden>Share…</button>
 </nav>
-<script>(function(){var b=document.querySelector('.sharebar');if(!b)return;var u=b.dataset.url,t=b.dataset.title,v=b.dataset.via;var c=b.querySelector('[data-copy]');c.addEventListener('click',function(){(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){c.textContent='Copied!';setTimeout(function(){c.textContent='Copy link';},1500);},function(){window.prompt('Copy this link',u);});});var n=b.querySelector('[data-share]');if(navigator.share){n.hidden=false;n.addEventListener('click',function(){navigator.share({title:t,text:t+' — '+v,url:u}).catch(function(){});});}})();</script>`;
+<script>(function(){var b=document.querySelector('.sharebar');if(!b)return;var u=b.dataset.url,t=b.dataset.title,v=b.dataset.via;function cp(c,text,done){c.addEventListener('click',function(){(navigator.clipboard?navigator.clipboard.writeText(text):Promise.reject()).then(function(){var was=c.textContent;c.textContent=done;setTimeout(function(){c.textContent=was;},1500);},function(){window.prompt('Copy this',text);});});}cp(b.querySelector('[data-copy]'),u,'Copied!');cp(b.querySelector('[data-copy-post]'),b.dataset.post,'Copied, paste it in WhatsApp');var n=b.querySelector('[data-share]');if(navigator.share){n.hidden=false;n.addEventListener('click',function(){navigator.share({title:t,text:t+' — '+v,url:u}).catch(function(){});});}})();</script>`;
 }
 
 export function followHtml(site, { label = 'Follow us' } = {}) {

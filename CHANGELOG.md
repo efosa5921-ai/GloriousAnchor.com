@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 21 October 2026
 
+- **"Copy post" button** on every article and story page: copies the headline, summary and link in one go, ready to paste into a WhatsApp channel or group without typing the headline (WhatsApp's channel composer on iPhone can lose text typed above a link preview).
 - **New article: [Liatu Samuel Dawa, the Christian mother jailed 14 years in Borno for sharing her faith](/articles/liatu-samuel-dawa-jailed-14-years-in-borno/)**: what the court ruled, the charge, her plea, her husband in hiding, what Nigeria's Constitution says, and how to pray.
 - Cards and article pictures now favour the top of a photo, so faces in portrait pictures are no longer cut off.
 

@@ -50,6 +50,7 @@ test('renderPostPage and renderFeed escape text and include the essentials', () 
   assert.match(renderPostPage('{{hero}}', withPic, site, [withPic]), /class="article__hero"[^>]*alt="Welcome"/);
   const withShare = renderPostPage('{{share}}', p, site, [p]);
   assert.match(withShare, /class="sharebar"/); assert.match(withShare, /wa\.me\/\?text=/); assert.match(withShare, /data-copy/);
+  assert.match(withShare, /data-copy-post/); assert.match(withShare, /data-post="A title &amp; more\n\nSum &quot;quoted&quot;\n\nhttps:/, 'Copy post carries headline, summary and link');
   assert.ok(html.includes('<title>A title &amp; more</title>'));
   assert.ok(html.includes('<p>Body</p>'));
   assert.ok(html.includes('href="../b/"'), 'links to the other post by slug');

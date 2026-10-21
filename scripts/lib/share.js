@@ -84,7 +84,7 @@ export function renderSharePage(a, site, more = [], categoryLabel = '') {
       ${hero}
       ${a.summary ? `<p class="story__summary">${esc(a.summary)}</p>` : ''}
       ${cta}
-      ${shareBarHtml({ url: shareUrl(a, site), title: a.title, site })}
+      ${shareBarHtml({ url: shareUrl(a, site), title: a.title, summary: a.summary, site })}
       <p class="story__note">Found on ${esc(site.name)}. We link to the original; the full story belongs to ${esc(who)}.</p>
     </article>
     ${more.length ? `<aside class="article__aside story__more">
