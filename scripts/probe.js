@@ -52,4 +52,10 @@ try {
   console.log('not a feed:', String(err.message).split('\n')[0]);
   const links = feedLinksFromHtml(body, target);
   console.log('advertised feed links:', links.length ? links : 'none');
+  // Readable text of the page (headline, dates and paragraphs), so a story can be checked against its source.
+  const scope = body.match(/<article[\s\S]*?<\/article>/i)?.[0] || body;
+  const text = [...scope.matchAll(/<(h1|h2|h3|p|time|li)\b[^>]*>([\s\S]*?)<\/\1>/gi)]
+    .map(m => m[2].replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&#8217;|&rsquo;/g, '\u2019').replace(/&#8220;|&ldquo;/g, '\u201c').replace(/&#8221;|&rdquo;/g, '\u201d').replace(/&quot;/g, '"').replace(/\s+/g, ' ').trim())
+    .filter(t => t.length > 2);
+  if (text.length) console.log('--- page text ---\n' + text.join('\n').slice(0, 12000) + '\n---');
 }
