@@ -4,6 +4,11 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 21 October 2026
+
+- **New article: [Liatu Samuel Dawa, the Christian mother jailed 14 years in Borno for sharing her faith](/articles/liatu-samuel-dawa-jailed-14-years-in-borno/)**: what the court ruled, the charge, her plea, her husband in hiding, what Nigeria's Constitution says, and how to pray.
+- Cards and article pictures now favour the top of a photo, so faces in portrait pictures are no longer cut off.
+
 ## 19 October 2026
 
 - **Every section has its own address** (for example [/eschatology/](/eschatology/), [/news/](/news/), [/holyspirit/](/holyspirit/), [/writers/](/writers/)), with a short introduction, so search engines can list each section and you can link straight to one. All sections are linked in the footer.

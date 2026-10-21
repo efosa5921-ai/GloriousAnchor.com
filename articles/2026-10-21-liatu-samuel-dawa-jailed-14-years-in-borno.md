@@ -8,7 +8,6 @@ image: images/liatu-samuel-dawa.jpg
 categories: news, apologetics
 keywords: Liatu Samuel Dawa, Liyatu Samuel Dawa, Christian mother jailed Borno, 14 years prison evangelism Nigeria, Section 210 Borno Penal Code, Section 38 Nigerian Constitution freedom of religion, Christian persecution Nigeria 2026, Evangelist Amos Suleman, Hebrews 13:3 remember those in prison, Matthew 5:10
 pinned: true
-draft: true
 ---
 
 > *Remember those who are in prison, as though in prison with them, and those who are mistreated, since you also are in the body.* (Hebrews 13:3)
