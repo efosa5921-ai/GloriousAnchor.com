@@ -52,6 +52,13 @@ test('unfurl uses oEmbed when available and falls back to HTML', async () => {
   assert.equal(calls.length, 1);
   const b = await unfurl('https://example.com/post', fetchText);
   assert.equal(b.title, 'From HTML');
+  const withPhoto = async (u) => {
+    if (u.includes('oembed')) return JSON.stringify({ author_name: 'Someone', html: '<blockquote><p>Post text</p>— Someone (@s) <a>Oct 20, 2026</a></blockquote>' });
+    if (u.startsWith('https://fxtwitter.com/')) return '<meta property="og:image" content="https://pbs.twimg.com/media/ABC?format=webp&name=large">';
+    throw new Error('unexpected ' + u);
+  };
+  const p = await unfurl('https://x.com/someone/status/123', withPhoto);
+  assert.equal(p.title, 'Post text'); assert.equal(p.image, 'https://pbs.twimg.com/media/ABC?format=jpg&name=large');
   const failing = async (u) => { if (u.includes('oembed')) throw new Error('HTTP 404'); return '<meta property="og:title" content="HTML after oEmbed failure">'; };
   const c = await unfurl('https://x.com/a/status/1', failing);
   assert.equal(c.title, 'HTML after oEmbed failure');

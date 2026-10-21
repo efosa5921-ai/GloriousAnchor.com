@@ -105,7 +105,16 @@ export async function unfurl(url, fetchText) {
   if (oe) {
     try {
       const data = parseOembed(await fetchText(oe), strategy);
-      if (data.title) return { ...data, strategy };
+      if (data.title) {
+        // X's embed service never includes the post's photo; its preview mirror serves Open Graph tags that do.
+        if (strategy === 'twitter' && !data.image) {
+          try {
+            const m = url.match(/\/\/(?:x|twitter)\.com\/([^/]+)\/status\/(\d+)/i);
+            if (m) { const og = parseOpenGraph(await fetchText(`https://fxtwitter.com/${m[1]}/status/${m[2]}`), url); if (og.image && !/\/profile_images\//.test(og.image)) data.image = og.image.replace(/\?format=webp(&|$)/, '?format=jpg$1'); }
+          } catch { /* no photo, the branded tile stands in */ }
+        }
+        return { ...data, strategy };
+      }
     } catch { /* fall through to HTML */ }
   }
   const html = await fetchText(url);
