@@ -165,7 +165,7 @@ export function pickToArticle(pick, fetched, firstSeen) {
     author: stripHtml(pick.author || f.author || '') || null,
     publishedAt,
     kind: 'pick',
-    ...(mediaFor(url) ? { media: mediaFor(url) } : {}),
+    ...((pick.media === 'video' || pick.media === 'audio') ? { media: pick.media } : mediaFor(url) ? { media: mediaFor(url) } : {}),
     source: pick.source || (PLATFORMS.has(provider) ? provider : (f.siteName || provider)),
     sourceId: PICKS_SOURCE.id,
     sourceHome: pick.homepage || null,

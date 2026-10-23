@@ -84,6 +84,8 @@ test('pickToArticle merges manual overrides over fetched data and handles dates'
   assert.equal(v.media, 'video'); assert.equal(v.kind, 'pick');
   assert.equal(pickToArticle({ url: 'https://open.spotify.com/episode/abc' }, { title: 'Ep' }, 1).media, 'audio');
   assert.equal(pickToArticle({ url: 'https://open.spotify.com/track/abc' }, { title: 'Song' }, 1).media, undefined);
+  assert.equal(pickToArticle({ url: 'https://x.com/a/status/1', media: 'video' }, { title: 'Clip' }, 1).media, 'video', 'an X post with a video can be marked as one');
+  assert.equal(pickToArticle({ url: 'https://x.com/a/status/1', media: 'photo' }, { title: 'Clip' }, 1).media, undefined);
   assert.equal(pickToArticle({ url: 'https://x.com/a/status/2' }, { title: 'T' }, 1).categories, undefined);
   const c = pickToArticle({ url: 'https://x.com/a/status/1' }, { title: 'T' }, 1234);
   assert.equal(c.publishedAt, 1234, 'falls back to first-seen time');

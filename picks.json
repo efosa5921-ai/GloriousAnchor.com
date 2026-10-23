@@ -2,7 +2,7 @@
   "_help": [
     "Hand-picked links. Paste any URL: an article, an X post, a TikTok or YouTube video, an Instagram or Facebook post.",
     "The build fetches the page's title, description and image (Open Graph) or uses the platform's public oEmbed endpoint.",
-    "Fields: url (required), title, summary, image, author, source, note, added (date), pinned (true/false), enabled (false hides it).",
+    "Fields: url (required), title, summary, image, author, source, note, added (date), pinned (true/false), enabled (false hides it), media (\"video\" or \"audio\", for an X or Facebook post whose link does not say it is a video; the card then says Watch/Listen).",
     "Anything you type here overrides what was fetched. Instagram and Facebook block bots, so give those a title (and ideally an image).",
     "Optional \"categories\": a list of tab ids from feeds.json (e.g. [\"holyspirit\"]) to show the pick in those tabs as well as Picks.",
     "Pinned picks lead Top Stories. Examples:",
@@ -13,6 +13,18 @@
     "{ \"url\": \"https://youtu.be/VIDEOID\", \"categories\": [\"holyspirit\"] }"
   ],
   "picks": [
+    {
+      "url": "https://x.com/DrFrankTurek/status/2110853230368555400",
+      "title": "Frank Turek answers a student: \"Why is my 'queer' behaviour considered wrong?\"",
+      "summary": "A student at Northwest Missouri State asked Dr Frank Turek why her 'queer' behaviour is considered wrong. His answer, live on campus: culture says morality is based on feelings, but true love requires truth.",
+      "image": "https://pbs.twimg.com/amplify_video_thumb/2110840828457349120/img/PPpGADpvncaKGIAi.jpg",
+      "source": "X · @DrFrankTurek (video)",
+      "media": "video",
+      "categories": [
+        "apologetics"
+      ],
+      "added": "2026-10-23"
+    },
     {
       "url": "https://x.com/spiricocong/status/2112464727108428111",
       "title": "Nigerian Christian mother jailed 14 years in Borno State for sharing her faith",

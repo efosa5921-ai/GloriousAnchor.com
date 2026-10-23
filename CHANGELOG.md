@@ -4,6 +4,10 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 23 October 2026
+
+- **Pick**: Frank Turek answers a student who asked why her 'queer' behaviour is considered wrong, live on campus (video, in Apologetics). A pick can now be marked as a video or audio when its link does not say so, so the card reads Watch or Listen.
+
 ## 21 October 2026
 
 - **"Copy post" button** on every article and story page: copies the headline, summary and link in one go, ready to paste into a WhatsApp channel or group without typing the headline (WhatsApp's channel composer on iPhone can lose text typed above a link preview).
