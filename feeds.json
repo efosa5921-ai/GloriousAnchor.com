@@ -1,7 +1,7 @@
 {
   "site": {
     "name": "Glorious Anchor",
-    "tagline": "Christian news, voices and video, anchored in one place.",
+    "tagline": "Christian news, voices and video for the Spirit-filled church, anchored in one place.",
     "verse": "We have this hope as an anchor for the soul, firm and secure. — Hebrews 6:19",
     "url": "https://gloriousanchor.com",
     "imageProxy": "https://wsrv.nl/?url={url}&w={w}&output=webp&q=75&default={url}",
@@ -40,7 +40,7 @@
     {
       "id": "teaching",
       "label": "Teaching & Devotional",
-      "description": "Daily teaching and devotionals from trusted ministries, to feed your walk with God."
+      "description": "Daily teaching and devotionals from Spirit-filled, Pentecostal and evangelistic ministries, to feed your walk with God."
     },
     {
       "id": "apologetics",
@@ -70,11 +70,13 @@
     },
     {
       "id": "video",
-      "label": "YouTube"
+      "label": "YouTube",
+      "description": "Sermons, worship, testimonies and news from charismatic, Pentecostal and evangelistic channels."
     },
     {
       "id": "radio",
-      "label": "Radio"
+      "label": "Radio",
+      "description": "Podcasts and broadcasts from Spirit-filled preachers and evangelists, ready to play."
     },
     {
       "id": "social",
@@ -137,7 +139,6 @@
       "url": "https://religionnews.com/feed/",
       "category": "news",
       "kind": "news",
-      "featured": true,
       "homepage": "https://religionnews.com"
     },
     {
@@ -156,7 +157,9 @@
       "url": "https://baptistnews.com/feed/",
       "category": "news",
       "kind": "news",
-      "homepage": "https://baptistnews.com"
+      "homepage": "https://baptistnews.com",
+      "enabled": false,
+      "_note": "Paused 23 Oct 2026: the site leans charismatic, Pentecostal and evangelistic; this source is moderate Baptist. Re-enable in the admin if wanted."
     },
     {
       "id": "cna",
@@ -164,7 +167,9 @@
       "url": "https://www.catholicnewsagency.com/rss/news.xml",
       "category": "news",
       "kind": "news",
-      "homepage": "https://www.catholicnewsagency.com"
+      "homepage": "https://www.catholicnewsagency.com",
+      "enabled": false,
+      "_note": "Paused 23 Oct 2026: the site leans charismatic, Pentecostal and evangelistic; this source is Catholic. Re-enable in the admin if wanted."
     },
     {
       "id": "ncregister",
@@ -172,7 +177,9 @@
       "url": "https://www.ncregister.com/rss",
       "category": "news",
       "kind": "news",
-      "homepage": "https://www.ncregister.com"
+      "homepage": "https://www.ncregister.com",
+      "enabled": false,
+      "_note": "Paused 23 Oct 2026: the site leans charismatic, Pentecostal and evangelistic; this source is Catholic. Re-enable in the admin if wanted."
     },
     {
       "id": "premier",
@@ -196,7 +203,8 @@
       "url": "https://www1.cbn.com/rss-cbn-articles-cbnnews.xml",
       "category": "news",
       "kind": "news",
-      "homepage": "https://www1.cbn.com/cbnnews"
+      "homepage": "https://www1.cbn.com/cbnnews",
+      "featured": true
     },
     {
       "id": "world",
@@ -260,7 +268,6 @@
       "url": "https://relevantmagazine.com/feed/",
       "category": "culture",
       "kind": "article",
-      "featured": true,
       "homepage": "https://relevantmagazine.com"
     },
     {
@@ -269,7 +276,6 @@
       "url": "https://www.thegospelcoalition.org/feed/",
       "category": "culture",
       "kind": "article",
-      "featured": true,
       "homepage": "https://www.thegospelcoalition.org"
     },
     {
@@ -278,7 +284,9 @@
       "url": "https://mereorthodoxy.com/feed",
       "category": "culture",
       "kind": "article",
-      "homepage": "https://mereorthodoxy.com"
+      "homepage": "https://mereorthodoxy.com",
+      "enabled": false,
+      "_note": "Paused 23 Oct 2026: the site leans charismatic, Pentecostal and evangelistic; this source is Reformed/Anglican. Re-enable in the admin if wanted."
     },
     {
       "id": "first-things",
@@ -286,7 +294,9 @@
       "url": "https://www.firstthings.com/rss",
       "category": "culture",
       "kind": "article",
-      "homepage": "https://www.firstthings.com"
+      "homepage": "https://www.firstthings.com",
+      "enabled": false,
+      "_note": "Paused 23 Oct 2026: the site leans charismatic, Pentecostal and evangelistic; this source is Catholic/ecumenical. Re-enable in the admin if wanted."
     },
     {
       "id": "plough",
@@ -304,7 +314,9 @@
       "url": "https://www.crossway.org/articles/feed/",
       "category": "culture",
       "kind": "article",
-      "homepage": "https://www.crossway.org/articles"
+      "homepage": "https://www.crossway.org/articles",
+      "enabled": false,
+      "_note": "Paused 23 Oct 2026: the site leans charismatic, Pentecostal and evangelistic; this source is Reformed publisher. Re-enable in the admin if wanted."
     },
     {
       "id": "christian-scholars",
@@ -312,7 +324,9 @@
       "url": "https://christianscholars.com/feed/",
       "category": "culture",
       "kind": "article",
-      "homepage": "https://christianscholars.com"
+      "homepage": "https://christianscholars.com",
+      "enabled": false,
+      "_note": "Paused 23 Oct 2026: the site leans charismatic, Pentecostal and evangelistic; this source is academic. Re-enable in the admin if wanted."
     },
     {
       "id": "desiring-god",
@@ -320,7 +334,6 @@
       "url": "https://www.desiringgod.org/feed",
       "category": "teaching",
       "kind": "article",
-      "featured": true,
       "homepage": "https://www.desiringgod.org"
     },
     {
@@ -329,7 +342,9 @@
       "url": "https://www.ligonier.org/feed",
       "category": "teaching",
       "kind": "article",
-      "homepage": "https://www.ligonier.org"
+      "homepage": "https://www.ligonier.org",
+      "enabled": false,
+      "_note": "Paused 23 Oct 2026: the site leans charismatic, Pentecostal and evangelistic; this source is Reformed, cessationist. Re-enable in the admin if wanted."
     },
     {
       "id": "our-daily-bread",
@@ -363,7 +378,9 @@
       "url": "https://albertmohler.com/feed",
       "category": "teaching",
       "kind": "article",
-      "homepage": "https://albertmohler.com"
+      "homepage": "https://albertmohler.com",
+      "enabled": false,
+      "_note": "Paused 23 Oct 2026: the site leans charismatic, Pentecostal and evangelistic; this source is Southern Baptist, cessationist. Re-enable in the admin if wanted."
     },
     {
       "id": "challies",
@@ -371,7 +388,9 @@
       "url": "https://www.challies.com/feed/",
       "category": "articles",
       "kind": "article",
-      "homepage": "https://www.challies.com"
+      "homepage": "https://www.challies.com",
+      "enabled": false,
+      "_note": "Paused 23 Oct 2026: the site leans charismatic, Pentecostal and evangelistic; this source is Reformed, cessationist. Re-enable in the admin if wanted."
     },
     {
       "id": "deyoung",
@@ -384,7 +403,9 @@
         {
           "url": "https://www.thegospelcoalition.org/blogs/kevin-deyoung/feed/"
         }
-      ]
+      ],
+      "enabled": false,
+      "_note": "Paused 23 Oct 2026: the site leans charismatic, Pentecostal and evangelistic; this source is Reformed, cessationist. Re-enable in the admin if wanted."
     },
     {
       "id": "voskamp",
@@ -400,7 +421,9 @@
       "url": "https://www.thegospelcoalition.org/blogs/trevin-wax/feed/",
       "category": "articles",
       "kind": "article",
-      "homepage": "https://www.thegospelcoalition.org/blogs/trevin-wax/"
+      "homepage": "https://www.thegospelcoalition.org/blogs/trevin-wax/",
+      "enabled": false,
+      "_note": "Paused 23 Oct 2026: the site leans charismatic, Pentecostal and evangelistic; this source is Reformed. Re-enable in the admin if wanted."
     },
     {
       "id": "alcorn",
@@ -418,7 +441,9 @@
       "url": "https://scotmcknight.substack.com/feed",
       "category": "articles",
       "kind": "article",
-      "homepage": "https://scotmcknight.substack.com"
+      "homepage": "https://scotmcknight.substack.com",
+      "enabled": false,
+      "_note": "Paused 23 Oct 2026: the site leans charismatic, Pentecostal and evangelistic; this source is progressive critic. Re-enable in the admin if wanted."
     },
     {
       "id": "tisby",
@@ -426,7 +451,9 @@
       "url": "https://jemartisby.substack.com/feed",
       "category": "articles",
       "kind": "article",
-      "homepage": "https://jemartisby.substack.com"
+      "homepage": "https://jemartisby.substack.com",
+      "enabled": false,
+      "_note": "Paused 23 Oct 2026: the site leans charismatic, Pentecostal and evangelistic; this source is progressive critic. Re-enable in the admin if wanted."
     },
     {
       "id": "du-mez",
@@ -434,7 +461,9 @@
       "url": "https://kristindumez.substack.com/feed",
       "category": "articles",
       "kind": "article",
-      "homepage": "https://kristindumez.substack.com"
+      "homepage": "https://kristindumez.substack.com",
+      "enabled": false,
+      "_note": "Paused 23 Oct 2026: the site leans charismatic, Pentecostal and evangelistic; this source is progressive critic. Re-enable in the admin if wanted."
     },
     {
       "id": "prior",
@@ -442,7 +471,9 @@
       "url": "https://karenswallowprior.substack.com/feed",
       "category": "articles",
       "kind": "article",
-      "homepage": "https://karenswallowprior.substack.com"
+      "homepage": "https://karenswallowprior.substack.com",
+      "enabled": false,
+      "_note": "Paused 23 Oct 2026: the site leans charismatic, Pentecostal and evangelistic; this source is progressive critic. Re-enable in the admin if wanted."
     },
     {
       "id": "yt-bibleproject",
@@ -473,7 +504,9 @@
           "type": "youtube",
           "handle": "@ligonier"
         }
-      ]
+      ],
+      "enabled": false,
+      "_note": "Paused 23 Oct 2026: the site leans charismatic, Pentecostal and evangelistic; this source is Reformed, cessationist. Re-enable in the admin if wanted."
     },
     {
       "id": "yt-tgc",
@@ -543,7 +576,8 @@
       "type": "youtube",
       "handle": "@elevationchurch",
       "category": "video",
-      "kind": "video"
+      "kind": "video",
+      "featured": true
     },
     {
       "id": "yt-elevation-worship",
@@ -559,7 +593,8 @@
       "type": "youtube",
       "handle": "@bethelmusic",
       "category": "video",
-      "kind": "video"
+      "kind": "video",
+      "featured": true
     },
     {
       "id": "yt-hillsong",
@@ -567,7 +602,8 @@
       "type": "youtube",
       "handle": "@hillsongworship",
       "category": "video",
-      "kind": "video"
+      "kind": "video",
+      "featured": true
     },
     {
       "id": "yt-maverick",
@@ -583,7 +619,8 @@
       "type": "youtube",
       "handle": "@CBNnewsonline",
       "category": "video",
-      "kind": "video"
+      "kind": "video",
+      "featured": true
     },
     {
       "id": "r-christianity",
@@ -622,7 +659,9 @@
         {
           "url": "https://old.reddit.com/r/Reformed/.rss"
         }
-      ]
+      ],
+      "enabled": false,
+      "_note": "Paused 23 Oct 2026: the site leans charismatic, Pentecostal and evangelistic; this source is Reformed. Re-enable in the admin if wanted."
     },
     {
       "id": "r-catholicism",
@@ -635,7 +674,9 @@
         {
           "url": "https://old.reddit.com/r/Catholicism/.rss"
         }
-      ]
+      ],
+      "enabled": false,
+      "_note": "Paused 23 Oct 2026: the site leans charismatic, Pentecostal and evangelistic; this source is Catholic. Re-enable in the admin if wanted."
     },
     {
       "id": "bsky-ct",
@@ -795,7 +836,8 @@
         "holyspirit",
         "news"
       ],
-      "kind": "news"
+      "kind": "news",
+      "featured": true
     },
     {
       "id": "charisma-mag",
@@ -825,7 +867,8 @@
         "holyspirit",
         "teaching"
       ],
-      "kind": "article"
+      "kind": "article",
+      "featured": true
     },
     {
       "id": "prophecy-news-watch",
@@ -844,7 +887,9 @@
       "homepage": "https://albertmohler.com/the-briefing",
       "category": "radio",
       "kind": "audio",
-      "featured": true
+      "featured": true,
+      "enabled": false,
+      "_note": "Paused 23 Oct 2026: the site leans charismatic, Pentecostal and evangelistic; this source is Southern Baptist, cessationist. Re-enable in the admin if wanted."
     },
     {
       "id": "pod-bibleproject",
@@ -870,7 +915,9 @@
       "url": "https://renewingyourmind.org/feed",
       "homepage": "https://renewingyourmind.org",
       "category": "radio",
-      "kind": "audio"
+      "kind": "audio",
+      "enabled": false,
+      "_note": "Paused 23 Oct 2026: the site leans charismatic, Pentecostal and evangelistic; this source is Reformed, cessationist. Re-enable in the admin if wanted."
     },
     {
       "id": "pod-holy-post",
@@ -878,7 +925,9 @@
       "url": "https://feeds.megaphone.fm/holypost",
       "homepage": "https://www.holypost.com",
       "category": "radio",
-      "kind": "audio"
+      "kind": "audio",
+      "enabled": false,
+      "_note": "Paused 23 Oct 2026: the site leans charismatic, Pentecostal and evangelistic; this source is progressive-leaning. Re-enable in the admin if wanted."
     },
     {
       "id": "pod-tgc",
@@ -886,7 +935,9 @@
       "url": "https://feeds.simplecast.com/fbd6gqBG",
       "homepage": "https://www.thegospelcoalition.org/podcasts/gospelbound/",
       "category": "radio",
-      "kind": "audio"
+      "kind": "audio",
+      "enabled": false,
+      "_note": "Paused 23 Oct 2026: the site leans charismatic, Pentecostal and evangelistic; this source is Reformed. Re-enable in the admin if wanted."
     },
     {
       "id": "pod-focus",
@@ -895,6 +946,450 @@
       "homepage": "https://www.focusonthefamily.com/episodes/broadcast/",
       "category": "radio",
       "kind": "audio"
+    },
+    {
+      "id": "faith-news",
+      "name": "Faith News Network (Church of God)",
+      "url": "https://faithnews.cc/feed/",
+      "homepage": "https://faithnews.cc",
+      "category": "news",
+      "kind": "news"
+    },
+    {
+      "id": "rccg",
+      "name": "RCCG (Redeemed Christian Church of God)",
+      "url": "https://www.rccg.org/feed/",
+      "homepage": "https://www.rccg.org",
+      "category": "news",
+      "kind": "news"
+    },
+    {
+      "id": "morning-star-news",
+      "name": "Morning Star News",
+      "url": "https://morningstarnews.org/feed/",
+      "homepage": "https://morningstarnews.org",
+      "category": "news",
+      "kind": "news",
+      "featured": true
+    },
+    {
+      "id": "icc",
+      "name": "International Christian Concern",
+      "url": "https://www.persecution.org/feed/",
+      "homepage": "https://www.persecution.org",
+      "category": "news",
+      "kind": "news"
+    },
+    {
+      "id": "joyce-meyer-articles",
+      "name": "Joyce Meyer Ministries",
+      "url": "https://joycemeyer.org/feeds/articles.xml",
+      "homepage": "https://joycemeyer.org",
+      "category": "teaching",
+      "kind": "article"
+    },
+    {
+      "id": "joyce-meyer-devotional",
+      "name": "Joyce Meyer daily devotional",
+      "url": "https://joycemeyer.org/feeds/devotionals.xml",
+      "homepage": "https://joycemeyer.org/dailydevo",
+      "category": "teaching",
+      "kind": "article"
+    },
+    {
+      "id": "yt-bgea",
+      "name": "Billy Graham Evangelistic Association",
+      "type": "youtube",
+      "channelId": "UC29BKw2DaNMQe2B90QRVCNw",
+      "homepage": "https://billygraham.org",
+      "category": "video",
+      "kind": "video",
+      "featured": true
+    },
+    {
+      "id": "yt-greg-laurie",
+      "name": "Pastor Greg Laurie",
+      "type": "youtube",
+      "channelId": "UCp9pxqv-oMY1a6axT6mHcew",
+      "homepage": "https://harvest.org",
+      "category": "video",
+      "kind": "video"
+    },
+    {
+      "id": "yt-cfan",
+      "name": "Christ For All Nations",
+      "type": "youtube",
+      "channelId": "UCJ8Tk-_-BcfLv3qYgIbXsuw",
+      "homepage": "https://cfan.org",
+      "category": "video",
+      "kind": "video",
+      "featured": true
+    },
+    {
+      "id": "yt-nick-vujicic",
+      "name": "Nick Vujicic",
+      "type": "youtube",
+      "channelId": "UCchPXJ45rWh5BMXbrWmaMTA",
+      "homepage": "https://www.lifewithoutlimbs.org",
+      "category": "video",
+      "kind": "video"
+    },
+    {
+      "id": "yt-living-waters",
+      "name": "Living Waters (Ray Comfort)",
+      "type": "youtube",
+      "channelId": "UCmrVJGUS1u5-Hsm_BFS_1YA",
+      "homepage": "https://www.livingwaters.com",
+      "category": "apologetics",
+      "kind": "video",
+      "categories": [
+        "apologetics",
+        "video"
+      ]
+    },
+    {
+      "id": "yt-joseph-prince",
+      "name": "Joseph Prince",
+      "type": "youtube",
+      "channelId": "UCJRSBsjLPipnu8y03qa2_Iw",
+      "homepage": "https://www.josephprince.org",
+      "category": "video",
+      "kind": "video",
+      "featured": true
+    },
+    {
+      "id": "yt-joel-osteen",
+      "name": "Joel Osteen",
+      "type": "youtube",
+      "channelId": "UCvxWyn4rfcI2H9APhfUIB1Q",
+      "homepage": "https://www.joelosteen.com",
+      "category": "video",
+      "kind": "video"
+    },
+    {
+      "id": "yt-transformation",
+      "name": "Transformation Church (Michael Todd)",
+      "type": "youtube",
+      "channelId": "UCLaQE1OWx96NfC1wAmekpqw",
+      "homepage": "https://transformchurch.us",
+      "category": "video",
+      "kind": "video"
+    },
+    {
+      "id": "yt-bethel-church",
+      "name": "Bethel Church (Redding)",
+      "type": "youtube",
+      "channelId": "UCcsElfb1ac7fRxnLHxJL39A",
+      "homepage": "https://www.bethel.com",
+      "category": "video",
+      "kind": "video"
+    },
+    {
+      "id": "yt-bill-johnson",
+      "name": "Bill Johnson Teaching",
+      "type": "youtube",
+      "channelId": "UCspy9Ay2Z9VI__qS7Fdbs6Q",
+      "homepage": "https://www.bethel.com",
+      "category": "holyspirit",
+      "kind": "video",
+      "categories": [
+        "holyspirit",
+        "video"
+      ]
+    },
+    {
+      "id": "yt-jesus-image",
+      "name": "Jesus Image (Michael Koulianos)",
+      "type": "youtube",
+      "channelId": "UCu-rO0kN-fbuGKTllbuEvZw",
+      "homepage": "https://jesusimage.tv",
+      "category": "holyspirit",
+      "kind": "video",
+      "categories": [
+        "holyspirit",
+        "video"
+      ]
+    },
+    {
+      "id": "yt-david-diga",
+      "name": "David Diga Hernandez",
+      "type": "youtube",
+      "channelId": "UCgtFFXZoUxZy3PE_dyhWDhQ",
+      "homepage": "https://www.davidhernandezministries.com",
+      "category": "holyspirit",
+      "kind": "video",
+      "categories": [
+        "holyspirit",
+        "video"
+      ]
+    },
+    {
+      "id": "yt-isaiah-saldivar",
+      "name": "Isaiah Saldivar",
+      "type": "youtube",
+      "channelId": "UCeapS6tXIdBI-Hf82-MrlCA",
+      "homepage": "https://isaiahsaldivar.com",
+      "category": "holyspirit",
+      "kind": "video",
+      "categories": [
+        "holyspirit",
+        "video"
+      ]
+    },
+    {
+      "id": "yt-vlad-savchuk",
+      "name": "Vlad Savchuk",
+      "type": "youtube",
+      "channelId": "UC1DuOQg0-nr99t17Ca8Hlag",
+      "homepage": "https://vladimirsavchuk.com",
+      "category": "holyspirit",
+      "kind": "video",
+      "categories": [
+        "holyspirit",
+        "video"
+      ]
+    },
+    {
+      "id": "yt-koinonia",
+      "name": "Koinonia Global (Apostle Joshua Selman)",
+      "type": "youtube",
+      "channelId": "UCq2ueL6wl7slTuInRbFpe7w",
+      "homepage": "https://koinoniaglobal.org",
+      "category": "video",
+      "kind": "video",
+      "featured": true
+    },
+    {
+      "id": "yt-dunamis",
+      "name": "Dunamis TV (Dr Paul Enenche)",
+      "type": "youtube",
+      "channelId": "UCtLlKV4vUqcxezKOoeILs5Q",
+      "homepage": "https://dunamisgospel.org",
+      "category": "video",
+      "kind": "video"
+    },
+    {
+      "id": "yt-jerry-eze",
+      "name": "Jerry Eze (NSPPD)",
+      "type": "youtube",
+      "channelId": "UCQxSLR7Y8x4jeywg_X47YBw",
+      "homepage": "https://nsppd.org",
+      "category": "video",
+      "kind": "video"
+    },
+    {
+      "id": "yt-tbn",
+      "name": "TBN",
+      "type": "youtube",
+      "channelId": "UCq1BLq3MpYj0-77WKQPu5Cg",
+      "homepage": "https://www.tbn.org",
+      "category": "video",
+      "kind": "video"
+    },
+    {
+      "id": "yt-godtv",
+      "name": "GOD TV",
+      "type": "youtube",
+      "channelId": "UC1_JSuk0BSA_FWzSvMsezGg",
+      "homepage": "https://www.god.tv",
+      "category": "video",
+      "kind": "video"
+    },
+    {
+      "id": "yt-charisma",
+      "name": "Charisma Media",
+      "type": "youtube",
+      "channelId": "UCxh7gzwGHFwPn0S6GU1HEFA",
+      "homepage": "https://charismamag.com",
+      "category": "holyspirit",
+      "kind": "video",
+      "categories": [
+        "holyspirit",
+        "video"
+      ]
+    },
+    {
+      "id": "pod-joseph-prince",
+      "name": "Joseph Prince Audio Podcast",
+      "url": "https://feeds.simplecast.com/EzSMEy8K",
+      "homepage": "https://www.josephprince.org",
+      "category": "radio",
+      "kind": "audio",
+      "featured": true
+    },
+    {
+      "id": "pod-jentezen",
+      "name": "Jentezen Franklin at Free Chapel",
+      "url": "https://anchor.fm/s/db838520/podcast/rss",
+      "homepage": "https://www.jentezenfranklin.org",
+      "category": "radio",
+      "kind": "audio"
+    },
+    {
+      "id": "pod-joyce-meyer",
+      "name": "Joyce Meyer: Enjoying Everyday Life",
+      "url": "https://feeds.libsyn.com/56578/rss",
+      "homepage": "https://joycemeyer.org",
+      "category": "radio",
+      "kind": "audio"
+    },
+    {
+      "id": "pod-bvov",
+      "name": "Believer’s Voice of Victory (Kenneth Copeland)",
+      "url": "https://feeds.captivate.fm/bvov-audio/",
+      "homepage": "https://www.kcm.org",
+      "category": "radio",
+      "kind": "audio"
+    },
+    {
+      "id": "pod-charisma-news",
+      "name": "Charisma News podcast",
+      "url": "https://media.rss.com/charismanews/feed.xml",
+      "homepage": "https://charismanews.com",
+      "category": "radio",
+      "kind": "audio",
+      "categories": [
+        "radio",
+        "holyspirit"
+      ]
+    },
+    {
+      "id": "pod-kolenda",
+      "name": "The Daniel Kolenda Show",
+      "url": "https://anchor.fm/s/10a2a4094/podcast/rss",
+      "homepage": "https://danielkolenda.com",
+      "category": "radio",
+      "kind": "audio"
+    },
+    {
+      "id": "pod-greg-laurie",
+      "name": "Greg Laurie: A New Beginning",
+      "url": "https://www.omnycontent.com/d/playlist/f55c2a52-ae2b-46a8-a563-ab9600c95ab0/9a2c91ec-eb96-4683-b389-aba401706c30/c8cc661c-0136-4e17-8bd4-aba401706c3e/podcast.rss",
+      "homepage": "https://harvest.org",
+      "category": "radio",
+      "kind": "audio"
+    },
+    {
+      "id": "pod-potters-house",
+      "name": "The Potter’s House (T.D. Jakes)",
+      "url": "https://feeds.acast.com/public/shows/6845b19da13d3373731451b5",
+      "homepage": "https://www.tphonline.org",
+      "category": "radio",
+      "kind": "audio"
+    },
+    {
+      "id": "pod-koinonia",
+      "name": "Koinonia Global messages (Apostle Joshua Selman)",
+      "url": "https://anchor.fm/s/1065bfa84/podcast/rss",
+      "homepage": "https://koinoniaglobal.org",
+      "category": "radio",
+      "kind": "audio"
+    },
+    {
+      "id": "pod-elevation",
+      "name": "Elevation with Steven Furtick",
+      "url": "https://podcast.elevationchurch.org/feed.xml",
+      "homepage": "https://elevationchurch.org",
+      "category": "radio",
+      "kind": "audio"
+    },
+    {
+      "id": "pod-bgea-gps",
+      "name": "GPS: God. People. Stories. (BGEA)",
+      "url": "https://rss.buzzsprout.com/1324990.rss",
+      "homepage": "https://billygraham.org",
+      "category": "radio",
+      "kind": "audio"
+    },
+    {
+      "id": "pod-revival-lifestyle",
+      "name": "Revival Lifestyle with Isaiah Saldivar",
+      "url": "https://media.rss.com/revivallifestyle/feed.xml",
+      "homepage": "https://isaiahsaldivar.com",
+      "category": "radio",
+      "kind": "audio",
+      "categories": [
+        "radio",
+        "holyspirit"
+      ]
+    },
+    {
+      "id": "pod-hillsong",
+      "name": "Hillsong Australia Podcast",
+      "url": "https://feeds.transistor.fm/hillsong-australia-podcast",
+      "homepage": "https://hillsong.com",
+      "category": "radio",
+      "kind": "audio"
+    },
+    {
+      "id": "pod-transformation",
+      "name": "Transformation Church",
+      "url": "https://www.spreaker.com/show/4996262/episodes/feed",
+      "homepage": "https://transformchurch.us",
+      "category": "radio",
+      "kind": "audio"
+    },
+    {
+      "id": "pod-oyedepo",
+      "name": "The Oyedepo Podcast (Bishop David Oyedepo)",
+      "url": "https://feed.podbean.com/oyedepo/feed.xml",
+      "homepage": "https://faithtabernacle.org.ng",
+      "category": "radio",
+      "kind": "audio",
+      "featured": true
+    },
+    {
+      "id": "pod-jesus-image",
+      "name": "Jesus Image",
+      "url": "https://rss.buzzsprout.com/121969.rss",
+      "homepage": "https://jesusimage.tv",
+      "category": "radio",
+      "kind": "audio",
+      "categories": [
+        "radio",
+        "holyspirit"
+      ]
+    },
+    {
+      "id": "pod-priscilla-shirer",
+      "name": "Going Beyond with Priscilla Shirer",
+      "url": "https://rss.libsyn.com/shows/105491/destinations/567255.xml",
+      "homepage": "https://www.goingbeyond.com",
+      "category": "radio",
+      "kind": "audio"
+    },
+    {
+      "id": "pod-john-bevere",
+      "name": "The John Bevere Podcast",
+      "url": "https://anchor.fm/s/1134aaf88/podcast/rss",
+      "homepage": "https://messengerinternational.org",
+      "category": "radio",
+      "kind": "audio"
+    },
+    {
+      "id": "pod-bill-johnson",
+      "name": "Thinking in Options with Bill Johnson",
+      "url": "https://rss.libsyn.com/shows/604170/destinations/5259860.xml",
+      "homepage": "https://www.bethel.com",
+      "category": "radio",
+      "kind": "audio",
+      "categories": [
+        "radio",
+        "holyspirit"
+      ]
+    },
+    {
+      "id": "r-pentecostal",
+      "name": "r/Pentecostal",
+      "type": "reddit",
+      "subreddit": "Pentecostal",
+      "category": "social",
+      "kind": "social",
+      "fallbacks": [
+        {
+          "url": "https://www.reddit.com/r/Pentecostal/new/.rss"
+        }
+      ]
     },
     {
       "id": "x-example",

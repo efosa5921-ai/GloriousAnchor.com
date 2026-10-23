@@ -4,7 +4,8 @@ date: 2026-10-15
 author: The Glorious Anchor team
 summary: One calm page for Christian news, teaching, video, podcasts and prophecy, a church finder near you, a daily digest and a Bible quiz. Here is how it works.
 image: https://gloriousanchor.com/assets/social.jpg
-keywords: Christian news aggregator, Christian news app, Christian teaching online, Christian podcasts, Bible quiz, find a church near me, Glorious Anchor, GAIN TV, GAIN Radio
+keywords: Christian news aggregator, Christian news app, Christian teaching online, Christian podcasts, Bible quiz, find a church near me, Glorious Anchor, GAIN TV, GAIN Radio, Pentecostal news, charismatic Christian news, evangelistic ministries
+updated: 2026-10-23
 pinned: true
 ---
 
@@ -12,7 +13,7 @@ pinned: true
 
 There is more good Christian reporting, writing and teaching published every day than any of us can keep up with. It is scattered across news sites, ministry blogs, Substacks, YouTube channels and social feeds, each with its own app, its own login and its own notifications.
 
-Glorious Anchor gathers it into one calm page. Nothing here is written by an algorithm and nothing is hidden behind one. Every card links straight to the person who made it.
+Glorious Anchor gathers it into one calm page, with a heart for the Spirit-filled, Pentecostal and evangelistic church: ministries that preach the gospel, pray for the sick and expect the Holy Spirit to move today. Nothing here is written by an algorithm and nothing is hidden behind one. Every card links straight to the person who made it.
 
 ## What you will find
 
@@ -65,6 +66,6 @@ Open the site in your phone's browser and choose *Add to Home Screen* (Safari) o
 
 ## A note on sources
 
-We link, we do not copy. Headlines, summaries and images belong to the people who made them, and we show only what they publish in their own public feeds, with a link back to the source. The site sets no tracking cookies and shows no advertising. If you publish something you think belongs here, or would rather not be included, write to [info@gloriousanchor.com](mailto:info@gloriousanchor.com). We would love to hear from you.
+The publishers, ministries, channels and podcasts we draw from lean charismatic, Pentecostal and evangelistic, alongside the main Christian news outlets. We link, we do not copy. Headlines, summaries and images belong to the people who made them, and we show only what they publish in their own public feeds, with a link back to the source. The site sets no tracking cookies and shows no advertising. If you publish something you think belongs here, or would rather not be included, write to [info@gloriousanchor.com](mailto:info@gloriousanchor.com). We would love to hear from you.
 
 Thank you for reading. Stay anchored.
