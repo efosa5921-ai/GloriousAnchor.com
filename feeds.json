@@ -1170,9 +1170,9 @@
     },
     {
       "id": "yt-jerry-eze",
-      "name": "Jerry Eze (NSPPD)",
+      "name": "Pastor Jerry Eze (NSPPD)",
       "type": "youtube",
-      "channelId": "UCQxSLR7Y8x4jeywg_X47YBw",
+      "channelId": "UCLg4NCAJxhIvD4IRV__LOFg",
       "homepage": "https://nsppd.org",
       "category": "video",
       "kind": "video"
@@ -1389,7 +1389,9 @@
         {
           "url": "https://www.reddit.com/r/Pentecostal/new/.rss"
         }
-      ]
+      ],
+      "enabled": false,
+      "_note": "Paused 23 Oct 2026: the subreddit is quiet (last post months ago), so it only added noise to feed-health."
     },
     {
       "id": "x-example",
