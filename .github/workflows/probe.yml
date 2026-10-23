@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       target:
-        description: 'Feed URL, page URL, or @youtubehandle'
+        description: 'Feed URL, page URL, @youtubehandle, or podcast:<name>; several separated by spaces for a one-line check each'
         required: true
         type: string
 

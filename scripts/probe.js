@@ -10,7 +10,39 @@ import { channelIdFromHtml, feedLinksFromHtml, YT_FEED } from './lib/sources.js'
 
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36';
 let target = process.argv[2];
-if (!target) { console.error('usage: node scripts/probe.js <url | @youtubehandle>'); process.exit(1); }
+if (!target) { console.error('usage: node scripts/probe.js <url | @youtubehandle | podcast:<search terms>> [more targets...]'); process.exit(1); }
+
+// Several targets at once (space-separated, in one workflow input): one short line each, for checking a batch of
+// candidate sources. A target "podcast:Some Show" looks the show up in Apple's podcast directory and prints its feed URL.
+const targets = process.argv.slice(2).join(' ').split(/\s+/).filter(Boolean);
+if (targets.length > 1 || targets[0].startsWith('podcast:')) {
+  const brief = async (t) => {
+    try {
+      if (t.startsWith('podcast:')) {
+        const term = t.slice(8).replace(/[+_]/g, ' ');
+        const res = await fetch(`https://itunes.apple.com/search?media=podcast&limit=3&term=${encodeURIComponent(term)}`);
+        const json = await res.json();
+        return `${t}: ` + ((json.results || []).map((r) => `"${r.collectionName}" by ${r.artistName} → ${r.feedUrl}`).join(' | ') || 'no results');
+      }
+      if (t.startsWith('@')) {
+        const res = await fetch(`https://www.youtube.com/${t}`, { headers: { 'User-Agent': UA } });
+        const body = await res.text();
+        const id = channelIdFromHtml(body);
+        return `${t}: ${res.status} title="${body.match(/<title>([^<]*)<\/title>/)?.[1] || ''}" channel=${id || 'unresolved'} canonical=${body.match(/<link rel="canonical" href="([^"]+)"/)?.[1] || ''}`;
+      }
+      const res = await fetch(t, { redirect: 'follow', headers: { 'User-Agent': UA } });
+      const body = await res.text();
+      try {
+        const feed = await new Parser().parseString(body);
+        return `${t}: ${res.status} FEED title="${feed.title}" items=${feed.items?.length ?? 0} latest=${feed.items?.[0]?.isoDate || feed.items?.[0]?.pubDate || ''}`;
+      } catch {
+        return `${t}: ${res.status} page title="${body.match(/<title>([^<]*)<\/title>/)?.[1]?.trim().slice(0, 80) || ''}" feeds=${JSON.stringify(feedLinksFromHtml(body, t).slice(0, 4))}`;
+      }
+    } catch (err) { return `${t}: ERROR ${String(err.message).split('\n')[0]}`; }
+  };
+  for (const line of await Promise.all(targets.map(brief))) console.log(line);
+  process.exit(0);
+}
 
 async function get(url) {
   const t0 = Date.now();
