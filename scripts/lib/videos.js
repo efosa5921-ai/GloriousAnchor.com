@@ -1,8 +1,10 @@
 /**
  * Drop YouTube videos that have gone away. Churches often stream a service, then make the recording private or
  * delete it; the feed entry lingers for days and YouTube serves a grey "no thumbnail" placeholder for it.
- * YouTube's oEmbed endpoint answers 401 for private and 404 for deleted videos (403 means embedding is off,
- * which is fine). Results are cached: fresh videos are re-checked every 12 hours for 3 days, since a stream is
+ * YouTube's oEmbed endpoint answers 404 for deleted videos and 401 both for private videos and for public ones
+ * whose channel has switched embedding off (RHEMA, for one). A 401 is therefore settled by the thumbnail: a
+ * private video has none (404), a public one has (200) and is kept, since cards link out to YouTube anyway.
+ * Results are cached: fresh videos are re-checked every 12 hours for 3 days, since a stream is
  * usually hidden soon after it ends; a video found missing stays out for 14 days.
  * The thumbnail is checked too: for a stream that has no picture yet (or any video without one) YouTube answers
  * 404 but still sends a small grey placeholder image, which browsers happily display. Such videos keep their
@@ -37,8 +39,12 @@ export async function dropGoneVideos(articles, cache, { fetchStatus, now = Date.
       const a = toCheck[i++];
       try {
         const status = await fetchStatus(OEMBED(a.videoId), 'GET');
-        const entry = { ok: !(status === 401 || status === 404), status, at: now };
-        if (entry.ok && a.image && YT_THUMB.test(a.image)) {
+        const entry = { ok: status !== 404, status, at: now };
+        const thumbUrl = a.image && YT_THUMB.test(a.image) ? a.image : `https://i.ytimg.com/vi/${a.videoId}/hqdefault.jpg`;
+        if (status === 401) {
+          // Private, or merely not embeddable? Only a public video has a real thumbnail.
+          try { entry.thumb = await fetchStatus(thumbUrl, 'HEAD'); entry.ok = entry.thumb === 200; } catch { /* unknown: keep it */ }
+        } else if (entry.ok && a.image && YT_THUMB.test(a.image)) {
           try { entry.thumb = await fetchStatus(a.image, 'HEAD'); } catch { /* unknown: keep the picture */ }
         }
         cache[a.videoId] = entry;
