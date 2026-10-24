@@ -18,7 +18,7 @@ const YT_THUMB = /^https?:\/\/i\d?\.ytimg\.com\//i;
 
 export function needsCheck(entry, article, now) {
   if (!entry) return true;
-  if (!entry.ok) return now - entry.at > GONE_MS;
+  if (!entry.ok) return (entry.status === 401 && entry.thumb === undefined) || now - entry.at > GONE_MS; // a 401 judged before the thumbnail test gets a second look
   if (entry.thumb === undefined && article.image && YT_THUMB.test(article.image)) return true; // thumbnail never checked
   const fresh = (article.publishedAt || 0) > now - FRESH_MS;
   return fresh ? now - entry.at > RECHECK_MS : now - entry.at > STALE_MS;

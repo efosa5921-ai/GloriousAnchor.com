@@ -38,6 +38,8 @@ test('needsCheck re-checks fresh videos every 12 hours and old ones rarely', () 
   assert.equal(needsCheck({ ok: true, at: now - 11 * H }, fresh, now), false);
   assert.equal(needsCheck({ ok: true, at: now - 13 * H }, old, now), false);
   assert.equal(needsCheck({ ok: false, at: now - 2 * 24 * H }, fresh, now), false);
+  assert.equal(needsCheck({ ok: false, status: 401, at: now - 2 * 24 * H }, fresh, now), true, 'an old 401 verdict without a thumbnail check is re-examined');
+  assert.equal(needsCheck({ ok: false, status: 401, thumb: 404, at: now - 2 * 24 * H }, fresh, now), false);
   assert.equal(needsCheck({ ok: false, at: now - 15 * 24 * H }, fresh, now), true);
 });
 
