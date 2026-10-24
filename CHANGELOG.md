@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 24 October 2026
 
+- **New article: [Jordan Church attack: Islamist gunmen kill eight Christians at a funeral in Karak](/articles/jordan-church-attack-karak-funeral/)**: what happened at St George's Church in Hmoud, who did it, Jordan's response, and how to pray.
 - **"From our writers" slider** leads Top Stories: every Glorious Anchor article in one slider, opening on a different article every two hours, with arrows, dots and swipe to flick through the rest. Pinned items and strong stories fill the slots beside it.
 - **Pins now expire.** A pinned article or pick leads Top Stories for three days, then takes its normal place by date, so the front page no longer holds on to an old story. The Liatu Samuel Dawa article and post are unpinned.
 - Videos from channels that switch off embedding (RHEMA, for one) no longer disappear from the site: they were being mistaken for private videos.
