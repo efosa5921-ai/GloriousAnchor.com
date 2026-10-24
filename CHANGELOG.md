@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 24 October 2026
 
+- **New article: [Prophet Isa El-Buba: the former Islamic occultist who says he saw hell](/articles/prophet-isa-el-buba-former-muslim-occultist-turned-prophet/)**, with his video testimony playing on the page. Articles can now carry an embedded video.
 - **New article: [Jordan Church attack: Islamist gunmen kill eight Christians at a funeral in Karak](/articles/jordan-church-attack-karak-funeral/)**: what happened at St George's Church in Hmoud, who did it, Jordan's response, and how to pray.
 - **"From our writers" slider** leads Top Stories: every Glorious Anchor article in one slider, opening on a different article every two hours, with arrows, dots and swipe to flick through the rest. Pinned items and strong stories fill the slots beside it.
 - **Pins now expire.** A pinned article or pick leads Top Stories for three days, then takes its normal place by date, so the front page no longer holds on to an old story. The Liatu Samuel Dawa article and post are unpinned.
