@@ -9,7 +9,7 @@
  *   author: The Glorious Anchor team
  *   summary: One or two sentences shown on the card.
  *   image: images/anchor-sunrise.jpg        (a file in articles/images/, or a full URL; optional)
- *   pinned: true                            (optional: lead the front page)
+ *   pinned: true                            (optional: lead the front page for three days; a date keeps it until then, "always" for good)
  *   categories: eschatology, pitn           (optional: tabs from feeds.json to show it in, besides Our Articles)
  *   keywords: seven spirits of God, Isaiah 11:2   (optional: search terms, carried into the article's structured data)
  *   searchTitle: How Did Noah Warn the World?   (optional: a shorter title for the browser tab, search results and previews; the
@@ -22,6 +22,7 @@
 import { marked } from 'marked';
 import { stripHtml, truncate, makeId } from './articles.js';
 import { articleJsonLd, metaTags, shareBarHtml } from './seo.js';
+import { pinActive } from './pins.js';
 
 export const OWN_SOURCE = { id: 'ours', name: 'Glorious Anchor', category: 'ours', kind: 'article', featured: true, homepage: '/articles/' };
 
@@ -59,7 +60,7 @@ function parseDate(meta, filename) {
 }
 
 /** Turn one Markdown file into a post object (or null for invalid files). Drafts come back with draft: true and a /drafts/ URL. */
-export function compilePost(filename, text, site) {
+export function compilePost(filename, text, site, now = Date.now()) {
   const { meta, body } = parseFrontMatter(text);
   const draft = meta.draft === true;
   const html = marked.parse(body, { gfm: true, breaks: false });
@@ -84,7 +85,7 @@ export function compilePost(filename, text, site) {
     ...(Number.isNaN(updatedAt) ? {} : { updatedAt }),
     author: stripHtml(meta.author || site.name),
     publishedAt,
-    pinned: meta.pinned === true,
+    pinned: pinActive(meta.pinned, publishedAt, now),
     readingMinutes: Math.max(1, Math.round(words / 220)),
     url: `${site.url.replace(/\/$/, '')}/${draft ? 'drafts' : 'articles'}/${slug}/`,
     path: `${draft ? 'drafts' : 'articles'}/${slug}/index.html`,

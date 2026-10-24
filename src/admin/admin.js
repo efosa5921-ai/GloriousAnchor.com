@@ -184,7 +184,7 @@
           h('label', {}, 'Date', h('input', { name: 'added', type: 'date', value: p.added || '' })))),
       pickCats.length ? h('fieldset', { class: 'cats' }, h('legend', {}, 'Also show in'),
         ...pickCats.map((c) => h('label', { class: 'check' }, h('input', { name: 'cat', type: 'checkbox', value: c.id, checked: chosen.has(c.id) }), c.label))) : null,
-      h('label', { class: 'check' }, h('input', { name: 'pinned', type: 'checkbox', checked: !!p.pinned }), 'Pin to the top of the front page'),
+      h('label', { class: 'check' }, h('input', { name: 'pinned', type: 'checkbox', checked: !!p.pinned }), 'Pin to the top of the front page (three days)'),
       h('div', { class: 'row' }, h('button', { class: 'btn', type: 'submit' }, existing ? 'Apply' : 'Add'), existing ? h('button', { class: 'btn btn--ghost', type: 'button', onclick: render }, 'Cancel') : null),
     );
     f.addEventListener('submit', (e) => {
@@ -323,7 +323,7 @@
       h('div', { class: 'row' }, field('Image', 'image', { placeholder: 'images/photo.jpg or https://…' }), h('button', { class: 'btn btn--ghost', type: 'button', onclick: () => imgInput.click() }, 'Upload image'), imgInput),
       (state.articleCats || []).length ? h('fieldset', { class: 'cats' }, h('legend', {}, 'Also show in'),
         ...state.articleCats.map((c) => h('label', { class: 'check' }, h('input', { name: 'cat', type: 'checkbox', value: c.id, checked: String(m.categories || '').split(/[,\s]+/).includes(c.id) }), c.label))) : null,
-      h('div', { class: 'row' }, h('label', { class: 'check' }, h('input', { name: 'pinned', type: 'checkbox', checked: m.pinned === true }), 'Pin to the top of the front page'), h('label', { class: 'check' }, h('input', { name: 'draft', type: 'checkbox', checked: m.draft === true }), 'Draft (not published)')),
+      h('div', { class: 'row' }, h('label', { class: 'check' }, h('input', { name: 'pinned', type: 'checkbox', checked: m.pinned === true }), 'Pin to the top of the front page (three days)'), h('label', { class: 'check' }, h('input', { name: 'draft', type: 'checkbox', checked: m.draft === true }), 'Draft (not published)')),
       h('div', { class: 'row row--between' }, h('span', { class: 'muted' }, 'Body'), h('button', { class: 'btn btn--ghost btn--small', type: 'button', onclick: () => { preview.hidden = !preview.hidden; if (!preview.hidden) preview.innerHTML = window.marked ? window.marked.parse(body.value) : '<p>Preview unavailable (offline).</p>'; } }, 'Preview')),
       body, preview,
       h('div', { class: 'savebar' }, h('button', { class: 'btn', type: 'submit' }, ed.isNew ? 'Publish' : 'Save'), h('span', { class: 'muted' }, ed.isNew ? 'Creates a new file in articles/' : `Editing ${ed.name}`)),

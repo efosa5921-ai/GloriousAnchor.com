@@ -5,7 +5,7 @@
     "Fields: url (required), title, summary, image, author, source, note, added (date), pinned (true/false), enabled (false hides it), media (\"video\" or \"audio\", for an X or Facebook post whose link does not say it is a video; the card then says Watch/Listen).",
     "Anything you type here overrides what was fetched. Instagram and Facebook block bots, so give those a title (and ideally an image).",
     "Optional \"categories\": a list of tab ids from feeds.json (e.g. [\"holyspirit\"]) to show the pick in those tabs as well as Picks.",
-    "Pinned picks lead Top Stories. Examples:",
+    "Pinned picks lead Top Stories for three days from \"added\"; \"pinned\": \"2026-10-30\" keeps one until that day, \"always\" for good. Examples:",
     "{ \"url\": \"https://www.example.com/some-article\", \"note\": \"Worth your time this week.\", \"pinned\": true }",
     "{ \"url\": \"https://x.com/someone/status/1234567890\" }",
     "{ \"url\": \"https://www.tiktok.com/@someone/video/1234567890\" }",
@@ -34,7 +34,6 @@
       "categories": [
         "news"
       ],
-      "pinned": true,
       "added": "2026-10-20",
       "image": "https://gloriousanchor.com/articles/images/liatu-samuel-dawa.jpg"
     },

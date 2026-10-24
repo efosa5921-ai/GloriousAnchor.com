@@ -5,6 +5,7 @@
  * always override what was fetched (needed for Instagram and Facebook, which block bots).
  */
 import { stripHtml, truncate, cleanUrl, makeId } from './articles.js';
+import { pinActive } from './pins.js';
 
 export const PICKS_SOURCE = { id: 'picks', name: 'Picks', category: 'picks', kind: 'pick', featured: true, homepage: null };
 export const PICKS_TTL_MS = 7 * 24 * 3600 * 1000;
@@ -142,7 +143,7 @@ export function needsManualFields(url) {
 }
 
 /** Turn a picks.json entry plus fetched data into an article object. */
-export function pickToArticle(pick, fetched, firstSeen) {
+export function pickToArticle(pick, fetched, firstSeen, now = Date.now()) {
   const url = cleanUrl(pick.url);
   if (!url) return null;
   const f = fetched || {};
@@ -172,6 +173,6 @@ export function pickToArticle(pick, fetched, firstSeen) {
     category: PICKS_SOURCE.category,
     ...(extraCats.length ? { categories: [PICKS_SOURCE.category, ...extraCats] } : {}),
     featured: true,
-    pinned: Boolean(pick.pinned),
+    pinned: pinActive(pick.pinned, publishedAt, now),
   };
 }

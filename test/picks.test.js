@@ -66,12 +66,14 @@ test('unfurl uses oEmbed when available and falls back to HTML', async () => {
 
 test('pickToArticle merges manual overrides over fetched data and handles dates', () => {
   const fetched = { title: 'Fetched', description: 'Fetched desc', image: 'https://i/f.jpg', author: 'F', siteName: 'Site', publishedAt: '2026-10-08T14:00:00Z' };
-  const a = pickToArticle({ url: 'https://site.org/p?utm_source=x', note: 'Read it', pinned: true }, fetched, 1000);
+  const a = pickToArticle({ url: 'https://site.org/p?utm_source=x', note: 'Read it', pinned: true }, fetched, 1000, Date.parse('2026-10-09T14:00:00Z'));
   assert.equal(a.url, 'https://site.org/p');
   assert.equal(a.title, 'Fetched');
   assert.equal(a.summary, 'Fetched desc');
   assert.equal(a.note, 'Read it');
   assert.equal(a.pinned, true);
+  assert.equal(pickToArticle({ url: 'https://site.org/p', pinned: true }, fetched, 1000, Date.parse('2026-10-20T00:00:00Z')).pinned, false, 'a pin expires after three days');
+  assert.equal(pickToArticle({ url: 'https://site.org/p', pinned: 'always' }, fetched, 1000, Date.parse('2027-10-20T00:00:00Z')).pinned, true);
   assert.equal(a.kind, 'pick');
   assert.equal(a.sourceId, 'picks');
   assert.equal(a.source, 'Site');

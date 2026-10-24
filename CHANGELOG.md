@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 24 October 2026
 
+- **Pins now expire.** A pinned article or pick leads Top Stories for three days, then takes its normal place by date, so the front page no longer holds on to an old story. The Liatu Samuel Dawa article and post are unpinned.
 - Videos from channels that switch off embedding (RHEMA, for one) no longer disappear from the site: they were being mistaken for private videos.
 - **Three more channels**: Living Faith Church Worldwide (Winners Chapel, starred), Apostle Arome Osayi (The Holy Spirit tab) and RHEMA with Kenneth E. Hagin (Teaching).
 

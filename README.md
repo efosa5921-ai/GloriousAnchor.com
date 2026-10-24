@@ -173,7 +173,7 @@ Write the article here in Markdown. **Bold**, *italic*, ## headings, lists, quot
 
 - `title` and `date` are the only required lines. The date part of the file name is used if `date` is missing.
 - `image` is a file you uploaded to `articles/images/`, or a full `https://` URL. Optional.
-- `pinned: true` makes the article lead the front page. `draft: true` keeps it out of the build until you remove it.
+- `pinned: true` makes the article lead the front page for three days from its date; `pinned: 2026-10-30` keeps it there until that day and `pinned: always` for good (`scripts/lib/pins.js`). `draft: true` keeps it out of the build until you remove it.
 - Edit a file to update the article; delete it to unpublish. The address comes from the file name after the date.
 
 ### What's new
@@ -207,7 +207,7 @@ preview data (Open Graph tags), or the public oEmbed endpoint for X, TikTok and 
 
 - Optional fields `title`, `summary`, `image`, `author`, `source`, `added` (date) override whatever was fetched.
 - **Instagram and Facebook** block automated previews, so give those posts a `title` (and ideally an `image`).
-- `note` shows as an editor's note on the card. `pinned: true` puts the pick at the top of Top Stories.
+- `note` shows as an editor's note on the card. `pinned: true` puts the pick at the top of Top Stories for three days from `added` (a date keeps it until then, `"always"` for good).
 - `categories` (a list of tab ids from `feeds.json`, e.g. `["holyspirit"]`) shows the pick in those tabs as well as Picks. Unknown ids are ignored with a warning. Own articles take the same field in their front matter (`categories: eschatology, pitn`).
 - Search readiness: every article is checked at build time (`seoWarnings` in `scripts/lib/posts.js`): title length as shown in search (a shorter `searchTitle` may stand in for a long heading), summary length, keywords, picture, word count and subheadings; shortfalls print as ⚠ lines in the build log. `keywords`, `searchTitle` and `updated` are optional front-matter fields.
 - An article with `draft: true` is not published, but the build renders it as an unlisted preview at `/drafts/<slug>/` (noindex, no share bar, a yellow banner, blocked in robots.txt, absent from cards, feeds and the sitemap) so the owner can read it on any device before it goes live.

@@ -71,3 +71,18 @@ test('searchTitle drives the tab and meta title while the heading keeps the full
   const w = seoWarnings(bare).join(' | ');
   assert.match(w, /under 65/); assert.match(w, /only 5 characters/); assert.match(w, /no keywords/); assert.match(w, /no picture/); assert.match(w, /words/);
 });
+
+test('a pin lasts three days unless given a date or "always"', async () => {
+  const { pinActive } = await import('../scripts/lib/pins.js');
+  const day = 24 * 3600 * 1000; const t0 = Date.parse('2026-10-21T00:00:00Z');
+  assert.equal(pinActive(true, t0, t0 + 2 * day), true);
+  assert.equal(pinActive(true, t0, t0 + 4 * day), false);
+  assert.equal(pinActive('2026-10-30', t0, t0 + 8 * day), true);
+  assert.equal(pinActive('2026-10-30', t0, Date.parse('2026-10-31T01:00:00Z')), false);
+  assert.equal(pinActive('always', t0, t0 + 400 * day), true);
+  assert.equal(pinActive(undefined, t0, t0), false);
+  const site = { name: 'GA', url: 'https://gloriousanchor.com' };
+  const fresh = compilePost('2026-10-21-a.md', '---\ntitle: A\npinned: true\n---\nBody', site, t0 + day);
+  const stale = compilePost('2026-10-21-a.md', '---\ntitle: A\npinned: true\n---\nBody', site, t0 + 10 * day);
+  assert.equal(fresh.pinned, true); assert.equal(stale.pinned, false);
+});
