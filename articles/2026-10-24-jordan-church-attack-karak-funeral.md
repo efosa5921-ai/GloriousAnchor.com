@@ -1,18 +1,20 @@
 ---
-title: Jordan church attack: gunmen kill eight at a funeral in Karak
-searchTitle: Jordan Church Attack: Gunmen Kill Eight at Karak Funeral
+title: Jordan Church attack: Islamist gunmen kill eight Christians at a funeral in Karak
+searchTitle: Jordan Church Attack: Islamist Gunmen Kill 8 Christians in Karak
 date: 2026-10-24
 author: The Glorious Anchor team
-summary: Gunmen fired on a Greek Orthodox funeral in Hmoud, Karak, on 23 October 2026, killing at least eight. What happened, who did it, Jordan's response, how to pray.
+summary: Islamist gunmen fired on Christians at a Greek Orthodox Church funeral in Karak, Jordan, on 23 October 2026, killing at least eight. What happened, and how to pray.
 image: https://pbs.twimg.com/amplify_video_thumb/2113677968706813952/img/5tnAmJKQqDM9fVQU.jpg
 categories: news, pitn
-keywords: Jordan church attack, Karak church shooting, Hmoud church attack, St George Greek Orthodox Church Karak, Christians in Jordan, church funeral shooting Jordan 2026, King Abdullah iron fist, Christian persecution Middle East, Hebrews 13:3, Matthew 24:9
+keywords: Jordan Church attack, Karak church shooting, Islamist attack on Christians Jordan, Hmoud church attack, St George Greek Orthodox Church Karak, Christians in Jordan, church funeral shooting Jordan 2026, King Abdullah iron fist, Christian persecution Middle East, Hebrews 13:3, Matthew 24:9
 draft: true
 ---
 
 > *The Lord is near to the brokenhearted and saves the crushed in spirit.* (Psalm 34:18)
 
-On Friday 23 October 2026, more than 150 people gathered at a Greek Orthodox church in the village of Hmoud, in Jordan's Karak governorate, to bury a member of their community. During the funeral, three gunmen drove up and opened fire on the mourners. At least eight people were killed and about forty were wounded. It is the deadliest attack on a church in Jordan's modern history, in a country where Christians and Muslims have lived side by side for centuries.
+On Friday 23 October 2026, more than 150 Christians gathered at a Greek Orthodox Church in the village of Hmoud, in Jordan's Karak governorate, to bury a member of their community. During the funeral, three gunmen drove up and opened fire on the mourners, shouting "Allahu Akbar" as they shot. At least eight Christians were killed and about forty people were wounded. Jordan's prime minister says the killers acted on extremist Islamist ideology, and a video appears to show them pledging allegiance to the Islamic State. It is the deadliest attack on a church in Jordan's modern history, in a country where Christians and Muslims have lived side by side for centuries.
+
+The facts matter here, so let us state them plainly: this was Muslim extremists killing Christians because they were Christians, at a church, at a funeral. It is also true that Muslim neighbours ran toward the gunfire to carry the wounded, that a Muslim mourner was among those shot, and that Jordan's Muslim king and the Grand Imam of Al-Azhar condemned the killers. Both truths belong in the record.
 
 Here is what has been established so far, drawn from CNN, the Associated Press, Al Jazeera and Jordan's own media, and how the church should respond.
 
@@ -36,13 +38,13 @@ The toll rose through the day. Jordan's authorities first reported six dead, the
 
 The names of the dead had not been released when this article was written. We will add them, with a request for prayer by name, as soon as they are confirmed.
 
-## Who carried out the attack
+## Who carried out the attack: Islamist extremists
 
-Nobody had been arrested and no group had claimed responsibility by the time of writing. Jordan's Public Security Directorate called it "a terrorist attack against Christians attending a funeral" by unidentified gunmen, and a manhunt was under way. The Interior Ministry blamed "a group of extremists".
+Nobody had been arrested and no group had formally claimed responsibility by the time of writing, but the identity of the killers is not in serious doubt. They shouted the Islamic cry "Allahu Akbar" as they fired on Christians at a church, and Jordan's own government describes them as Islamist extremists. Jordan's Public Security Directorate called it "a terrorist attack against Christians attending a funeral" by unidentified gunmen, and a manhunt was under way. The Interior Ministry blamed "a group of extremists".
 
 Prime Minister Jafar Hassan said: "What happened in Karak was the result of extremist terrorist ideology rooted in takfir," the practice of declaring other people infidels, "and we will not allow society to go down this path."
 
-A video circulating online appears to show the attackers declaring allegiance to the Islamic State group. It had not been verified and the group had not claimed the attack. Jordan has fought that movement before: in December 2016, Islamic State gunmen killed fourteen people in Karak, including police officers at the city's Crusader castle.
+A video circulating online appears to show the attackers declaring allegiance to the Islamic State group. The video had not been independently verified and the group had not formally claimed the attack, which is why this article says "Islamist extremists" rather than naming the group as fact. Jordan has fought that movement before: in December 2016, Islamic State gunmen killed fourteen people in Karak, including police officers at the city's Crusader castle.
 
 ## Jordan's response
 
@@ -84,7 +86,7 @@ Remember those who are mistreated, "since you also are in the body" (Hebrews 13:
 
 ### What happened at the church in Karak, Jordan?
 
-On 23 October 2026, three gunmen opened fire on a funeral at St George's Greek Orthodox Church in the village of Hmoud, Karak governorate, firing for several minutes at mourners in the church courtyard before fleeing. At least eight people were killed and about forty wounded.
+On 23 October 2026, three Islamist gunmen opened fire on a Christian funeral at St George's Greek Orthodox Church in the village of Hmoud, Karak governorate, firing for several minutes at mourners in the church courtyard before fleeing. At least eight people were killed and about forty wounded.
 
 ### Who was killed in the Jordan church attack?
 
@@ -92,7 +94,7 @@ The victims were Christian mourners, mostly aged between 50 and 70, attending th
 
 ### Who carried out the attack on the church in Jordan?
 
-Nobody had been arrested or claimed responsibility by 24 October. Jordan's prime minister blamed extremist, takfiri ideology, and an unverified video appears to show the attackers pledging allegiance to the Islamic State. A manhunt is under way.
+Islamist extremists. The three gunmen shouted "Allahu Akbar" as they fired on Christian mourners, Jordan's prime minister blamed extremist, takfiri ideology, and an unverified video appears to show the attackers pledging allegiance to the Islamic State. Nobody had been arrested and no group had formally claimed the attack by 24 October; a manhunt is under way.
 
 ### How did Jordan respond?
 
