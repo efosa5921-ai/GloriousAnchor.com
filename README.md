@@ -173,6 +173,7 @@ Write the article here in Markdown. **Bold**, *italic*, ## headings, lists, quot
 
 - `title` and `date` are the only required lines. The date part of the file name is used if `date` is missing.
 - `image` is a file you uploaded to `articles/images/`, or a full `https://` URL. Optional.
+- On Top Stories the lead slot is a **From our writers** slider of all own articles (`writersSlider` in `src/app.js`): the slide shown first is chosen by the current two-hour slot (`floor(now / 2h) mod n`), so the front page rotates through them between visits and the page advances by itself when the slot changes. Readers swipe or use the arrows and dots.
 - `pinned: true` makes the article lead the front page for three days from its date; `pinned: 2026-10-30` keeps it there until that day and `pinned: always` for good (`scripts/lib/pins.js`). `draft: true` keeps it out of the build until you remove it.
 - Edit a file to update the article; delete it to unpublish. The address comes from the file name after the date.
 

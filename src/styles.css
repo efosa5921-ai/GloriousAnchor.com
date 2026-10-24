@@ -111,7 +111,7 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 .select select { appearance: none; background: var(--surface); color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 7px 32px 7px 12px; font: inherit; font-size: .9rem; background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%); background-position: calc(100% - 16px) 55%, calc(100% - 11px) 55%; background-size: 5px 5px; background-repeat: no-repeat; max-width: 200px; }
 
 /* Hero */
-.hero { display: grid; gap: 16px; grid-template-columns: 1.6fr 1fr; margin-bottom: 20px; }
+.hero { display: grid; gap: 16px; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); margin-bottom: 20px; }
 .hero .card { margin: 0; }
 .hero .lead { grid-row: span 3; }
 .hero .lead .card__media { aspect-ratio: 16 / 9; }
@@ -122,6 +122,22 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 .hero .side .card__summary { display: none; }
 .hero .side .card__title { font-size: 1rem; }
 .hero .side .save { top: auto; bottom: 8px; }
+/* "From our writers" slider in the lead slot: one article per slide, scroll-snap, arrows and dots. */
+.slider { position: relative; display: flex; flex-direction: column; min-width: 0; max-width: 100%; }
+.slider__head { display: flex; justify-content: space-between; align-items: baseline; margin: 0 2px 8px; font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--gold); }
+.slider__count { color: var(--muted); font-weight: 600; letter-spacing: 0; text-transform: none; }
+.slider__track { display: flex; flex: 1; width: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
+.slider__track::-webkit-scrollbar { display: none; }
+.slider__slide { flex: 0 0 100%; min-width: 100%; scroll-snap-align: start; scroll-snap-stop: always; display: flex; }
+.slider__slide .card { width: 100%; }
+.slider__nav { position: absolute; top: 34%; width: 40px; height: 40px; border-radius: 999px; border: 0; background: rgba(0, 0, 0, .55); color: #fff; display: grid; place-items: center; cursor: pointer; opacity: .85; z-index: 2; }
+.slider__nav svg { width: 22px; height: 22px; }
+.slider__nav:hover, .slider__nav:focus-visible { opacity: 1; }
+.slider__nav--prev { left: 10px; } .slider__nav--next { right: 10px; }
+.slider__dots { display: flex; justify-content: center; gap: 8px; padding: 10px 0 2px; }
+.slider__dot { width: 9px; height: 9px; border-radius: 999px; border: 0; padding: 0; background: var(--line); cursor: pointer; }
+.slider__dot[aria-selected="true"] { background: var(--gold); transform: scale(1.25); }
+@media (prefers-reduced-motion: reduce) { .slider__track { scroll-behavior: auto; } }
 
 /* Cards */
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }

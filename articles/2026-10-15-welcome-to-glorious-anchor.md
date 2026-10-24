@@ -17,6 +17,8 @@ Glorious Anchor gathers it into one calm page, with a heart for the Spirit-fille
 
 ## What you will find
 
+Top Stories opens with **From our writers**, a slider of our own articles that turns to a different one every two hours; swipe or use the arrows to read the others.
+
 - **Top Stories** is a balanced mix of everything below, refreshed through the day, with no single publisher allowed to crowd out the rest.
 - **News** carries Christian news outlets from around the world.
 - **Faith & Culture** holds essays and commentary from magazines and journals.

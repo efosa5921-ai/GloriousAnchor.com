@@ -294,22 +294,55 @@
     btn.closest('.card').appendChild(menu); openMenu = menu; menu.querySelector('a').focus();
   }
 
+  // Which of our articles leads right now: the choice moves on every two hours, so the front page keeps rotating
+  // through them between visits, and the slider lets a reader flick through the rest.
+  const SLOT_MS = 2 * 3600 * 1000;
+  const slotIndex = (n) => Math.floor(Date.now() / SLOT_MS) % n;
+  function writersSlider(ours) {
+    const box = document.createElement('section'); box.className = 'slider lead'; box.setAttribute('aria-roledescription', 'carousel'); box.setAttribute('aria-label', 'From our writers');
+    const head = document.createElement('div'); head.className = 'slider__head';
+    head.innerHTML = '<span class="slider__label">From our writers</span><span class="slider__count"></span>';
+    const track = document.createElement('div'); track.className = 'slider__track';
+    ours.forEach((a, i) => { const slide = document.createElement('div'); slide.className = 'slider__slide'; slide.dataset.index = i; slide.setAttribute('role', 'group'); slide.setAttribute('aria-label', `${i + 1} of ${ours.length}`); slide.appendChild(card(a, 'lead')); track.appendChild(slide); });
+    const prev = document.createElement('button'); prev.type = 'button'; prev.className = 'slider__nav slider__nav--prev'; prev.setAttribute('aria-label', 'Previous article'); prev.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    const next = prev.cloneNode(true); next.className = 'slider__nav slider__nav--next'; next.setAttribute('aria-label', 'Next article'); next.querySelector('path').setAttribute('d', 'M9 6l6 6-6 6');
+    const dots = document.createElement('div'); dots.className = 'slider__dots'; dots.setAttribute('role', 'tablist');
+    ours.forEach((a, i) => { const d = document.createElement('button'); d.type = 'button'; d.className = 'slider__dot'; d.setAttribute('role', 'tab'); d.setAttribute('aria-label', a.title); d.addEventListener('click', () => go(i, true)); dots.appendChild(d); });
+    let current = slotIndex(ours.length), slot = Math.floor(Date.now() / SLOT_MS);
+    const paint = () => { [...dots.children].forEach((d, i) => d.setAttribute('aria-selected', String(i === current))); head.querySelector('.slider__count').textContent = `${current + 1} / ${ours.length}`; };
+    const go = (i, smooth) => { current = (i + ours.length) % ours.length; track.scrollTo({ left: current * track.clientWidth, behavior: smooth ? 'smooth' : 'instant' }); paint(); };
+    prev.addEventListener('click', () => go(current - 1, true)); next.addEventListener('click', () => go(current + 1, true));
+    let t; track.addEventListener('scroll', () => { clearTimeout(t); t = setTimeout(() => { const i = Math.round(track.scrollLeft / Math.max(1, track.clientWidth)); if (i !== current && i >= 0 && i < ours.length) { current = i; paint(); } }, 80); }, { passive: true });
+    box.append(head, track, prev, next, dots);
+    paint();
+    requestAnimationFrame(() => go(current, false));
+    const tick = setInterval(() => { if (!box.isConnected) return clearInterval(tick); const now = Math.floor(Date.now() / SLOT_MS); if (now !== slot) { slot = now; go(slotIndex(ours.length), true); } }, 60000);
+    return box;
+  }
+
   function renderList(list) {
     els.hero.innerHTML = ''; els.grid.innerHTML = '';
     els.grid.classList.toggle('grid--grouped', state.sort === 'source');
     const useHero = state.sort === 'newest' && !state.query && !state.showSaved && list.length >= HERO_COUNT;
     let rest = list;
     if (useHero) {
-      // Pinned items always lead; the remaining hero slots prefer stories with pictures.
-      const pinnedFirst = list.filter((a) => a.pinned);
-      const strong = list.filter((a) => !a.pinned && a.image && a.kind !== 'social');
-      const withImg = list.filter((a) => !a.pinned && a.image);
-      const rest0 = list.filter((a) => !a.pinned);
-      const pool = strong.length + pinnedFirst.length >= HERO_COUNT ? strong : withImg.length + pinnedFirst.length >= HERO_COUNT ? withImg : rest0;
-      const pick = [...pinnedFirst, ...pool].slice(0, HERO_COUNT);
+      // On Top Stories the lead slot is a slider of our own articles, opening on the one for the current two-hour
+      // slot. Elsewhere pinned items lead. The remaining hero slots prefer pinned items, then stories with pictures.
+      const ours = state.category === 'top' ? list.filter((a) => a.internal && !/\/articles\/whats-new\/$/.test(a.url || '')) : [];
+      const slider = ours.length >= 2;
+      const inSlider = new Set(slider ? ours.map((a) => a.id) : []);
+      const left = list.filter((a) => !inSlider.has(a.id));
+      const pinnedFirst = left.filter((a) => a.pinned);
+      const strong = left.filter((a) => !a.pinned && a.image && a.kind !== 'social');
+      const withImg = left.filter((a) => !a.pinned && a.image);
+      const rest0 = left.filter((a) => !a.pinned);
+      const slots = slider ? HERO_COUNT - 1 : HERO_COUNT;
+      const pool = strong.length + pinnedFirst.length >= slots ? strong : withImg.length + pinnedFirst.length >= slots ? withImg : rest0;
+      const pick = [...pinnedFirst, ...pool].slice(0, slots);
       const picked = new Set(pick.map((a) => a.id));
-      rest = list.filter((a) => !picked.has(a.id));
-      pick.forEach((a, i) => els.hero.appendChild(card(a, i === 0 ? 'lead' : 'side')));
+      rest = list.filter((a) => !picked.has(a.id) && !inSlider.has(a.id));
+      if (slider) els.hero.appendChild(writersSlider(ours));
+      pick.forEach((a, i) => els.hero.appendChild(card(a, !slider && i === 0 ? 'lead' : 'side')));
     }
     els.hero.hidden = !useHero;
 
