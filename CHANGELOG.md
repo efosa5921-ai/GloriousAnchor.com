@@ -4,6 +4,10 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 24 October 2026
+
+- **Three more channels**: Living Faith Church Worldwide (Winners Chapel, starred), Apostle Arome Osayi (The Holy Spirit tab) and RHEMA with Kenneth E. Hagin (Teaching).
+
 ## 23 October 2026
 
 - **The site now leans charismatic, Pentecostal and evangelistic.** 46 new sources: Pentecostal news (Faith News Network, RCCG) and persecution reporting (Morning Star News, International Christian Concern); Joyce Meyer teaching; YouTube channels from the Billy Graham Evangelistic Association, Christ For All Nations, Greg Laurie, Nick Vujicic, Living Waters, Joseph Prince, Joel Osteen, Transformation Church, Bethel Church, Bill Johnson, Jesus Image, David Diga Hernandez, Isaiah Saldivar, Vlad Savchuk, Koinonia Global, Dunamis TV, Jerry Eze (NSPPD), TBN, GOD TV and Charisma Media; and 19 podcasts on GAIN Radio including Joseph Prince, Jentezen Franklin, Joyce Meyer, Believer's Voice of Victory, T.D. Jakes, Steven Furtick, Apostle Joshua Selman, Bishop David Oyedepo, Priscilla Shirer and John Bevere. Catholic, Reformed and progressive sources are paused (they can be switched back on in the admin).

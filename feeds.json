@@ -1394,6 +1394,42 @@
       "_note": "Paused 23 Oct 2026: the subreddit is quiet (last post months ago), so it only added noise to feed-health."
     },
     {
+      "id": "yt-lfcww",
+      "name": "Living Faith Church Worldwide (Winners Chapel)",
+      "type": "youtube",
+      "channelId": "UCyUKtrMdDilf74SPkCCKKtw",
+      "homepage": "https://faithtabernacle.org.ng",
+      "category": "video",
+      "kind": "video",
+      "featured": true
+    },
+    {
+      "id": "yt-arome-osayi",
+      "name": "Apostle Arome Osayi",
+      "type": "youtube",
+      "channelId": "UCh6Sn6v_mdhwWTEpNvo5A4A",
+      "homepage": "https://www.youtube.com/@apostlearomeosayi",
+      "category": "holyspirit",
+      "kind": "video",
+      "categories": [
+        "holyspirit",
+        "video"
+      ]
+    },
+    {
+      "id": "yt-rhema-hagin",
+      "name": "RHEMA: Kenneth E. Hagin",
+      "type": "youtube",
+      "channelId": "UC4dPv_hU_nns85YldI7UiuA",
+      "homepage": "https://rhema.org",
+      "category": "teaching",
+      "kind": "video",
+      "categories": [
+        "teaching",
+        "video"
+      ]
+    },
+    {
       "id": "x-example",
       "name": "Example on X",
       "type": "rsshub",
