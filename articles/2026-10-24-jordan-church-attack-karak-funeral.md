@@ -3,7 +3,7 @@ title: Jordan Church attack: Islamist gunmen kill eight Christians at a funeral 
 searchTitle: Jordan Church Attack: Islamist Gunmen Kill 8 Christians in Karak
 date: 2026-10-24
 author: The Glorious Anchor team
-summary: Islamist gunmen fired on Christians at a Greek Orthodox Church funeral in Karak, Jordan, on 23 October 2026, killing at least eight. What happened, and how to pray.
+summary: Islamist gunmen fired on Christians at a Greek Orthodox Church funeral in Karak, Jordan, on 23 October 2026, killing eight. What happened, and how to pray.
 image: https://pbs.twimg.com/amplify_video_thumb/2113677968706813952/img/5tnAmJKQqDM9fVQU.jpg
 categories: news, pitn
 keywords: Jordan Church attack, Karak church shooting, Islamist attack on Christians Jordan, Hmoud church attack, St George Greek Orthodox Church Karak, Christians in Jordan, church funeral shooting Jordan 2026, King Abdullah iron fist, Christian persecution Middle East, Hebrews 13:3, Matthew 24:9
