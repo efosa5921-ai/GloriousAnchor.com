@@ -4,7 +4,7 @@ searchTitle: Dr Paul Enenche: The Doctor Who Left Medicine for Ministry
 date: 2026-10-25T12:30:00Z
 author: The Glorious Anchor team
 summary: How Dr Paul Enenche and his wife Dr Becky, both doctors, left medicine in 1996 to found Dunamis in Abuja: the Glory Dome, branches, YouTube and social handles.
-image: https://wordpress-817464-2806606.cloudwaysapps.com/wp-content/uploads/2018/09/Dr-and-Dr-Mrs.-Paul-and-Becky-Enenche.jpg
+image: images/paul-enenche.jpg
 categories: holyspirit, teaching
 keywords: Paul Enenche, Dr Paul Enenche biography, Paul Enenche medical doctor, Becky Enenche medical doctor, Dunamis International Gospel Centre, Glory Dome Abuja, Paul Enenche YouTube channel, Paul Enenche Instagram, Dunamis TV, Seeds of Destiny devotional, Enenche left medicine for ministry
 draft: true
@@ -16,7 +16,7 @@ In the last days of May 1996 a young doctor in Jos had three offers on his desk.
 
 Thirty years later, that church is Dunamis International Gospel Centre, and its home is the 100,000-seat Glory Dome on the airport road in Abuja. This is the story of how two doctors left medicine, and what they built.
 
-*Photo: Dr Paul and Dr Becky Enenche. Credit: Idoma Voice.*
+*Photo: Dr Paul Enenche preaching at Dunamis International Gospel Centre, Abuja.*
 
 ## A bus conductor's son from Benue
 
