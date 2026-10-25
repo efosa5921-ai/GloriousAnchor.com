@@ -3,7 +3,7 @@ title: Purpose and Ambition: a juxtaposition
 searchTitle: Purpose vs Ambition: What Is the Difference? (Efosa Adun)
 date: 2026-10-25
 author: Efosa Adun
-summary: Ambition is what you desire to become; purpose is what God created you to become. Efosa Adun on why purpose outgrows ambition, and the first step to finding it.
+summary: Ambition is what you desire to become; purpose is what God created you for. Efosa Adun on why purpose outgrows ambition, and the first step to finding it.
 image: images/purpose-and-ambition.jpg
 categories: teaching, articles
 keywords: purpose vs ambition, difference between purpose and ambition, God's purpose for my life, how to find your purpose, ambition in the Bible, purpose driven life, Adam in the garden purpose, leaving a job for ministry, Efosa Adun
