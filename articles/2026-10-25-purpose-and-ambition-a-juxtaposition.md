@@ -10,7 +10,7 @@ keywords: purpose vs ambition, difference between purpose and ambition, God's pu
 draft: true
 ---
 
-While ambition is what you desire and pursue to become, purpose is what God created you to become, and what He desires for your life.
+While ambition is what you desire and pursue to become, purpose is what God created you for, and what He desires for your life.
 
 No matter how great an ambition you have envisioned for yourself, it is dwarfed by God's purpose for your life.
 
