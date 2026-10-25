@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 25 October 2026
 
+- **Two new articles**: [Purpose and Ambition: a juxtaposition](/articles/purpose-and-ambition-a-juxtaposition/) by Efosa Adun, and [Dr Paul Enenche: the doctor who left medicine to build Dunamis](/articles/paul-enenche-doctor-who-left-medicine-for-ministry/), the story of two doctors who left medicine in 1996, with his YouTube and social handles.
 - **New article: [The Ark at Canaanland: the history, progress and opening date of Winners' Chapel's 109,000-seat church](/articles/the-ark-canaanland-winners-chapel/)**, with three videos and photographs of the building.
 - Every article now carries a closing "Questions this article answers" section, links to related sections, and tabs: the Noah, GAIN TV and welcome articles were brought up to the same standard as the newer ones. The Noah article gains a section on Noah's 120 years of warning (Genesis 6:3, 2 Peter 2:5, Matthew 24:38-39).
 

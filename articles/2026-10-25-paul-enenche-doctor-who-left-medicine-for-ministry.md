@@ -7,7 +7,6 @@ summary: How Dr Paul Enenche and his wife Dr Becky, both doctors, left medicine 
 image: images/paul-enenche.jpg
 categories: holyspirit, teaching
 keywords: Paul Enenche, Dr Paul Enenche biography, Paul Enenche medical doctor, Becky Enenche medical doctor, Dunamis International Gospel Centre, Glory Dome Abuja, Paul Enenche YouTube channel, Paul Enenche Instagram, Dunamis TV, Seeds of Destiny devotional, Enenche left medicine for ministry
-draft: true
 ---
 
 > *But what things were gain to me, those I counted loss for Christ.* (Philippians 3:7)

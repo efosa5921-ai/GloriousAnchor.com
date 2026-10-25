@@ -7,7 +7,6 @@ summary: Ambition is what you desire to become; purpose is what God created you 
 image: images/purpose-and-ambition.jpg
 categories: teaching, articles
 keywords: purpose vs ambition, difference between purpose and ambition, God's purpose for my life, how to find your purpose, ambition in the Bible, purpose driven life, Adam in the garden purpose, leaving a job for ministry, Efosa Adun
-draft: true
 ---
 
 While ambition is what you desire and pursue to become, purpose is what God created you for, and what He desires for your life.
