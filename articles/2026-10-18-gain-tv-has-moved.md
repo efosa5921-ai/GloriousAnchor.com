@@ -5,6 +5,8 @@ author: The Glorious Anchor team
 summary: The GAIN TV WhatsApp channel was closed. Here is where to find GAIN TV now, and how to keep getting new Christian videos every day.
 image: images/gain-tv-moved.jpg
 keywords: GAIN TV, GAIN TV WhatsApp channel, Christian video channel, Glorious Anchor WhatsApp channel, Christian videos daily, gaintv.app, GAIN Radio
+updated: 2026-10-25
+categories: video
 ---
 
 If you followed **GAIN TV on WhatsApp**, you may have noticed that the channel is gone. WhatsApp closed it, and we cannot post there or message its followers any more. Nothing else has changed: GAIN TV continues, with more than before.
@@ -25,5 +27,21 @@ If you followed **GAIN TV on WhatsApp**, you may have noticed that the channel i
 ## Please pass this on
 
 We have no way to reach the people who followed the old channel. If you were one of them, or you know someone who was, please forward this page or the picture above. Thank you for staying with us.
+
+The videos themselves are also on this site: open the [YouTube](/tv/) tab for the day's new videos, [The Holy Spirit](/holyspirit/) for Spirit-filled teaching, and [GAIN Radio](/radio/) for podcasts.
+
+## Questions this article answers
+
+### What happened to the GAIN TV WhatsApp channel?
+
+WhatsApp closed it. We cannot post there or contact its followers, so GAIN TV has moved to its own website and to new channels on WhatsApp, Telegram and X.
+
+### Where can I watch GAIN TV now?
+
+At [gaintv.app](https://gaintv.app), which lists new Christian videos every day with nothing to install, and on the [YouTube tab](/tv/) of Glorious Anchor. Add either to your phone's home screen to use it like an app.
+
+### How do I join the new Glorious Anchor WhatsApp channel?
+
+Tap [this link](https://whatsapp.com/channel/0029VbDsSvP2Jl86RiDqNe3d), or open WhatsApp, go to Updates and search for "Glorious Anchor". Telegram users can follow [t.me/gloriousanchor](https://t.me/gloriousanchor) instead.
 
 *We have this hope as an anchor for the soul, firm and secure.* (Hebrews 6:19)

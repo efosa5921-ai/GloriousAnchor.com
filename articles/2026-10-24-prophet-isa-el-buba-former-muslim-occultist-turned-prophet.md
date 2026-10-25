@@ -3,7 +3,7 @@ title: Prophet Isa El-Buba: the former Islamic occultist who says he saw hell
 searchTitle: Prophet Isa El-Buba: Former Muslim Occultist Turned Prophet
 date: 2026-10-24
 author: The Glorious Anchor team
-summary: Who is Prophet Isa El-Buba of EBOMI, Jos? His Muslim upbringing, the 1982 night he says he saw hell and met Jesus, and his video testimony (1 John 4:1, Acts 9).
+summary: Who is Prophet Isa El-Buba of EBOMI, Jos? His Muslim upbringing, the 1982 night he says he saw hell and met Jesus, and his video testimony (1 John 4:1).
 image: https://i.ytimg.com/vi/eC8hGK9irBs/sddefault.jpg
 categories: apologetics, holyspirit
 keywords: Prophet Isa El-Buba, Isa El-Buba testimony, Isa El-Buba former Muslim, El-Buba saw hell video, EBOMI Jos, Evangelical Bible Outreach Ministries International, Prophet on the Plateau, Muslim converts to Christianity Nigeria, Burning Hell film testimony, Acts 9 Saul conversion

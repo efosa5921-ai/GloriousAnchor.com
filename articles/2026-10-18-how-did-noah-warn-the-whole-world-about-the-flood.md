@@ -3,10 +3,11 @@ title: How did Noah inform people from Africa, Japan, Europe and America about t
 searchTitle: How Did Noah Warn the Whole World About the Flood?
 date: 2026-10-18
 author: Efosa Adun
-summary: In Noah's day the earth had one landmass, one language and far fewer people, so his warning could reach everyone. Genesis 10:25, Babel and Pangaea explained.
+summary: In Noah's day the earth had one landmass, one language and far fewer people, so his warning could reach everyone. Genesis 10:25, Babel and Pangaea.
 image: images/noah-one-landmass.jpg
 categories: apologetics
 keywords: how did Noah warn the world, Noah's flood, Pangaea and the Bible, days of Peleg earth divided, Genesis 10:25, Tower of Babel one language, Noah's Ark, Genesis 6
+updated: 2026-10-25
 pinned: true
 ---
 
@@ -29,6 +30,30 @@ Another factor that would have made communication easier in Noah's time is that 
 ## Far fewer people
 
 Finally, the population of the earth in Noah's day was far smaller than it is today. Fewer people, one landmass, and one language would have made it far easier for Noah's warning about the coming Flood to reach everyone.
+
+## A preacher of righteousness for 120 years
+
+Noah also had time. God announced that man's days would be "120 years" (Genesis 6:3), and Noah built the Ark in plain sight through those years. Peter calls him "a herald of righteousness" (2 Peter 2:5): the Ark itself was the sermon, and everyone within reach of one landmass and one language could hear it. Nobody who perished could say they had not been warned (Hebrews 11:7).
+
+That is why Jesus used Noah's day as a picture of his own return: "they were unaware until the flood came and swept them all away" (Matthew 24:38-39). The warning was clear; the problem was unbelief. For more on reading the signs of the times, see our [Prophecy in the News](/pitn/) section, and for more answers to hard questions, our [Apologetics](/apologetics/) section.
+
+## Questions this article answers
+
+### How could Noah warn people in Africa, Asia, Europe and America about the flood?
+
+In Noah's day the continents had not yet separated. Scripture says the earth was divided in the days of Peleg (Genesis 10:25), after the Flood, so Noah lived on one connected landmass, with one language and a far smaller population. His warning could reach everyone.
+
+### Does the Bible mention Pangaea?
+
+Not by name, but Genesis 1:9-10 describes the waters gathered into one place and the dry land appearing, which fits a single landmass, and Genesis 10:25 says the earth was divided later, in Peleg's time. The way South America and Africa fit together is consistent with that.
+
+### Did everyone speak one language in Noah's time?
+
+Yes. Genesis 11:1 says "the whole earth had one language and the same words" until the Tower of Babel, which came after the Flood. So Noah had no language barrier.
+
+### How long did Noah warn people?
+
+About 120 years (Genesis 6:3), while the Ark was being built. Peter calls Noah "a herald of righteousness" (2 Peter 2:5), and Jesus said the people of that day ignored the warning until the flood came (Matthew 24:38-39).
 
 ---
 

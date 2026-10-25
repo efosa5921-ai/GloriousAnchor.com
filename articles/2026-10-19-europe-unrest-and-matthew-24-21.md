@@ -59,7 +59,25 @@ Jesus follows that warning with a promise: "But the one who endures to the end w
 
 **Keep your hope where it cannot burn.** Town halls can be rebuilt and governments replaced. "We have this hope as an anchor for the soul, firm and secure" (Hebrews 6:19). Whatever Europe's autumn holds, the one who said "I have overcome the world" (John 16:33) has not changed his mind.
 
-Is this the great tribulation? Read in context, no. Is it a reason to pray, to serve and to lift up our heads? Jesus says yes.
+Is this the great tribulation? Read in context, no. Is it a reason to pray, to serve and to lift up our heads? Jesus says yes. For more current events read in the light of Scripture, follow our [Prophecy in the News](/pitn/) and [Eschatology](/eschatology/) sections.
+
+## Questions this article answers
+
+### Are the riots in France the great tribulation of Matthew 24:21?
+
+No. In Matthew 24 Jesus places the "great tribulation" after "the abomination of desolation" (verse 15) and describes it as worse than anything before or after. Riots over the cost of living, however serious, are what Jesus calls "the beginning of the birth pains" (verse 8), not the tribulation itself.
+
+### What is happening in France and Europe?
+
+Since mid-October 2026, protests over living costs and youth unemployment have turned violent in France, with clashes spreading to Italy, Albania and Belgium. Hundreds of thousands have marched, buildings have burned and police have made mass arrests.
+
+### What does Matthew 24 say about wars, riots and unrest?
+
+Jesus said there would be wars, rumours of wars, famines and earthquakes, and that "all these are but the beginning of the birth pains" (Matthew 24:6-8). He told his disciples not to be alarmed, to endure, and to keep preaching the gospel to all nations (verses 13-14).
+
+### How should Christians respond to riots?
+
+Pray for those in authority (1 Timothy 2:1-2), refuse violence (Romans 12:17-18), serve the people behind the headlines (Matthew 25:35-40), and keep hope anchored in Christ, who said "I have overcome the world" (John 16:33).
 
 ---
 

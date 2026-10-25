@@ -3,7 +3,7 @@ title: Liatu Samuel Dawa: Christian mother jailed 14 years in Borno for sharing 
 searchTitle: Liatu Samuel Dawa: Christian Mother Jailed 14 Years in Borno
 date: 2026-10-21
 author: The Glorious Anchor team
-summary: Liatu Samuel Dawa was jailed 14 years in Borno after a Muslim woman she spoke to chose Christ. The charge, her plea, Section 38 and how to pray (Hebrews 13:3).
+summary: Liatu Samuel Dawa was jailed 14 years in Borno after a Muslim woman she spoke to chose Christ. The charge, her plea, Section 38, how to pray (Hebrews 13:3).
 image: images/liatu-samuel-dawa.jpg
 categories: news, apologetics
 keywords: Liatu Samuel Dawa, Liyatu Samuel Dawa, Christian mother jailed Borno, 14 years prison evangelism Nigeria, Section 210 Borno Penal Code, Section 38 Nigerian Constitution freedom of religion, Christian persecution Nigeria 2026, Evangelist Amos Suleman, Hebrews 13:3 remember those in prison, Matthew 5:10

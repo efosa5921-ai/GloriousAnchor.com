@@ -5,7 +5,7 @@ author: The Glorious Anchor team
 summary: One calm page for Christian news, teaching, video, podcasts and prophecy, a church finder near you, a daily digest and a Bible quiz. Here is how it works.
 image: https://gloriousanchor.com/assets/social.jpg
 keywords: Christian news aggregator, Christian news app, Christian teaching online, Christian podcasts, Bible quiz, find a church near me, Glorious Anchor, GAIN TV, GAIN Radio, Pentecostal news, charismatic Christian news, evangelistic ministries
-updated: 2026-10-23
+updated: 2026-10-25
 pinned: true
 ---
 
@@ -69,5 +69,23 @@ Open the site in your phone's browser and choose *Add to Home Screen* (Safari) o
 ## A note on sources
 
 The publishers, ministries, channels and podcasts we draw from lean charismatic, Pentecostal and evangelistic, alongside the main Christian news outlets. We link, we do not copy. Headlines, summaries and images belong to the people who made them, and we show only what they publish in their own public feeds, with a link back to the source. The site sets no tracking cookies and shows no advertising. If you publish something you think belongs here, or would rather not be included, write to [info@gloriousanchor.com](mailto:info@gloriousanchor.com). We would love to hear from you.
+
+## Questions this article answers
+
+### What is Glorious Anchor?
+
+Glorious Anchor is a free Christian news and media site that gathers news, teaching, articles, sermons, worship, podcasts and social posts from charismatic, Pentecostal and evangelistic ministries and the main Christian news outlets into one fast page, with a church finder, a daily digest and a Bible quiz.
+
+### What are GAIN TV and GAIN Radio?
+
+GAIN TV ([gaintv.app](https://gaintv.app)) is the video side of the network, with new Christian videos every day, and GAIN Radio ([gainradio.app](https://gainradio.app)) is the audio side, with podcasts and broadcasts that play on the page. Both are part of the Glorious Anchor International Network.
+
+### Is Glorious Anchor free, and does it track me?
+
+Yes, it is free, and no, it sets no tracking cookies and shows no advertising. You can follow sources, save stories and use My Feed without an account.
+
+### How do I get Glorious Anchor on my phone?
+
+Open gloriousanchor.com in your browser and choose "Add to Home Screen". It then opens like an app. You can also follow the WhatsApp channel, Telegram channel or the daily email digest.
 
 Thank you for reading. Stay anchored.
