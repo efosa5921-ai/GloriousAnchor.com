@@ -4,6 +4,10 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 26 October 2026
+
+- **The "From our writers" slider now opens on the newest article** for its first day, then turns every two hours through the articles of the last 30 days, newest first. Older articles leave the slider and stay under Our Articles.
+
 ## 25 October 2026
 
 - **Two new articles**: [Purpose and Ambition: a juxtaposition](/articles/purpose-and-ambition-a-juxtaposition/) by Efosa Adun, and [Dr Paul Enenche: the doctor who left medicine to build Dunamis](/articles/paul-enenche-doctor-who-left-medicine-for-ministry/), the story of two doctors who left medicine in 1996, with his YouTube and social handles.
