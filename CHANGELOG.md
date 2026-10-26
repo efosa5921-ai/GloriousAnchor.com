@@ -6,7 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 26 October 2026
 
-- **The "From our writers" slider now opens on the newest article** for its first day, then turns every two hours through the articles of the last 30 days, newest first. Older articles leave the slider and stay under Our Articles.
+- **The "From our writers" slider now always opens on the newest article**, with the rest of the last 30 days' articles behind it, newest first; a page left open moves on one slide every two hours. Older articles leave the slider and stay under Our Articles.
 
 ## 25 October 2026
 

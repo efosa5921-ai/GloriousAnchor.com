@@ -297,14 +297,9 @@
   // Which of our articles leads right now: the choice moves on every two hours, so the front page keeps rotating
   // through them between visits, and the slider lets a reader flick through the rest.
   const SLOT_MS = 2 * 3600 * 1000, DAY_MS = 24 * 3600 * 1000;
-  const SLIDER_DAYS = 30, SLIDER_MAX = 8, LEAD_HOURS = 24;
-  // Slides are newest first. A newly published article leads for its first day; after that the opening slide moves
-  // on every two hours through the recent ones. Articles older than SLIDER_DAYS leave the slider (they stay in Our Articles).
-  const slotIndex = (ours) => {
-    const n = ours.length, newest = ours[0]?.publishedAt || 0;
-    if (Date.now() - newest < LEAD_HOURS * 3600 * 1000) return 0;
-    return Math.floor(Date.now() / SLOT_MS) % n;
-  };
+  const SLIDER_DAYS = 30, SLIDER_MAX = 8;
+  // Slides are newest first and the slider always opens on the newest article. While the page stays open it moves
+  // on one slide every two hours. Articles older than SLIDER_DAYS leave the slider (they stay in Our Articles).
   function writersSlider(ours) {
     const box = document.createElement('section'); box.className = 'slider lead'; box.setAttribute('aria-roledescription', 'carousel'); box.setAttribute('aria-label', 'From our writers');
     const head = document.createElement('div'); head.className = 'slider__head';
@@ -315,7 +310,7 @@
     const next = prev.cloneNode(true); next.className = 'slider__nav slider__nav--next'; next.setAttribute('aria-label', 'Next article'); next.querySelector('path').setAttribute('d', 'M9 6l6 6-6 6');
     const dots = document.createElement('div'); dots.className = 'slider__dots'; dots.setAttribute('role', 'tablist');
     ours.forEach((a, i) => { const d = document.createElement('button'); d.type = 'button'; d.className = 'slider__dot'; d.setAttribute('role', 'tab'); d.setAttribute('aria-label', a.title); d.addEventListener('click', () => go(i, true)); dots.appendChild(d); });
-    let current = slotIndex(ours), slot = Math.floor(Date.now() / SLOT_MS);
+    let current = 0, slot = Math.floor(Date.now() / SLOT_MS);
     const paint = () => { [...dots.children].forEach((d, i) => d.setAttribute('aria-selected', String(i === current))); head.querySelector('.slider__count').textContent = `${current + 1} / ${ours.length}`; };
     const go = (i, smooth) => { current = (i + ours.length) % ours.length; track.scrollTo({ left: current * track.clientWidth, behavior: smooth ? 'smooth' : 'instant' }); paint(); };
     prev.addEventListener('click', () => go(current - 1, true)); next.addEventListener('click', () => go(current + 1, true));
@@ -323,7 +318,7 @@
     box.append(head, track, prev, next, dots);
     paint();
     requestAnimationFrame(() => go(current, false));
-    const tick = setInterval(() => { if (!box.isConnected) return clearInterval(tick); const now = Math.floor(Date.now() / SLOT_MS); if (now !== slot) { slot = now; go(slotIndex(ours), true); } }, 60000);
+    const tick = setInterval(() => { if (!box.isConnected) return clearInterval(tick); const now = Math.floor(Date.now() / SLOT_MS); if (now !== slot) { slot = now; go(current + 1, true); } }, 60000);
     return box;
   }
 
