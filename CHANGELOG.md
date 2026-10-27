@@ -4,6 +4,10 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 27 October 2026
+
+- **New article: [Ethiopia church attacks: 60 Orthodox Christians killed in Oromia in one week, and Western leaders say nothing](/articles/ethiopia-oromia-attacks-orthodox-christians-killed/)**: the Merti and Shirka attacks, the Holy Synod's statement, who is blamed, and how to pray.
+
 ## 26 October 2026
 
 - **The "From our writers" slider now always opens on the newest article**, with the rest of the last 30 days' articles behind it, newest first; a page left open moves on one slide every two hours. Older articles leave the slider and stay under Our Articles.
