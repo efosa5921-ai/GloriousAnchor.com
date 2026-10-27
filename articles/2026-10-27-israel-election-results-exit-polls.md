@@ -7,7 +7,6 @@ summary: Israel's 27 October 2026 election by the exit polls: Likud largest, Net
 image: https://www.israelhayom.com/wp-content/uploads/2026/10/Benjamin-Netanyahu-and-Gadi-Eisenkot.jpg
 categories: news, pitn
 keywords: Israel election results 2026, Israel election exit polls, Knesset election October 2026, Netanyahu election results, Gadi Eisenkot Yashar, Israel election who won, Israel coalition 61 seats, Arab parties Knesset seats, pray for the peace of Jerusalem, Israel election prophecy
-draft: true
 ---
 
 > *Pray for the peace of Jerusalem: "May they be secure who love you!"* (Psalm 122:6)
