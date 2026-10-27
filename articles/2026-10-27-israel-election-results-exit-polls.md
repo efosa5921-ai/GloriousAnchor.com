@@ -3,7 +3,7 @@ title: Israel election results so far: exit polls show a deadlock, Likud largest
 searchTitle: Israel Election Results 2026: Exit Polls Show Deadlock
 date: 2026-10-27T22:30:00Z
 author: The Glorious Anchor team
-summary: Israel's 27 October 2026 election by the exit polls: Likud largest, Netanyahu's bloc 50 seats, Eisenkot's 52 to 53, Arab parties a record 17 to 18. What comes next.
+summary: Israel's 27 October 2026 election by the exit polls: Likud largest, Netanyahu's bloc 50 seats, Eisenkot's 52 to 53, Arab parties a record 17 to 18.
 image: https://www.israelhayom.com/wp-content/uploads/2026/10/Benjamin-Netanyahu-and-Gadi-Eisenkot.jpg
 categories: news, pitn
 keywords: Israel election results 2026, Israel election exit polls, Knesset election October 2026, Netanyahu election results, Gadi Eisenkot Yashar, Israel election who won, Israel coalition 61 seats, Arab parties Knesset seats, pray for the peace of Jerusalem, Israel election prophecy
