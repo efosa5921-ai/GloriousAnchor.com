@@ -419,6 +419,9 @@ mark { background: var(--gold-soft); color: inherit; border-radius: 2px; padding
 .article__body { font-size: 1.12rem; line-height: 1.7; }
 .article__body h2, .article__body h3 { font-family: var(--serif); line-height: 1.25; margin: 1.6em 0 .5em; }
 .article__body p { margin: 0 0 1.1em; }
+.article__body table { width: 100%; border-collapse: collapse; margin: 0 0 1.2em; font-size: .95rem; display: block; overflow-x: auto; }
+.article__body th, .article__body td { padding: 6px 10px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
+.article__body th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; }
 .article__body .video { position: relative; aspect-ratio: 16 / 9; margin: 0 0 1.1em; border-radius: var(--radius); overflow: hidden; background: #000; }
 .article__body .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .article__body img { border-radius: 8px; margin: 1em 0; }
