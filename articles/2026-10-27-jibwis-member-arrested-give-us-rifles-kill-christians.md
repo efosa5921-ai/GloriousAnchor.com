@@ -7,7 +7,6 @@ summary: A 22-year-old in JIBWIS uniform was filmed chanting for AK-47s to kill 
 image: https://pbs.twimg.com/amplify_video_thumb/2115096460467335168/img/QgCfcvA0SZfPLGiA.jpg
 categories: news, pitn
 keywords: JIBWIS member arrested, give us rifles to kill Christians video, Zamfara police arrest viral video, Umar Ibrahim Gandi Maradun, Izala video threatening Christians, Enugu Jos Christians threat, CAN Daniel Okoh statement, Sheikh Bala Lau JIBWIS, Christian persecution Nigeria 2026, Matthew 5:44
-draft: true
 ---
 
 > *Bless those who persecute you; bless and do not curse them.* (Romans 12:14)

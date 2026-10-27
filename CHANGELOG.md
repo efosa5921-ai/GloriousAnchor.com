@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 27 October 2026
 
+- **New article: ["Give us rifles to go and kill Christians": Zamfara police arrest JIBWIS member after viral video threatening Enugu and Jos](/articles/jibwis-member-arrested-give-us-rifles-kill-christians/)**: the video, the arrest, JIBWIS's disavowal and CAN's demands.
 - **New article: [Ethiopia church attacks: 60 Orthodox Christians killed in Oromia in one week, and Western leaders say nothing](/articles/ethiopia-oromia-attacks-orthodox-christians-killed/)**: the Merti and Shirka attacks, the Holy Synod's statement, who is blamed, and how to pray.
 
 ## 26 October 2026
