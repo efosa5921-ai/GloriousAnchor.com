@@ -7,7 +7,6 @@ summary: Suspected AI-generated faces in INEC's online voters' register in Edo: 
 image: https://i.ytimg.com/vi/Dcf08bEdkPc/maxresdefault.jpg
 categories: news
 keywords: INEC AI generated photos, INEC voters register AI images, Edo voter register Etsako West, INEC preliminary register online, display.inecnigeria.org, INEC claims and objections 2026, Pat Utomi INEC, 2027 Nigeria election voter register, Mohammed Kudu Haruna INEC statement, Proverbs 11:1 false balance
-draft: true
 ---
 
 > *A false balance is an abomination to the LORD, but a just weight is his delight.* (Proverbs 11:1)
