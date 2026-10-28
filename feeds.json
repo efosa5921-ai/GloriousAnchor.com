@@ -1048,6 +1048,19 @@
       ]
     },
     {
+      "id": "yt-godlogic",
+      "name": "GodLogic Apologetics",
+      "type": "youtube",
+      "handle": "@GodLogicApologetics",
+      "channelId": "UCfTJJ9hIy6Us3JVJV_4eKzg",
+      "category": "apologetics",
+      "kind": "video",
+      "categories": [
+        "apologetics",
+        "video"
+      ]
+    },
+    {
       "id": "yt-joseph-prince",
       "name": "Joseph Prince",
       "type": "youtube",
