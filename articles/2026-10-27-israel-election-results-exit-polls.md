@@ -3,17 +3,20 @@ title: Israel election results so far: exit polls show a deadlock, Likud largest
 searchTitle: Israel Election Results 2026: Exit Polls Show Deadlock
 date: 2026-10-27T22:30:00Z
 author: The Glorious Anchor team
-summary: Israel's 27 October 2026 election by the exit polls: Likud largest, Netanyahu's bloc 50 seats, Eisenkot's 52 to 53, Arab parties a record 17 to 18.
+summary: Israel's 27 October 2026 election: first exit polls put Eisenkot's bloc ahead, revised ones tilt to Netanyahu, nobody near 61. The count, the claims, what next.
 image: https://www.israelhayom.com/wp-content/uploads/2026/10/Benjamin-Netanyahu-and-Gadi-Eisenkot.jpg
 categories: news, pitn
 keywords: Israel election results 2026, Israel election exit polls, Knesset election October 2026, Netanyahu election results, Gadi Eisenkot Yashar, Israel election who won, Israel coalition 61 seats, Arab parties Knesset seats, pray for the peace of Jerusalem, Israel election prophecy
+updated: 2026-10-28
 ---
 
 > *Pray for the peace of Jerusalem: "May they be secure who love you!"* (Psalm 122:6)
 
 Israelis voted on Tuesday 27 October 2026 in their first general election since the Hamas attack of 7 October 2023, and in record numbers. When the polls closed at ten in the evening the television networks' exit polls agreed on one thing: nobody has won. Benjamin Netanyahu's Likud is the largest party, his bloc is short of a majority, and the bloc led by former army chief Gadi Eisenkot is a little ahead but short too. The Arab parties, with a record 17 or 18 seats between them, hold the balance that neither side wants to depend on.
 
-This article sets out the results as they stood on Tuesday night, what happens next, and how Christians might pray. We will update it as the real count replaces the exit polls; the official result is due on 4 November.
+This article sets out the results as they stood on Tuesday night, what happens next, and how Christians might pray. We will keep updating it as the real count replaces the exit polls; the official result is due on 4 November.
+
+**Update, Wednesday 28 October.** The picture shifted overnight. As the networks refined their samples, Channel 12 revised its figures to give Netanyahu's bloc 52 seats and Eisenkot's 49, with the Arab parties on 19; Channel 13 trimmed Eisenkot's bloc to 51; i24NEWS's own poll gave Netanyahu 55 to 49; and Channel 14, still the outlier, moved to a one-seat majority of 61 for Netanyahu on the assumption that Yisrael Beytenu falls below the threshold. The Central Elections Committee finished its first 100,000 ballots at 2.30 in the morning with Likud on 27 per cent, Yashar on 17 and Together on 9, figures it warned mean little this early. Turnout closed at 77.7 per cent, the highest since 1999. Soldiers' ballots will not be fully counted before Thursday. The details are below.
 
 *Photo: Benjamin Netanyahu and Gadi Eisenkot. Credit: Israel Hayom.*
 
@@ -44,17 +47,27 @@ The blocs, as the networks drew them:
 
 Several small lists, including the Reservists party of Ofer Winter and Yaron Zelekha's Economic party, fell below the 3.25 per cent threshold on every poll, so their votes count for nothing and the final seat shares will shift once the real ballots are in. Exit polls in Israel have been wrong by several seats before.
 
+## The revised polls and the first count
+
+Exit polls in Israel are taken until a couple of hours before the polls close, and the networks revise them as late samples come in. On Tuesday night the revisions ran one way. Channel 12 went from 50 for Netanyahu's bloc and 52 for Eisenkot's to 52 and 49, with the Joint List and Ra'am together on 19. Channel 13 moved the Arab parties up to 18 and Eisenkot's bloc down to 51. i24NEWS's own poll had Likud 27, Yashar 20, Together 15, Shas 8, the Democrats, Joint List and Ra'am on 9, 9 and 7, United Torah Judaism and Otzma Yehudit 7 each, Religious Zionism 6 and Yisrael Beytenu 5, for blocs of 55 to 49 with the Arab parties on 16. Channel 14's late update gave Netanyahu 61, a majority of one, but only by assuming Avigdor Liberman's party misses the 3.25 per cent threshold and its votes are redistributed.
+
+Then the real count began. At 2.30 am the Central Elections Committee said it had counted its first 100,000 ballots: 27 per cent for Likud, 17 per cent for Yashar, 9 per cent for Together. Those are a fraction of the vote and the committee said so. The hundreds of thousands of soldiers' and absentee ballots, which have moved seats in past elections, will not be fully counted before Thursday.
+
 ## A record turnout
 
-By eight in the evening turnout stood at 74.3 per cent, against 66.3 per cent at the same hour last time, and the Central Elections Committee said it was the highest in decades. Among Israelis voting at embassies abroad, turnout was 86 per cent. Whatever else the night showed, Israelis wanted to be heard.
+By eight in the evening turnout stood at 74.3 per cent, against 66.3 per cent at the same hour last time, and at the close it was 77.7 per cent, the highest since 1999 and within a point of the all-time record of 1973. Turnout in Arab towns was among the highest in the country. Among Israelis voting at embassies abroad it was 86 per cent. Whatever else the night showed, Israelis wanted to be heard.
 
 ## What the two leaders said
 
-Gadi Eisenkot, the former chief of staff who entered politics after losing a son in Gaza, said the early numbers showed how little confidence the public had left in Netanyahu and "the October 7 government", and that if the results held he would move at once to replace it. Netanyahu had not spoken by the time of writing. His allies pointed out that Likud had, on every poll, beaten Yashar as the largest party, which gives him the first claim on the president's attention.
+Gadi Eisenkot, the former chief of staff who entered politics after losing a son in Gaza, wrote on X: "If these are the final results, this is a victory for Israel's responsible Zionist majority," and promised a government "committed to universal conscription as soon as possible." Naftali Bennett told his supporters after midnight: "The alliance of those who serve has defeated the alliance of draft dodgers. Netanyahu has lost, and the October 7 government is going home." Yair Lapid said "the State of Israel saved itself today" and that the opposition, as the side with more votes, had the duty to form a government, "not perfect on day one" and perhaps not broad, but one it would expand. Those claims rest on the first wave of polls; the revised ones are less kind to them.
+
+Netanyahu had made no statement by the early hours. Before the polls closed he had posted a video calling the high turnout in Arab towns part of an effort to "steal" the election, and his allies pointed out that Likud had beaten Yashar as the largest party on every poll, which gives him the first claim on the president's attention. Gideon Sa'ar mocked the "smugness" of commentators who had written the coalition off.
+
+The man both sides were calling was Mansour Abbas of Ra'am. "Everyone is speaking with us, not just from the change bloc," he told Channel 12, adding that "with the numbers we have now, there is no government." Yair Golan of the Democrats said he would not sit with Likud under Netanyahu or with the haredi parties, but did not rule out a coalition with the Arab parties.
 
 ## What happens next
 
-The Central Elections Committee counts through the night and the following days; soldiers' and absentee ballots come last and have swung seats before. The official results are confirmed on 4 November. President Isaac Herzog then consults every party that won seats and asks the member of Knesset most likely to assemble 61 to try, with 28 days to do it and a possible 14-day extension before the task passes to someone else, or the country votes again.
+The Central Elections Committee counts through the night and the following days; soldiers' and absentee ballots come last, are not expected to be fully counted before Thursday, and have swung seats before. The official results are confirmed on 4 November. President Isaac Herzog then consults every party that won seats and asks the member of Knesset most likely to assemble 61 to try, with 28 days to do it and a possible 14-day extension before the task passes to someone else, or the country votes again.
 
 The arithmetic is unforgiving. Netanyahu's bloc of Likud, Shas, United Torah Judaism, Religious Zionism and Otzma Yehudit is at 50 on the mainstream polls. Eisenkot's bloc of Yashar, Together, the Democrats and Yisrael Beytenu is at 52 or 53, and its leaders have ruled out governing with the Joint List, though Ra'am's Mansour Abbas has said he is willing to repeat his 2021 partnership, and the Joint List has offered a "safety net" from outside a coalition in return for commitments on crime and Palestinian statehood. The other roads are a unity government, a rotating premiership, a different prime minister from one of the camps, or a sixth election in seven years, during which Netanyahu would stay on as caretaker.
 
@@ -74,7 +87,7 @@ For more current events read in the light of Scripture, see our [Prophecy in the
 
 ### Who won the Israel election on 27 October 2026?
 
-Nobody yet. Exit polls from Channels 12 and 13 put the opposition bloc led by Gadi Eisenkot at 52 to 53 seats and Benjamin Netanyahu's bloc at 50, both short of the 61 needed. Channel 14 gave Netanyahu's bloc 60. Likud was the largest party on every poll. The official count is due on 4 November.
+Nobody yet. The first exit polls put Gadi Eisenkot's bloc at 52 to 53 seats and Benjamin Netanyahu's at 50; the networks' revised polls later in the night tilted the other way, with Channel 12 giving Netanyahu 52 to 49 and i24NEWS 55 to 49, while Channel 14 gave him a one-seat majority. Likud was the largest party on every poll. The count continues and the official result is due on 4 November.
 
 ### How many seats did Likud and Yashar win?
 
@@ -82,7 +95,7 @@ By the exit polls, Likud took 24 to 30 seats and Eisenkot's Yashar 19 to 23, dep
 
 ### How many seats did the Arab parties win?
 
-A record 17 to 18 between the Joint List (10 or 11) and Ra'am (7). Neither main bloc can reach 61 without them or without a unity deal, and the opposition's leaders have ruled out governing with the Joint List.
+A record 16 to 19 between the Joint List (9 to 11) and Ra'am (7), depending on the poll. Neither main bloc can reach 61 without them or without a unity deal, and the opposition's leaders have ruled out governing with the Joint List.
 
 ### What happens after the Israeli election?
 
@@ -96,4 +109,4 @@ It was the first since 7 October 2023 and the war that followed, and a verdict o
 
 Pray for all in authority (1 Timothy 2:1-2) and for the peace of Jerusalem (Psalm 122:6): for whoever forms the government, for the bereaved and the hostages' families, for Arab and Jewish believers in Israel, and with confidence that God's purposes for Israel do not depend on the outcome (Romans 11:29).
 
-*Sources: exit polls as reported by Israel National News, Ynetnews, The Jerusalem Post and Israel Hayom on 27 October 2026; NBC News, CNN and Axios; Al Jazeera's pre-election guide to the possible outcomes (25 October); the Central Elections Committee's turnout figures. Exit polls are projections; this article will be updated as the count is published.*
+*Sources: exit polls and their revisions as reported by Israel National News, Ynetnews, The Jerusalem Post, Israel Hayom, i24NEWS and The Jewish Chronicle's live coverage on 27 and 28 October 2026; NBC News, CNN, NPR and Axios; Al Jazeera's pre-election guide to the possible outcomes (25 October); the Central Elections Committee's turnout and first-count figures. Exit polls are projections; this article is updated as the count is published.*
