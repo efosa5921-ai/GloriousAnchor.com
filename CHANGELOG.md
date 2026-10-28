@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 28 October 2026
 
+- **Updated: [Israel election results](/articles/israel-election-results-exit-polls/)** now carries the counted results (Netanyahu's bloc 54, Eisenkot's 48, Arab parties 18 with two thirds counted), a count-versus-exit-poll table, the leaders' statements and the timetable to Friday's final tally.
 - **New article: [The Pentagon's "doomsday plan": what FORTRESS America and the 90-day rule really say, and how a Christian should read it](/articles/pentagon-fortress-america-90-day-doomsday-plan/)**: what is confirmed, what is hype, Britain's "Be Ready" campaign, and Matthew 24:6.
 
 ## 27 October 2026
