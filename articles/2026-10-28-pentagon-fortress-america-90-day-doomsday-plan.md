@@ -7,7 +7,6 @@ summary: The Pentagon's FORTRESS plan and the reported 90-day rule for bases: wh
 image: https://pbs.twimg.com/amplify_video_thumb/2115186135139840000/img/_sT3FfRK2dsGwUGF.jpg
 categories: pitn, news
 keywords: Pentagon doomsday plan, FORTRESS America, Pentagon 90 days bases, Pentagon FORTRESS initiative explained, portable nuclear reactors military bases, Hegseth State of the Force, Sean Parnell power is combat, UK Be Ready campaign stockpile, wars and rumours of wars Matthew 24:6, Christian preparedness
-draft: true
 ---
 
 > *And you will hear of wars and rumours of wars. See that you are not alarmed, for this must take place, but the end is not yet.* (Matthew 24:6)

@@ -4,6 +4,10 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 28 October 2026
+
+- **New article: [The Pentagon's "doomsday plan": what FORTRESS America and the 90-day rule really say, and how a Christian should read it](/articles/pentagon-fortress-america-90-day-doomsday-plan/)**: what is confirmed, what is hype, Britain's "Be Ready" campaign, and Matthew 24:6.
+
 ## 27 October 2026
 
 - **New article: [Israel election results so far: exit polls show a deadlock, Likud largest, neither bloc at 61](/articles/israel-election-results-exit-polls/)**, with a seat table that will be updated as the count comes in. Articles can now carry tables.
