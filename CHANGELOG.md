@@ -8,7 +8,7 @@ summary: A running list of what has been added to the site, newest first.
 
 - **New source: GodLogic Apologetics** (YouTube) now appears in Apologetics and GAIN TV.
 - **New article: [INEC and the "AI-generated" voters: what the Edo register screenshots show, what INEC admits, and how to check your own record](/articles/inec-ai-generated-photos-voters-register/)**, with the DonAza video embedded: the Etsako West screenshots, INEC's statement, the 15 December deadline and how to check your record.
-- **Updated: [Israel election results](/articles/israel-election-results-exit-polls/)** now carries the counted results (Netanyahu's bloc 54, Eisenkot's 49, Arab parties 17 with 77.6 per cent counted), a count-versus-exit-poll table, the leaders' statements and the timetable to Friday's final tally.
+- **Updated: [Israel election results](/articles/israel-election-results-exit-polls/)** now carries the counted results (Netanyahu's bloc 53, Eisenkot's 48, Arab parties a record 19 with the regular count complete), a count-versus-exit-poll table, the leaders' statements and the timetable to Friday's final tally.
 - **New article: [The Pentagon's "doomsday plan": what FORTRESS America and the 90-day rule really say, and how a Christian should read it](/articles/pentagon-fortress-america-90-day-doomsday-plan/)**: what is confirmed, what is hype, Britain's "Be Ready" campaign, and Matthew 24:6.
 
 ## 27 October 2026
