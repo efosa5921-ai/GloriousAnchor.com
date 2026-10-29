@@ -4,9 +4,13 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 29 October 2026
+
+- **New article: [Glenn Beck's warning: what Europe's "Be Ready" advisories really say, and how a Christian should "be ready"](/articles/glenn-beck-warning-europe-be-ready-advisories/)**: the UK, EU, German, Swedish and central-bank advice checked against his claim that "something is coming", and Luke 12:40.
+- **New source: GodLogic Apologetics** (YouTube) now appears in Apologetics and GAIN TV.
+
 ## 28 October 2026
 
-- **New source: GodLogic Apologetics** (YouTube) now appears in Apologetics and GAIN TV.
 - **New article: [INEC and the "AI-generated" voters: what the Edo register screenshots show, what INEC admits, and how to check your own record](/articles/inec-ai-generated-photos-voters-register/)**, with the DonAza video embedded: the Etsako West screenshots, INEC's statement, the 15 December deadline and how to check your record.
 - **Updated: [Israel election results](/articles/israel-election-results-exit-polls/)** now carries the counted results (Netanyahu's bloc 53, Eisenkot's 48, Arab parties a record 19 with the regular count complete), a count-versus-exit-poll table, the leaders' statements and the timetable to Friday's final tally.
 - **New article: [The Pentagon's "doomsday plan": what FORTRESS America and the 90-day rule really say, and how a Christian should read it](/articles/pentagon-fortress-america-90-day-doomsday-plan/)**: what is confirmed, what is hype, Britain's "Be Ready" campaign, and Matthew 24:6.

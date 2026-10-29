@@ -7,7 +7,6 @@ summary: Glenn Beck says Europe's "Be Ready" advisories and the Pentagon's FORTR
 image: https://pbs.twimg.com/amplify_video_thumb/2115503910983208960/img/LQZlbF3V8IJuDhpK.jpg
 categories: pitn, news
 keywords: Glenn Beck warning something is coming, Europe Be Ready advisories, UK Be Ready campaign checklist, stockpile cash water food, EU 72 hour emergency kit, Germany ten days supplies, Sweden if crisis or war comes, keep cash at home ECB, Pentagon FORTRESS initiative, Christian preparedness Luke 12:40
-draft: true
 ---
 
 > *You also must be ready, for the Son of Man is coming at an hour you do not expect.* (Luke 12:40)
