@@ -3,7 +3,7 @@ title: "When Christians are murdered in Nigeria, the media goes silent": is Nanc
 searchTitle: Media Silence on Nigeria's Murdered Christians: The Evidence
 date: 2026-10-30T17:00:00Z
 author: The Glorious Anchor team
-summary: Nancy Mace says the media goes silent when Christians are murdered in Nigeria. The death tolls, the Yelwata test case, the "clashes" framing, and how to respond.
+summary: Nancy Mace says the media goes silent when Christians are murdered in Nigeria. The death tolls, the Yelwata test case, the "clashes" framing, how to respond.
 image: https://pbs.twimg.com/ext_tw_video_thumb/2115978300619132929/pu/img/ZzCyvso7LBJ0f2Kh.jpg
 categories: news
 keywords: media silence Christians Nigeria, Nancy Mace Nigeria Christians video, Christians killed in Nigeria 2026, Open Doors World Watch List 2026 Nigeria, Yelwata massacre media coverage, farmer herder clashes framing, Nigeria Country of Particular Concern, Christian genocide Nigeria debate, Bill Maher Nigeria Christians, Hebrews 13:3 remember the persecuted
