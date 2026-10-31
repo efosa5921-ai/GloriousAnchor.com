@@ -1,0 +1,24 @@
+{
+  "_help": [
+    "The Harvest page (/harvest/) tracks Muslims leaving Islam and coming to Christ, as far as that can be counted.",
+    "channels: YouTube channels whose newest videos' comments are read each build for first-person testimonies ('I left Islam', 'I accepted Jesus'), and whose subscriber counts are shown as reach. Each needs a channelId (UC...). Keep it to channels that reach Muslims; every channel costs about 25 quota units a build.",
+    "figures: the scoreboard of published survey numbers. Give value, label, detail, source, url, date. Update when a new survey appears.",
+    "trends: Google Trends keywords (up to 3) and ISO country codes (up to 4) for the search-interest charts.",
+    "testimonyForm: a Google Form 'embed' URL (Form → Send → <> → copy the src) for readers to tell their story; leave empty to show a Telegram invitation instead."
+  ],
+  "channels": [
+    { "id": "yt-towards-jesus", "name": "Towards Jesus", "channelId": "UCtsq4U2uFD1xiSd82341-fA" },
+    { "id": "yt-apologetics-roadshow", "name": "David Wood (Apologetics Roadshow)", "channelId": "UCePbPbJ96WvMeMm_VuDkOJA" },
+    { "id": "yt-godlogic", "name": "GodLogic Apologetics", "channelId": "UCfTJJ9hIy6Us3JVJV_4eKzg" }
+  ],
+  "figures": [
+    { "value": "750,000–950,000", "label": "Christians in Iran, almost all converts", "detail": "An anonymous online survey of about 50,000 Iranians found 1.5% calling themselves Christian, 22% with no religion and 9% atheist. Only a third still identified as Shia Muslims, in a country whose government reports 99% Muslim.", "source": "GAMAAN, Iranians' Attitudes Toward Religion", "url": "https://gamaan.org/2020/08/25/iranians-attitudes-toward-religion-a-2020-survey-report/", "date": "June 2020" },
+    { "value": "1 in 4", "label": "Americans raised Muslim who no longer identify as Muslim", "detail": "Where leaving costs nothing, about a quarter leave. Pew also finds converts into Islam roughly balance the losses in the United States.", "source": "Pew Research Center", "url": "https://www.pewresearch.org/religion/2025/03/26/religious-switching-into-and-out-of-islam/", "date": "March 2025" },
+    { "value": "8% → 13%", "label": "Arabs describing themselves as 'not religious'", "detail": "Across ten Arab countries the share rose in six years, to about a third in Tunisia, with the sharpest change among the under-30s.", "source": "Arab Barometer, reported by the BBC", "url": "https://www.bbc.com/news/world-middle-east-48703377", "date": "June 2019" },
+    { "value": "Fastest-growing", "label": "Iran's underground church", "detail": "Open Doors ranks the Iranian church among the fastest-growing in the world, meeting in homes, fed by satellite television, Farsi Bibles and, in testimony after testimony, dreams of Jesus.", "source": "Open Doors", "url": "https://www.opendoors.org/en-US/persecution/countries/iran/", "date": "2026" },
+    { "value": "327 million", "label": "More Muslims in 2020 than in 2010, almost all by birth", "detail": "Islam is still the fastest-growing religion in numbers because Muslim families are young and large; Pew finds Muslims among the groups least likely to change religion where it can be measured, which is to say outside the countries where it is a crime.", "source": "Pew Research Center, How the Global Religious Landscape Changed", "url": "https://www.pewresearch.org/religion/2025/06/09/how-the-global-religious-landscape-changed-from-2010-to-2020/", "date": "June 2025" },
+    { "value": "6 million a year", "label": "A Muslim cleric's own lament, never verified", "detail": "In December 2000 the Libyan cleric Ahmad al-Qataani told Al Jazeera that six million African Muslims were becoming Christians every year. Nobody has substantiated the figure; it is quoted here as his alarm, not as a count.", "source": "Al Jazeera interview, widely reported", "url": "", "date": "December 2000" }
+  ],
+  "trends": { "keywords": ["ex muslim", "leaving islam"], "geos": ["NG", "EG", "PK", "ID"] },
+  "testimonyForm": ""
+}

@@ -218,6 +218,17 @@ After each build, `dist/data/meta.json` lists every source with `ok: true/false`
 URL or handle is easy to spot. Feed URLs and YouTube handles in the shipped config are best-effort; check the first
 build's log and correct any that fail.
 
+## The Harvest page
+
+`/harvest/` tracks Muslims leaving Islam and coming to Christ, as far as that can honestly be counted. `harvest.json`
+lists the YouTube channels that reach Muslims, a scoreboard of published survey figures (with sources and dates),
+Google Trends keywords and countries, and an optional Google Form for testimonies. Each build, with the
+`YOUTUBE_API_KEY` secret, `scripts/lib/harvest.js` reads the channels' subscriber counts and the newest comments under
+their latest videos, and counts writers who say in the first person that they have left Islam or come to Christ.
+Each person is counted once by a salted hash of their channel id; no comment text or names are stored, and the running
+state lives in `dist/data/harvest.json` (cached between builds like the other data files). About 25 quota units per
+channel per build. Without a key the page still renders from the last state and the scoreboard.
+
 ## Bible Quiz
 
 `quizzes.json` holds the quizzes (id, title, description, difficulty, questions with `options` and the `answer` index, optional `ref` and `note`). The build validates them (`scripts/lib/quiz.js`), publishes `data/quizzes.json` and renders `/quiz/` from `src/quiz/index.html`; `src/quiz/quiz.js` plays a quiz with shuffled questions and options, shows the reference after each answer, keeps best scores in the browser and offers WhatsApp, X and share-sheet buttons with a link back to that quiz. The quiz of the day rotates by UTC day. The admin's Quizzes view edits quizzes in a plain text format (`Q:`, `A:` with `*` on the right answer, `Ref:`, `Note:`).

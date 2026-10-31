@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 31 October 2026
 
+- **New page: [The Harvest](/harvest/)** tracks Muslims leaving Islam and coming to Christ: the published survey figures, the live reach of the channels taking the gospel to Muslims, a running count of people who say in their own words under those channels' videos that they have left Islam or found Christ, Google's search-interest charts, and a place to tell your story. Linked from the footer and the Apologetics articles.
 - **New article: [Muslims are leaving Islam every day: David Wood on the "avalanche of apostasy", and the stories and numbers behind it](/articles/muslims-leaving-islam-david-wood-2-million/)**, with his video embedded: Iran's secret church, the Arab world's quiet exodus, dreams of Jesus and the harvest to gather.
 - **New sources: David Wood's Apologetics Roadshow and Towards Jesus** (YouTube) now appear in Apologetics and GAIN TV.
 

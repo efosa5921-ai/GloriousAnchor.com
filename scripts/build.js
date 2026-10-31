@@ -31,6 +31,7 @@ import { applyHidden } from './lib/articles.js';
 import { youtubeApiUrl, apiToFeed } from './lib/youtube.js';
 import { validateQuizzes, renderQuizPage } from './lib/quiz.js';
 import { pickDigest, digestDate, digestText, digestHtml, renderDigestPage, renderDigestFeed, renderTopFeed } from './lib/digest.js';
+import { updateHarvest, renderHarvestPage, emptyState as emptyHarvest } from './lib/harvest.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = path.join(ROOT, 'src');
@@ -248,7 +249,7 @@ function validate(config) {
     if (s.fallbacks !== undefined && !Array.isArray(s.fallbacks)) throw new Error(`feeds.json: "fallbacks" on "${s.id}" must be a list`);
   }
   // Section landing pages live at /<slug>/, so a category's slug may not be one of the site's fixed paths.
-  const reserved = new Set(['articles', 'churches', 'digest', 'quiz', 's', 'data', 'assets', 'admin', 'videos']);
+  const reserved = new Set(['articles', 'churches', 'digest', 'quiz', 's', 'data', 'assets', 'admin', 'videos', 'harvest']);
   for (const c of config.categories) {
     const slug = c.slug || c.id;
     if (!['top', 'ours'].includes(c.id) && reserved.has(slug) && !Object.values(config.site?.brands || {}).some((br) => br?.category === c.id)) throw new Error(`feeds.json: category "${c.id}" needs a "slug" that is not a fixed path (${slug} is taken)`);
@@ -393,6 +394,7 @@ async function finalizeSeo({ site, articles, posts, churches, categories = [] })
     ...posts.map((p) => ({ url: p.url, lastmod: p.publishedAt, changefreq: 'monthly', priority: 0.9 })),
     { url: `${b}/churches/`, changefreq: 'weekly', priority: 0.8 },
     { url: `${b}/digest/`, changefreq: 'daily', priority: 0.8 },
+    { url: `${b}/harvest/`, changefreq: 'daily', priority: 0.8 },
     { url: `${b}/quiz/`, changefreq: 'daily', priority: 0.8 },
     ...brandSlugs.map((s) => ({ url: `${b}/${s}/`, changefreq: 'hourly', priority: 0.9 })),
     ...sectionSlugs.map((s) => ({ url: `${b}/${s}/`, changefreq: 'hourly', priority: 0.8 })),
@@ -647,6 +649,19 @@ async function main() {
   await mkdir(path.join(DIST, 'digest'), { recursive: true });
   await writeFile(path.join(DIST, 'digest', 'index.html'), renderDigestPage(digestItems, site, today, text));
   await writeFile(path.join(DIST, 'digest', 'digest.txt'), text);
+
+  // The Harvest: Muslims leaving Islam, as far as it can be counted (see lib/harvest.js and harvest.json).
+  const harvestConfig = await readJson(path.join(ROOT, 'harvest.json'), { channels: [], figures: [] });
+  let harvest = await readJson(path.join(DATA_DIR, 'harvest.json'), emptyHarvest());
+  if (!fixturesDir) {
+    harvest = await updateHarvest(harvest, { key: (process.env.YOUTUBE_API_KEY || '').trim(), channels: harvestConfig.channels || [], fetcher: (u) => fetch(u, { signal: AbortSignal.timeout(limits.timeoutMs || 15000) }), log: (m) => console.warn('  ! ' + m) });
+    console.log(`harvest: ${harvest.totals.christ} came to Christ, ${harvest.totals.left} left Islam, in ${harvest.totals.comments} comments under ${harvest.totals.videos} videos${harvest.quotaSpent ? ` (${harvest.quotaSpent} quota units)` : ' (no API key: counts unchanged)'}`);
+  }
+  const harvestSources = new Set((harvestConfig.channels || []).map((c) => c.id));
+  const harvestVideos = published.filter((a) => harvestSources.has(a.sourceId)).slice(0, 12);
+  await writeFile(path.join(DATA_DIR, 'harvest.json'), JSON.stringify(harvest));
+  await mkdir(path.join(DIST, 'harvest'), { recursive: true });
+  await writeFile(path.join(DIST, 'harvest', 'index.html'), renderHarvestPage({ config: harvestConfig, state: harvest, site, videos: harvestVideos }));
   await writeFile(path.join(DIST, 'digest', 'feed.xml'), renderDigestFeed(digests, site));
   await writeFile(path.join(DIST, 'feed.xml'), renderTopFeed(published, site));
   await writeFile(path.join(DIST, '.nojekyll'), ''); // tell GitHub Pages not to run Jekyll
