@@ -3,6 +3,7 @@
  * Diagnostic: fetch a URL the way the build does and print what came back.
  *   node scripts/probe.js https://example.com/feed/
  *   node scripts/probe.js @somehandle          (YouTube handle → shows how it resolves)
+ *   node scripts/probe.js https://www.youtube.com/watch?v=ID   (prints the video's details, description and caption transcript)
  * Run it from GitHub Actions (workflow "Probe a feed") to see what a publisher serves to GitHub's IP range.
  */
 import Parser from 'rss-parser';
@@ -70,6 +71,39 @@ if (target.startsWith('@')) {
 
 const { body } = await get(target);
 console.log('--- first 700 chars ---\n' + body.slice(0, 700).replace(/\s+/g, ' ') + '\n---');
+// A YouTube watch page: print the video's details, description and caption transcript so a video can be checked.
+if (/youtube\.com\/watch|youtu\.be\//.test(target) && body.includes('ytInitialPlayerResponse')) await youtubeDetails(body);
+
+function jsonAfter(hay, marker) {
+  const start = hay.indexOf(marker);
+  if (start < 0) return null;
+  let i = hay.indexOf('{', start), depth = 0, inStr = false, esc = false;
+  for (let j = i; j < hay.length; j++) {
+    const c = hay[j];
+    if (inStr) { if (esc) esc = false; else if (c === '\\') esc = true; else if (c === '"') inStr = false; continue; }
+    if (c === '"') inStr = true; else if (c === '{') depth++; else if (c === '}' && --depth === 0) { try { return JSON.parse(hay.slice(i, j + 1)); } catch { return null; } }
+  }
+  return null;
+}
+
+async function youtubeDetails(html) {
+  const pr = jsonAfter(html, 'ytInitialPlayerResponse = ');
+  if (!pr) { console.log('youtube: could not parse ytInitialPlayerResponse'); return; }
+  const d = pr.videoDetails || {}, mf = pr.microformat?.playerMicroformatRenderer || {};
+  console.log(`--- youtube video ---\ntitle: ${d.title}\nchannel: ${d.author} (${d.channelId})\nlength: ${d.lengthSeconds}s  views: ${d.viewCount}  published: ${mf.publishDate || ''}  uploaded: ${mf.uploadDate || ''}  category: ${mf.category || ''}`);
+  if (d.keywords?.length) console.log('keywords:', d.keywords.slice(0, 30).join(', '));
+  console.log('description:\n' + (d.shortDescription || '').slice(0, 2500) + '\n---');
+  const tracks = pr.captions?.playerCaptionsTracklistRenderer?.captionTracks || [];
+  console.log('caption tracks:', tracks.map((t) => `${t.languageCode}${t.kind ? '/' + t.kind : ''}`).join(', ') || 'none');
+  const track = tracks.find((t) => t.languageCode?.startsWith('en') && t.kind !== 'asr') || tracks.find((t) => t.languageCode?.startsWith('en')) || tracks[0];
+  if (!track) return;
+  try {
+    const res = await fetch(track.baseUrl + '&fmt=json3', { headers: { 'User-Agent': UA } });
+    const json = await res.json();
+    const text = (json.events || []).flatMap((e) => (e.segs || []).map((s) => s.utf8)).join('').replace(/\n/g, ' ').replace(/\s+/g, ' ').trim();
+    console.log(`--- transcript (${track.languageCode}${track.kind ? '/' + track.kind : ''}, ${text.length} chars) ---\n` + text.slice(0, 20000) + '\n---');
+  } catch (err) { console.log('transcript fetch failed:', String(err.message).split('\n')[0]); }
+}
 // Social/preview metadata and any image or video URLs the page names: handy for finding a thumbnail.
 for (const m of body.matchAll(/<meta[^>]+(?:property|name)=["'](?:og|twitter):[^"']+["'][^>]*>/gi)) console.log('meta:', m[0].replace(/\s+/g, ' ').slice(0, 300));
 const media = new Set();
