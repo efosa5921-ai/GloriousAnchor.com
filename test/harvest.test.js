@@ -99,3 +99,12 @@ test('harvestWidgetHtml is empty before the first count and shows the headline n
   const html = harvestWidgetHtml({ ...emptyState(), totals: { left: 2, christ: 3, comments: 4059, videos: 24 }, channels: { a: { subscribers: 805000 }, b: { subscribers: 417000 } } });
   assert.ok(html.includes('<b>5</b>') && html.includes('1.2m') && html.includes('4.1k') && html.includes('href="harvest/"'));
 });
+
+test('updateHarvest re-reads everything when the pattern version changes', async () => {
+  const old = { ...emptyState(), version: 1, totals: { left: 9, christ: 9, comments: 99, videos: 9 }, authors: { x: 'left' }, videos: { v: { done: true } }, channels: { keep: { subscribers: 5 } } };
+  const state = await updateHarvest(old, { key: '', channels: [] });
+  assert.equal(state.version, 2);
+  assert.deepEqual(state.totals, emptyState().totals);
+  assert.deepEqual(state.videos, {});
+  assert.equal(state.channels.keep.subscribers, 5);
+});

@@ -86,8 +86,11 @@ export function tallyComments(comments, seen = {}) {
   return { counts, added };
 }
 
+// Bump when the testimony patterns change so the next build re-reads the videos it has already counted.
+export const HARVEST_VERSION = 2;
+
 export function emptyState() {
-  return { version: 1, totals: { left: 0, christ: 0, comments: 0, videos: 0 }, authors: {}, videos: {}, channels: {}, history: [], updatedAt: null };
+  return { version: HARVEST_VERSION, totals: { left: 0, christ: 0, comments: 0, videos: 0 }, authors: {}, videos: {}, channels: {}, history: [], updatedAt: null };
 }
 
 async function apiGet(fetcher, key, resource, params) {
@@ -107,6 +110,7 @@ async function apiGet(fetcher, key, resource, params) {
  */
 export async function updateHarvest(state, { key, channels = [], fetcher = fetch, now = Date.now(), videosPerChannel = 8, pagesPerVideo = 3, log = () => {} } = {}) {
   state = { ...emptyState(), ...(state || {}) };
+  if ((state.version || 0) < HARVEST_VERSION) { log(`harvest: patterns changed (v${state.version || 0} → v${HARVEST_VERSION}), re-reading counted videos`); state = { ...state, version: HARVEST_VERSION, totals: emptyState().totals, authors: {}, videos: {} }; }
   state.totals = { ...emptyState().totals, ...(state.totals || {}) };
   if (!key || !channels.length) return state;
   const ids = channels.map((c) => c.channelId).filter(Boolean);
