@@ -3,7 +3,7 @@ title: Muslims are leaving Islam every day: David Wood on the "avalanche of apos
 searchTitle: Muslims Are Leaving Islam Every Day: David Wood's Evidence
 date: 2026-10-31T19:00:00Z
 author: The Glorious Anchor team
-summary: David Wood says nearly 2 million Muslims leave Islam every year. Iran's secret church, the Arab world's quiet exodus, dreams of Jesus and the harvest the Church must gather.
+summary: David Wood says nearly 2 million Muslims leave Islam every year. Iran's secret church, the Arab world's quiet exodus, dreams of Jesus and the harvest to gather.
 image: https://i.ytimg.com/vi/KMdPm30KWTg/maxresdefault.jpg
 categories: apologetics, news
 keywords: Muslims leaving Islam every day, Muslims leaving Islam 2026, David Wood Muslims leaving Islam video, ex-Muslims coming to Christ, Iran church growth converts, Muslims dreams of Jesus, Muslims converting to Christianity Africa, avalanche of apostasy, reaching Muslims with the gospel, Acts 17 Apologetics
