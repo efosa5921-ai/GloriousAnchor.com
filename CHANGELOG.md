@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 31 October 2026
 
+- **New article: [Muslims are leaving Islam every day: David Wood on the "avalanche of apostasy", and the stories and numbers behind it](/articles/muslims-leaving-islam-david-wood-2-million/)**, with his video embedded: Iran's secret church, the Arab world's quiet exodus, dreams of Jesus and the harvest to gather.
 - **New sources: David Wood's Apologetics Roadshow and Towards Jesus** (YouTube) now appear in Apologetics and GAIN TV.
 
 ## 29 October 2026
