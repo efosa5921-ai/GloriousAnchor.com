@@ -13,6 +13,12 @@ test('classifyComment counts first-person testimonies only', () => {
   assert.equal(classifyComment('My friend says he left Islam but I do not believe him'), null);
   assert.equal(classifyComment('I will never leave Islam, Allah is one'), null);
   assert.equal(classifyComment("I'm not an ex-Muslim, I'm a proud Muslim"), null);
+  assert.equal(classifyComment('Ex-Muslim here, from Egypt. These videos helped me.'), 'left');
+  assert.equal(classifyComment('As an ex muslim I can confirm everything he says'), 'left');
+  assert.equal(classifyComment('I became a Christian after 25 years in Islam'), 'christ');
+  assert.equal(classifyComment("I'm a former Muslim and I was baptized in March"), 'christ');
+  assert.equal(classifyComment('I come from a Muslim family in Pakistan and today I believe in Jesus'), 'christ');
+  assert.equal(classifyComment('We gave our lives to Christ last Easter'), 'christ');
   assert.equal(classifyComment('Great video'), null);
 });
 

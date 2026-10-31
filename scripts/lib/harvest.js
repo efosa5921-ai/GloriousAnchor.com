@@ -28,6 +28,9 @@ const LEFT = [
   /\bi\s+(?:was|used to be|grew up(?: as)?|was raised(?: as)?|was born)\s+(?:a\s+)?muslim\b[^.!?\n]{0,80}\b(?:but|until|before|and now|now)\b/i,
   /\b(?:i|we)\s+(?:have\s+)?(?:stopped|quit)\s+(?:being\s+(?:a\s+)?muslim|praying to allah|believing in (?:islam|allah|muhammad))\b/i,
   /\b(?:my|our)\s+(?:whole\s+)?(?:family|parents|brother|sister|wife|husband)\s+(?:and i\s+)?(?:have\s+|has\s+)?(?:left|abandoned|renounced)\s+islam\b/i,
+  /\b(?:as an?|being an?|speaking as an?)\s+ex[- ]?muslim\b/i,
+  /\bex[- ]?muslim\s+here\b/i,
+  /\b(?:i|we)\s+(?:have\s+)?(?:left|abandoned|renounced)\s+(?:the\s+)?(?:religion of islam|muslim faith|deen)\b/i,
 ];
 const CHRIST = [
   /\b(?:i|we|i'?ve|i have|we have)\s+(?:finally\s+|recently\s+|just\s+|now\s+)?(?:accepted|received|found|met|encountered|chose|chosen|believed in|surrendered to|given my life to|gave my life to|given my heart to|gave my heart to|came to|come to|turned to|trust(?:ed)? in|now follow|started following|decided to follow)\s+(?:the lord\s+)?(?:jesus|christ|yeshua|isa(?: al[- ]masih)?)\b/i,
@@ -36,6 +39,10 @@ const CHRIST = [
   /\b(?:i|we)\s+(?:have\s+)?converted\s+(?:from islam\s+)?to\s+christianity\b/i,
   /\bjesus\s+(?:christ\s+)?(?:is|became|is now|has become)\s+my\s+(?:lord|saviou?r|king)\b/i,
   /\b(?:i|we)\s+(?:was|were|got|have been|am|are)\s+(?:a\s+)?muslim\b[^.!?\n]{0,80}\b(?:now|today)\s+(?:i|we)\s+(?:am|are|follow|believe in|love|serve)\s+(?:a\s+christian|jesus|christ)\b/i,
+  /\b(?:i|we|i'?ve|i have)\s+(?:finally\s+|recently\s+|just\s+)?(?:became|become|converted to|turned)\s+(?:a\s+)?christian\b/i,
+  /\b(?:i|i'?m|i am)\s+(?:a\s+)?(?:former|ex)[- ]?muslim\b[^.!?\n]{0,60}\b(?:christian|jesus|christ|baptized|saved|born again)\b/i,
+  /\b(?:from|raised in|born into)\s+(?:a\s+)?muslim\s+(?:family|home|background|country)\b[^.!?\n]{0,80}\b(?:i|we)\s+(?:now\s+)?(?:believe in|follow|accepted|love|belong to|gave my life to|serve)\s+(?:jesus|christ)\b/i,
+  /\b(?:i|we)\s+(?:have\s+)?(?:given|gave)\s+(?:my|our)\s+(?:life|lives|heart)\s+to\s+(?:jesus|christ)\b/i,
 ];
 const NEGATED = /\b(?:never|not|no way|n't|won'?t|will never|would never|cannot|can'?t|nobody|no one|if\s+i|why would i|i will not)\b[^.!?\n]{0,30}$/i;
 const QUESTION_OR_REPORTED = /\b(?:why|how|when|do you|did you|have you|says?|said|claims?|told me|my friend|he|she|they)\b[^.!?\n]{0,25}$/i;
