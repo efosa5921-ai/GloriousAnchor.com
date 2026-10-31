@@ -86,9 +86,32 @@ function jsonAfter(hay, marker) {
   return null;
 }
 
+// With the YOUTUBE_API_KEY secret, ask the Data API for the video's and channel's official records (public data only;
+// caption text cannot be downloaded this way, only listed). Costs a few quota units.
+async function youtubeApiDetails(videoId) {
+  const key = (process.env.YOUTUBE_API_KEY || '').trim();
+  if (!key || !videoId) return;
+  const api = async (path) => { const r = await fetch(`https://www.googleapis.com/youtube/v3/${path}&key=${key}`); return [r.status, await r.json()]; };
+  try {
+    const [st, v] = await api(`videos?part=snippet,contentDetails,statistics,status&id=${videoId}`);
+    const it = v.items?.[0];
+    if (!it) { console.log(`--- youtube data api --- videos.list ${st}: ${JSON.stringify(v).slice(0, 300)}`); return; }
+    const sn = it.snippet, cd = it.contentDetails, stt = it.statistics, stat = it.status;
+    console.log(`--- youtube data api ---\ntitle: ${sn.title}\nchannel: ${sn.channelTitle} (${sn.channelId})\npublished: ${sn.publishedAt}  duration: ${cd.duration}  views: ${stt.viewCount}  likes: ${stt.likeCount}  comments: ${stt.commentCount}\ncategoryId: ${sn.categoryId}  language: ${sn.defaultLanguage || sn.defaultAudioLanguage || ''}  licensed: ${cd.licensedContent}  madeForKids: ${stat.madeForKids}  privacy: ${stat.privacyStatus}`);
+    if (sn.tags?.length) console.log('tags:', sn.tags.slice(0, 30).join(', '));
+    console.log('description:\n' + (sn.description || '').slice(0, 3000) + '\n---');
+    const [, c] = await api(`channels?part=snippet,statistics,brandingSettings&id=${sn.channelId}`);
+    const ch = c.items?.[0];
+    if (ch) console.log(`channel: ${ch.snippet.title}  handle: ${ch.snippet.customUrl || ''}  created: ${ch.snippet.publishedAt}  country: ${ch.snippet.country || ch.brandingSettings?.channel?.country || ''}  subscribers: ${ch.statistics.subscriberCount}  videos: ${ch.statistics.videoCount}  views: ${ch.statistics.viewCount}\nchannel description:\n${(ch.snippet.description || '').slice(0, 2000)}\n---`);
+    const [, caps] = await api(`captions?part=snippet&videoId=${videoId}`);
+    console.log('caption tracks (api):', (caps.items || []).map((t) => `${t.snippet.language}/${t.snippet.trackKind}${t.snippet.isAutoSynced ? '/auto' : ''}`).join(', ') || (caps.error ? `error ${caps.error.code}` : 'none'));
+  } catch (err) { console.log('youtube data api failed:', String(err.message).split('\n')[0]); }
+}
+
 async function youtubeDetails(html) {
   const pr = jsonAfter(html, 'ytInitialPlayerResponse = ');
   if (!pr) { console.log('youtube: could not parse ytInitialPlayerResponse'); return; }
+  await youtubeApiDetails(target.match(/[?&]v=([\w-]{11})/)?.[1] || target.match(/youtu\.be\/([\w-]{11})/)?.[1]);
   const d = pr.videoDetails || {}, mf = pr.microformat?.playerMicroformatRenderer || {};
   console.log(`--- youtube video ---\ntitle: ${d.title}\nchannel: ${d.author} (${d.channelId})\nlength: ${d.lengthSeconds}s  views: ${d.viewCount}  published: ${mf.publishDate || ''}  uploaded: ${mf.uploadDate || ''}  category: ${mf.category || ''}`);
   if (d.keywords?.length) console.log('keywords:', d.keywords.slice(0, 30).join(', '));

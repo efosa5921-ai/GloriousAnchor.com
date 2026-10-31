@@ -23,3 +23,5 @@ jobs:
           cache: npm
       - run: npm ci
       - run: node scripts/probe.js "${{ inputs.target }}"
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
