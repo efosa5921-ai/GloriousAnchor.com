@@ -663,7 +663,7 @@ async function main() {
   await writeFile(path.join(DATA_DIR, 'harvest.json'), JSON.stringify(harvest));
   await mkdir(path.join(DIST, 'harvest'), { recursive: true });
   await writeFile(path.join(DIST, 'harvest', 'index.html'), renderHarvestPage({ config: harvestConfig, state: harvest, site, videos: harvestVideos }));
-  harvestWidget = harvestWidgetHtml(harvest, harvestConfig);
+  harvestWidget = harvestWidgetHtml(harvest, harvestConfig, '', site);
   await writeFile(path.join(DIST, 'digest', 'feed.xml'), renderDigestFeed(digests, site));
   await writeFile(path.join(DIST, 'feed.xml'), renderTopFeed(published, site));
   await writeFile(path.join(DIST, '.nojekyll'), ''); // tell GitHub Pages not to run Jekyll

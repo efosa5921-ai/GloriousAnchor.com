@@ -17,7 +17,7 @@
  */
 import { createHash } from 'node:crypto';
 import { uploadsPlaylistId } from './youtube.js';
-import { cardHtml, subscribeHtml, metaTags } from './seo.js';
+import { cardHtml, subscribeHtml, metaTags, shareBarHtml } from './seo.js';
 
 const API = 'https://www.googleapis.com/youtube/v3';
 
@@ -200,18 +200,26 @@ function sparkline(points, key) {
 }
 
 /** A one-line strip for the homepage: the headline counts and a link to the page. Empty until the first count. */
-export function harvestWidgetHtml(state, config = {}, prefix = '') {
+export function harvestWidgetHtml(state, config = {}, prefix = '', site = null) {
   const t = state?.totals || {};
   const reach = Object.values(state?.channels || {}).reduce((n, c) => n + (c.subscribers || 0), 0);
   const said = Number(t.left || 0) + Number(t.christ || 0);
   if (!reach && !t.comments) return '';
-  return `<a class="harvest-widget" href="${prefix}harvest/" aria-label="The Harvest: Muslims leaving Islam, as far as it can be counted">
-      <span class="harvest-widget__kicker">The Harvest</span>
-      <span class="harvest-widget__stat"><b>${esc(fmt(said))}</b> said they left Islam or found Christ${sinceText(state) ? ` <span class="harvest-widget__since">since ${esc(sinceText(state))}</span>` : ''}</span>
-      <span class="harvest-widget__stat"><b>${esc(fmt(reach))}</b> reached by the channels we follow</span>
-      <span class="harvest-widget__stat"><b>${esc(fmt(t.comments))}</b> comments read</span>
-      <span class="harvest-widget__more">See the count →</span>
-    </a>`;
+  const since = sinceText(state);
+  const pageUrl = `${base(site || {})}/harvest/`;
+  const shareTitle = `The Harvest: ${fmt(said)} people have said they left Islam or found Christ${since ? ` since ${since}` : ''}, under the channels taking the gospel to Muslims`;
+  const via = `via ${site?.name || 'Glorious Anchor'}`;
+  return `<div class="harvest-widget">
+      <a class="harvest-widget__link" href="${prefix}harvest/" aria-label="The Harvest: Muslims leaving Islam, as far as it can be counted">
+        <span class="harvest-widget__kicker">The Harvest</span>
+        <span class="harvest-widget__stat"><b>${esc(fmt(said))}</b> said they left Islam or found Christ${since ? ` <span class="harvest-widget__since">since ${esc(since)}</span>` : ''}</span>
+        <span class="harvest-widget__stat"><b>${esc(fmt(reach))}</b> reached by the channels we follow</span>
+        <span class="harvest-widget__stat"><b>${esc(fmt(t.comments))}</b> comments read</span>
+        <span class="harvest-widget__more">See the count →</span>
+      </a>
+      <button class="harvest-widget__share" type="button" data-harvest-share data-url="${esc(pageUrl)}" data-title="${esc(shareTitle)}" data-via="${esc(via)}" aria-label="Share The Harvest"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M12 15V3m0 0L8 7m4-4 4 4"/></svg><span>Share</span></button>
+    </div>
+    <script>(function(){var b=document.querySelector('[data-harvest-share]');if(!b)return;b.addEventListener('click',function(){var u=b.dataset.url,t=b.dataset.title,v=b.dataset.via;if(navigator.share){navigator.share({title:t,text:t+' \u2014 '+v,url:u}).catch(function(){});}else{window.open('https://wa.me/?text='+encodeURIComponent(t+'\n'+u+'\n\n'+v),'_blank','noopener');}});})();</script>`;
 }
 
 /**
@@ -263,6 +271,7 @@ export function renderHarvestPage({ config, state, site, videos = [], now = Date
       <div class="harvest__stat"><div class="harvest__num">${fmt(reach)}</div><div class="harvest__label">subscribers to the channels we follow</div><div class="harvest__sub">${fmt(views)} video views in all</div>${sparkline(state?.history || [], 'reach')}</div>
       <div class="harvest__stat"><div class="harvest__num">${fmt(t.comments)}</div><div class="harvest__label">comments read</div><div class="harvest__sub">under ${fmt(t.videos)} videos${sinceText(state) ? ` since ${esc(sinceText(state))}` : ''}; each person counted once</div></div>
     </section>
+    <div id="share">${shareBarHtml({ url, title: `The Harvest: ${fmt(Number(t.left || 0) + Number(t.christ || 0))} people have said they left Islam or found Christ${sinceText(state) ? ` since ${sinceText(state)}` : ''}, under the channels taking the gospel to Muslims`, summary: 'Muslims are leaving Islam every day. This page shows what can honestly be counted: the surveys, the reach of the channels taking the gospel to Muslims, and the people who say so in their own words.', site, label: 'Share the count' })}</div>
     <p class="harvest__method">How the count works: ${sinceText(state) ? `we began counting on ${esc(sinceText(state))}. ` : ''}Each build reads the newest comments under the latest videos of the channels below and counts the writers who say, in the first person, that they have left Islam ("I left Islam", "I'm an ex-Muslim") or come to Christ ("I accepted Jesus", "I was baptized"). Questions, reports about other people and denials are not counted. Each person is counted once, by an anonymous code; no names or comments are stored. It is a floor, not a total: most who leave never say so anywhere.</p>
 
     <section class="harvest__section">
