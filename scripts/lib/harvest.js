@@ -192,6 +192,21 @@ function sparkline(points, key) {
   return `<svg class="harvest__spark" viewBox="0 0 ${w} ${h}" aria-hidden="true"><polyline fill="none" stroke="currentColor" stroke-width="2" points="${d}"/></svg>`;
 }
 
+/** A one-line strip for the homepage: the headline counts and a link to the page. Empty until the first count. */
+export function harvestWidgetHtml(state, config = {}, prefix = '') {
+  const t = state?.totals || {};
+  const reach = Object.values(state?.channels || {}).reduce((n, c) => n + (c.subscribers || 0), 0);
+  const said = Number(t.left || 0) + Number(t.christ || 0);
+  if (!reach && !t.comments) return '';
+  return `<a class="harvest-widget" href="${prefix}harvest/" aria-label="The Harvest: Muslims leaving Islam, as far as it can be counted">
+      <span class="harvest-widget__kicker">The Harvest</span>
+      <span class="harvest-widget__stat"><b>${esc(fmt(said))}</b> said they left Islam or found Christ</span>
+      <span class="harvest-widget__stat"><b>${esc(fmt(reach))}</b> reached by the channels we follow</span>
+      <span class="harvest-widget__stat"><b>${esc(fmt(t.comments))}</b> comments read</span>
+      <span class="harvest-widget__more">See the count →</span>
+    </a>`;
+}
+
 /**
  * Render the page. `videos` are the channels' newest items (already normalised articles) for the stream.
  */

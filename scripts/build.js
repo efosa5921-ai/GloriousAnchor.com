@@ -31,7 +31,8 @@ import { applyHidden } from './lib/articles.js';
 import { youtubeApiUrl, apiToFeed } from './lib/youtube.js';
 import { validateQuizzes, renderQuizPage } from './lib/quiz.js';
 import { pickDigest, digestDate, digestText, digestHtml, renderDigestPage, renderDigestFeed, renderTopFeed } from './lib/digest.js';
-import { updateHarvest, renderHarvestPage, emptyState as emptyHarvest } from './lib/harvest.js';
+import { updateHarvest, renderHarvestPage, harvestWidgetHtml, emptyState as emptyHarvest } from './lib/harvest.js';
+let harvestWidget = ''; // filled once the Harvest counts are known; shown on the home page
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = path.join(ROOT, 'src');
@@ -318,7 +319,7 @@ async function finalizeSeo({ site, articles, posts, churches, categories = [] })
     .map((c) => ({ ...c, slug: brandByCategory[c.id] || c.slug || c.id, isBrand: Boolean(brandByCategory[c.id]) }));
   const sectionLinks = (prefix) => sectionLinksHtml([{ slug: 'articles', label: 'Our Articles' }, ...sections], prefix);
   index = index.replace('<!--prerender-->', prerenderCards(articles, 24, site.imageProxy)).replace('<!--subscribe-->', subscribeHtml(site)).replace('<!--followlinks-->', footerFollow)
-    .replace('<!--section-->', '').replace('<!--sections-->', sectionLinks(''));
+    .replace('<!--section-->', '').replace('<!--harvest-->', harvestWidget).replace('<!--sections-->', sectionLinks(''));
   await writeFile(indexPath, index);
 
   // Entry pages: the same app opening on a category, with its own title, description, intro and prerendered cards.
@@ -331,7 +332,7 @@ async function finalizeSeo({ site, articles, posts, churches, categories = [] })
       .replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${escHtml(description || tagline || '')}">`)
       .replace('<!--seo:head-->', [metaTags({ title, description: description || tagline, url, image: social, site }), `<meta name="ga-brand" content="${escHtml(slug)}">`, `<meta name="ga-category" content="${escHtml(category)}">`, sectionJsonLd({ site, url, name: title, description: description || tagline, items: inCategory })].join('\n  '))
       .replace('<!--section-->', intro ? `<section class="section-intro"><h1 class="section-intro__h1">${escHtml(intro.h1)}</h1><p class="section-intro__p">${escHtml(intro.p)}</p></section>` : '')
-      .replace('<!--sections-->', sectionLinks('../'))
+      .replace('<!--sections-->', sectionLinks('../')).replace('<!--harvest-->', '')
       .replace('<!--prerender-->', prerenderCards(inCategory, 24, site.imageProxy))
       .replace('<!--subscribe-->', subscribeHtml(site)).replace('<!--followlinks-->', footerFollow)
       .replace(/<span class="brand__name">[^<]*<\/span>/, `<span class="brand__name">${escHtml(name)}</span>`)
@@ -662,6 +663,7 @@ async function main() {
   await writeFile(path.join(DATA_DIR, 'harvest.json'), JSON.stringify(harvest));
   await mkdir(path.join(DIST, 'harvest'), { recursive: true });
   await writeFile(path.join(DIST, 'harvest', 'index.html'), renderHarvestPage({ config: harvestConfig, state: harvest, site, videos: harvestVideos }));
+  harvestWidget = harvestWidgetHtml(harvest, harvestConfig);
   await writeFile(path.join(DIST, 'digest', 'feed.xml'), renderDigestFeed(digests, site));
   await writeFile(path.join(DIST, 'feed.xml'), renderTopFeed(published, site));
   await writeFile(path.join(DIST, '.nojekyll'), ''); // tell GitHub Pages not to run Jekyll

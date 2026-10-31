@@ -62,7 +62,7 @@ The [Bible Quiz](/quiz/) sets a new quiz of the day, ten questions with four ans
 
 Every card has a share button: send a story to a WhatsApp group, post it to X, Facebook or Telegram, email it, or copy the link. Whoever opens it lands on the story here, one tap from the full article at its source, with more from the same section alongside. On a phone it opens your own share sheet. The [daily digest](/digest/), in the tab bar beside Find a church, gathers the day's best stories in one page you can copy straight into a group. Put your email address in the subscribe box and the digest comes to your inbox every morning, or follow the [WhatsApp channel](https://whatsapp.com/channel/0029VbDsSvP2Jl86RiDqNe3d) and the [Telegram channel](https://t.me/gloriousanchor), where new stories arrive through the day. If you prefer a feed reader, [/feed.xml](/feed.xml) carries the latest items.
 
-[The Harvest](/harvest/), linked in the footer, tracks Muslims leaving Islam and coming to Christ as far as that can honestly be counted: the published survey figures, the reach of the channels taking the gospel to Muslims, a running count of people who say under those channels' videos that they have left Islam or found Jesus, and Google's charts of who is searching for a way out.
+[The Harvest](/harvest/), the strip at the top of the front page and a link in the footer, tracks Muslims leaving Islam and coming to Christ as far as that can honestly be counted: the published survey figures, the reach of the channels taking the gospel to Muslims, a running count of people who say under those channels' videos that they have left Islam or found Jesus, and Google's charts of who is searching for a way out.
 
 ## On your phone
 

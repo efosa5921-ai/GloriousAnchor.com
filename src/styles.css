@@ -526,3 +526,12 @@ mark { background: var(--gold-soft); color: inherit; border-radius: 2px; padding
 .harvest__links { padding-left: 20px; line-height: 1.7; }
 @media (max-width: 600px) { .harvest__trend { height: 340px; } }
 .digest__foot code, .harvest__method code { overflow-wrap: anywhere; word-break: break-all; }
+
+/* Harvest strip on the home page */
+.harvest-widget { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 18px; margin: 14px 0 6px; padding: 12px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); text-decoration: none; color: inherit; }
+.harvest-widget:hover { border-color: var(--gold); }
+.harvest-widget__kicker { color: var(--gold); font-weight: 700; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; }
+.harvest-widget__stat { font-size: .92rem; color: var(--muted); }
+.harvest-widget__stat b { color: inherit; font-family: var(--serif); font-size: 1.25rem; color: var(--text, inherit); margin-right: 4px; }
+.harvest-widget__more { margin-left: auto; font-weight: 700; color: var(--gold); white-space: nowrap; }
+@media (max-width: 600px) { .harvest-widget { gap: 4px 12px; } .harvest-widget__stat { font-size: .85rem; } .harvest-widget__more { margin-left: 0; } }

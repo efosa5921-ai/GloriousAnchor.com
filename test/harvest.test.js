@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { classifyComment, tallyComments, updateHarvest, renderHarvestPage, emptyState } from '../scripts/lib/harvest.js';
+import { classifyComment, tallyComments, updateHarvest, renderHarvestPage, harvestWidgetHtml, emptyState } from '../scripts/lib/harvest.js';
 
 test('classifyComment counts first-person testimonies only', () => {
   assert.equal(classifyComment('I left Islam two years ago after watching these debates.'), 'left');
@@ -92,4 +92,10 @@ test('renderHarvestPage shows counts, figures, channels and trends', () => {
   assert.ok(html.includes('<polyline'));
   assert.ok(html.includes('t.me/gloriousanchor'));
   assert.ok(html.includes('"@type":"Dataset"'));
+});
+
+test('harvestWidgetHtml is empty before the first count and shows the headline numbers after', () => {
+  assert.equal(harvestWidgetHtml(emptyState()), '');
+  const html = harvestWidgetHtml({ ...emptyState(), totals: { left: 2, christ: 3, comments: 4059, videos: 24 }, channels: { a: { subscribers: 805000 }, b: { subscribers: 417000 } } });
+  assert.ok(html.includes('<b>5</b>') && html.includes('1.2m') && html.includes('4.1k') && html.includes('href="harvest/"'));
 });
