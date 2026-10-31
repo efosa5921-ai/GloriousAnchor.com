@@ -66,6 +66,7 @@ test('updateHarvest reads reach and comments, dedupes, and skips videos read rec
   assert.deepEqual(state.totals, { left: 1, christ: 1, comments: 3, videos: 1 });
   assert.equal(state.history.length, 1);
   assert.equal(state.history[0].reach, 1000);
+  assert.equal(state.startedAt, '2026-10-31');
   assert.ok(!JSON.stringify(state).includes('"x"'), 'author ids are not stored in clear');
   const before = calls.length;
   state = await updateHarvest(state, { key: 'k', channels, fetcher, now: now + 3600000 });
@@ -98,6 +99,8 @@ test('harvestWidgetHtml is empty before the first count and shows the headline n
   assert.equal(harvestWidgetHtml(emptyState()), '');
   const html = harvestWidgetHtml({ ...emptyState(), totals: { left: 2, christ: 3, comments: 4059, videos: 24 }, channels: { a: { subscribers: 805000 }, b: { subscribers: 417000 } } });
   assert.ok(html.includes('<b>5</b>') && html.includes('1.2m') && html.includes('4.1k') && html.includes('href="harvest/"'));
+  const dated = harvestWidgetHtml({ ...emptyState(), startedAt: '2026-10-31', totals: { left: 1, christ: 0, comments: 10, videos: 1 }, channels: { a: { subscribers: 10 } } });
+  assert.ok(dated.includes('since 31 October 2026'));
 });
 
 test('updateHarvest re-reads everything when the pattern version changes', async () => {

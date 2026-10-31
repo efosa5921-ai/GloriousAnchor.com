@@ -90,7 +90,7 @@ export function tallyComments(comments, seen = {}) {
 export const HARVEST_VERSION = 2;
 
 export function emptyState() {
-  return { version: HARVEST_VERSION, totals: { left: 0, christ: 0, comments: 0, videos: 0 }, authors: {}, videos: {}, channels: {}, history: [], updatedAt: null };
+  return { version: HARVEST_VERSION, totals: { left: 0, christ: 0, comments: 0, videos: 0 }, authors: {}, videos: {}, channels: {}, history: [], startedAt: null, updatedAt: null };
 }
 
 async function apiGet(fetcher, key, resource, params) {
@@ -113,6 +113,8 @@ export async function updateHarvest(state, { key, channels = [], fetcher = fetch
   if ((state.version || 0) < HARVEST_VERSION) { log(`harvest: patterns changed (v${state.version || 0} → v${HARVEST_VERSION}), re-reading counted videos`); state = { ...state, version: HARVEST_VERSION, totals: emptyState().totals, authors: {}, videos: {} }; }
   state.totals = { ...emptyState().totals, ...(state.totals || {}) };
   if (!key || !channels.length) return state;
+  // The day counting began: the first history point, or today.
+  state.startedAt ||= (state.history || [])[0]?.date || new Date(now).toISOString().slice(0, 10);
   const ids = channels.map((c) => c.channelId).filter(Boolean);
   // Reach: subscribers, views and video counts for every channel in one call.
   try {
@@ -181,6 +183,7 @@ export async function updateHarvest(state, { key, channels = [], fetcher = fetch
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const fmt = (n) => { n = Number(n || 0); if (n >= 1e6) return `${(n / 1e6).toFixed(n >= 1e7 ? 0 : 1)}m`; if (n >= 1e3) return `${(n / 1e3).toFixed(n >= 1e5 ? 0 : 1)}k`; return String(n); };
 const base = (site) => String(site.url || '').replace(/\/+$/, '');
+const sinceText = (state) => { const d = state?.startedAt || (state?.history || [])[0]?.date; if (!d) return ''; const dt = new Date(d); return isNaN(dt) ? '' : dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }); };
 
 function trendsIframe(widget, keywords, geo = '', time = 'today 5-y') {
   const req = { comparisonItem: keywords.map((keyword) => ({ keyword, geo, time })), category: 0, property: '' };
@@ -204,7 +207,7 @@ export function harvestWidgetHtml(state, config = {}, prefix = '') {
   if (!reach && !t.comments) return '';
   return `<a class="harvest-widget" href="${prefix}harvest/" aria-label="The Harvest: Muslims leaving Islam, as far as it can be counted">
       <span class="harvest-widget__kicker">The Harvest</span>
-      <span class="harvest-widget__stat"><b>${esc(fmt(said))}</b> said they left Islam or found Christ</span>
+      <span class="harvest-widget__stat"><b>${esc(fmt(said))}</b> said they left Islam or found Christ${sinceText(state) ? ` <span class="harvest-widget__since">since ${esc(sinceText(state))}</span>` : ''}</span>
       <span class="harvest-widget__stat"><b>${esc(fmt(reach))}</b> reached by the channels we follow</span>
       <span class="harvest-widget__stat"><b>${esc(fmt(t.comments))}</b> comments read</span>
       <span class="harvest-widget__more">See the count →</span>
@@ -255,12 +258,12 @@ export function renderHarvestPage({ config, state, site, videos = [], now = Date
     </section>
 
     <section class="harvest__stats" aria-label="Live counts">
-      <div class="harvest__stat"><div class="harvest__num">${fmt(t.christ)}</div><div class="harvest__label">people who said they have come to Christ</div><div class="harvest__sub">in comments read so far</div>${sparkline(state?.history || [], 'christ')}</div>
+      <div class="harvest__stat"><div class="harvest__num">${fmt(t.christ)}</div><div class="harvest__label">people who said they have come to Christ</div><div class="harvest__sub">in comments read${sinceText(state) ? ` since ${esc(sinceText(state))}` : ' so far'}</div>${sparkline(state?.history || [], 'christ')}</div>
       <div class="harvest__stat"><div class="harvest__num">${fmt(t.left)}</div><div class="harvest__label">more who said they have left Islam</div><div class="harvest__sub">and have not yet said where they are going</div>${sparkline(state?.history || [], 'left')}</div>
       <div class="harvest__stat"><div class="harvest__num">${fmt(reach)}</div><div class="harvest__label">subscribers to the channels we follow</div><div class="harvest__sub">${fmt(views)} video views in all</div>${sparkline(state?.history || [], 'reach')}</div>
-      <div class="harvest__stat"><div class="harvest__num">${fmt(t.comments)}</div><div class="harvest__label">comments read</div><div class="harvest__sub">under ${fmt(t.videos)} videos; each person counted once</div></div>
+      <div class="harvest__stat"><div class="harvest__num">${fmt(t.comments)}</div><div class="harvest__label">comments read</div><div class="harvest__sub">under ${fmt(t.videos)} videos${sinceText(state) ? ` since ${esc(sinceText(state))}` : ''}; each person counted once</div></div>
     </section>
-    <p class="harvest__method">How the count works: each build reads the newest comments under the latest videos of the channels below and counts the writers who say, in the first person, that they have left Islam ("I left Islam", "I'm an ex-Muslim") or come to Christ ("I accepted Jesus", "I was baptized"). Questions, reports about other people and denials are not counted. Each person is counted once, by an anonymous code; no names or comments are stored. It is a floor, not a total: most who leave never say so anywhere.</p>
+    <p class="harvest__method">How the count works: ${sinceText(state) ? `we began counting on ${esc(sinceText(state))}. ` : ''}Each build reads the newest comments under the latest videos of the channels below and counts the writers who say, in the first person, that they have left Islam ("I left Islam", "I'm an ex-Muslim") or come to Christ ("I accepted Jesus", "I was baptized"). Questions, reports about other people and denials are not counted. Each person is counted once, by an anonymous code; no names or comments are stored. It is a floor, not a total: most who leave never say so anywhere.</p>
 
     <section class="harvest__section">
       <h2>What the surveys say</h2>

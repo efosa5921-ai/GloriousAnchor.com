@@ -535,3 +535,4 @@ mark { background: var(--gold-soft); color: inherit; border-radius: 2px; padding
 .harvest-widget__stat b { color: inherit; font-family: var(--serif); font-size: 1.25rem; color: var(--text, inherit); margin-right: 4px; }
 .harvest-widget__more { margin-left: auto; font-weight: 700; color: var(--gold); white-space: nowrap; }
 @media (max-width: 600px) { .harvest-widget { gap: 4px 12px; } .harvest-widget__stat { font-size: .85rem; } .harvest-widget__more { margin-left: 0; } }
+.harvest-widget__since { color: var(--muted); font-size: .8rem; }
