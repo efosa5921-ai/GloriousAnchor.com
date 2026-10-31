@@ -528,16 +528,14 @@ mark { background: var(--gold-soft); color: inherit; border-radius: 2px; padding
 .digest__foot code, .harvest__method code { overflow-wrap: anywhere; word-break: break-all; }
 
 /* Harvest strip on the home page */
-.harvest-widget { display: flex; align-items: center; gap: 10px; margin: 14px 0 6px; padding: 10px 12px 10px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); }
+.harvest-widget { position: relative; margin: 14px 0 6px; padding: 12px 52px 12px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); }
 .harvest-widget:hover { border-color: var(--gold); }
-.harvest-widget__link { display: flex; flex: 1 1 auto; flex-wrap: wrap; align-items: center; gap: 6px 18px; min-width: 0; text-decoration: none; color: inherit; }
-.harvest-widget__share { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; background: transparent; color: inherit; font: inherit; font-size: .85rem; font-weight: 700; cursor: pointer; }
-.harvest-widget__share:hover { border-color: var(--gold); color: var(--gold); }
-.harvest-widget__share svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.harvest-widget__link { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 18px; min-width: 0; text-decoration: none; color: inherit; }
+.harvest-widget .share { right: 8px; opacity: 1; background: var(--surface-2); color: var(--text); }
 .harvest-page .sharebar { margin: 4px 0 10px; }
 .harvest-widget__kicker { color: var(--gold); font-weight: 700; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; }
 .harvest-widget__stat { font-size: .92rem; color: var(--muted); }
 .harvest-widget__stat b { color: inherit; font-family: var(--serif); font-size: 1.25rem; color: var(--text, inherit); margin-right: 4px; }
 .harvest-widget__more { margin-left: auto; font-weight: 700; color: var(--gold); white-space: nowrap; }
-@media (max-width: 600px) { .harvest-widget { flex-wrap: wrap; } .harvest-widget__link { gap: 4px 12px; } .harvest-widget__stat { font-size: .85rem; } .harvest-widget__more { margin-left: 0; } .harvest-widget__share span { display: none; } .harvest-widget__share { padding: 8px 10px; } }
+@media (max-width: 600px) { .harvest-widget__link { gap: 4px 12px; } .harvest-widget__stat { font-size: .85rem; } .harvest-widget__more { margin-left: 0; } }
 .harvest-widget__since { color: var(--muted); font-size: .8rem; }

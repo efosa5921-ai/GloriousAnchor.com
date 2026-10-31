@@ -291,8 +291,10 @@
     const copy = document.createElement('button'); copy.type = 'button'; copy.textContent = 'Copy link'; copy.setAttribute('role', 'menuitem');
     copy.addEventListener('click', async () => { const u = shareLink(a); try { await navigator.clipboard.writeText(u); copy.textContent = 'Copied!'; } catch { window.prompt('Copy this link', u); } setTimeout(closeShare, 900); });
     menu.appendChild(copy);
-    btn.closest('.card').appendChild(menu); openMenu = menu; menu.querySelector('a').focus();
+    (btn.closest('.card') || btn.parentElement).appendChild(menu); openMenu = menu; menu.querySelector('a').focus();
   }
+  // The Harvest strip on the front page shares like a card: the same button, menu and share sheet.
+  for (const btn of document.querySelectorAll('[data-harvest-share]')) btn.addEventListener('click', (e) => share({ id: 'harvest', title: btn.dataset.title, url: btn.dataset.url, internal: true }, e.currentTarget));
 
   // Which of our articles leads right now: the choice moves on every two hours, so the front page keeps rotating
   // through them between visits, and the slider lets a reader flick through the rest.

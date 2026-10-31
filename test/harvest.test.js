@@ -100,7 +100,7 @@ test('harvestWidgetHtml is empty before the first count and shows the headline n
   assert.equal(harvestWidgetHtml(emptyState()), '');
   const html = harvestWidgetHtml({ ...emptyState(), totals: { left: 2, christ: 3, comments: 4059, videos: 24 }, channels: { a: { subscribers: 805000 }, b: { subscribers: 417000 } } });
   assert.ok(html.includes('<b>5</b>') && html.includes('1.2m') && html.includes('4.1k') && html.includes('href="harvest/"'));
-  assert.ok(html.includes('data-harvest-share') && html.includes('navigator.share'));
+  assert.ok(html.includes('data-harvest-share') && html.includes('class="share"') && !html.includes('<script'));
   const dated = harvestWidgetHtml({ ...emptyState(), startedAt: '2026-10-31', totals: { left: 1, christ: 0, comments: 10, videos: 1 }, channels: { a: { subscribers: 10 } } });
   assert.ok(dated.includes('since 31 October 2026'));
 });

@@ -208,7 +208,6 @@ export function harvestWidgetHtml(state, config = {}, prefix = '', site = null) 
   const since = sinceText(state);
   const pageUrl = `${base(site || {})}/harvest/`;
   const shareTitle = `The Harvest: ${fmt(said)} people have said they left Islam or found Christ${since ? ` since ${since}` : ''}, under the channels taking the gospel to Muslims`;
-  const via = `via ${site?.name || 'Glorious Anchor'}`;
   return `<div class="harvest-widget">
       <a class="harvest-widget__link" href="${prefix}harvest/" aria-label="The Harvest: Muslims leaving Islam, as far as it can be counted">
         <span class="harvest-widget__kicker">The Harvest</span>
@@ -217,9 +216,8 @@ export function harvestWidgetHtml(state, config = {}, prefix = '', site = null) 
         <span class="harvest-widget__stat"><b>${esc(fmt(t.comments))}</b> comments read</span>
         <span class="harvest-widget__more">See the count →</span>
       </a>
-      <button class="harvest-widget__share" type="button" data-harvest-share data-url="${esc(pageUrl)}" data-title="${esc(shareTitle)}" data-via="${esc(via)}" aria-label="Share The Harvest"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M12 15V3m0 0L8 7m4-4 4 4"/></svg><span>Share</span></button>
-    </div>
-    <script>(function(){var b=document.querySelector('[data-harvest-share]');if(!b)return;b.addEventListener('click',function(){var u=b.dataset.url,t=b.dataset.title,v=b.dataset.via;if(navigator.share){navigator.share({title:t,text:t+' \u2014 '+v,url:u}).catch(function(){});}else{window.open('https://wa.me/?text='+encodeURIComponent(t+'\n'+u+'\n\n'+v),'_blank','noopener');}});})();</script>`;
+      <button class="share" type="button" title="Share" aria-label="Share The Harvest" data-harvest-share data-url="${esc(pageUrl)}" data-title="${esc(shareTitle)}"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg></button>
+    </div>`;
 }
 
 /**
