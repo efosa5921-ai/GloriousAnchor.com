@@ -4,6 +4,10 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 1 November 2026
+
+- **New article: [Isaac Oyedepo opens "Habitation" in Christchurch, New Zealand](/articles/isaac-oyedepo-habitation-christchurch-new-zealand/)**, with his video invitation: the venue, the Jonah series, and the no-offerings ministry of Bishop Oyedepo's son.
+
 ## 31 October 2026
 
 - **Harvest counter on the front page**: a strip at the top of Top Stories shows how many people have said they left Islam or found Christ, how many the channels reach and how many comments have been read, with a link to [The Harvest](/harvest/).
