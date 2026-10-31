@@ -525,3 +525,4 @@ mark { background: var(--gold-soft); color: inherit; border-radius: 2px; padding
 .harvest__form { width: 100%; min-height: 900px; border: 0; }
 .harvest__links { padding-left: 20px; line-height: 1.7; }
 @media (max-width: 600px) { .harvest__trend { height: 340px; } }
+.digest__foot code, .harvest__method code { overflow-wrap: anywhere; word-break: break-all; }
