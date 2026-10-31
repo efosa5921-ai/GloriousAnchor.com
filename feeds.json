@@ -1074,6 +1074,19 @@
       ]
     },
     {
+      "id": "yt-towards-jesus",
+      "name": "Towards Jesus",
+      "type": "youtube",
+      "handle": "@towardsjesus",
+      "channelId": "UCtsq4U2uFD1xiSd82341-fA",
+      "category": "apologetics",
+      "kind": "video",
+      "categories": [
+        "apologetics",
+        "video"
+      ]
+    },
+    {
       "id": "yt-joseph-prince",
       "name": "Joseph Prince",
       "type": "youtube",

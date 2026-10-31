@@ -3,7 +3,7 @@ title: Are nearly 2 million Muslims leaving Islam every year? David Wood's claim
 searchTitle: Are 2 Million Muslims Leaving Islam a Year? What the Data Says
 date: 2026-10-31T19:00:00Z
 author: The Glorious Anchor team
-summary: David Wood says nearly 2 million Muslims leave Islam every year. Pew's 13-country data, Iran's secret survey and the US figures tested, and how to pray and reach them.
+summary: David Wood says nearly 2 million Muslims leave Islam every year. Pew data, Iran's secret survey and the US figures tested, and how to pray for them.
 image: https://i.ytimg.com/vi/KMdPm30KWTg/maxresdefault.jpg
 categories: apologetics, news
 keywords: Muslims leaving Islam every year, how many Muslims leave Islam, David Wood Muslims leaving Islam, ex-Muslims statistics 2026, Pew religious switching Islam, Iran Christians GAMAAN survey, Muslims converting to Christianity, apostasy in Islam, reaching Muslims with the gospel, Acts 17 Apologetics
@@ -62,7 +62,7 @@ Third, be honest with the numbers. The believer who claims Islam is collapsing i
 
 Fourth, receive them. Every one of those "nearly 2 million" who finds a church needs a family that will stand with them when their own disowns them. In northern Nigeria that is not a figure of speech, as our report on [Prophet Isa El-Buba, a former Muslim](/articles/prophet-isa-el-buba-former-muslim-occultist-turned-prophet/) shows. "There is one God, and there is one mediator between God and men, the man Christ Jesus, who gave himself as a ransom for all" (1 Timothy 2:5-6). For all includes the Muslim next door.
 
-For more, see our [Apologetics](/apologetics/) section, which now carries David Wood's Apologetics Roadshow alongside GodLogic Apologetics, Mike Winger, Cliffe Knechtle and Living Waters.
+For more, see our [Apologetics](/apologetics/) section, which now carries David Wood's Apologetics Roadshow alongside Towards Jesus, GodLogic Apologetics, Mike Winger, Cliffe Knechtle and Living Waters.
 
 ## Questions this article answers
 

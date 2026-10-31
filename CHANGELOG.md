@@ -6,7 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 31 October 2026
 
-- **New source: David Wood's Apologetics Roadshow** (YouTube) now appears in Apologetics and GAIN TV.
+- **New sources: David Wood's Apologetics Roadshow and Towards Jesus** (YouTube) now appear in Apologetics and GAIN TV.
 
 ## 29 October 2026
 
