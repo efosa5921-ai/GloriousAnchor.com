@@ -4,6 +4,10 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 31 October 2026
+
+- **New source: David Wood's Apologetics Roadshow** (YouTube) now appears in Apologetics and GAIN TV.
+
 ## 29 October 2026
 
 - **New article: [Glenn Beck's warning: what Europe's "Be Ready" advisories really say, and how a Christian should "be ready"](/articles/glenn-beck-warning-europe-be-ready-advisories/)**: the UK, EU, German, Swedish and central-bank advice checked against his claim that "something is coming", and Luke 12:40.

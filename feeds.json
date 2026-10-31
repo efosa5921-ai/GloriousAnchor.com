@@ -1061,6 +1061,19 @@
       ]
     },
     {
+      "id": "yt-apologetics-roadshow",
+      "name": "David Wood (Apologetics Roadshow)",
+      "type": "youtube",
+      "handle": "@apologeticsroadshow",
+      "channelId": "UCePbPbJ96WvMeMm_VuDkOJA",
+      "category": "apologetics",
+      "kind": "video",
+      "categories": [
+        "apologetics",
+        "video"
+      ]
+    },
+    {
       "id": "yt-joseph-prince",
       "name": "Joseph Prince",
       "type": "youtube",
