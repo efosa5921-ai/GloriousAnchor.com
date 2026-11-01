@@ -30,7 +30,10 @@ export function apiToFeed(json, channelId) {
     const s = it.snippet || {};
     const id = s.resourceId?.videoId;
     if (!id || !s.title || s.title === 'Private video' || s.title === 'Deleted video') continue;
-    const thumbs = Object.values(s.thumbnails || {}).filter((t) => t?.url).sort((a, b) => (b.width || 0) - (a.width || 0));
+    // Only the sizes YouTube reliably serves, best first. The API also lists an "fhd" (1920x1080) picture that does not
+    // exist for most videos and answers with a grey placeholder, so it is left out.
+    const order = ['maxres', 'standard', 'high', 'medium', 'default'];
+    const thumbs = order.map((k) => s.thumbnails?.[k]).filter((t) => t?.url);
     items.push({
       id: `yt:video:${id}`,
       'yt:videoId': id,

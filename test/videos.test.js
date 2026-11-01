@@ -49,3 +49,18 @@ test('network failures keep the video and leave it unchecked', async () => {
   assert.equal(r.kept.length, 1); assert.equal(cache.x, undefined);
   assert.match(OEMBED('abc'), /youtube\.com\/oembed\?url=https%3A%2F%2Fwww\.youtube\.com%2Fwatch%3Fv%3Dabc/);
 });
+
+test('a missing large thumbnail falls back to hqdefault instead of the cover tile', async () => {
+  const now = Date.parse('2026-11-01T00:00:00Z');
+  const a = { id: 'v', kind: 'video', videoId: 'ARUItdBrK9I', image: 'https://i.ytimg.com/vi/ARUItdBrK9I/fhddefault.jpg', publishedAt: now - 3600000 };
+  const cache = {};
+  const statuses = { 'https://www.youtube.com/oembed': 200, fhddefault: 404, hqdefault: 200 };
+  const fetchStatus = async (url) => { for (const k of Object.keys(statuses)) if (url.includes(k)) return statuses[k]; return 200; };
+  const { kept, placeholders } = await dropGoneVideos([a], cache, { fetchStatus, now });
+  assert.equal(placeholders, 1);
+  assert.equal(kept[0].image, 'https://i.ytimg.com/vi/ARUItdBrK9I/hqdefault.jpg');
+  assert.equal(cache.ARUItdBrK9I.fallback, 'https://i.ytimg.com/vi/ARUItdBrK9I/hqdefault.jpg');
+  // A cached 404 from before the fallback existed is looked at again.
+  assert.equal(needsCheck({ ok: true, status: 200, thumb: 404, at: now }, a, now), true);
+  assert.equal(needsCheck({ ok: true, status: 200, thumb: 404, fallback: 'x', at: now }, a, now), false);
+});

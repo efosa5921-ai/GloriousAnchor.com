@@ -26,3 +26,10 @@ test('apiToFeed looks like a parsed YouTube RSS feed', () => {
   assert.equal(extractImage(it), 'https://i.ytimg.com/vi/abcdefghijk/hqdefault.jpg');
   assert.deepEqual(it.mediaGroup['media:description'], ['About it']);
 });
+
+test('apiToFeed ignores the fhd thumbnail YouTube lists but rarely serves', () => {
+  const json = { items: [{ snippet: { resourceId: { videoId: 'abc' }, title: 'T', publishedAt: '2026-11-01T00:00:00Z', thumbnails: { default: { url: 'd', width: 120 }, high: { url: 'h', width: 480 }, maxres: { url: 'm', width: 1280 }, fhd: { url: 'f', width: 1920 } } } }] };
+  const feed = apiToFeed(json, 'UCx');
+  assert.equal(feed.items[0].mediaGroup['media:thumbnail'][0].$.url, 'm');
+  assert.ok(!JSON.stringify(feed).includes('"f"'));
+});
