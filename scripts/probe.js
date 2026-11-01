@@ -16,6 +16,16 @@ if (!target) { console.error('usage: node scripts/probe.js <url | @youtubehandle
 // Several targets at once (space-separated, in one workflow input): one short line each, for checking a batch of
 // candidate sources. A target "podcast:Some Show" looks the show up in Apple's podcast directory and prints its feed URL.
 const targets = process.argv.slice(2).join(' ').split(/\s+/).filter(Boolean);
+// A target "ytapi:<resource>?<params>" calls the YouTube Data API with the YOUTUBE_API_KEY secret and prints the answer
+// (key redacted), e.g. ytapi:videos?part=snippet,status,liveStreamingDetails&id=VIDEOID
+if (targets.length === 1 && targets[0].startsWith('ytapi:')) {
+  const key = (process.env.YOUTUBE_API_KEY || '').trim();
+  if (!key) { console.log('ytapi: no YOUTUBE_API_KEY in this run'); process.exit(0); }
+  const res = await fetch(`https://www.googleapis.com/youtube/v3/${targets[0].slice(6)}&key=${key}`);
+  const text = (await res.text()).split(key).join('[key]');
+  console.log(`ytapi ${res.status}:\n` + text.slice(0, 12000));
+  process.exit(0);
+}
 if (targets.length > 1 || targets[0].startsWith('podcast:')) {
   const brief = async (t) => {
     try {
@@ -136,7 +146,7 @@ if (media.size) console.log('media urls:\n  ' + [...media].slice(0, 40).join('\n
 try {
   const feed = await new Parser().parseString(body);
   console.log(`parsed as feed: title="${feed.title}" items=${feed.items?.length ?? 0}`);
-  for (const it of (feed.items || []).slice(0, 3)) console.log(`  - ${it.isoDate || it.pubDate || ''} ${it.title}`);
+  for (const it of (feed.items || []).slice(0, 8)) console.log(`  - ${it.isoDate || it.pubDate || ''} ${it.title} ${it.link || ''}`);
 } catch (err) {
   console.log('not a feed:', String(err.message).split('\n')[0]);
   const links = feedLinksFromHtml(body, target);
