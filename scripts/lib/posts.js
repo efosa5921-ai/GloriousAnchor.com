@@ -104,6 +104,7 @@ export function postToArticle(post, site) {
     image: post.image || fallback, // own articles always get a picture on the card
     author: post.author,
     publishedAt: post.publishedAt,
+    ...(post.updatedAt ? { updatedAt: post.updatedAt } : {}),
     kind: 'article',
     source: OWN_SOURCE.name,
     sourceId: OWN_SOURCE.id,

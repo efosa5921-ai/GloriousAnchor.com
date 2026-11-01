@@ -276,6 +276,7 @@ export function slimArticle(a, summaryMax = 160) {
   if (a.duration) out.duration = a.duration;
   if (a.pinned) out.pinned = true;
   if (a.internal) out.internal = true;
+  if (a.updatedAt && a.updatedAt > a.publishedAt) out.updatedAt = a.updatedAt;
   if (a.note) out.note = a.note;
   return out;
 }

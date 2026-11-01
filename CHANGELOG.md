@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 1 November 2026
 
+- **Updated articles move to the front of the slider**: when one of our articles gets a substantive update (the Israel election story, say) it ranks by the update date in the "From our writers" slider and its card shows "Updated" with the new date, so a refreshed story is not buried behind newer ones.
 - **Updated: [Israel election results](/articles/israel-election-results-exit-polls/)** with the final count (Likud 27, Shas down to 6, blocs unchanged at 53-48-19), Eisenkot's four conditions for coalition partners, Liberman's break with his bloc, the police answer to Likud's "stolen election" claim, Saturday's Tel Aviv rally, and the dates for Herzog's consultations and the Knesset swearing-in.
 - **Four more channels in Apologetics and GAIN TV**: DLM Christian Lifestyle, Ruslan KD, THE BEAT by Allen Parr and Sam Shamoun, who is also counted on The Harvest.
 - **Fifteen more apologetics channels** (YouTube) now appear in Apologetics and GAIN TV: Cross Examined, Answers in Genesis, InspiringPhilosophy, Whaddo You Meme??, Melissa Dougherty, Sean McDowell, Reasonable Faith, Testify, Apologetics Canada, Cold-Case Christianity, Red Pen Logic, Stand to Reason, Wes Huff, and two that take the gospel to Muslims, CIRA International and DCCI Ministries, which are also counted on The Harvest.

@@ -234,9 +234,13 @@
       src.after(by);
     }
     const t = node.querySelector('.card__time');
-    t.dateTime = new Date(a.publishedAt).toISOString();
-    t.textContent = relTime(a.publishedAt);
-    t.title = new Date(a.publishedAt).toLocaleString();
+    // A substantively updated article of ours shows when it was updated, and ranks by that date in the slider.
+    const updated = a.updatedAt && a.updatedAt > a.publishedAt;
+    const when = updated ? a.updatedAt : a.publishedAt;
+    t.dateTime = new Date(when).toISOString();
+    if (updated) t.dataset.prefix = 'Updated ';
+    t.textContent = (t.dataset.prefix || '') + relTime(when);
+    t.title = updated ? `Updated ${new Date(when).toLocaleString()} · first published ${new Date(a.publishedAt).toLocaleString()}` : new Date(when).toLocaleString();
     const link = node.querySelector('.card__title a');
     link.href = a.url; link.innerHTML = highlight(a.title, state.query);
     if (a.internal) { link.removeAttribute('target'); media.removeAttribute('target'); }
@@ -328,8 +332,10 @@
   // through them between visits, and the slider lets a reader flick through the rest.
   const SLOT_MS = 2 * 3600 * 1000, DAY_MS = 24 * 3600 * 1000;
   const SLIDER_DAYS = 30, SLIDER_MAX = 8;
-  // Slides are newest first and the slider always opens on the newest article. While the page stays open it moves
-  // on one slide every two hours. Articles older than SLIDER_DAYS leave the slider (they stay in Our Articles).
+  // Slides are newest first, counting a substantive update as new, and the slider always opens on the newest. While
+  // the page stays open it moves on one slide every two hours. Articles older than SLIDER_DAYS leave the slider (they
+  // stay in Our Articles).
+  const recency = (a) => Math.max(a.updatedAt || 0, a.publishedAt || 0);
   function writersSlider(ours) {
     const box = document.createElement('section'); box.className = 'slider lead'; box.setAttribute('aria-roledescription', 'carousel'); box.setAttribute('aria-label', 'From our writers');
     const head = document.createElement('div'); head.className = 'slider__head';
@@ -361,8 +367,8 @@
       // On Top Stories the lead slot is a slider of our own articles, opening on the one for the current two-hour
       // slot. Elsewhere pinned items lead. The remaining hero slots prefer pinned items, then stories with pictures.
       const ours = state.category === 'top'
-        ? list.filter((a) => a.internal && !/\/articles\/whats-new\/$/.test(a.url || '') && (a.publishedAt || 0) > Date.now() - SLIDER_DAYS * DAY_MS)
-          .sort((a, b) => (b.publishedAt || 0) - (a.publishedAt || 0)).slice(0, SLIDER_MAX)
+        ? list.filter((a) => a.internal && !/\/articles\/whats-new\/$/.test(a.url || '') && recency(a) > Date.now() - SLIDER_DAYS * DAY_MS)
+          .sort((a, b) => recency(b) - recency(a)).slice(0, SLIDER_MAX)
         : [];
       const slider = ours.length >= 2;
       const inSlider = new Set(slider ? ours.map((a) => a.id) : []);
@@ -514,7 +520,7 @@
   els.q.addEventListener('blur', () => { if (!els.q.value) els.searchForm.classList.remove('open'); });
   document.addEventListener('keydown', (e) => { if (e.key === '/' && !/input|textarea|select/i.test(document.activeElement.tagName)) { e.preventDefault(); els.q.focus(); } });
   // Refresh relative timestamps once a minute.
-  setInterval(() => { document.querySelectorAll('time.card__time').forEach((t) => { t.textContent = relTime(Date.parse(t.dateTime)); }); }, 60000);
+  setInterval(() => { document.querySelectorAll('time.card__time').forEach((t) => { t.textContent = (t.dataset.prefix || '') + relTime(Date.parse(t.dateTime)); }); }, 60000);
 
   /* ---------- PWA: install prompt, offline notice, updates ---------- */
   let installEvent = null;

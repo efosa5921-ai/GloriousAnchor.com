@@ -134,6 +134,9 @@ test('audio episodes carry their enclosure and duration', () => {
   assert.equal(ep.duration, 24 * 60 + 30);
   assert.equal(slimArticle(ep).audio, ep.audio);
   assert.equal(slimArticle(ep).duration, ep.duration);
+  // A later `updated` date travels to the front end; an earlier or missing one does not.
+  assert.equal(slimArticle({ ...ep, publishedAt: 10, updatedAt: 20 }).updatedAt, 20);
+  assert.equal(slimArticle({ ...ep, publishedAt: 10, updatedAt: 5 }).updatedAt, undefined);
   // Non-audio sources never get a player, even with an enclosure.
   const news = normaliseItem({ title: 'N', link: 'https://ex.com/n', pubDate: 'Mon, 13 Oct 2026 09:00:00 +0000', enclosure: { url: 'https://cdn.ex.com/n.mp3', type: 'audio/mpeg' } }, { id: 'n', name: 'N', category: 'news' });
   assert.equal(news.audio, undefined);
