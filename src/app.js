@@ -296,6 +296,34 @@
   // The Harvest strip on the front page shares like a card: the same button, menu and share sheet.
   for (const btn of document.querySelectorAll('[data-harvest-share]')) btn.addEventListener('click', (e) => share({ id: 'harvest', title: btn.dataset.title, url: btn.dataset.url, internal: true }, e.currentTarget));
 
+  /* ---------- The Harvest strip: live numbers ---------- */
+  // The strip is baked into the page at build time, and the page itself is served from the device's cache first, so
+  // the numbers are refreshed here from data/harvest.json (fresh when online) on every load and every 15 minutes.
+  const fmtCount = (n) => { n = Number(n || 0); if (n >= 1e6) return `${(n / 1e6).toFixed(n >= 1e7 ? 0 : 1)}m`; if (n >= 1e3) return `${(n / 1e3).toFixed(n >= 1e5 ? 0 : 1)}k`; return String(n); };
+  async function refreshHarvest() {
+    const box = document.querySelector('.harvest-widget');
+    if (!box) return;
+    try {
+      const res = await fetch(`${BASE}data/harvest.json`, { cache: 'no-cache' });
+      if (!res.ok) return;
+      const h = await res.json();
+      const t = h.totals || {};
+      const said = Number(t.left || 0) + Number(t.christ || 0);
+      const reach = Object.values(h.channels || {}).reduce((n, c) => n + (c.subscribers || 0), 0);
+      const nums = box.querySelectorAll('.harvest-widget__stat b');
+      if (nums[0]) nums[0].textContent = fmtCount(said);
+      if (nums[1]) nums[1].textContent = fmtCount(reach);
+      if (nums[2]) nums[2].textContent = fmtCount(t.comments);
+      const since = box.querySelector('.harvest-widget__since');
+      if (since && h.startedAt) since.textContent = `since ${new Date(h.startedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })}`;
+      const btn = box.querySelector('[data-harvest-share]');
+      if (btn) btn.dataset.title = `The Harvest: ${fmtCount(said)} people have said they left Islam or found Christ${h.startedAt ? ` since ${since ? since.textContent.replace(/^since /, '') : ''}` : ''}, under the channels taking the gospel to Muslims`;
+      if (h.updatedAt) box.title = `Counts updated ${new Date(h.updatedAt).toLocaleString()}`;
+    } catch { /* offline: keep what the page came with */ }
+  }
+  refreshHarvest();
+  setInterval(refreshHarvest, 15 * 60 * 1000);
+
   // Which of our articles leads right now: the choice moves on every two hours, so the front page keeps rotating
   // through them between visits, and the slider lets a reader flick through the rest.
   const SLOT_MS = 2 * 3600 * 1000, DAY_MS = 24 * 3600 * 1000;

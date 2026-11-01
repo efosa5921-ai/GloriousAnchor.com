@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 1 November 2026
 
+- **The Harvest strip refreshes itself**: the numbers on the front page are fetched live on every visit and every 15 minutes, so they no longer wait for the page to be re-downloaded.
 - **Fixed grey video thumbnails**: YouTube began advertising a large picture size it has not actually generated for new videos; cards now use a size that exists and fall back to the standard thumbnail.
 - **Share The Harvest**: a share button on the front-page strip and a share bar on the Harvest page, with the current count in the message.
 - **New article: [Isaac Oyedepo opens "Habitation" in Christchurch, New Zealand](/articles/isaac-oyedepo-habitation-christchurch-new-zealand/)**, with his video invitation: the venue, the Jonah series, and the no-offerings ministry of Bishop Oyedepo's son.
