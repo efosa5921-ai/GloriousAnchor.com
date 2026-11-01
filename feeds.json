@@ -1308,6 +1308,58 @@
       ]
     },
     {
+      "id": "yt-dlm-christian-lifestyle",
+      "name": "DLM Christian Lifestyle",
+      "type": "youtube",
+      "handle": "@dlmchristianlifestyle",
+      "channelId": "UCNxMqTW2y6uZm3lbFsT_cwA",
+      "category": "apologetics",
+      "kind": "video",
+      "categories": [
+        "apologetics",
+        "video"
+      ]
+    },
+    {
+      "id": "yt-ruslan-kd",
+      "name": "Ruslan KD",
+      "type": "youtube",
+      "handle": "@ruslankd",
+      "channelId": "UCj2yZE96gWsFyeVYnY9zXeg",
+      "category": "apologetics",
+      "kind": "video",
+      "categories": [
+        "apologetics",
+        "video"
+      ]
+    },
+    {
+      "id": "yt-the-beat-allen-parr",
+      "name": "THE BEAT by Allen Parr",
+      "type": "youtube",
+      "handle": "@AllenParr",
+      "channelId": "UCm_RMW_fQk-ELpPYUzor8lw",
+      "category": "apologetics",
+      "kind": "video",
+      "categories": [
+        "apologetics",
+        "video"
+      ]
+    },
+    {
+      "id": "yt-sam-shamoun",
+      "name": "Sam Shamoun",
+      "type": "youtube",
+      "handle": "@SamShamoun",
+      "channelId": "UCvhg3guvnV3N8aAOsunYCnw",
+      "category": "apologetics",
+      "kind": "video",
+      "categories": [
+        "apologetics",
+        "video"
+      ]
+    },
+    {
       "id": "yt-joseph-prince",
       "name": "Joseph Prince",
       "type": "youtube",

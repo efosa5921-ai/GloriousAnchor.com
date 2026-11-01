@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 1 November 2026
 
+- **Four more channels in Apologetics and GAIN TV**: DLM Christian Lifestyle, Ruslan KD, THE BEAT by Allen Parr and Sam Shamoun, who is also counted on The Harvest.
 - **Fifteen more apologetics channels** (YouTube) now appear in Apologetics and GAIN TV: Cross Examined, Answers in Genesis, InspiringPhilosophy, Whaddo You Meme??, Melissa Dougherty, Sean McDowell, Reasonable Faith, Testify, Apologetics Canada, Cold-Case Christianity, Red Pen Logic, Stand to Reason, Wes Huff, and two that take the gospel to Muslims, CIRA International and DCCI Ministries, which are also counted on The Harvest.
 - **New sources: PfanderFilms and GodLogic 2.0** (YouTube) now appear in Apologetics and GAIN TV and are counted on The Harvest.
 - **The Harvest strip refreshes itself**: the numbers on the front page are fetched live on every visit and every 15 minutes, so they no longer wait for the page to be re-downloaded.
