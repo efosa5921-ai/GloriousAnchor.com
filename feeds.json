@@ -1113,6 +1113,201 @@
       ]
     },
     {
+      "id": "yt-cross-examined",
+      "name": "Cross Examined (Frank Turek)",
+      "type": "youtube",
+      "handle": "@crossexamined",
+      "channelId": "UCedYGs_lqq1uNet0u7qlSyQ",
+      "category": "apologetics",
+      "kind": "video",
+      "categories": [
+        "apologetics",
+        "video"
+      ]
+    },
+    {
+      "id": "yt-answers-in-genesis",
+      "name": "Answers in Genesis",
+      "type": "youtube",
+      "handle": "@answersingenesis",
+      "channelId": "UCicvc24eAbFp-thRrBnSP2A",
+      "category": "apologetics",
+      "kind": "video",
+      "categories": [
+        "apologetics",
+        "video"
+      ]
+    },
+    {
+      "id": "yt-inspiring-philosophy",
+      "name": "InspiringPhilosophy",
+      "type": "youtube",
+      "handle": "@inspiringphilosophy",
+      "channelId": "UC5qDet6sa6rODi7t6wfpg8g",
+      "category": "apologetics",
+      "kind": "video",
+      "categories": [
+        "apologetics",
+        "video"
+      ]
+    },
+    {
+      "id": "yt-whaddo-you-meme",
+      "name": "Whaddo You Meme??",
+      "type": "youtube",
+      "handle": "@whaddoyoumeme",
+      "channelId": "UC1okSIA8UEY8OqvtjGHFvzA",
+      "category": "apologetics",
+      "kind": "video",
+      "categories": [
+        "apologetics",
+        "video"
+      ]
+    },
+    {
+      "id": "yt-melissa-dougherty",
+      "name": "Melissa Dougherty",
+      "type": "youtube",
+      "handle": "@melissadougherty",
+      "channelId": "UCyKgD0DLtBN21gfThSalyUQ",
+      "category": "apologetics",
+      "kind": "video",
+      "categories": [
+        "apologetics",
+        "video"
+      ]
+    },
+    {
+      "id": "yt-sean-mcdowell",
+      "name": "Sean McDowell",
+      "type": "youtube",
+      "handle": "@seanmcdowell",
+      "channelId": "UCC321oNTD2yrszfYoz3-X1w",
+      "category": "apologetics",
+      "kind": "video",
+      "categories": [
+        "apologetics",
+        "video"
+      ]
+    },
+    {
+      "id": "yt-reasonable-faith",
+      "name": "Reasonable Faith (William Lane Craig)",
+      "type": "youtube",
+      "handle": "@drcraigvideos",
+      "channelId": "UCWyWFV9K5Ei0jiTttfnDpXQ",
+      "category": "apologetics",
+      "kind": "video",
+      "categories": [
+        "apologetics",
+        "video"
+      ]
+    },
+    {
+      "id": "yt-cira",
+      "name": "CIRA International",
+      "type": "youtube",
+      "handle": "@cirainternational",
+      "channelId": "UC5zGnPFoN5LjAsxU8ESiBMw",
+      "category": "apologetics",
+      "kind": "video",
+      "categories": [
+        "apologetics",
+        "video"
+      ]
+    },
+    {
+      "id": "yt-testify",
+      "name": "Testify",
+      "type": "youtube",
+      "handle": "@testifyapologetics",
+      "channelId": "UCadiEsTZ0hNxs5OxwGiyELQ",
+      "category": "apologetics",
+      "kind": "video",
+      "categories": [
+        "apologetics",
+        "video"
+      ]
+    },
+    {
+      "id": "yt-apologetics-canada",
+      "name": "Apologetics Canada",
+      "type": "youtube",
+      "handle": "@apologeticscanada",
+      "channelId": "UCdxnoWgNWJLEipq4pdhm9DA",
+      "category": "apologetics",
+      "kind": "video",
+      "categories": [
+        "apologetics",
+        "video"
+      ]
+    },
+    {
+      "id": "yt-cold-case-christianity",
+      "name": "Cold-Case Christianity (J. Warner Wallace)",
+      "type": "youtube",
+      "handle": "@coldcasechristianity",
+      "channelId": "UCVFe7xhG6rl0ruoMQCJDtnw",
+      "category": "apologetics",
+      "kind": "video",
+      "categories": [
+        "apologetics",
+        "video"
+      ]
+    },
+    {
+      "id": "yt-red-pen-logic",
+      "name": "Red Pen Logic (Tim Barnett)",
+      "type": "youtube",
+      "handle": "@redpenlogic",
+      "channelId": "UCmIwZDSKSeNboqWKtgX7UrA",
+      "category": "apologetics",
+      "kind": "video",
+      "categories": [
+        "apologetics",
+        "video"
+      ]
+    },
+    {
+      "id": "yt-dcci",
+      "name": "DCCI Ministries",
+      "type": "youtube",
+      "handle": "@dcciministries",
+      "channelId": "UCf0MDB_oF7huA78BNADx9sQ",
+      "category": "apologetics",
+      "kind": "video",
+      "categories": [
+        "apologetics",
+        "video"
+      ]
+    },
+    {
+      "id": "yt-stand-to-reason",
+      "name": "Stand to Reason (Greg Koukl)",
+      "type": "youtube",
+      "handle": "@STRvideos",
+      "channelId": "UCK9clHWD7H4HxFlr2KreJ2w",
+      "category": "apologetics",
+      "kind": "video",
+      "categories": [
+        "apologetics",
+        "video"
+      ]
+    },
+    {
+      "id": "yt-wes-huff",
+      "name": "Wes Huff",
+      "type": "youtube",
+      "handle": "@WesHuff",
+      "channelId": "UCJX2EazMKUqBQV048px2aoA",
+      "category": "apologetics",
+      "kind": "video",
+      "categories": [
+        "apologetics",
+        "video"
+      ]
+    },
+    {
       "id": "yt-joseph-prince",
       "name": "Joseph Prince",
       "type": "youtube",
