@@ -1061,6 +1061,19 @@
       ]
     },
     {
+      "id": "yt-godlogic2",
+      "name": "GodLogic 2.0",
+      "type": "youtube",
+      "handle": "@GodLogic2.0",
+      "channelId": "UCeViI8suCM0yQRtAhLX0Hhw",
+      "category": "apologetics",
+      "kind": "video",
+      "categories": [
+        "apologetics",
+        "video"
+      ]
+    },
+    {
       "id": "yt-apologetics-roadshow",
       "name": "David Wood (Apologetics Roadshow)",
       "type": "youtube",
