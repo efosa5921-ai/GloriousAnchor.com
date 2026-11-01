@@ -1087,6 +1087,19 @@
       ]
     },
     {
+      "id": "yt-pfander",
+      "name": "PfanderFilms (Jay Smith)",
+      "type": "youtube",
+      "handle": "@pfanderfilms",
+      "channelId": "UC-wOxG8p_Nk5nFkSxZOxq6w",
+      "category": "apologetics",
+      "kind": "video",
+      "categories": [
+        "apologetics",
+        "video"
+      ]
+    },
+    {
       "id": "yt-joseph-prince",
       "name": "Joseph Prince",
       "type": "youtube",
