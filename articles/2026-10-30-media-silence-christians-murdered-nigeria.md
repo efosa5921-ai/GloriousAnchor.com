@@ -3,7 +3,7 @@ title: "When Christians are murdered in Nigeria, the media goes silent": the rec
 searchTitle: Media Silence and Nigeria's Complacency on Murdered Christians
 date: 2026-10-30T17:00:00Z
 author: The Glorious Anchor team
-summary: Nancy Mace says the media goes silent when Christians are murdered in Nigeria. Two silences, in fact: a press that looks away and a government that denies and does not arrest.
+summary: Nancy Mace says the media goes silent when Christians are murdered in Nigeria. There are two silences: a press that looks away and a government that does not arrest.
 image: https://pbs.twimg.com/ext_tw_video_thumb/2115978300619132929/pu/img/ZzCyvso7LBJ0f2Kh.jpg
 categories: news
 keywords: media silence Christians Nigeria, Nigeria government complacency Christians killed, Nancy Mace Nigeria Christians video, Christians killed in Nigeria 2026, Open Doors World Watch List 2026 Nigeria, Yelwata massacre trial, farmer herder clashes framing, soldiers failed to respond Plateau Benue attacks, Nigeria Country of Particular Concern, Christian genocide Nigeria denial Tinubu, Nigeria beheading video fact check, Hebrews 13:3 remember the persecuted
