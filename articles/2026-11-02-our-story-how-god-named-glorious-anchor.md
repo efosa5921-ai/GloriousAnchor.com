@@ -3,7 +3,7 @@ title: Our story: how God spoke the name "Glorious Anchor", and what He said it 
 searchTitle: The Glorious Anchor Story: How God Gave the Vision (Michael Ede)
 date: 2026-11-02
 author: Michael Ede
-summary: Michael Ede, visioner of Glorious Anchor International Network, records the encounters in which God spoke the name, the "tornado of His power" and the mandate to the nations.
+summary: Michael Ede, visioner of Glorious Anchor International Network, records how God spoke the name, the "tornado of His power" and the call to the nations.
 image: images/holy-spirit-dove.jpg
 categories: teaching, articles, holyspirit
 keywords: Glorious Anchor story, Glorious Anchor International Network, GAIN vision, Michael Ede, Prevailing Prayer Mountain, tornado of His power riding in the wings of His glory, Goshen city of light, apostle of light, Shiloh Winners Chapel Benin, Christian media ministry vision, Habakkuk 2:2 write the vision
