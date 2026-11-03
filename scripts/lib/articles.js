@@ -161,6 +161,24 @@ export function normaliseTitle(title) {
 
 const REDDIT_BOILERPLATE = /\s*submitted by\s+\/u\/\S+.*$/i;
 
+/**
+ * Some feeds (Endtime Ministries, for one) start every summary with the headline, so a card and its link preview read
+ * the title twice. Drop a summary's leading copy of the title, with any punctuation that followed it.
+ */
+export function stripLeadingTitle(summary, title) {
+  if (!summary || !title) return summary || '';
+  const norm = (t) => t.toLowerCase().replace(/[\u2018\u2019\u201c\u201d]/g, (c) => ({ '\u2018': "'", '\u2019': "'", '\u201c': '"', '\u201d': '"' }[c])).replace(/\s+/g, ' ').trim();
+  const t = norm(title);
+  if (!t || norm(summary).slice(0, t.length) !== t) return summary;
+  // Find where the title ends in the original (whitespace may differ), then skip separators.
+  let i = 0, j = 0;
+  const low = summary.toLowerCase();
+  while (j < t.length && i < low.length) { if (/\s/.test(low[i]) && /\s/.test(t[j])) { while (i < low.length && /\s/.test(low[i])) i++; j++; } else { i++; j++; } }
+  const rest = summary.slice(i).replace(/^[\s\-\u2013\u2014:.,;|]+/, '');
+  if (!rest) return '';
+  return rest.charAt(0).toUpperCase() + rest.slice(1);
+}
+
 export function normaliseItem(item, source, feed) {
   const kind = KINDS.includes(source.kind) ? source.kind : 'news';
   const url = cleanUrl(item.link || (typeof item.guid === 'string' ? item.guid : null));
@@ -178,7 +196,7 @@ export function normaliseItem(item, source, feed) {
   const publishedAt = parseDate(item) ?? Date.now();
   let summary = kind === 'social' && title.startsWith(bodyText.slice(0, Math.min(40, bodyText.length)))
     ? '' // the title already *is* the post
-    : truncate(bodyText);
+    : truncate(kind === 'social' ? bodyText : stripLeadingTitle(bodyText, title)); // a post's caption is its title
   if (summary && summary.toLowerCase() === title.toLowerCase()) summary = '';
 
   const author = stripHtml(item.creator || item.dcCreator || item.author?.name || item.author || '') || null;

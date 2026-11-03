@@ -4,6 +4,10 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 3 November 2026
+
+- **Fixed summaries that repeated the headline**: some feeds (Endtime Ministries, for one) begin every summary with the story's title, so cards and shared link previews read it twice. The repeated title is now removed.
+
 ## 1 November 2026
 
 - **New article: ["When Christians are murdered in Nigeria, the media goes silent": the record of two silences](/articles/media-silence-christians-murdered-nigeria/)**: Nancy Mace's charge against the press, and the longer charge sheet against Nigeria's government: denial, seven months to charge anyone for Yelwata, soldiers a mile away who did not come, arrests within hours for a Fulani leader and none for eighteen Christians, and the recycled "beheading" video traced to a Boko Haram attack on soldiers.

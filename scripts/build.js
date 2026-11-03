@@ -14,7 +14,7 @@ import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import Parser from 'rss-parser';
-import { normaliseItem, dedupe, mergeWithPrevious, slimArticle, capOutput } from './lib/articles.js';
+import { normaliseItem, dedupe, mergeWithPrevious, slimArticle, capOutput, stripLeadingTitle } from './lib/articles.js';
 import { resolveFeedUrl, homepageFor, serviceUrl, expandEnv, feedLinksFromHtml, conventionalFeedPaths, relayUrl, youtubeCacheKey } from './lib/sources.js';
 import { unfurl, pickToArticle, needsManualFields, PICKS_SOURCE, PICKS_TTL_MS } from './lib/picks.js';
 import { fetchInstagramItems } from './lib/instagram.js';
@@ -554,6 +554,8 @@ async function main() {
   const cutoff = fixturesDir ? 0 : Date.now() - limits.maxAgeHours * 3600 * 1000; // fixtures never age out
   const merged = mergeWithPrevious(fresh, previous.filter((p) => p?.sourceId !== PICKS_SOURCE.id && p?.sourceId !== OWN_SOURCE.id), sourceStatus, cutoff);
   let articles = dedupe(merged);
+  // Stories cached from earlier builds were normalised by older code: re-apply the summary clean-up to them too.
+  for (const a of articles) if (a.summary && a.kind !== 'social') a.summary = stripLeadingTitle(a.summary, a.title);
   if (config.hidden?.length) {
     const before = articles.length;
     articles = applyHidden(articles, config.hidden);

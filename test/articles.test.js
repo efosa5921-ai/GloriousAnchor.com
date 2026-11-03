@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { cleanUrl, stripHtml, truncate, extractImage, dedupe, mergeWithPrevious, normaliseItem, makeId, slimArticle, capOutput, audioEnclosure, parseDuration } from '../scripts/lib/articles.js';
+import { cleanUrl, stripHtml, truncate, extractImage, dedupe, mergeWithPrevious, normaliseItem, makeId, slimArticle, capOutput, audioEnclosure, parseDuration, stripLeadingTitle } from '../scripts/lib/articles.js';
 
 test('cleanUrl strips tracking params and hash, rejects non-http', () => {
   assert.equal(cleanUrl('https://ex.com/a?utm_source=x&id=1#frag'), 'https://ex.com/a?id=1');
@@ -165,4 +165,16 @@ test('applyHidden drops stories by id, by story link and by publisher link prefi
   assert.deepEqual(applyHidden(list, ['https://example.com/news/']).map((a) => a.id), ['1viixrk', 'def', 'ghi']);
   assert.deepEqual(applyHidden(list, ['example.com']).map((a) => a.id), ['1viixrk', 'ghi']);
   assert.equal(applyHidden(list, []).length, 4); assert.equal(applyHidden(list, undefined).length, 4);
+});
+
+test('stripLeadingTitle drops a summary\'s leading copy of the headline', () => {
+  const title = 'Pope Promotes Religious Unity Across Europe';
+  assert.equal(stripLeadingTitle(`${title} Pope Leo XIV is encouraging leaders…`, title), 'Pope Leo XIV is encouraging leaders…');
+  assert.equal(stripLeadingTitle(`${title}: Pope Leo XIV is encouraging`, title), 'Pope Leo XIV is encouraging');
+  assert.equal(stripLeadingTitle(`pope  promotes religious unity across europe — the rest`, title), 'The rest');
+  assert.equal(stripLeadingTitle('Something else entirely', title), 'Something else entirely');
+  assert.equal(stripLeadingTitle(title, title), '');
+  assert.equal(stripLeadingTitle('', title), '');
+  const a = normaliseItem({ title, link: 'https://x/p', contentSnippet: `${title} Pope Leo XIV is encouraging.`, pubDate: 'Mon, 02 Nov 2026 10:00:00 GMT' }, { id: 's', name: 'S', kind: 'news', category: 'news' }, {});
+  assert.equal(a.summary, 'Pope Leo XIV is encouraging.');
 });
