@@ -4,6 +4,10 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 4 November 2026
+
+- **Updated: [Israel's coalition talks begin](/articles/israel-election-results-exit-polls/)**: the result certified with no evidence of fraud, Herzog's consultations under way with Shas and Smotrich for Netanyahu and Liberman and Ra'am for Eisenkot, the president's exchange with Orit Strook over the Arab parties, the Shin Bet's foreign-money update, and the 11 November deadline for naming a candidate.
+
 ## 3 November 2026
 
 - **Fixed summaries that repeated the headline**: some feeds (Endtime Ministries, for one) begin every summary with the story's title, so cards and shared link previews read it twice. The repeated title is now removed.
