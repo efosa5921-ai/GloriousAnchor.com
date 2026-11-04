@@ -7,6 +7,7 @@ summary: Glenn Beck says Europe's "Be Ready" advisories and the Pentagon's FORTR
 image: https://pbs.twimg.com/amplify_video_thumb/2115503910983208960/img/LQZlbF3V8IJuDhpK.jpg
 categories: pitn, news
 keywords: Glenn Beck warning something is coming, Europe Be Ready advisories, UK Be Ready campaign checklist, stockpile cash water food, EU 72 hour emergency kit, Germany ten days supplies, Sweden if crisis or war comes, keep cash at home ECB, Pentagon FORTRESS initiative, Christian preparedness Luke 12:40
+updated: 2026-11-04
 ---
 
 > *You also must be ready, for the Son of Man is coming at an hour you do not expect.* (Luke 12:40)
@@ -16,6 +17,8 @@ keywords: Glenn Beck warning something is coming, Europe Be Ready advisories, UK
 Beck is a broadcaster, not a prophet, and he says so himself: some of his past warnings have come true and others have not. But the two things he points to are real, and many of our readers have asked about them. This article lays out what European governments are actually telling their citizens, why they say they are doing it, how it fits with the Pentagon plan we [reported on yesterday](/articles/pentagon-fortress-america-90-day-doomsday-plan/), where Beck's reading goes beyond the evidence, and what "be ready" means for a Christian.
 
 *Picture: from Glenn Beck's video on X. Credit: Glenn Beck.*
+
+**Update, Wednesday 4 November.** The European Union has now joined the list. On 3 November, at the European Civil Protection Forum, Commissioner Hadja Lahbib presented the Commission's new population-preparedness guidelines, the delivery of the Preparedness Union Strategy of March 2025. They are not binding on member states, and their first item is the one Britain's campaign leads with: every household should be able to look after itself for 72 hours, with supplies and a "grab bag" ready. The Commission also announced an annual EU Preparedness Day, the first in October 2027. In Britain, the "Be Ready" campaign has emptied some supermarket shelves of bottled water and tinned food, and security minister Dan Jarvis has said "those who can follow this advice should follow this advice". Germany, Sweden and Finland have issued nothing new since this article was written; their guidance stands as described below. Snopes published an explainer on 3 November reaching the same conclusion as ours: the advisories are routine resilience messaging, not a warning of a specific event. The Pentagon has meanwhile put its 90-day figure on the record, as we report in the [FORTRESS article](/articles/pentagon-fortress-america-90-day-doomsday-plan/).
 
 ## What Britain's "Be Ready" campaign actually says
 
@@ -86,7 +89,7 @@ Yes, modestly. The "Be Ready" campaign launched on 22 October 2026 asks househol
 
 ### Which other countries have told citizens to prepare?
 
-The EU asked all citizens for a 72-hour kit in March 2025. Germany advises ten days of supplies, Sweden a week, and France, the Netherlands, Ireland, Finland, Norway and Denmark run similar campaigns. The European Central Bank, the Dutch, Austrian, Finnish and Swedish central banks all advise keeping cash at home.
+As of 3 November the European Commission itself: its new preparedness guidelines ask every household to be self-sufficient for 72 hours, and it has created an annual EU Preparedness Day from October 2027. The EU asked all citizens for a 72-hour kit in March 2025. Germany advises ten days of supplies, Sweden a week, and France, the Netherlands, Ireland, Finland, Norway and Denmark run similar campaigns. The European Central Bank, the Dutch, Austrian, Finnish and Swedish central banks all advise keeping cash at home.
 
 ### How much cash should you keep at home?
 

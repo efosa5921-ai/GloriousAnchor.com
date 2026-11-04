@@ -1,12 +1,13 @@
 ---
-title: Jordan Church attack: Islamist gunmen kill eight Christians at a funeral in Karak
-searchTitle: Jordan Church Attack: Islamist Gunmen Kill 8 Christians in Karak
+title: Jordan Church attack: Islamist gunmen kill nine Christians at a funeral in Karak, and three men now stand trial for terrorism
+searchTitle: Jordan Church Attack: 9 Christians Killed in Karak, 3 on Trial
 date: 2026-10-24
 author: The Glorious Anchor team
-summary: Islamist gunmen fired on Christians at a Greek Orthodox Church funeral in Karak, Jordan, on 23 October 2026, killing eight. What happened, and how to pray.
+summary: Islamist gunmen fired on a church funeral in Karak, Jordan, on 23 October 2026, killing nine. Three men are on trial for terrorism. How to pray.
 image: https://pbs.twimg.com/amplify_video_thumb/2113677968706813952/img/5tnAmJKQqDM9fVQU.jpg
 categories: news, pitn
 keywords: Jordan Church attack, Karak church shooting, Islamist attack on Christians Jordan, Hmoud church attack, St George Greek Orthodox Church Karak, Christians in Jordan, church funeral shooting Jordan 2026, King Abdullah iron fist, Christian persecution Middle East, Hebrews 13:3, Matthew 24:9
+updated: 2026-11-04
 ---
 
 > *The Lord is near to the brokenhearted and saves the crushed in spirit.* (Psalm 34:18)
@@ -18,6 +19,8 @@ The facts matter here, so let us state them plainly: this was Muslim extremists 
 Here is what has been established so far, drawn from CNN, the Associated Press, Al Jazeera and Jordan's own media, and how the church should respond.
 
 *Picture: a frame from security-camera footage of the attack, shared on X.*
+
+**Update, Wednesday 4 November.** The death toll is nine: Mohammad al-Qusous died later of his wounds. Three days after the attack, on 26 October, Jordan's Public Security Directorate arrested three men after a three-hour gun battle at an abandoned house in al-Jadeeda, near Karak; all three were seriously wounded and weapons were seized. The royal court named them as Hazaa Zidan Thneibat, 33, Mashaal Zidan Thneibat, 32, and Ahmad Sami Thneibat, 31, two brothers and their brother-in-law. The same day the Royal Jordanian Air Force struck what it called Islamic State hideouts linked to the attackers in Daraa and Suwayda in southern Syria, saying more than twenty militants were killed; Syria said at least seven people died including three children, and Jordan's government later acknowledged civilian deaths. No group has claimed the attack and the interior ministry says it is too early to tie the three to a known organisation. On 3 November the State Security Court prosecutor charged them with nine counts of terrorist acts resulting in death, terrorist acts using weapons, possessing weapons for terrorist purposes, conspiracy and promoting a terrorist group's ideology; the trial opened on Wednesday 4 November, with the court appointing defence lawyers, and Jordanian media expect the prosecution to seek the death penalty. King Abdullah opened Parliament on 2 November with a minute's silence for "the martyrs of Karak" and said of the attackers: "They turned away from our great Jordanian family and betrayed this family. There is no place for them among us, not today and not tomorrow." The dead, all men aged 23 to 70, were buried on 25 October in a common grave opposite St George's, where a memorial is to be built; Patriarch Theophilos III of Jerusalem led the funeral with Cardinal Pizzaballa present. Jordanian and Arab media name the dead as Dr Fadi al-Halasa, known as "the doctor of the poor", Marwan al-Khaitan, Dr Asem Barqan, the lawyer Mazen Rasmi al-Qusous, Dr Maher al-Zuraiqat, Alaa Khalil al-Masarweh, Ihab Nayef al-Halasa, Dr Khaled al-Halasa and Mohammad al-Qusous; the lists published in the first days did not all agree, and we give these as reported.
 
 ## What happened at the church in Karak
 
@@ -89,7 +92,7 @@ On 23 October 2026, three Islamist gunmen opened fire on a Christian funeral at 
 
 ### Who was killed in the Jordan church attack?
 
-The victims were Christian mourners, mostly aged between 50 and 70, attending the funeral of a woman from the village. A Muslim mourner was among the wounded. The names of the dead had not been released when this was written.
+Nine men aged 23 to 70, including three doctors and a lawyer, several of them from the Halasa family of Hmoud; the ninth, Mohammad al-Qusous, died later of his wounds. About forty people were wounded. The victims were Christian mourners, mostly aged between 50 and 70, attending the funeral of a woman from the village. A Muslim mourner was among the wounded. The names of the dead had not been released when this was written.
 
 ### Who carried out the attack on the church in Jordan?
 
@@ -97,7 +100,7 @@ Islamist extremists. The three gunmen shouted "Allahu Akbar" as they fired on Ch
 
 ### How did Jordan respond?
 
-King Abdullah II called it a terrorist attack, promised to strike the perpetrators "with an iron fist" and visited the wounded. Jordan declared three days of mourning, and Muslim and Christian leaders held a joint vigil in Amman the same evening.
+Three suspects, two brothers and their brother-in-law from the Thneibat family, were arrested wounded on 26 October after a gun battle, charged with terrorism on 3 November, and went on trial before the State Security Court on 4 November. Jordan also struck what it called Islamic State hideouts in southern Syria. The king visited the church and the bereaved, and opened Parliament with a tribute to the dead. King Abdullah II called it a terrorist attack, promised to strike the perpetrators "with an iron fist" and visited the wounded. Jordan declared three days of mourning, and Muslim and Christian leaders held a joint vigil in Amman the same evening.
 
 ### How many Christians live in Jordan?
 

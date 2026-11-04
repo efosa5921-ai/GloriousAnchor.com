@@ -7,6 +7,7 @@ summary: Suspected AI-generated faces in INEC's online voters' register in Edo: 
 image: https://i.ytimg.com/vi/Dcf08bEdkPc/maxresdefault.jpg
 categories: news
 keywords: INEC AI generated photos, INEC voters register AI images, Edo voter register Etsako West, INEC preliminary register online, display.inecnigeria.org, INEC claims and objections 2026, Pat Utomi INEC, 2027 Nigeria election voter register, Mohammed Kudu Haruna INEC statement, Proverbs 11:1 false balance
+updated: 2026-11-04
 ---
 
 > *A false balance is an abomination to the LORD, but a just weight is his delight.* (Proverbs 11:1)
@@ -18,6 +19,8 @@ The video below, from the Nigerian commentary channel DonAza, walks through the 
 <div class="video"><iframe src="https://www.youtube.com/embed/Dcf08bEdkPc" title="After Nigerians Caught INEC for Using AI Pictures, INEC Has This To Say" loading="lazy" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>
 
 *Video: "After Nigerians Caught INEC for Using AI Pictures, INEC Has This To Say", DonAza on YouTube.*
+
+**Update, Wednesday 4 November.** INEC has now put a number on it and explained how the photos got in. Its biometric system flagged 268 records for review over suspected AI-generated photos and other irregularities. Its director of ICT, Lawrence Bayode, said some registration officers used their own official log-ins to introduce the records, and some exploited the special registration option for people with missing or incomplete fingers; "some are AI-generated, others are not AI but very bad registration." The commission says the clean-up is under way: records with wholly AI-generated photos are being removed, while genuine photographs that were merely "enhanced" by phone apps are kept. The chairman, Joash Amupitan, told staff in Port Harcourt on 31 October that the commission is investigating the AI photos and other discrepancies, will act on verified findings, and wants voters to use the claims-and-objections period before the register is certified on 15 December. Atiku Abubakar has demanded an independent forensic audit and the naming, suspension and prosecution of the officers responsible, calling INEC's response "disgraceful evasion", and SERAP has asked the president to direct the Data Protection Commission to investigate possible breaches of the Data Protection Act. No court case has been filed and INEC has given no Edo-specific figure. The claims of "20 or 30 million fake entries" circulating online are party allegations, not INEC's findings.
 
 ## What the Edo screenshots showed
 
@@ -75,7 +78,7 @@ In screenshots of voter records from polling units in Ward 11, Etsako West local
 
 ### What did INEC say about the AI photos?
 
-In a statement on 27 October signed by Mohammed Kudu Haruna, INEC said the online register is the same preliminary register displayed from 9 to 15 October, that questionable records were flagged during that display and are being reviewed, that the online copy does not include ongoing clean-up, and that it is investigating "possible technical or procedural lapses".
+By 1 November it said 268 records had been flagged, that some registration officers had used their own log-ins and the missing-fingers exemption to insert them, and that the AI-generated ones were being removed. In a statement on 27 October signed by Mohammed Kudu Haruna, INEC said the online register is the same preliminary register displayed from 9 to 15 October, that questionable records were flagged during that display and are being reviewed, that the online copy does not include ongoing clean-up, and that it is investigating "possible technical or procedural lapses".
 
 ### How do I check my name on the INEC voters' register?
 

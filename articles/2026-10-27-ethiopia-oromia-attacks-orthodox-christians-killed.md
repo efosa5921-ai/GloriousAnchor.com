@@ -7,6 +7,7 @@ summary: Ethiopia's Orthodox Church says 60 Christians were killed in Merti and 
 image: https://www.aljazeera.com/wp-content/uploads/2026/10/AFP__20191027__1LS0VD__v1__HighRes__EthiopiaReligionPoliticsOrthodoxUnrest-1793077016.jpg?resize=1920%2C1440
 categories: news, pitn
 keywords: Ethiopia church attack, Oromia attacks Orthodox Christians, Shirka attack Ethiopia, Merti attack Arsi Zone, Ethiopian Orthodox Tewahedo Church massacre, 60 Christians killed Ethiopia, Oromo Liberation Army attacks, Christian persecution Ethiopia 2026, Western leaders silent Christians killed, Hebrews 13:3
+updated: 2026-11-04
 ---
 
 > *They went from house to house.* That is how survivors describe it, and it is how the Bible describes the night of judgment in Egypt, except that here there was no blood on the doorposts to keep death out.
@@ -16,6 +17,8 @@ In the space of five days, armed men killed at least sixty Orthodox Christians i
 The story was carried by Reuters, the Associated Press, the BBC, Al Jazeera and Vatican News. It was not mentioned by the leaders of Britain, France, Spain, Italy, Germany, Ireland, Norway or Canada, a silence that one widely shared post on X set out name by name. Here is what is known.
 
 *Photo: Ethiopian Orthodox worshippers. AFP file photo via Al Jazeera.*
+
+**Update, Wednesday 4 November.** Ethiopia's own human-rights commission has now confirmed the Shirka massacre and put names to the attackers. The Ethiopian Human Rights Commission said on 4 November that 48 people were killed in Shirka on 24 October, 23 of them members of locally organised security units, five militia and thirteen civilians, and that seven more civilians were then killed by "informal armed individuals" operating within or alongside the regional security structure. It named the Oromo Liberation Army, which the government calls "Shene", as the reported attacker, urged the government to rein in the informal armed groups, and said it is finalising a wider investigation into attacks across several districts of south-east Oromia. The Oromia regional government says 73 people have been detained in connection with the killings, though Addis Standard had earlier reported that more than fifty residents were detained after burying the dead or helping the wounded, and it is not clear whether anyone has been charged. The church's own figure of sixty dead across Merti and Shirka stands. The United States ambassador, Ervin Massinga, condemned the "reported targeted killings" in Arsi and called for an investigation; no statement from Prime Minister Abiy Ahmed has been reported, and the high-level meeting with the government that the Holy Synod demanded has not been reported to have taken place. A clip of a burning church that circulated as footage of the attacks was found by AFP to be AI-generated. No further attacks have been reported since.
 
 ## What happened in Merti and Shirka
 
@@ -70,7 +73,7 @@ Armed men killed at least sixty Orthodox Christians in two attacks: fourteen on 
 
 ### Who carried out the attacks on Christians in Oromia?
 
-Nobody has claimed them. The Oromia regional government blamed the Oromo Liberation Army and its rebel allies without presenting evidence; the OLA has not responded but has previously denied targeting civilians. Claims that the attackers were Islamists rest on an anonymous social media post and are not made by the church or by agencies reporting from Ethiopia.
+The Ethiopian Human Rights Commission's report of 4 November names the Oromo Liberation Army as the reported attacker in Shirka, and says informal armed men attached to the regional security structure killed seven more civilians afterwards. Nobody has claimed them. The Oromia regional government blamed the Oromo Liberation Army and its rebel allies without presenting evidence; the OLA has not responded but has previously denied targeting civilians. Claims that the attackers were Islamists rest on an anonymous social media post and are not made by the church or by agencies reporting from Ethiopia.
 
 ### What did the Ethiopian Orthodox Church say?
 

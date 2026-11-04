@@ -7,6 +7,7 @@ summary: A 22-year-old in JIBWIS uniform was filmed chanting for AK-47s to kill 
 image: https://pbs.twimg.com/amplify_video_thumb/2115096460467335168/img/QgCfcvA0SZfPLGiA.jpg
 categories: news, pitn
 keywords: JIBWIS member arrested, give us rifles to kill Christians video, Zamfara police arrest viral video, Umar Ibrahim Gandi Maradun, Izala video threatening Christians, Enugu Jos Christians threat, CAN Daniel Okoh statement, Sheikh Bala Lau JIBWIS, Christian persecution Nigeria 2026, Matthew 5:44
+updated: 2026-11-04
 ---
 
 > *Bless those who persecute you; bless and do not curse them.* (Romans 12:14)
@@ -16,6 +17,8 @@ A video that spread across Nigeria on Monday shows a young man in the uniform of
 Here is what has been established, and what remains to be answered.
 
 *Picture: the viral video as broadcast by AIT. Credit: Africa Independent Television.*
+
+**Update, Wednesday 4 November.** The police have named the man and said how the video was made. He is Umar Ibrahim Gandi Maradun, 22, of Maradun local government area in Zamfara State. According to the Nigeria Police Force and Zamfara's commissioner of police, A. M. Bello, the video was recorded on Friday 23 October in Maradun as he led a JIBWIS first-aid ("Yan Agaji") group of pupils from two Islamic schools to a mosque; JIBWIS itself apprehended him and brought him to Gusau, where the police paraded him. The police say he will be charged under sections 77, 78 and 380(b) of the Zamfara Penal Code, which cover incitement to violence, disturbing the public peace and criminal intimidation. As of 4 November no arraignment, court date or release has been reported. Two fact-checks have settled the question of authenticity: PRNigeria found the video was not AI-generated, and Dubawa rated it real, noting the JIBWIS first-aid uniform; PRNigeria also found "insufficient evidence" that the group's members made the threat as members, which is JIBWIS's position. Archbishop Okoh's demand of 27 October, that the DSS and police establish who organised and financed the video and assess the risk to churches, has had no reported answer, and JIBWIS's national chairman, Sheikh Abdullahi Bala-Lau, has condemned the video and asked for the same investigation.
 
 ## What the video shows
 
@@ -71,7 +74,7 @@ In a video recorded on 23 October 2026 in Maradun, Zamfara State, a man in JIBWI
 
 ### Who was arrested over the video threatening Christians?
 
-Umar Ibrahim Gandi Maradun, 22, a native of Maradun who joined JIBWIS in 2025. JIBWIS handed him to the Zamfara State Police, which announced the arrest on 27 October and is investigating incitement, disturbance of public peace and criminal intimidation under the Zamfara Penal Code.
+Umar Ibrahim Gandi Maradun, 22, of Maradun in Zamfara State, who police say recorded it on 23 October while leading a JIBWIS first-aid group of pupils to a mosque. He is to be charged with incitement, breach of the peace and criminal intimidation under the Zamfara Penal Code. Umar Ibrahim Gandi Maradun, 22, a native of Maradun who joined JIBWIS in 2025. JIBWIS handed him to the Zamfara State Police, which announced the arrest on 27 October and is investigating incitement, disturbance of public peace and criminal intimidation under the Zamfara Penal Code.
 
 ### What is JIBWIS?
 

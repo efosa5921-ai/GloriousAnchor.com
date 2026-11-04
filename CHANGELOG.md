@@ -6,6 +6,15 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 4 November 2026
 
+- **Corrected: [Liatu Samuel Dawa](/articles/liatu-samuel-dawa-jailed-14-years-in-borno/)**: fuller reporting of the court record shows the convert was a girl of 13 and the charge was child custody, the judgment was in May, and an appeal is filed; the Christian lawyers who defended her caution against calling it a conviction for preaching. We say so at the top of the article.
+- **Updated: [JIBWIS arrest](/articles/jibwis-member-arrested-give-us-rifles-kill-christians/)**: the suspect named as Umar Ibrahim Gandi Maradun, 22, how and where the video was recorded, the charges the police intend, and the fact-checks that found the video genuine.
+- **Updated: [INEC and the "AI-generated" voters](/articles/inec-ai-generated-photos-voters-register/)**: 268 records flagged, how registration officers inserted them, the clean-up, the chairman's statement, and Atiku's and SERAP's demands.
+- **Updated: [The two silences over Nigeria's Christians](/articles/media-silence-christians-murdered-nigeria/)**: Binnari's toll and the Senate motion, new attacks this week in Karim Lamido, Logo and Kachia, the Ariko captives, and the Liatu Dawa correction.
+- **Updated: [Jordan Church attack](/articles/jordan-church-attack-karak-funeral/)**: the toll is nine, the dead are named, three men from one family were arrested after a gun battle, charged with terrorism on 3 November and went on trial on 4 November, Jordan struck Islamic State hideouts in Syria, and the king paid tribute in Parliament.
+- **Updated: [Ethiopia church attacks](/articles/ethiopia-oromia-attacks-orthodox-christians-killed/)**: Ethiopia's human-rights commission confirms 48 dead in Shirka plus seven killed by informal armed men, names the Oromo Liberation Army, and 73 people have been detained.
+- **Updated: [The Pentagon's "doomsday plan"](/articles/pentagon-fortress-america-90-day-doomsday-plan/)**: the 90-day stockpile is now confirmed on the record by an assistant secretary, with a programme office established and no cost or congressional action yet.
+- **Updated: [Glenn Beck's warning](/articles/glenn-beck-warning-europe-be-ready-advisories/)**: the European Commission's new 72-hour household preparedness guidelines and an annual EU Preparedness Day from 2027.
+- **Updated: [Israel's coalition talks](/articles/israel-election-results-exit-polls/)**: Netanyahu's first statement, the Shin Bet chief's request to question three Arab party leaders and the attorney general's rebuke, and Thursday's order of consultations.
 - **Updated: [Israel's coalition talks begin](/articles/israel-election-results-exit-polls/)**: the result certified with no evidence of fraud, Herzog's consultations under way with Shas and Smotrich for Netanyahu and Liberman and Ra'am for Eisenkot, the president's exchange with Orit Strook over the Arab parties, the Shin Bet's foreign-money update, and the 11 November deadline for naming a candidate.
 
 ## 3 November 2026

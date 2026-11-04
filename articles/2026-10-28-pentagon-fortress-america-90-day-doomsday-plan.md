@@ -7,6 +7,7 @@ summary: The Pentagon's FORTRESS plan and the reported 90-day rule for bases: wh
 image: https://pbs.twimg.com/amplify_video_thumb/2115186135139840000/img/_sT3FfRK2dsGwUGF.jpg
 categories: pitn, news
 keywords: Pentagon doomsday plan, FORTRESS America, Pentagon 90 days bases, Pentagon FORTRESS initiative explained, portable nuclear reactors military bases, Hegseth State of the Force, Sean Parnell power is combat, UK Be Ready campaign stockpile, wars and rumours of wars Matthew 24:6, Christian preparedness
+updated: 2026-11-04
 ---
 
 > *And you will hear of wars and rumours of wars. See that you are not alarmed, for this must take place, but the end is not yet.* (Matthew 24:6)
@@ -16,6 +17,8 @@ keywords: Pentagon doomsday plan, FORTRESS America, Pentagon 90 days bases, Pent
 Some of this is real and new. Some of it is a familiar programme wearing a frightening name. This article separates the two, and then asks what a Christian should make of a government planning for the lights to go out.
 
 *Picture: from the video circulating on X. Credit: The Steve Gruber Show.*
+
+**Update, Wednesday 4 November.** The 90-day figure is now on the record. Dale Marks, the Assistant Secretary for Energy, Installations and Environment, told Breaking Defense on 30 October that the Pentagon is "mandating a 90-day sovereign stockpile" of critical parts, fuels, propellants and ammunition at each installation, paired with depots for 3D-printing spares, and that the power goal is "30, 60, or even 90 days without a single watt of outside power". Stockpile sizes will be set by each base's projected consumption and resupply times. A directive has established the FORTRESS America programme office under the Under Secretary for Acquisition and Sustainment. On money, Marks said much of it would come through public-private partnerships, "not me having to go back up on Capitol Hill with my hand out"; no cost has been published, Congress has held no hearing on it, and the government is running on a continuing resolution until 11 December. Fact-checkers, including Snopes on 3 November, make the same point this article did: the programme is real, the "doomsday" label is not the Pentagon's, and the base assessments, about 500 of them, are still under way.
 
 ## What FORTRESS America is
 
@@ -71,7 +74,7 @@ It is the internet's name for FORTRESS America, a Pentagon initiative announced 
 
 ### Is the 90-day requirement confirmed?
 
-Not officially. Fox News Digital reported it from internal planning documents. Spokesman Sean Parnell shared the report but has not confirmed the figure, and the Pentagon has published no directive, timeline or cost. Snopes rates the claim "mostly true": the initiative is real, the 90-day detail is reported rather than announced.
+Yes, as of 30 October: Assistant Secretary Dale Marks said the Pentagon is "mandating a 90-day sovereign stockpile" at its installations and aims for up to 90 days of independent power. Before that it rested on Fox News's reading of internal documents. Not officially. Fox News Digital reported it from internal planning documents. Spokesman Sean Parnell shared the report but has not confirmed the figure, and the Pentagon has published no directive, timeline or cost. Snopes rates the claim "mostly true": the initiative is real, the 90-day detail is reported rather than announced.
 
 ### What does FORTRESS America include?
 
