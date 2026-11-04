@@ -32,9 +32,12 @@ if (targets.length === 1 && /^(json|img):/.test(targets[0])) {
   const mode = targets[0].slice(0, targets[0].indexOf(':'));
   const res = await fetch(targets[0].slice(mode.length + 1), { headers: { 'user-agent': 'Mozilla/5.0 (compatible; GloriousAnchorBot/1.0)' } });
   console.log(`${mode} ${res.status} ${res.headers.get('content-type') || ''}`);
-  if (mode === 'json') console.log((await res.text()).slice(0, 12000));
-  else { const b64 = Buffer.from(await res.arrayBuffer()).toString('base64'); console.log(`base64 ${b64.length} chars`); for (let i = 0; i < b64.length; i += 1000) console.log(b64.slice(i, i + 1000)); }
-  process.exit(0);
+  let out = '';
+  if (mode === 'json') out = (await res.text()).slice(0, 12000);
+  else { const b64 = Buffer.from(await res.arrayBuffer()).toString('base64'); out = `base64 ${b64.length} chars\n` + (b64.match(/.{1,1000}/g) || []).join('\n'); }
+  // Let stdout drain before exiting: process.exit() right after console.log drops output beyond the pipe buffer.
+  process.stdout.write(out + '\n', () => process.exit(0));
+  await new Promise(() => {});
 }
 if (targets.length > 1 || targets[0].startsWith('podcast:')) {
   const brief = async (t) => {
