@@ -1407,7 +1407,8 @@
       "categories": [
         "holyspirit",
         "video"
-      ]
+      ],
+      "featured": true
     },
     {
       "id": "yt-jesus-image",
@@ -1739,7 +1740,8 @@
       "categories": [
         "teaching",
         "video"
-      ]
+      ],
+      "featured": true
     },
     {
       "id": "x-example",

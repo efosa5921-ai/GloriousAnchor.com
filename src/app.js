@@ -112,17 +112,34 @@
    * channel or subreddit can't dominate the front page. Featured sources get more room.
    */
   const TOP_CAPS = { news: 5, article: 4, video: 3, audio: 2, social: 2, pick: 40 };
+  // Apologetics (debates, rebuttals) has its own tab; on the front page it is held back so that news and teaching
+  // for every believer lead: one item per apologetics source, a handful in all, and none before the first screenful.
+  const APOLOGETICS = { perSource: 1, total: 4, after: 15, every: 6 };
+  function isApologetics(a) {
+    const cats = a.categories || [a.category];
+    return cats.includes('apologetics') && !cats.includes('teaching') && !cats.includes('holyspirit') && !a.internal && !a.pinned;
+  }
   function topMix(all) {
     const perSource = new Map();
-    const out = [];
+    const out = [], held = [];
     for (const a of all) {
       const n = perSource.get(a.sourceId) || 0;
-      const cap = (TOP_CAPS[a.kind] || 4) * (a.featured ?? srcInfo(a).featured ? 2 : 1);
+      const apol = isApologetics(a);
+      const cap = apol ? APOLOGETICS.perSource : (TOP_CAPS[a.kind] || 4) * (a.featured ?? srcInfo(a).featured ? 2 : 1);
       if (n >= cap) continue;
+      if (apol && held.length >= APOLOGETICS.total) continue;
       perSource.set(a.sourceId, n + 1);
-      out.push(a);
+      (apol ? held : out).push(a);
     }
-    return out;
+    if (!held.length) return out;
+    // Slot the held apologetics items in one at a time, spaced out, after the first screenful.
+    const mixed = out.slice(0, APOLOGETICS.after);
+    let i = APOLOGETICS.after, k = 0;
+    while (i < out.length || k < held.length) {
+      for (let j = 0; j < APOLOGETICS.every && i < out.length; j++) mixed.push(out[i++]);
+      if (k < held.length) mixed.push(held[k++]);
+    }
+    return mixed;
   }
 
   /* ---------- Rendering ---------- */
@@ -374,10 +391,12 @@
       const slider = ours.length >= 2;
       const inSlider = new Set(slider ? ours.map((a) => a.id) : []);
       const left = list.filter((a) => !inSlider.has(a.id));
-      const pinnedFirst = left.filter((a) => a.pinned);
-      const strong = left.filter((a) => !a.pinned && a.image && a.kind !== 'social');
-      const withImg = left.filter((a) => !a.pinned && a.image);
-      const rest0 = left.filter((a) => !a.pinned);
+      // On Top Stories the hero slots skip apologetics: those belong in their own tab, not the front window.
+      const heroPool = state.category === 'top' ? left.filter((a) => !isApologetics(a)) : left;
+      const pinnedFirst = heroPool.filter((a) => a.pinned);
+      const strong = heroPool.filter((a) => !a.pinned && a.image && a.kind !== 'social');
+      const withImg = heroPool.filter((a) => !a.pinned && a.image);
+      const rest0 = heroPool.filter((a) => !a.pinned);
       const slots = slider ? HERO_COUNT - 1 : HERO_COUNT;
       const pool = strong.length + pinnedFirst.length >= slots ? strong : withImg.length + pinnedFirst.length >= slots ? withImg : rest0;
       const pick = [...pinnedFirst, ...pool].slice(0, slots);
