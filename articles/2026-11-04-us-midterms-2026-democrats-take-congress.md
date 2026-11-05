@@ -8,6 +8,7 @@ image: images/us-capitol.jpg
 categories: news, pitn
 keywords: US midterm election results 2026, who won the midterms 2026, Democrats win House and Senate, Senate seats flipped 2026, evangelical vote midterms 2026 exit poll, Trump midterm reaction, Vance Iran war midterms, Hakeem Jeffries Speaker, abortion ballot measures 2026 results, midterms Nigeria Christian persecution, midterms Israel aid Democrats, pray for those in authority 1 Timothy 2:1-2, Daniel 2:21 God removes kings
 updated: 2026-11-04T22:30:00Z
+draft: true
 ---
 
 > *He changes times and seasons; he removes kings and sets up kings.* (Daniel 2:21)
