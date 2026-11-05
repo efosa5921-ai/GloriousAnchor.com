@@ -1804,6 +1804,51 @@
       "featured": true
     },
     {
+      "id": "yt-awmi",
+      "name": "Andrew Wommack Ministries",
+      "type": "youtube",
+      "handle": "@AWMI",
+      "channelId": "UCS4iNLtjyx5O4iCvGtpOw0Q",
+      "homepage": "https://www.awmi.net",
+      "category": "teaching",
+      "kind": "video",
+      "categories": [
+        "teaching",
+        "video"
+      ],
+      "featured": true
+    },
+    {
+      "id": "yt-joyce-meyer",
+      "name": "Joyce Meyer Ministries",
+      "type": "youtube",
+      "handle": "@joycemeyer",
+      "channelId": "UCER2LBsm4hB_Kxte63RoftQ",
+      "homepage": "https://joycemeyer.org",
+      "category": "teaching",
+      "kind": "video",
+      "categories": [
+        "teaching",
+        "video"
+      ],
+      "featured": true
+    },
+    {
+      "id": "yt-tony-evans",
+      "name": "Tony Evans",
+      "type": "youtube",
+      "handle": "@DrTonyEvans",
+      "channelId": "UCRZweRCzcK5ObXPCNKvdMOQ",
+      "homepage": "https://tonyevans.org",
+      "category": "teaching",
+      "kind": "video",
+      "categories": [
+        "teaching",
+        "video"
+      ],
+      "featured": true
+    },
+    {
       "id": "x-example",
       "name": "Example on X",
       "type": "rsshub",

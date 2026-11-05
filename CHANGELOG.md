@@ -6,7 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 5 November 2026
 
-- **New teaching channels, featured**: Derek Prince Ministries, In Touch Ministries (Charles Stanley), David Jeremiah (Turning Point) and Jesse Duplantis Ministries (YouTube) in Teaching and GAIN TV.
+- **New teaching channels, featured**: Derek Prince Ministries, In Touch Ministries (Charles Stanley), David Jeremiah (Turning Point), Jesse Duplantis Ministries, Andrew Wommack Ministries, Joyce Meyer Ministries and Tony Evans (YouTube) in Teaching and GAIN TV.
 - **Apologetics stays in its own tab, teaching leads the front page**: Top Stories now holds apologetics videos back, one per channel and a few per page, placed after the first screenful and never in the lead slots, so news and teaching for every believer come first. RHEMA (Kenneth E. Hagin) and Bill Johnson Teaching are featured so their videos get more room.
 - **Shorter share text for our articles**: sharing one of our articles to WhatsApp, X, Telegram or email, from a card, the article page, the digest or the automatic Telegram and X posts, now uses its short title rather than the full headline, so the message no longer scrolls its beginning out of view in a chat.
 
