@@ -1744,6 +1744,66 @@
       "featured": true
     },
     {
+      "id": "yt-derek-prince",
+      "name": "Derek Prince Ministries",
+      "type": "youtube",
+      "handle": "@DerekPrinceMinistries",
+      "channelId": "UCSmg21GUdg-e8USUsSbGqEQ",
+      "homepage": "https://www.derekprince.org",
+      "category": "teaching",
+      "kind": "video",
+      "categories": [
+        "teaching",
+        "video"
+      ],
+      "featured": true
+    },
+    {
+      "id": "yt-in-touch",
+      "name": "In Touch Ministries (Charles Stanley)",
+      "type": "youtube",
+      "handle": "@InTouchMinistries",
+      "channelId": "UCXL6kvDyoQpvtaeafC4pLyg",
+      "homepage": "https://www.intouch.org",
+      "category": "teaching",
+      "kind": "video",
+      "categories": [
+        "teaching",
+        "video"
+      ],
+      "featured": true
+    },
+    {
+      "id": "yt-david-jeremiah",
+      "name": "David Jeremiah (Turning Point)",
+      "type": "youtube",
+      "handle": "@DrDavidJeremiah",
+      "channelId": "UCqQ9naMCqK_wUEWoxXvh7Dw",
+      "homepage": "https://www.davidjeremiah.org",
+      "category": "teaching",
+      "kind": "video",
+      "categories": [
+        "teaching",
+        "video"
+      ],
+      "featured": true
+    },
+    {
+      "id": "yt-jesse-duplantis",
+      "name": "Jesse Duplantis Ministries",
+      "type": "youtube",
+      "handle": "@JesseDuplantisMinistries",
+      "channelId": "UCkF88mEt8uIDkuavgoJDuoA",
+      "homepage": "https://www.jdm.org",
+      "category": "teaching",
+      "kind": "video",
+      "categories": [
+        "teaching",
+        "video"
+      ],
+      "featured": true
+    },
+    {
       "id": "x-example",
       "name": "Example on X",
       "type": "rsshub",
