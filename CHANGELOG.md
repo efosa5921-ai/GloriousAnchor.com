@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 4 November 2026
 
+- **New article: [US midterms 2026: Democrats take the House and the Senate](/articles/us-midterms-2026-democrats-take-congress/)**: the seats that flipped, the governors, the exit polls including how evangelicals and Catholics voted, the abortion and marriage ballot measures, what Trump, Vance, Jeffries, Thune and Schumer said, and what the new Congress means for Nigeria's Christians and for Israel.
 - **Corrected: [Liatu Samuel Dawa](/articles/liatu-samuel-dawa-jailed-14-years-in-borno/)**: fuller reporting of the court record shows the convert was a girl of 13 and the charge was child custody, the judgment was in May, and an appeal is filed; the Christian lawyers who defended her caution against calling it a conviction for preaching. We say so at the top of the article.
 - **Updated: [JIBWIS arrest](/articles/jibwis-member-arrested-give-us-rifles-kill-christians/)**: the suspect named as Umar Ibrahim Gandi Maradun, 22, how and where the video was recorded, the charges the police intend, and the fact-checks that found the video genuine.
 - **Updated: [INEC and the "AI-generated" voters](/articles/inec-ai-generated-photos-voters-register/)**: 268 records flagged, how registration officers inserted them, the clean-up, the chairman's statement, and Atiku's and SERAP's demands.
