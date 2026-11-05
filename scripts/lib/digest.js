@@ -57,7 +57,7 @@ export function digestText(items, site, date) {
   const lines = [`*${site.name} — ${longDate(date)}*`, ''];
   for (const a of items) {
     const who = a.internal ? site.name : a.source;
-    lines.push(`• ${a.title}${who ? ` — ${who}` : ''}`, shareUrl(a, site), '');
+    lines.push(`• ${a.shareTitle || a.title}${who ? ` — ${who}` : ''}`, shareUrl(a, site), '');
   }
   lines.push(`More every day at ${base(site)} ${site.tagline ? `— ${site.tagline}` : ''}`.trim());
   return lines.join('\n');
@@ -121,7 +121,7 @@ export function renderDigestPage(items, site, date, text) {
         <summary>Post story by story (each with its own picture)</summary>
         <p class="digest__lede">WhatsApp shows one picture per message, for the first link. To give every story its picture, post them one at a time: copy, paste into the channel, send, next.</p>
         <ol class="digest__steps">
-${items.map((a, i) => `          <li><button class="btn btn--ghost btn--small" type="button" data-copy-item="${i}">Copy ${i + 1}</button> <a class="btn btn--ghost btn--small" href="https://wa.me/?text=${encodeURIComponent(`${a.title} — ${a.internal ? site.name : a.source}\n${shareUrl(a, site)}\n\nvia ${site.name}`)}" target="_blank" rel="noopener">WhatsApp</a> <span class="digest__step">${esc(a.title)}</span></li>`).join('\n')}
+${items.map((a, i) => `          <li><button class="btn btn--ghost btn--small" type="button" data-copy-item="${i}">Copy ${i + 1}</button> <a class="btn btn--ghost btn--small" href="https://wa.me/?text=${encodeURIComponent(`${a.shareTitle || a.title} — ${a.internal ? site.name : a.source}\n${shareUrl(a, site)}\n\nvia ${site.name}`)}" target="_blank" rel="noopener">WhatsApp</a> <span class="digest__step">${esc(a.title)}</span></li>`).join('\n')}
         </ol>
       </details>
     </section>
@@ -134,7 +134,7 @@ ${items.map((a, i) => cardHtml(a, { href: shareUrl(a, site), imageProxy: site.im
       <p class="footer__meta">Feed readers and automation: <code>${esc(b)}/digest/feed.xml</code> carries one digest a day; <code>${esc(b)}/feed.xml</code> carries every new item.</p>
     </section>
     <pre id="digestText" hidden>${esc(text)}</pre>
-    <script type="application/json" id="digestData">${JSON.stringify({ site: site.name, date: longDate(date), url: b.replace(/^https?:\/\//, ''), items: items.map((a) => ({ title: a.title, source: a.internal ? site.name : a.source, image: a.image ? previewImage(a, site) : null, url: shareUrl(a, site) })) }).replace(/</g, '\\u003c')}</script>
+    <script type="application/json" id="digestData">${JSON.stringify({ site: site.name, date: longDate(date), url: b.replace(/^https?:\/\//, ''), items: items.map((a) => ({ title: a.shareTitle || a.title, source: a.internal ? site.name : a.source, image: a.image ? previewImage(a, site) : null, url: shareUrl(a, site) })) }).replace(/</g, '\\u003c')}</script>
     <pre id="digestMd" hidden>${esc(md)}</pre>
   </main>
   <footer class="footer"><div class="wrap"><p class="footer__meta"><a href="../">${esc(site.name)}</a> · <a href="../articles/">Our articles</a> · <a href="../churches/">Find a church</a></p></div></footer>

@@ -41,6 +41,7 @@ test('date-only or numbered episode titles get the show name in front', async ()
   assert.equal(postTitle({ title: 'Episode 412', source: 'Holy Post' }), 'Holy Post: Episode 412');
   assert.equal(postTitle({ title: '#88', source: 'Show' }), 'Show: #88');
   assert.equal(postTitle({ title: 'A real headline', source: 'RNS' }), 'A real headline');
+  assert.equal(postTitle({ title: 'A very long headline for the page', shareTitle: 'Short title', source: 'Ours' }), 'Short title');
   assert.match(telegramMessage({ id: 'd', title: '18.10.26', url: 'https://ex.com/d', source: 'The Briefing', kind: 'audio', publishedAt: 0 }, site), /^<b>The Briefing: 18\.10\.26<\/b>/);
 });
 

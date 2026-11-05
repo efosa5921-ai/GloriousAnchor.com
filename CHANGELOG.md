@@ -4,6 +4,10 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 5 November 2026
+
+- **Shorter share text for our articles**: sharing one of our articles to WhatsApp, X, Telegram or email, from a card, the article page, the digest or the automatic Telegram and X posts, now uses its short title rather than the full headline, so the message no longer scrolls its beginning out of view in a chat.
+
 ## 4 November 2026
 
 - **New article: [US midterms 2026: Democrats take the House and the Senate](/articles/us-midterms-2026-democrats-take-congress/)**: the seats that flipped, the governors, the exit polls including how evangelicals and Catholics voted, the abortion and marriage ballot measures, what Trump, Vance, Jeffries, Thune and Schumer said, and what the new Congress means for Nigeria's Christians and for Israel.

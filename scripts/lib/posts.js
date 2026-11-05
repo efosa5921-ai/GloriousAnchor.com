@@ -105,6 +105,8 @@ export function postToArticle(post, site) {
     author: post.author,
     publishedAt: post.publishedAt,
     ...(post.updatedAt ? { updatedAt: post.updatedAt } : {}),
+    // The short search title doubles as the share text: a long headline pasted into a chat scrolls its start out of view.
+    ...(post.searchTitle ? { shareTitle: post.searchTitle } : {}),
     kind: 'article',
     source: OWN_SOURCE.name,
     sourceId: OWN_SOURCE.id,
@@ -132,7 +134,7 @@ export function renderPostPage(template, post, site, others) {
     hero: post.image ? `<img class="article__hero" src="${esc(post.image)}" alt="${esc(post.title)}">` : '',
     meta: metaTags({ title: post.searchTitle || post.title, description: post.summary, url: post.url, image: post.image || `${site.url.replace(/\/$/, '')}/assets/social.jpg`, type: 'article', site }),
     jsonld: articleJsonLd(post, site),
-    share: post.draft ? '' : shareBarHtml({ url: post.url, title: post.title, summary: post.summary, site, label: 'Share this article' }),
+    share: post.draft ? '' : shareBarHtml({ url: post.url, title: post.searchTitle || post.title, summary: post.summary, site, label: 'Share this article' }),
     robots: post.draft ? '<meta name="robots" content="noindex, nofollow">' : '',
     draftBanner: post.draft ? `<div class="banner banner--draft" role="status"><strong>Draft preview.</strong> This article is not published: it is not listed anywhere, not in the feeds, and search engines are asked to ignore it. Read it through, then tell Claude to publish it or edit it in the admin and untick <em>Draft</em>.</div>` : '',
   };

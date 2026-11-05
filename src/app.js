@@ -263,7 +263,8 @@
 
   /* ---------- Sharing ---------- */
   const SITE_URL = () => (state.meta?.site?.url || location.origin).replace(/\/$/, '');
-  function shareText(a) { return `${a.title}${a.internal ? '' : ` — ${a.source}`}`; }
+  // Our own articles share under their short title (the one search engines and link previews show); stories keep theirs.
+  function shareText(a) { return `${a.shareTitle || a.title}${a.internal ? '' : ` — ${a.source}`}`; }
   /** Stories are shared as gloriousanchor.com/s/<id>/: a branded preview card that forwards to the article. */
   function shareLink(a) { return a.internal ? a.url : `${SITE_URL()}/s/${encodeURIComponent(a.id)}/`; }
   function shareTargets(a) {

@@ -25,6 +25,7 @@ export function selectNew(articles, announced, { maxStories = 3, maxAgeHours = 2
 
 /** Podcast feeds often title episodes by date or number alone; prefix the show name so a post never reads "23.10.26". */
 export function postTitle(a) {
+  if (a.shareTitle) return a.shareTitle;
   const bare = /^[\d\s.,/:#-]+$|^(ep(isode)?\.?\s*\d+|#\d+)$/i.test(a.title.trim());
   return bare && a.source ? `${a.source}: ${a.title.trim()}` : a.title;
 }
