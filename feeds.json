@@ -139,7 +139,9 @@
       "url": "https://religionnews.com/feed/",
       "category": "news",
       "kind": "news",
-      "homepage": "https://religionnews.com"
+      "homepage": "https://religionnews.com",
+      "enabled": false,
+      "_note": "Dropped 6 Nov 2026 at the owner's request: its coverage does not serve the site's goal of preaching the gospel. Re-enable in the admin if wanted."
     },
     {
       "id": "baptist-press",

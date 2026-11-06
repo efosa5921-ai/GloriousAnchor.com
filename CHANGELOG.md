@@ -4,6 +4,10 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 6 November 2026
+
+- **Religion News Service dropped**: its stories no longer appear anywhere on the site.
+
 ## 5 November 2026
 
 - **Ravi Zacharias on the front page**: four of his best-known messages, Why I Believe Jesus, the Liberty University convocation, God's Plan for Your Life and The Discipline of a Godly Man, are now Picks in Teaching, with the first pinned to lead Top Stories. His ministry's channel no longer exists and the archive channels are dormant, so Picks, which never age out, are how his messages stay on the site.
