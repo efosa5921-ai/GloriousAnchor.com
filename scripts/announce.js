@@ -12,7 +12,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { selectNew, telegramMessage, xText, oauthHeader, findRepost } from './lib/announce.js';
+import { selectNew, telegramMessage, xText, oauthHeader, findRepost, recordOutcome } from './lib/announce.js';
 import { previewImage } from './lib/share.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -100,7 +100,12 @@ async function main() {
   const site = meta.site || { name: 'Glorious Anchor', url: 'https://gloriousanchor.com' };
   const stateFile = path.join(DATA, 'announced.json');
   const announced = await readJson(stateFile, null);
+  const pendingFile = path.join(DATA, 'x-pending.json');
+  const pending = await readJson(pendingFile, {});
   const now = Date.now();
+  // Items listed in scripts/announce-skip.json are recorded as announced without being posted.
+  const skip = await readJson(path.join(ROOT, 'scripts', 'announce-skip.json'), { ids: [] });
+  if (announced) for (const id of skip.ids || []) if (!announced[id]) announced[id] = now;
   if (!announced) {
     // First run: remember everything so only genuinely new items get announced from now on.
     const seed = Object.fromEntries(articles.map((a) => [a.id, now]));
@@ -125,6 +130,16 @@ async function main() {
       }
     }
   }
+  // Posts X refused earlier (credits depleted, say) wait here; try a few each run and stop at the first refusal.
+  const retry = Object.entries(pending).sort((a, b) => a[1] - b[1]).slice(0, 5);
+  if (retry.length) console.log(`announce: ${Object.keys(pending).length} post(s) waiting for X`);
+  for (const [id, t] of retry) {
+    const a = articles.find((it) => it.id === id);
+    if (!a || now - t > 30 * 86400 * 1000) { delete pending[id]; continue; }
+    if (!x || dry) break;
+    try { await postX(a, site); delete pending[id]; console.log(`  ✓ X (retry): ${a.title}`); }
+    catch (err) { console.warn(`  ✗ X (retry): ${a.title} — ${err.message}`); if (/402|credits/i.test(err.message)) break; }
+  }
   const items = selectNew(articles, announced, { now });
   const xStoryBudget = Number(env.X_STORIES_PER_RUN || 0) || 0;
   let xStoriesUsed = 0;
@@ -134,17 +149,17 @@ async function main() {
     if (telegram) targets.push(['Telegram', postTelegram]);
     const priority = a.internal || a.kind === 'pick';
     if (x && (priority || xStoriesUsed < xStoryBudget)) { targets.push(['X', postX]); if (!priority) xStoriesUsed++; }
-    let ok = true;
+    const results = {};
     for (const [name, fn] of targets) {
-      if (dry) { console.log(`  [${name}] ${a.title}`); continue; }
-      try { await fn(a, site); console.log(`  ✓ ${name}: ${a.title}`); }
-      catch (err) { ok = false; failures++; console.warn(`  ✗ ${name}: ${a.title} — ${err.message}`); }
+      if (dry) { console.log(`  [${name}] ${a.title}`); results[name] = true; continue; }
+      try { await fn(a, site); results[name] = true; console.log(`  ✓ ${name}: ${a.title}`); }
+      catch (err) { results[name] = false; failures++; console.warn(`  ✗ ${name}: ${a.title} — ${err.message}`); }
     }
-    if (ok || dry) announced[a.id] = now;
+    recordOutcome(announced, pending, a, results, now);
   }
   // Forget ids older than 30 days so the state file stays small.
   for (const [id, t] of Object.entries(announced)) if (now - t > 30 * 86400 * 1000) delete announced[id];
-  if (!dry) await writeFile(stateFile, JSON.stringify(announced));
+  if (!dry) { await writeFile(stateFile, JSON.stringify(announced)); await writeFile(pendingFile, JSON.stringify(pending)); }
   if (failures) process.exitCode = 1;
 }
 

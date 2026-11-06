@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { selectNew, telegramMessage, xText, oauthHeader, X_MAX } from '../scripts/lib/announce.js';
+import { selectNew, telegramMessage, xText, oauthHeader, X_MAX, recordOutcome } from '../scripts/lib/announce.js';
 
 const now = Date.parse('2026-10-17T08:00:00Z');
 const h = (n) => now - n * 3600 * 1000;
@@ -57,4 +57,19 @@ test('findRepost matches by id, URL, article slug or title fragment', async () =
   assert.equal(findRepost(list, 'noah warn').id, 'a1');
   assert.equal(findRepost(list, 'nothing here'), null);
   assert.equal(findRepost(list, ''), null);
+});
+
+test('recordOutcome marks an item announced once any channel took it, and parks a failed X post for retry', () => {
+  const announced = {}; const pending = {}; const a = { id: 'a1' };
+  recordOutcome(announced, pending, a, { Telegram: true, X: false }, 100);
+  assert.equal(announced.a1, 100, 'Telegram success is enough: no repeat next run');
+  assert.equal(pending.a1, 100, 'the X post waits for a retry');
+  recordOutcome(announced, pending, a, { Telegram: true, X: true }, 200);
+  assert.equal(pending.a1, undefined, 'a later X success clears the retry');
+  const b = { id: 'b1' };
+  recordOutcome(announced, pending, b, { Telegram: false, X: false }, 300);
+  assert.equal(announced.b1, undefined, 'nothing took it: try again next run');
+  assert.equal(pending.b1, undefined);
+  recordOutcome(announced, pending, { id: 'c1' }, {}, 400);
+  assert.equal(announced.c1, 400, 'no channels configured still records it');
 });

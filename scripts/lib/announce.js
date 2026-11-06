@@ -23,6 +23,19 @@ export function selectNew(articles, announced, { maxStories = 3, maxAgeHours = 2
   return [...priority, ...picked];
 }
 
+/**
+ * Record one item's outcome. It counts as announced as soon as any channel took it, so a failure on one channel
+ * (X out of credits, say) never makes the other channel repeat the post on the next run. A failed X post goes into
+ * `pending` to be retried on a later run; a successful one clears it.
+ */
+export function recordOutcome(announced, pending, a, results, now = Date.now()) {
+  const attempted = Object.keys(results);
+  const anyOk = attempted.some((k) => results[k]);
+  if (anyOk || attempted.length === 0) announced[a.id] = now;
+  if (results.X === false && anyOk) pending[a.id] = pending[a.id] || now;
+  else if (results.X === true) delete pending[a.id];
+}
+
 /** Podcast feeds often title episodes by date or number alone; prefix the show name so a post never reads "23.10.26". */
 export function postTitle(a) {
   if (a.shareTitle) return a.shareTitle;

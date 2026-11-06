@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 6 November 2026
 
+- **Telegram repeats fixed**: since X stopped accepting posts, every hourly build had been re-posting our articles and picks to the Telegram channel. A post now counts as announced once Telegram has it, and the X copy waits in a queue that is retried when credits return. Sorry for the noise.
 - **New article: [Chibok girls, twelve years on](/articles/chibok-girls-twelve-years-on/)**: 87 still missing by their parents' count, who came home and how, the one who refused to leave, the parents' letter to the president, and why the video shared on X this week is Lydia Simon's 2024 rescue, not a new escape.
 - **Church directory seeded**: forty-one listed churches with addresses, service times and maps, each with its own page under /churches/: the great churches of Nigeria from Faith Tabernacle to the Glory Dome, the home churches of the American pastors we feature, from Lakewood and The Potter's House to Bethel and Shadow Mountain, and Hillsong Sydney, New Creation Singapore, Yoido in Seoul, Jesus House and KICC in London, and Christ Church Jerusalem.
 - **Updated: [Israel's coalition talks](/articles/israel-election-results-exit-polls/)**: Herzog's count of 67 recommendations for Eisenkot to 46 for Netanyahu, his warning that the parties' "mutual vetoes" leave it unclear who can govern, his decision due on Sunday, Yashar's demand for the mandate, Likud's last word, and the Shin Bet handing its evidence to the police.
