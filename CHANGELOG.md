@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 6 November 2026
 
+- **Church directory seeded**: seventeen listed churches, with addresses, service times and maps, from Faith Tabernacle at Canaanland and the Glory Dome in Abuja to KICC and Winners' Chapel Dartford in Kent, each with its own page under /churches/.
 - **Updated: [Israel's coalition talks](/articles/israel-election-results-exit-polls/)**: Herzog's count of 67 recommendations for Eisenkot to 46 for Netanyahu, his warning that the parties' "mutual vetoes" leave it unclear who can govern, his decision due on Sunday, Yashar's demand for the mandate, Likud's last word, and the Shin Bet handing its evidence to the police.
 - **New article: [The Apostle Thomas in Kerala](/articles/apostle-thomas-kerala-india-christians/)**: how "doubting Thomas" took the gospel to India in AD 52, what the evidence says, the seven churches, his tomb at Mylapore, the church that bears his name, and how Pentecost came to his coast.
 - **Liberal-leaning sources dropped**: RELEVANT, Christianity Today (website and Bluesky) and r/Christianity no longer appear on the site.

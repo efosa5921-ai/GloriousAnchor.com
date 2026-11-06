@@ -5,5 +5,187 @@
     "Addresses are located automatically at build time (OpenStreetMap geocoding) and the result is cached. Give lat/lng directly for precision.",
     "Manage this list from gloriousanchor.com/admin/ under Churches."
   ],
-  "churches": []
+  "churches": [
+    {
+      "name": "Faith Tabernacle, Canaanland (Winners' Chapel headquarters)",
+      "address": "Canaanland, Km 10, Idiroko Road",
+      "city": "Ota, Ogun State",
+      "country": "Nigeria",
+      "denomination": "Living Faith Church Worldwide (Winners' Chapel)",
+      "website": "https://faithtabernacle.org.ng/",
+      "serviceTimes": "Sunday 6:00, 8:10 and 10:20 am; Wednesday Midweek Communion Service 5:00 pm",
+      "notes": "Bishop David O. Oyedepo, presiding bishop. The 50,000-seat Faith Tabernacle, opened 1999, is the headquarters of Winners' Chapel; the Ark, a 109,000-seat church, is being built beside it."
+    },
+    {
+      "name": "Living Faith Church (Winners' Chapel), Sapele Road, Benin City",
+      "address": "Km 6, Benin-Sapele Road, after Agip Junction, Oka",
+      "city": "Benin City, Edo State",
+      "country": "Nigeria",
+      "denomination": "Living Faith Church Worldwide (Winners' Chapel)",
+      "website": "https://x.com/lfcbenin",
+      "serviceTimes": "Sunday 6:30, 8:30 and 10:30 am",
+      "notes": "One of Winners' Chapel's largest provincial churches, and the church where Glorious Anchor's founders met in the Evangelism Unit."
+    },
+    {
+      "name": "Dunamis International Gospel Centre, The Glory Dome",
+      "address": "The Glory Dome, Lord's Garden, Airport Road",
+      "city": "Abuja",
+      "country": "Nigeria",
+      "denomination": "Dunamis International Gospel Centre (Pentecostal)",
+      "website": "https://dunamisgospel.org/",
+      "phone": "+234 803 314 4509",
+      "serviceTimes": "Sunday 6:30 and 9:00 am; Tuesday Healing and Deliverance Service 9:30 am; Wednesday Power Communion Service 5:30 pm; last Friday of the month Worship, Word and Wonders Night 9:30 pm",
+      "notes": "Dr Paul and Dr Becky Enenche, senior pastors. The 100,000-seat Glory Dome, dedicated in November 2018, is the largest church auditorium in the world.",
+      "lat": 8.9665,
+      "lng": 7.3447
+    },
+    {
+      "name": "Koinonia Global (Eternity Network International), Abuja",
+      "address": "Chida Event Centre, Plot 224 Solomon Lar Way, Utako District",
+      "city": "Abuja",
+      "country": "Nigeria",
+      "denomination": "Eternity Network International (Pentecostal)",
+      "website": "https://koinoniaglobal.org/",
+      "phone": "+234 814 721 4444",
+      "serviceTimes": "Sunday 5:00 pm",
+      "notes": "Apostle Joshua Selman Nimmak. The weekly Koinonia Abuja service draws crowds that queue from the morning; the new Koinonia Global Arena at Jabi hosts the annual General Assembly."
+    },
+    {
+      "name": "Redeemed Christian Church of God, Redemption City (Redemption Camp)",
+      "address": "Km 46, Lagos-Ibadan Expressway, Mowe",
+      "city": "Mowe, Ogun State",
+      "country": "Nigeria",
+      "denomination": "Redeemed Christian Church of God (Pentecostal)",
+      "website": "https://www.rccg.cc/",
+      "phone": "+234 802 320 8688",
+      "serviceTimes": "Holy Ghost Service: first Friday of every month, 7:00 pm",
+      "notes": "Pastor E. A. Adeboye, General Overseer. The camp, renamed Redemption City of God in 2022, is a town in its own right with a three-kilometre auditorium, and hosts the monthly Holy Ghost Service and the Holy Ghost Congress each December."
+    },
+    {
+      "name": "RCCG National Headquarters (Throne of Grace), Ebute-Metta",
+      "address": "1-5 Redemption Way, Ebute-Metta",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "denomination": "Redeemed Christian Church of God (Pentecostal)",
+      "website": "https://www.rccghq.org/",
+      "phone": "+234 1 470 0555",
+      "serviceTimes": "Sunday 7:00 and 10:00 am; Monday Digging Deep 6:00 pm; Tuesday Deliverance and Breakthrough 9:00 am; Thursday Faith Clinic 6:00 pm",
+      "notes": "The mother church of the RCCG, where Pa Josiah Akindayomi founded the mission in 1952."
+    },
+    {
+      "name": "Salvation Ministries (Home of Success) headquarters",
+      "address": "Plot 17 Birabi Street, GRA Phase 1",
+      "city": "Port Harcourt, Rivers State",
+      "country": "Nigeria",
+      "denomination": "Salvation Ministries (Pentecostal)",
+      "website": "https://www.smhos.org/",
+      "serviceTimes": "Sunday 6:30, 8:00, 9:30 and 11:00 am; Thursday 5:00 pm",
+      "notes": "Pastor David Ibiyeomie, founder and senior pastor since 1997. Known for its packed multiple Sunday services and the 5 Nights of Glory crusade."
+    },
+    {
+      "name": "Christ Embassy (LoveWorld), LoveWorld Convocation Arena",
+      "address": "8 Billings Way, Oregun, Ikeja",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "denomination": "Christ Embassy / Believers' LoveWorld (Pentecostal)",
+      "website": "https://christembassy.org/",
+      "serviceTimes": "Sunday 7:00, 8:45, 10:30 am and 12:00 noon; Wednesday 6:00 pm",
+      "notes": "Pastor Chris Oyakhilome, founder and president. The 20,000-seat arena is the home of the Lagos Virtual Zone, LoveWorld TV and Rhapsody of Realities."
+    },
+    {
+      "name": "House on the Rock, The Rock Cathedral",
+      "address": "Rock Cathedral Drive, off Kusenla Road, Ikate-Elegushi, Lekki",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "denomination": "House on the Rock (Pentecostal)",
+      "website": "https://houseontherock.org.ng/",
+      "phone": "+234 201 461 4120",
+      "serviceTimes": "Sunday 9:00 am; Wednesday 6:00 pm online",
+      "notes": "Pastor Paul and Pastor Ifeanyi Adefarasin. Global headquarters of House on the Rock and home of The Experience, Africa's largest gospel concert."
+    },
+    {
+      "name": "Daystar Christian Centre",
+      "address": "Plot A3C Ikosi Road, Oregun, Ikeja",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "denomination": "Daystar Christian Centre (Pentecostal)",
+      "website": "https://daystarng.org/",
+      "phone": "+234 812 595 3460",
+      "serviceTimes": "Sunday 7:00, 9:00 and 11:00 am",
+      "notes": "Pastor Sam Adeyemi, founder and senior pastor since 1995. Known for leadership teaching and the Daystar Leadership Academy."
+    },
+    {
+      "name": "Streams of Joy International (NSPPD), Abuja",
+      "address": "M & M Event Centre, 11 Tafawa Balewa Road, Garki 1, beside Nicon Luxury Hotel",
+      "city": "Abuja",
+      "country": "Nigeria",
+      "denomination": "Streams of Joy International (Pentecostal)",
+      "website": "https://streamsofjoy.org/",
+      "serviceTimes": "Sunday 7:00, 8:30, 10:15 and 11:45 am; Thursday 6:00 pm",
+      "notes": "Pastor Jerry Eze, founder and lead pastor, host of NSPPD, the daily 7 am online prayer broadcast. The founding church is Streams of Joy Umuahia, Jubilee House, Km 4 Ikot Ekpene Road (Sunday 7:00, 8:05, 9:15 and 10:45 am)."
+    },
+    {
+      "name": "Omega Fire Ministries International headquarters, The Restoration City",
+      "address": "Km 132, Benin-Okene-Abuja Expressway",
+      "city": "Auchi, Edo State",
+      "country": "Nigeria",
+      "denomination": "Omega Fire Ministries (Pentecostal)",
+      "website": "https://omegafireministrieshq.org/",
+      "serviceTimes": "Fire Miracle Night: last Friday of every month; see website for Sunday times",
+      "notes": "Apostle Johnson Suleman, founder and general overseer since 2004. The Restoration City campus houses Omega Bible University."
+    },
+    {
+      "name": "Deeper Life Bible Church International headquarters, Gbagada",
+      "address": "2-10 Ayodele Oke-Owo Street, Gbagada",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "denomination": "Deeper Christian Life Ministry (Holiness, Pentecostal)",
+      "website": "https://dclm.org/",
+      "phone": "+234 815 819 1111",
+      "serviceTimes": "Sunday Worship Service 8:00 am; Monday Bible Study 6:00 pm",
+      "notes": "Pastor W. F. Kumuyi, founder and general superintendent since 1973. The 30,000-seat headquarters church was commissioned in April 2018."
+    },
+    {
+      "name": "Christ Apostolic Church, Ebute-Elefun (CAC mother church, Lagos)",
+      "address": "28 Olowu Street, Ebute-Elefun, Lagos Island",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "denomination": "Christ Apostolic Church (Aladura, Pentecostal)",
+      "website": "http://cacghq.org/",
+      "serviceTimes": "See website; Breaking Barrier Service on the last Sunday of the month",
+      "notes": "The mother church of the Christ Apostolic Church in Lagos and seat of CAC Lagos DCC."
+    },
+    {
+      "name": "Commonwealth of Zion Assembly (COZA), Guzape",
+      "address": "1 Nasir El Rufai Crescent, Guzape Hills, Asokoro Extension",
+      "city": "Abuja",
+      "country": "Nigeria",
+      "denomination": "COZA (Pentecostal)",
+      "website": "https://cozaglobal.org/",
+      "serviceTimes": "Sunday 9:00 am",
+      "notes": "Pastor Biodun and Pastor Modele Fatoyinbo. Known for its youthful services and the 12 Days of Glory and 7DG conferences."
+    },
+    {
+      "name": "Kingsway International Christian Centre (KICC), Prayer City",
+      "address": "Buckmore Park, Maidstone Road, Chatham, Kent ME5 9QG",
+      "city": "Chatham, Kent",
+      "country": "United Kingdom",
+      "denomination": "KICC (Pentecostal)",
+      "website": "https://www.kicc.org.uk/",
+      "phone": "+44 20 8525 0000",
+      "serviceTimes": "Sunday 9:00 am, 11:00 am and 6:00 pm",
+      "notes": "Pastor Matthew Ashimolowo, founder and senior pastor since 1992; one of the largest churches in Britain, with a free shuttle from Chatham, Gillingham and Maidstone East stations. London campus: Land of Wonders, 468-474 Hoe Street, Walthamstow E17 9AH."
+    },
+    {
+      "name": "Winners' Chapel International, Dartford (UK and European headquarters)",
+      "address": "1 Churchill Close, Green Street Green Road, Dartford, Kent DA1 1QE",
+      "city": "Dartford, Kent",
+      "country": "United Kingdom",
+      "denomination": "Living Faith Church Worldwide (Winners' Chapel)",
+      "website": "https://winners-chapel.org.uk/",
+      "phone": "+44 1322 292097",
+      "serviceTimes": "Sunday 7:00, 9:15 and 11:30 am; Wednesday 6:00 pm; Covenant Hour of Prayer Monday to Friday 6:00 am",
+      "notes": "European headquarters of Bishop David Oyedepo's Winners' Chapel, run by World Mission Agency; services last ninety minutes."
+    }
+  ]
 }
