@@ -7,7 +7,6 @@ summary: Did the Apostle Thomas reach Kerala in AD 52? The tradition, the seven 
 image: images/apostle-thomas-kerala.jpg
 categories: teaching, articles, apologetics
 keywords: Apostle Thomas in India, St Thomas Kerala AD 52, Saint Thomas Christians, did Thomas go to India, seven churches of St Thomas, Thomas tomb Mylapore, Acts of Thomas, Muziris Kodungallur, Syro-Malabar Church, Mar Thoma Church, Coonan Cross Oath, Kerala Pentecostal church, John 20:28 my Lord and my God, doubting Thomas
-draft: true
 ---
 
 > *Thomas answered him, "My Lord and my God!"* (John 20:28)
