@@ -216,6 +216,267 @@
       "notes": "European headquarters of Bishop David Oyedepo's Winners' Chapel, run by World Mission Agency; services last ninety minutes.",
       "lat": 51.4367,
       "lng": 0.237
+    },
+    {
+      "name": "Lakewood Church",
+      "address": "3700 Southwest Freeway",
+      "city": "Houston, Texas",
+      "country": "United States",
+      "denomination": "Non-denominational (charismatic)",
+      "website": "https://www.lakewoodchurch.com",
+      "phone": "+1 713 635 4154",
+      "serviceTimes": "Sunday 8:30 and 11:00 am; Spanish service Sunday 2:00 pm",
+      "notes": "Joel and Victoria Osteen. The largest congregation in America, meeting in the former Compaq Center."
+    },
+    {
+      "name": "The Potter's House of Dallas",
+      "address": "6777 W. Kiest Blvd",
+      "city": "Dallas, Texas",
+      "country": "United States",
+      "denomination": "Non-denominational (Pentecostal)",
+      "website": "https://thepottershouse.org",
+      "phone": "+1 214 331 0954",
+      "serviceTimes": "Sunday 10:00 am; Wednesday 7:00 pm",
+      "notes": "Founded by Bishop T. D. Jakes; led since April 2025 by Sarah Jakes Roberts and Touré Roberts. Known for MegaFest and the Potter's House podcast on GAIN Radio."
+    },
+    {
+      "name": "Elevation Church, Ballantyne",
+      "address": "11701 Elevation Point Drive",
+      "city": "Charlotte, North Carolina",
+      "country": "United States",
+      "denomination": "Non-denominational",
+      "website": "https://www.elevationchurch.org",
+      "phone": "+1 704 246 0820",
+      "serviceTimes": "See website for times",
+      "notes": "Steven Furtick, lead pastor; home of Elevation Worship."
+    },
+    {
+      "name": "Transformation Church",
+      "address": "10441 S. Regal Blvd",
+      "city": "Tulsa, Oklahoma",
+      "country": "United States",
+      "denomination": "Non-denominational",
+      "website": "https://transformchurch.us",
+      "phone": "+1 918 582 3580",
+      "serviceTimes": "Sunday 10:00 am",
+      "notes": "Michael and Natalie Todd, lead pastors since 2015; known for the Relationship Goals and Crazy Faith series."
+    },
+    {
+      "name": "Bethel Church, Redding",
+      "address": "933 College View Drive",
+      "city": "Redding, California",
+      "country": "United States",
+      "denomination": "Non-denominational (charismatic)",
+      "website": "https://www.bethel.com",
+      "phone": "+1 530 246 6000",
+      "serviceTimes": "Sunday 8:00, 10:30 am and 1:00 pm",
+      "notes": "Bill Johnson, senior leader, and Kris Vallotton; home of Bethel Music and the Bethel School of Supernatural Ministry."
+    },
+    {
+      "name": "Harvest Christian Fellowship",
+      "address": "6115 Arlington Avenue",
+      "city": "Riverside, California",
+      "country": "United States",
+      "denomination": "Independent (Calvary Chapel and Southern Baptist affiliated)",
+      "website": "https://harvest.church",
+      "phone": "+1 951 687 6902",
+      "serviceTimes": "Sunday 8:00, 10:00 am and 12:00 noon",
+      "notes": "Greg Laurie, senior pastor; home of the Harvest Crusades and A New Beginning."
+    },
+    {
+      "name": "Free Chapel, Gainesville",
+      "address": "3001 McEver Road",
+      "city": "Gainesville, Georgia",
+      "country": "United States",
+      "denomination": "Non-denominational (Pentecostal)",
+      "website": "https://freechapel.org",
+      "phone": "+1 678 677 8300",
+      "serviceTimes": "Sunday 9:00 and 11:00 am; Wednesday 7:00 pm online",
+      "notes": "Jentezen Franklin, senior pastor; known for Kingdom Connection and his teaching on fasting."
+    },
+    {
+      "name": "Oak Cliff Bible Fellowship",
+      "address": "1660 W. Camp Wisdom Road",
+      "city": "Dallas, Texas",
+      "country": "United States",
+      "denomination": "Non-denominational",
+      "website": "https://www.ocbfchurch.org",
+      "phone": "+1 214 672 9100",
+      "serviceTimes": "Sunday 8:00 and 11:00 am",
+      "notes": "Founded by Dr Tony Evans, senior pastor 1976 to 2024; Jonathan Evans, lead pastor. Home of The Urban Alternative."
+    },
+    {
+      "name": "Shadow Mountain Community Church",
+      "address": "2100 Greenfield Drive",
+      "city": "El Cajon, California",
+      "country": "United States",
+      "denomination": "Southern Baptist",
+      "website": "https://shadowmountain.org",
+      "phone": "+1 619 440 1802",
+      "serviceTimes": "Saturday 5:00 pm; Sunday 9:00 and 10:45 am",
+      "notes": "Dr David Jeremiah, senior pastor; home of Turning Point."
+    },
+    {
+      "name": "First Baptist Church Atlanta",
+      "address": "4400 North Peachtree Road",
+      "city": "Dunwoody, Georgia",
+      "country": "United States",
+      "denomination": "Southern Baptist",
+      "website": "https://www.fba.org",
+      "phone": "+1 770 234 8300",
+      "serviceTimes": "Sunday 8:45 and 10:30 am; Wednesday 6:45 pm",
+      "notes": "Dr Anthony George, senior pastor, who succeeded Charles Stanley; home church of In Touch Ministries."
+    },
+    {
+      "name": "Jesus Image Church",
+      "address": "7601 Forest City Road",
+      "city": "Orlando, Florida",
+      "country": "United States",
+      "denomination": "Non-denominational (charismatic)",
+      "website": "https://jesusimagechurch.tv",
+      "phone": "+1 407 574 5357",
+      "serviceTimes": "Sunday 10:00 am and 6:00 pm",
+      "notes": "Michael and Jessica Koulianos; known for extended worship, Jesus School and the Jesus conferences. A permanent home is being built in Sanford, Florida."
+    },
+    {
+      "name": "Cornerstone Church, San Antonio",
+      "address": "18755 Stone Oak Parkway",
+      "city": "San Antonio, Texas",
+      "country": "United States",
+      "denomination": "Non-denominational (charismatic)",
+      "website": "https://www.sacornerstone.org",
+      "phone": "+1 210 490 1600",
+      "serviceTimes": "Sunday 8:30 and 11:00 am; Spanish service Sunday 2:00 pm",
+      "notes": "John Hagee, founder, and Matt Hagee, lead pastor; home of Hagee Ministries and Christians United for Israel."
+    },
+    {
+      "name": "Times Square Church",
+      "address": "237 West 51st Street",
+      "city": "New York, New York",
+      "country": "United States",
+      "denomination": "Non-denominational (Pentecostal)",
+      "website": "https://tsc.nyc",
+      "phone": "+1 212 541 6300",
+      "serviceTimes": "Sunday 10:00 am and 1:00 pm; Tuesday and Wednesday 7:00 pm",
+      "notes": "Founded by David Wilkerson in 1987; Tim Dilena, senior pastor, and Carter Conlon, general overseer. Meets in the Mark Hellinger Theatre."
+    },
+    {
+      "name": "The Brooklyn Tabernacle",
+      "address": "17 Smith Street",
+      "city": "Brooklyn, New York",
+      "country": "United States",
+      "denomination": "Non-denominational",
+      "website": "https://www.brooklyntabernacle.org",
+      "phone": "+1 718 290 2000",
+      "serviceTimes": "Sunday 9:00 am and 12:00 noon; Spanish service Sunday 3:00 pm; prayer meeting Tuesday 6:30 pm",
+      "notes": "Jim Cymbala, senior pastor; home of the Brooklyn Tabernacle Choir and the Tuesday prayer meeting."
+    },
+    {
+      "name": "Dream City Church, Phoenix",
+      "address": "13613 North Cave Creek Road",
+      "city": "Phoenix, Arizona",
+      "country": "United States",
+      "denomination": "Assemblies of God",
+      "website": "https://www.dreamcitychurch.us",
+      "phone": "+1 602 867 7117",
+      "serviceTimes": "Sunday 9:00 and 11:00 am; Wednesday 6:30 pm",
+      "notes": "Luke Barnett, senior pastor, and Tommy Barnett, global pastor; founded 1923 as Phoenix First Assembly, home of the Dream Center movement."
+    },
+    {
+      "name": "Gateway Church, Southlake",
+      "address": "700 Blessed Way",
+      "city": "Southlake, Texas",
+      "country": "United States",
+      "denomination": "Non-denominational (charismatic)",
+      "website": "https://gatewaypeople.com",
+      "phone": "+1 817 552 5800",
+      "serviceTimes": "Sunday 9:00 and 11:00 am",
+      "notes": "Daniel Floyd, senior pastor since August 2025; known for Gateway Worship."
+    },
+    {
+      "name": "Church of the Highlands, Grants Mill",
+      "address": "4700 Highlands Way",
+      "city": "Irondale (Birmingham), Alabama",
+      "country": "United States",
+      "denomination": "Non-denominational",
+      "website": "https://www.churchofthehighlands.com",
+      "phone": "+1 205 980 5577",
+      "serviceTimes": "Sunday 8:00, 9:30, 11:15 am and 4:30 pm",
+      "notes": "Chris Hodges, founding senior pastor; one of the largest churches in America, known for small groups, Highlands College and the ARC church-planting network."
+    },
+    {
+      "name": "Life.Church, Edmond",
+      "address": "4600 E. 2nd Street",
+      "city": "Edmond, Oklahoma",
+      "country": "United States",
+      "denomination": "Evangelical Covenant Church",
+      "website": "https://www.life.church",
+      "serviceTimes": "See website for times",
+      "notes": "Craig Groeschel, founder and senior pastor; the church behind the YouVersion Bible App and Church Online."
+    },
+    {
+      "name": "Hillsong Church, Sydney Hills",
+      "address": "1-9 Solent Circuit",
+      "city": "Norwest, Sydney, New South Wales",
+      "country": "Australia",
+      "denomination": "Pentecostal (Hillsong Church)",
+      "website": "https://hillsong.com/australia/sydney-hills/",
+      "serviceTimes": "Sunday 8:00 am, 10:00 am and 6:00 pm; Chinese service 10:15 am",
+      "notes": "Phil and Lucinda Dooley, global senior pastors; the founding campus, home of Hillsong Worship and Hillsong UNITED."
+    },
+    {
+      "name": "New Creation Church, Singapore",
+      "address": "The Star Performing Arts Centre, 1 Vista Exchange Green",
+      "city": "Singapore",
+      "country": "Singapore",
+      "denomination": "Non-denominational (charismatic)",
+      "website": "https://www.newcreation.org.sg",
+      "phone": "+65 6338 4565",
+      "serviceTimes": "Sunday 8:30 am, 11:30 am and 2:30 pm",
+      "notes": "Joseph Prince, senior pastor; one of Asia's largest churches, known for its grace-centred teaching."
+    },
+    {
+      "name": "Jesus House London (RCCG)",
+      "address": "112 Brent Terrace",
+      "city": "London NW2 1LT",
+      "country": "United Kingdom",
+      "denomination": "Redeemed Christian Church of God (Pentecostal)",
+      "website": "https://www.jesushouse.org.uk",
+      "phone": "+44 20 8438 8285",
+      "serviceTimes": "Sunday Fresh Fire 9:00 am, main service 10:00 am; Monday Bible study 7:00 pm",
+      "notes": "Pastor Agu Irukwu; the flagship RCCG parish in Britain, at Brent Cross."
+    },
+    {
+      "name": "Hillsong Church UK, Central London",
+      "address": "Dominion Theatre, 268-269 Tottenham Court Road",
+      "city": "London W1T 7AQ",
+      "country": "United Kingdom",
+      "denomination": "Pentecostal (Hillsong Church)",
+      "website": "https://hillsong.com/uk/central-london/",
+      "serviceTimes": "Sunday 10:15 am and 12:15 pm",
+      "notes": "Tim and Nicola Douglass, lead pastors of Hillsong UK; meets in a West End theatre."
+    },
+    {
+      "name": "Yoido Full Gospel Church",
+      "address": "15 Gukhoe-daero 76-gil, Yeongdeungpo-gu",
+      "city": "Seoul",
+      "country": "South Korea",
+      "denomination": "Assemblies of God",
+      "website": "https://english.fgtv.com",
+      "phone": "+82 2 6181 9191",
+      "serviceTimes": "Sunday 7:00, 9:00, 11:00 am and 1:00 pm; English services Sunday 9:00 and 11:00 am",
+      "notes": "Rev. Lee Young-hoon, senior pastor; founded in 1958 by David Yonggi Cho and long cited as the largest congregation in the world, known for cell groups and Prayer Mountain."
+    },
+    {
+      "name": "Christ Church Jerusalem",
+      "address": "Omar Ibn Al-Khattab Square, Jaffa Gate, Old City",
+      "city": "Jerusalem",
+      "country": "Israel",
+      "denomination": "Anglican (CMJ)",
+      "website": "https://christchurchjerusalem.org",
+      "phone": "+972 2 627 7730",
+      "serviceTimes": "Sunday Holy Communion 9:30 am and evening worship 6:00 pm; Saturday Hebrew worship 10:30 am; Wednesday Eucharist 10:30 am",
+      "notes": "Rev. David Pileggi, rector; the oldest Protestant church in the Middle East, consecrated in 1849, with a guesthouse and heritage centre inside Jaffa Gate."
     }
   ]
 }
