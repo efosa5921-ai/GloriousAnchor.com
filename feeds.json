@@ -48,6 +48,11 @@
       "description": "Writers and channels that explain and defend the Christian faith, with clear answers to hard questions."
     },
     {
+      "id": "generals",
+      "label": "God's Generals",
+      "description": "The lives of past men and women of God, from Wesley and Wigglesworth to Babalola and Bonnke, told in their own words and featured on their birthdays and the anniversaries of their homegoing."
+    },
+    {
       "id": "eschatology",
       "label": "Eschatology",
       "description": "Teaching on the end times and Bible prophecy from ministries that study it seriously."

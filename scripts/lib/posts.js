@@ -23,6 +23,7 @@ import { marked } from 'marked';
 import { stripHtml, truncate, makeId } from './articles.js';
 import { articleJsonLd, metaTags, shareBarHtml } from './seo.js';
 import { pinActive } from './pins.js';
+import { anniversaryFor } from './anniversaries.js';
 
 export const OWN_SOURCE = { id: 'ours', name: 'Glorious Anchor', category: 'ours', kind: 'article', featured: true, homepage: '/articles/' };
 
@@ -76,6 +77,9 @@ export function compilePost(filename, text, site, now = Date.now()) {
   const keywords = String(meta.keywords || '').split(',').map((k) => k.trim()).filter(Boolean);
   const searchTitle = stripHtml(meta.searchtitle || meta.search_title || '') || null;
   const updatedAt = meta.updated ? Date.parse(/^\d{4}-\d{2}-\d{2}$/.test(meta.updated) ? `${meta.updated}T12:00:00Z` : meta.updated) : NaN;
+  // God's Generals: born/died (YYYY-MM-DD) feature the article on those days each year.
+  const life = { ...(meta.born ? { born: String(meta.born) } : {}), ...(meta.died ? { died: String(meta.died) } : {}), ...(meta.person ? { person: stripHtml(String(meta.person)) } : {}) };
+  const anniv = anniversaryFor(life, now);
   const categories = [...new Set(String(meta.categories || '').replace(/^\[|\]$/g, '').split(/[,\s]+/).map((c) => c.trim().toLowerCase()).filter((c) => c && c !== OWN_SOURCE.category))];
   return {
     slug, title, html, summary, image,
@@ -83,9 +87,11 @@ export function compilePost(filename, text, site, now = Date.now()) {
     ...(keywords.length ? { keywords } : {}),
     ...(searchTitle ? { searchTitle } : {}),
     ...(Number.isNaN(updatedAt) ? {} : { updatedAt }),
+    ...life,
+    ...(anniv ? { anniversary: anniv.label, anniversaryHeadline: anniv.headline, anniversaryAt: anniv.at } : {}),
     author: stripHtml(meta.author || site.name),
     publishedAt,
-    pinned: pinActive(meta.pinned, publishedAt, now),
+    pinned: pinActive(meta.pinned, publishedAt, now) || Boolean(anniv),
     readingMinutes: Math.max(1, Math.round(words / 220)),
     url: `${site.url.replace(/\/$/, '')}/${draft ? 'drafts' : 'articles'}/${slug}/`,
     path: `${draft ? 'drafts' : 'articles'}/${slug}/index.html`,
@@ -107,6 +113,7 @@ export function postToArticle(post, site) {
     ...(post.updatedAt ? { updatedAt: post.updatedAt } : {}),
     // The short search title doubles as the share text: a long headline pasted into a chat scrolls its start out of view.
     ...(post.searchTitle ? { shareTitle: post.searchTitle } : {}),
+    ...(post.anniversary ? { anniversary: post.anniversary, anniversaryHeadline: post.anniversaryHeadline, anniversaryAt: post.anniversaryAt } : {}),
     kind: 'article',
     source: OWN_SOURCE.name,
     sourceId: OWN_SOURCE.id,

@@ -36,6 +36,16 @@ export function recordOutcome(announced, pending, a, results, now = Date.now()) 
   else if (results.X === true) delete pending[a.id];
 }
 
+/**
+ * Articles whose subject was born or went home on this day: announced once a year, under an id of their own, with the
+ * anniversary in front of the title. An article not yet announced at all is left to the ordinary new-item post.
+ */
+export function selectAnniversaries(articles, announced, { now = Date.now(), year = new Date(now).getUTCFullYear() } = {}) {
+  return articles
+    .filter((a) => a.internal && a.anniversary && announced[a.id] && !announced[`${a.id}@${year}`])
+    .map((a) => ({ ...a, id: `${a.id}@${year}`, shareTitle: `${a.anniversaryHeadline}: ${postTitle(a)}` }));
+}
+
 /** Podcast feeds often title episodes by date or number alone; prefix the show name so a post never reads "23.10.26". */
 export function postTitle(a) {
   if (a.shareTitle) return a.shareTitle;

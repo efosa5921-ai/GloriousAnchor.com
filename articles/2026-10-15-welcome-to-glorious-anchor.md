@@ -24,6 +24,7 @@ Top Stories opens with **From our writers**, a slider of our own articles that t
 - **Faith & Culture** holds essays and commentary from magazines and journals.
 - **Teaching & Devotional** brings daily teaching and devotionals from trusted ministries.
 - **Apologetics** gathers writers and channels that explain and defend the faith.
+- **God's Generals** tells the lives of past men and women of God, from Wesley and Wigglesworth to Babalola and Bonnke, and features each one on their birthday and the anniversary of their homegoing.
 - **Eschatology** follows teaching on the end times and biblical prophecy.
 
 Every section also has its own address, such as gloriousanchor.com/eschatology/ or gloriousanchor.com/news/, listed in the footer of every page, so you can bookmark or share one section on its own.

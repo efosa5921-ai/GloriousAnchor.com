@@ -266,6 +266,8 @@
     if (a.note) { const n = document.createElement('p'); n.className = 'card__note'; n.innerHTML = highlight(a.note, state.query); node.querySelector('.card__body').appendChild(n); }
     if (a.pinned) { node.classList.add('card--pinned'); node.querySelector('.card__kind').textContent = a.internal ? 'Pinned' : 'Pinned pick'; }
     if (a.internal) node.querySelector('.card__kind').textContent = a.pinned ? 'Pinned' : 'Ours';
+    // God's Generals on a birthday or homegoing anniversary: the chip says so and the card leads the slider for the day.
+    if (a.anniversary) { node.classList.add('card--anniversary'); node.querySelector('.card__kind').textContent = a.anniversary; }
     node.querySelector('.share').addEventListener('click', (e) => share(a, e.currentTarget));
     const save = node.querySelector('.save');
     const setSaved = (on) => { save.setAttribute('aria-pressed', String(on)); save.title = on ? 'Remove from saved' : 'Save story'; };
@@ -353,7 +355,7 @@
   // Slides are newest first, counting a substantive update as new, and the slider always opens on the newest. While
   // the page stays open it moves on one slide every two hours. Articles older than SLIDER_DAYS leave the slider (they
   // stay in Our Articles).
-  const recency = (a) => Math.max(a.updatedAt || 0, a.publishedAt || 0);
+  const recency = (a) => Math.max(a.anniversaryAt || 0, a.updatedAt || 0, a.publishedAt || 0);
   function writersSlider(ours) {
     const box = document.createElement('section'); box.className = 'slider lead'; box.setAttribute('aria-roledescription', 'carousel'); box.setAttribute('aria-label', 'From our writers');
     const head = document.createElement('div'); head.className = 'slider__head';
@@ -384,8 +386,10 @@
     if (useHero) {
       // On Top Stories the lead slot is a slider of our own articles, opening on the one for the current two-hour
       // slot. Elsewhere pinned items lead. The remaining hero slots prefer pinned items, then stories with pictures.
+      // The slider draws on every own article, not the capped Top Stories list: an updated article or one on its
+      // subject's anniversary may be older than the cap allows and must still lead.
       const ours = state.category === 'top'
-        ? list.filter((a) => a.internal && !/\/articles\/whats-new\/$/.test(a.url || '') && recency(a) > Date.now() - SLIDER_DAYS * DAY_MS)
+        ? state.articles.filter((a) => a.internal && !/\/articles\/whats-new\/$/.test(a.url || '') && recency(a) > Date.now() - SLIDER_DAYS * DAY_MS)
           .sort((a, b) => recency(b) - recency(a)).slice(0, SLIDER_MAX)
         : [];
       const slider = ours.length >= 2;

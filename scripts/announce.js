@@ -12,7 +12,8 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { selectNew, telegramMessage, xText, oauthHeader, findRepost, recordOutcome } from './lib/announce.js';
+import { selectNew, selectAnniversaries, telegramMessage, xText, oauthHeader, findRepost, recordOutcome, postTitle } from './lib/announce.js';
+import { dayIn } from './lib/anniversaries.js';
 import { previewImage } from './lib/share.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -140,11 +141,14 @@ async function main() {
     try { await postX(a, site); delete pending[id]; console.log(`  ✓ X (retry): ${a.title}`); }
     catch (err) { console.warn(`  ✗ X (retry): ${a.title} — ${err.message}`); if (/402|credits/i.test(err.message)) break; }
   }
-  const items = selectNew(articles, announced, { now });
+  const year = Number(dayIn(now).slice(0, 4));
+  const items = [...selectNew(articles, announced, { now }), ...selectAnniversaries(articles, announced, { now, year })];
   const xStoryBudget = Number(env.X_STORIES_PER_RUN || 0) || 0;
   let xStoriesUsed = 0;
   console.log(`announce: ${items.length} new item(s) to post${dry ? ' (dry run)' : ''}${telegram ? ' · Telegram' : ''}${x ? ' · X' : ''}`);
-  for (const a of items) {
+  for (let a of items) {
+    // A brand-new article announced on its subject's anniversary carries the anniversary too, and that year's post is spent.
+    if (a.anniversary && !a.id.includes('@')) { announced[`${a.id}@${year}`] = now; a = { ...a, shareTitle: `${a.anniversaryHeadline}: ${postTitle(a)}` }; }
     const targets = [];
     if (telegram) targets.push(['Telegram', postTelegram]);
     const priority = a.internal || a.kind === 'pick';
