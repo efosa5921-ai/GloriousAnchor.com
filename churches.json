@@ -14,7 +14,9 @@
       "denomination": "Living Faith Church Worldwide (Winners' Chapel)",
       "website": "https://faithtabernacle.org.ng/",
       "serviceTimes": "Sunday 6:00, 8:10 and 10:20 am; Wednesday Midweek Communion Service 5:00 pm",
-      "notes": "Bishop David O. Oyedepo, presiding bishop. The 50,000-seat Faith Tabernacle, opened 1999, is the headquarters of Winners' Chapel; the Ark, a 109,000-seat church, is being built beside it."
+      "notes": "Bishop David O. Oyedepo, presiding bishop. The 50,000-seat Faith Tabernacle, opened 1999, is the headquarters of Winners' Chapel; the Ark, a 109,000-seat church, is being built beside it.",
+      "lat": 6.6719,
+      "lng": 3.1573
     },
     {
       "name": "Living Faith Church (Winners' Chapel), Sapele Road, Benin City",
@@ -24,7 +26,9 @@
       "denomination": "Living Faith Church Worldwide (Winners' Chapel)",
       "website": "https://x.com/lfcbenin",
       "serviceTimes": "Sunday 6:30, 8:30 and 10:30 am",
-      "notes": "One of Winners' Chapel's largest provincial churches, and the church where Glorious Anchor's founders met in the Evangelism Unit."
+      "notes": "One of Winners' Chapel's largest provincial churches, and the church where Glorious Anchor's founders met in the Evangelism Unit.",
+      "lat": 6.3123,
+      "lng": 5.6223
     },
     {
       "name": "Dunamis International Gospel Centre, The Glory Dome",
@@ -48,7 +52,9 @@
       "website": "https://koinoniaglobal.org/",
       "phone": "+234 814 721 4444",
       "serviceTimes": "Sunday 5:00 pm",
-      "notes": "Apostle Joshua Selman Nimmak. The weekly Koinonia Abuja service draws crowds that queue from the morning; the new Koinonia Global Arena at Jabi hosts the annual General Assembly."
+      "notes": "Apostle Joshua Selman Nimmak. The weekly Koinonia Abuja service draws crowds that queue from the morning; the new Koinonia Global Arena at Jabi hosts the annual General Assembly.",
+      "lat": 9.0716,
+      "lng": 7.4345
     },
     {
       "name": "Redeemed Christian Church of God, Redemption City (Redemption Camp)",
@@ -59,7 +65,9 @@
       "website": "https://www.rccg.cc/",
       "phone": "+234 802 320 8688",
       "serviceTimes": "Holy Ghost Service: first Friday of every month, 7:00 pm",
-      "notes": "Pastor E. A. Adeboye, General Overseer. The camp, renamed Redemption City of God in 2022, is a town in its own right with a three-kilometre auditorium, and hosts the monthly Holy Ghost Service and the Holy Ghost Congress each December."
+      "notes": "Pastor E. A. Adeboye, General Overseer. The camp, renamed Redemption City of God in 2022, is a town in its own right with a three-kilometre auditorium, and hosts the monthly Holy Ghost Service and the Holy Ghost Congress each December.",
+      "lat": 6.7778,
+      "lng": 3.4209
     },
     {
       "name": "RCCG National Headquarters (Throne of Grace), Ebute-Metta",
@@ -70,7 +78,9 @@
       "website": "https://www.rccghq.org/",
       "phone": "+234 1 470 0555",
       "serviceTimes": "Sunday 7:00 and 10:00 am; Monday Digging Deep 6:00 pm; Tuesday Deliverance and Breakthrough 9:00 am; Thursday Faith Clinic 6:00 pm",
-      "notes": "The mother church of the RCCG, where Pa Josiah Akindayomi founded the mission in 1952."
+      "notes": "The mother church of the RCCG, where Pa Josiah Akindayomi founded the mission in 1952.",
+      "lat": 6.4863,
+      "lng": 3.3856
     },
     {
       "name": "Salvation Ministries (Home of Success) headquarters",
@@ -80,7 +90,9 @@
       "denomination": "Salvation Ministries (Pentecostal)",
       "website": "https://www.smhos.org/",
       "serviceTimes": "Sunday 6:30, 8:00, 9:30 and 11:00 am; Thursday 5:00 pm",
-      "notes": "Pastor David Ibiyeomie, founder and senior pastor since 1997. Known for its packed multiple Sunday services and the 5 Nights of Glory crusade."
+      "notes": "Pastor David Ibiyeomie, founder and senior pastor since 1997. Known for its packed multiple Sunday services and the 5 Nights of Glory crusade.",
+      "lat": 4.779,
+      "lng": 7.0125
     },
     {
       "name": "Christ Embassy (LoveWorld), LoveWorld Convocation Arena",
@@ -90,7 +102,9 @@
       "denomination": "Christ Embassy / Believers' LoveWorld (Pentecostal)",
       "website": "https://christembassy.org/",
       "serviceTimes": "Sunday 7:00, 8:45, 10:30 am and 12:00 noon; Wednesday 6:00 pm",
-      "notes": "Pastor Chris Oyakhilome, founder and president. The 20,000-seat arena is the home of the Lagos Virtual Zone, LoveWorld TV and Rhapsody of Realities."
+      "notes": "Pastor Chris Oyakhilome, founder and president. The 20,000-seat arena is the home of the Lagos Virtual Zone, LoveWorld TV and Rhapsody of Realities.",
+      "lat": 6.601,
+      "lng": 3.3645
     },
     {
       "name": "House on the Rock, The Rock Cathedral",
@@ -101,7 +115,9 @@
       "website": "https://houseontherock.org.ng/",
       "phone": "+234 201 461 4120",
       "serviceTimes": "Sunday 9:00 am; Wednesday 6:00 pm online",
-      "notes": "Pastor Paul and Pastor Ifeanyi Adefarasin. Global headquarters of House on the Rock and home of The Experience, Africa's largest gospel concert."
+      "notes": "Pastor Paul and Pastor Ifeanyi Adefarasin. Global headquarters of House on the Rock and home of The Experience, Africa's largest gospel concert.",
+      "lat": 6.437,
+      "lng": 3.493
     },
     {
       "name": "Daystar Christian Centre",
@@ -112,7 +128,9 @@
       "website": "https://daystarng.org/",
       "phone": "+234 812 595 3460",
       "serviceTimes": "Sunday 7:00, 9:00 and 11:00 am",
-      "notes": "Pastor Sam Adeyemi, founder and senior pastor since 1995. Known for leadership teaching and the Daystar Leadership Academy."
+      "notes": "Pastor Sam Adeyemi, founder and senior pastor since 1995. Known for leadership teaching and the Daystar Leadership Academy.",
+      "lat": 6.5999,
+      "lng": 3.3702
     },
     {
       "name": "Streams of Joy International (NSPPD), Abuja",
@@ -122,7 +140,9 @@
       "denomination": "Streams of Joy International (Pentecostal)",
       "website": "https://streamsofjoy.org/",
       "serviceTimes": "Sunday 7:00, 8:30, 10:15 and 11:45 am; Thursday 6:00 pm",
-      "notes": "Pastor Jerry Eze, founder and lead pastor, host of NSPPD, the daily 7 am online prayer broadcast. The founding church is Streams of Joy Umuahia, Jubilee House, Km 4 Ikot Ekpene Road (Sunday 7:00, 8:05, 9:15 and 10:45 am)."
+      "notes": "Pastor Jerry Eze, founder and lead pastor, host of NSPPD, the daily 7 am online prayer broadcast. The founding church is Streams of Joy Umuahia, Jubilee House, Km 4 Ikot Ekpene Road (Sunday 7:00, 8:05, 9:15 and 10:45 am).",
+      "lat": 9.0452,
+      "lng": 7.4939
     },
     {
       "name": "Omega Fire Ministries International headquarters, The Restoration City",
@@ -132,7 +152,9 @@
       "denomination": "Omega Fire Ministries (Pentecostal)",
       "website": "https://omegafireministrieshq.org/",
       "serviceTimes": "Fire Miracle Night: last Friday of every month; see website for Sunday times",
-      "notes": "Apostle Johnson Suleman, founder and general overseer since 2004. The Restoration City campus houses Omega Bible University."
+      "notes": "Apostle Johnson Suleman, founder and general overseer since 2004. The Restoration City campus houses Omega Bible University.",
+      "lat": 7.0674,
+      "lng": 6.2677
     },
     {
       "name": "Deeper Life Bible Church International headquarters, Gbagada",
@@ -143,7 +165,9 @@
       "website": "https://dclm.org/",
       "phone": "+234 815 819 1111",
       "serviceTimes": "Sunday Worship Service 8:00 am; Monday Bible Study 6:00 pm",
-      "notes": "Pastor W. F. Kumuyi, founder and general superintendent since 1973. The 30,000-seat headquarters church was commissioned in April 2018."
+      "notes": "Pastor W. F. Kumuyi, founder and general superintendent since 1973. The 30,000-seat headquarters church was commissioned in April 2018.",
+      "lat": 6.5561,
+      "lng": 3.388
     },
     {
       "name": "Christ Apostolic Church, Ebute-Elefun (CAC mother church, Lagos)",
@@ -153,7 +177,9 @@
       "denomination": "Christ Apostolic Church (Aladura, Pentecostal)",
       "website": "http://cacghq.org/",
       "serviceTimes": "See website; Breaking Barrier Service on the last Sunday of the month",
-      "notes": "The mother church of the Christ Apostolic Church in Lagos and seat of CAC Lagos DCC."
+      "notes": "The mother church of the Christ Apostolic Church in Lagos and seat of CAC Lagos DCC.",
+      "lat": 6.4562,
+      "lng": 3.4005
     },
     {
       "name": "Commonwealth of Zion Assembly (COZA), Guzape",
@@ -163,7 +189,9 @@
       "denomination": "COZA (Pentecostal)",
       "website": "https://cozaglobal.org/",
       "serviceTimes": "Sunday 9:00 am",
-      "notes": "Pastor Biodun and Pastor Modele Fatoyinbo. Known for its youthful services and the 12 Days of Glory and 7DG conferences."
+      "notes": "Pastor Biodun and Pastor Modele Fatoyinbo. Known for its youthful services and the 12 Days of Glory and 7DG conferences.",
+      "lat": 9.0112,
+      "lng": 7.5073
     },
     {
       "name": "Kingsway International Christian Centre (KICC), Prayer City",
@@ -185,7 +213,9 @@
       "website": "https://winners-chapel.org.uk/",
       "phone": "+44 1322 292097",
       "serviceTimes": "Sunday 7:00, 9:15 and 11:30 am; Wednesday 6:00 pm; Covenant Hour of Prayer Monday to Friday 6:00 am",
-      "notes": "European headquarters of Bishop David Oyedepo's Winners' Chapel, run by World Mission Agency; services last ninety minutes."
+      "notes": "European headquarters of Bishop David Oyedepo's Winners' Chapel, run by World Mission Agency; services last ninety minutes.",
+      "lat": 51.4367,
+      "lng": 0.237
     }
   ]
 }
