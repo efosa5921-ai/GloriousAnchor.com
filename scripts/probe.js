@@ -28,15 +28,20 @@ if (targets.length === 1 && targets[0].startsWith('ytapi:')) {
 }
 // "json:<url>" prints up to 12,000 characters of any URL's body (for JSON APIs such as api.fxtwitter.com);
 // "img:<url>" prints an image as base64 so a frame or thumbnail can be looked at where the image host is unreachable.
-if (targets.length === 1 && /^(json|img):/.test(targets[0])) {
-  const mode = targets[0].slice(0, targets[0].indexOf(':'));
-  const res = await fetch(targets[0].slice(mode.length + 1), { headers: { 'user-agent': 'Mozilla/5.0 (compatible; GloriousAnchorBot/1.0)' } });
-  console.log(`${mode} ${res.status} ${res.headers.get('content-type') || ''}`);
+if (targets.every((t) => /^(json|img):/.test(t))) {
+  // Several json: targets may be given at once (one per line of output, a second apart, for rate-limited APIs).
   let out = '';
-  if (mode === 'json') out = (await res.text()).slice(0, 12000);
-  else { const b64 = Buffer.from(await res.arrayBuffer()).toString('base64'); out = `base64 ${b64.length} chars\n` + (b64.match(/.{1,1000}/g) || []).join('\n'); }
+  for (const t of targets) {
+    const mode = t.slice(0, t.indexOf(':'));
+    const url = t.slice(mode.length + 1);
+    const res = await fetch(url, { headers: { 'user-agent': 'Mozilla/5.0 (compatible; GloriousAnchorBot/1.0; +https://gloriousanchor.com)' } });
+    out += `${mode} ${res.status} ${res.headers.get('content-type') || ''} ${targets.length > 1 ? url : ''}\n`;
+    if (mode === 'json') out += (await res.text()).slice(0, 12000) + '\n';
+    else { const b64 = Buffer.from(await res.arrayBuffer()).toString('base64'); out += `base64 ${b64.length} chars\n` + (b64.match(/.{1,1000}/g) || []).join('\n') + '\n'; }
+    if (targets.length > 1) await new Promise((r) => setTimeout(r, 1100));
+  }
   // Let stdout drain before exiting: process.exit() right after console.log drops output beyond the pipe buffer.
-  process.stdout.write(out + '\n', () => process.exit(0));
+  process.stdout.write(out, () => process.exit(0));
   await new Promise(() => {});
 }
 if (targets.length > 1 || targets[0].startsWith('podcast:')) {
