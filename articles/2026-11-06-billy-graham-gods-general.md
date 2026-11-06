@@ -10,7 +10,6 @@ summary: Billy Graham, born 7 November 1918: from a Charlotte dairy farm to 215 
 image: images/billy-graham.jpg
 categories: generals, teaching
 keywords: Billy Graham, Billy Graham biography, Billy Graham born November 7 1918, Billy Graham Africa tour 1960, Billy Graham Lagos crusade, Billy Graham death February 21 2018, Billy Graham quotes, Modesto Manifesto, Billy Graham John 3:16, God's generals, Billy Graham crusades, the Bible says Billy Graham
-draft: true
 ---
 
 > *For I am not ashamed of the gospel of Christ: for it is the power of God unto salvation to every one that believeth.* (Romans 1:16)
