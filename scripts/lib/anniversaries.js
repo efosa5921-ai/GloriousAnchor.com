@@ -2,7 +2,7 @@
  * Birth and homegoing anniversaries for the people our articles are about ("God's Generals").
  * An article with `born:` and/or `died:` in its front matter (YYYY-MM-DD) is featured on those days each year:
  * it leads the slider with a label such as "Born on this day in 1918", and is announced once per year.
- * Days are reckoned in Lagos time, where most of our readers are.
+ * Days are reckoned in the site's home time zone (West Africa Time, UTC+1).
  */
 export const TZ = 'Africa/Lagos';
 

@@ -1,15 +1,15 @@
 ---
-title: Billy Graham, born 7 November 1918: the farm boy who preached Christ to 215 million people, the 1960 crusade that filled Lagos, and the one message he never changed
+title: Billy Graham, born 7 November 1918: the farm boy who preached Christ to 215 million people, the 1960 Africa tour, and the one message he never changed
 searchTitle: Billy Graham: The Life of the Evangelist, Born 7 November 1918
 date: 2026-11-06T20:00:00Z
 author: The Glorious Anchor team
 person: Billy Graham
 born: 1918-11-07
 died: 2018-02-21
-summary: Billy Graham, born 7 November 1918: from a Charlotte dairy farm to 215 million hearers, the 1960 Lagos crusade, the Modesto rules, and "the Bible says".
+summary: Billy Graham, born 7 November 1918: from a Charlotte dairy farm to 215 million hearers, the 1960 Africa tour, the Modesto rules, and "the Bible says".
 image: images/billy-graham.jpg
 categories: generals, teaching
-keywords: Billy Graham, Billy Graham biography, Billy Graham born November 7 1918, Billy Graham Nigeria 1960, Billy Graham Lagos crusade, Billy Graham death February 21 2018, Billy Graham quotes, Modesto Manifesto, Billy Graham John 3:16, God's generals, Billy Graham crusades, the Bible says Billy Graham
+keywords: Billy Graham, Billy Graham biography, Billy Graham born November 7 1918, Billy Graham Africa tour 1960, Billy Graham Lagos crusade, Billy Graham death February 21 2018, Billy Graham quotes, Modesto Manifesto, Billy Graham John 3:16, God's generals, Billy Graham crusades, the Bible says Billy Graham
 draft: true
 ---
 
@@ -39,11 +39,11 @@ In 1954 Graham hired the Harringay Arena in north London for a month and stayed 
 
 In June 1973, on Yoido Plaza in Seoul, more than a million people stood to hear him on a single afternoon. It remains the largest in-person audience of his ministry, and probably of any preacher in history. He preached in the Soviet Union in 1982 and in North Korea in 1992 and 1994, and was criticised for both. He answered that he would go anywhere he was allowed to preach Christ.
 
-## Nigeria, 1960
+## Africa, 1960
 
-The year Nigeria won her independence, Billy Graham came. He landed in Lagos at the end of January 1960 on a tour of eleven African countries, from Liberia and Ghana to Kenya, Ethiopia and Egypt, and Nigeria was the heart of it. He preached in Lagos, Ibadan, Enugu, Kaduna and Jos between 28 January and 12 February. *Time* magazine reported crowds in Lagos of up to 100,000 and nearly 2,000 people walking forward on a single night. At University College, Ibadan, he spoke to students in the open air and several hundred responded. In Enugu the estimate was 40,000. The Billy Graham Library puts the Nigerian attendance at more than 200,000, with about 5,000 recorded decisions for Christ.
+In 1960, the year seventeen African countries became independent, Graham spent ten weeks on the continent, preaching in eleven countries from Liberia and Ghana to Kenya, Ethiopia and Egypt, and then in Jordan and Israel. More than half a million people heard him. The largest crowds were in Nigeria, where he preached in Lagos, Ibadan, Enugu, Kaduna and Jos between 28 January and 12 February. *Time* magazine reported crowds in Lagos of up to 100,000 and nearly 2,000 people walking forward on a single night. At University College, Ibadan, he spoke to students in the open air and several hundred responded. In Enugu the estimate was 40,000. The Billy Graham Library puts the attendance in Nigeria at more than 200,000, with about 5,000 recorded decisions for Christ.
 
-He met opposition too. Muslim organisations in Lagos printed pamphlets against the preaching, and a request to meet Muslim leaders was turned down. Graham preached the same message he preached everywhere, and left the churches to disciple the thousands who had come forward. Some of the men and women who later built Nigeria's great churches were young believers or children in those crowds. He came back to Lagos in 1997 by satellite, for a crusade beamed from Mexico to stadiums around the world, but it is the 1960 meetings the older generation remembers: the white preacher in the heat of the dry season, with one text, John 3:16, and an altar call.
+He met opposition too. Muslim organisations in Lagos printed pamphlets against the preaching, and a request to meet Muslim leaders was turned down. Graham preached the same message he preached everywhere, and left the local churches to disciple the thousands who had come forward. Some of the men and women who later built Africa's great churches were young believers or children in those crowds. He had refused to include South Africa, because the government would not let him preach to a mixed audience, and he said so publicly. The tour's lasting mark was not the numbers but the method: one text, John 3:16, an altar call, and the converts handed to the churches.
 
 ## The Bible says
 
@@ -61,11 +61,11 @@ Ruth died in 2007. Billy Graham died at home in Montreat, North Carolina, on 21 
 
 He had written his own announcement years before. "Someday you will read or hear that Billy Graham is dead. Don't you believe a word of it. I shall be more alive than I am now. I will just have changed my address. I have gone into the presence of God."
 
-## What a believer in Nigeria can take from Billy Graham
+## What a believer today can take from Billy Graham
 
 - **One message, kept simple.** He never grew out of John 3:16. Neither should the church.
 - **Rules before the test, not after.** Modesto was written before the money came. Every ministry that wants to last should write its own.
-- **The gospel is for everyone in the same room.** He pulled down the ropes in 1953 and would not preach to a segregated crowd. The church in Nigeria, divided by tribe and tongue, should hear that.
+- **The gospel is for everyone in the same room.** He pulled down the ropes in 1953 and would not preach to a segregated crowd. Any church divided by race, tribe, tongue or class should hear that.
 - **Keep the pulpit out of the party.** His regret over Nixon is a warning to every preacher courted by a politician.
 - **Leave the glory.** "My one purpose in life," he said, "is to help people find a personal relationship with God, which, I believe, comes through knowing Christ."
 
@@ -77,9 +77,9 @@ He had written his own announcement years before. "Someday you will read or hear
 
 Billy Graham was born on 7 November 1918 on a dairy farm near Charlotte, North Carolina, and died at his home in Montreat, North Carolina on 21 February 2018, aged ninety-nine. He is buried beside his wife Ruth at the Billy Graham Library in Charlotte.
 
-### Did Billy Graham preach in Nigeria?
+### Did Billy Graham preach in Africa?
 
-Yes. In January and February 1960, the year of independence, he preached in Lagos, Ibadan, Enugu, Kaduna and Jos as part of a tour of eleven African countries. Time magazine reported Lagos crowds of up to 100,000, and the Billy Graham Library counts more than 200,000 Nigerians at the meetings and about 5,000 decisions for Christ.
+Yes. In early 1960 he toured eleven African countries, from Liberia and Ghana to Kenya, Ethiopia and Egypt, and more than half a million people heard him. The largest meetings were in Nigeria, where Time magazine reported Lagos crowds of up to 100,000 and the Billy Graham Library counts more than 200,000 people and about 5,000 decisions for Christ.
 
 ### How many people did Billy Graham preach to?
 
