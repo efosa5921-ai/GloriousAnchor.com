@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 6 November 2026
 
+- **Liberal-leaning sources dropped**: RELEVANT, Christianity Today (website and Bluesky) and r/Christianity no longer appear on the site.
 - **Religion News Service dropped**: its stories no longer appear anywhere on the site.
 
 ## 5 November 2026

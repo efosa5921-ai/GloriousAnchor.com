@@ -122,7 +122,9 @@
       "category": "news",
       "kind": "news",
       "featured": true,
-      "homepage": "https://www.christianitytoday.com"
+      "homepage": "https://www.christianitytoday.com",
+      "enabled": false,
+      "_note": "Dropped 6 Nov 2026 at the owner's request (liberal-leaning sources): Christianity Today's editorial line has moved left of the site's readers (borderline; re-enable if wanted). Re-enable in the admin if wanted."
     },
     {
       "id": "christian-post",
@@ -270,7 +272,9 @@
       "url": "https://relevantmagazine.com/feed/",
       "category": "culture",
       "kind": "article",
-      "homepage": "https://relevantmagazine.com"
+      "homepage": "https://relevantmagazine.com",
+      "enabled": false,
+      "_note": "Dropped 6 Nov 2026 at the owner's request (liberal-leaning sources): RELEVANT takes progressive positions on culture and politics. Re-enable in the admin if wanted."
     },
     {
       "id": "tgc",
@@ -635,7 +639,9 @@
         {
           "url": "https://www.reddit.com/r/Christianity/new/.rss"
         }
-      ]
+      ],
+      "enabled": false,
+      "_note": "Dropped 6 Nov 2026 at the owner's request (liberal-leaning sources): r/Christianity leans progressive and mixes in non-Christian views; r/TrueChristian stays. Re-enable in the admin if wanted."
     },
     {
       "id": "r-truechristian",
@@ -686,7 +692,9 @@
       "type": "bluesky",
       "handle": "christianitytoday.com",
       "category": "social",
-      "kind": "social"
+      "kind": "social",
+      "enabled": false,
+      "_note": "Dropped 6 Nov 2026 at the owner's request (liberal-leaning sources): Christianity Today's Bluesky account, paused with the magazine. Re-enable in the admin if wanted."
     },
     {
       "id": "bsky-rns",
