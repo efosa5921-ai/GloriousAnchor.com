@@ -7,7 +7,6 @@ summary: Twelve years after Boko Haram took 276 girls from Chibok, 87 are still 
 image: images/chibok-girls.jpg
 categories: news
 keywords: Chibok girls, Chibok girls still missing, Bring Back Our Girls, Boko Haram Chibok kidnapping 2014, Chibok girls 2026, Chibok girl escaped with children, Lydia Simon Chibok, Chibok girls Christian, EYN Church of the Brethren Nigeria, Jeremiah 31:16 children shall come back, Hajara Haruna rescued Gwoza, Chibok girls where are they now
-draft: true
 ---
 
 > *Thus says the LORD: "Keep your voice from weeping, and your eyes from tears, for there is a reward for your work, declares the LORD, and they shall come back from the land of the enemy. There is hope for your future, declares the LORD, and your children shall come back to their own country."* (Jeremiah 31:16–17)
