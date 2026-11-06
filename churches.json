@@ -259,7 +259,9 @@
       "website": "https://transformchurch.us",
       "phone": "+1 918 582 3580",
       "serviceTimes": "Sunday 10:00 am",
-      "notes": "Michael and Natalie Todd, lead pastors since 2015; known for the Relationship Goals and Crazy Faith series."
+      "notes": "Michael and Natalie Todd, lead pastors since 2015; known for the Relationship Goals and Crazy Faith series.",
+      "lat": 36.0115,
+      "lng": -95.8827
     },
     {
       "name": "Bethel Church, Redding",
@@ -336,7 +338,9 @@
       "website": "https://jesusimagechurch.tv",
       "phone": "+1 407 574 5357",
       "serviceTimes": "Sunday 10:00 am and 6:00 pm",
-      "notes": "Michael and Jessica Koulianos; known for extended worship, Jesus School and the Jesus conferences. A permanent home is being built in Sanford, Florida."
+      "notes": "Michael and Jessica Koulianos; known for extended worship, Jesus School and the Jesus conferences. A permanent home is being built in Sanford, Florida.",
+      "lat": 28.6389,
+      "lng": -81.4156
     },
     {
       "name": "Cornerstone Church, San Antonio",
@@ -402,7 +406,9 @@
       "website": "https://www.churchofthehighlands.com",
       "phone": "+1 205 980 5577",
       "serviceTimes": "Sunday 8:00, 9:30, 11:15 am and 4:30 pm",
-      "notes": "Chris Hodges, founding senior pastor; one of the largest churches in America, known for small groups, Highlands College and the ARC church-planting network."
+      "notes": "Chris Hodges, founding senior pastor; one of the largest churches in America, known for small groups, Highlands College and the ARC church-planting network.",
+      "lat": 33.5166,
+      "lng": -86.6556
     },
     {
       "name": "Life.Church, Edmond",
@@ -433,7 +439,9 @@
       "website": "https://www.newcreation.org.sg",
       "phone": "+65 6338 4565",
       "serviceTimes": "Sunday 8:30 am, 11:30 am and 2:30 pm",
-      "notes": "Joseph Prince, senior pastor; one of Asia's largest churches, known for its grace-centred teaching."
+      "notes": "Joseph Prince, senior pastor; one of Asia's largest churches, known for its grace-centred teaching.",
+      "lat": 1.308,
+      "lng": 103.7884
     },
     {
       "name": "Jesus House London (RCCG)",
@@ -454,7 +462,9 @@
       "denomination": "Pentecostal (Hillsong Church)",
       "website": "https://hillsong.com/uk/central-london/",
       "serviceTimes": "Sunday 10:15 am and 12:15 pm",
-      "notes": "Tim and Nicola Douglass, lead pastors of Hillsong UK; meets in a West End theatre."
+      "notes": "Tim and Nicola Douglass, lead pastors of Hillsong UK; meets in a West End theatre.",
+      "lat": 51.5169,
+      "lng": -0.1296
     },
     {
       "name": "Yoido Full Gospel Church",
@@ -476,7 +486,9 @@
       "website": "https://christchurchjerusalem.org",
       "phone": "+972 2 627 7730",
       "serviceTimes": "Sunday Holy Communion 9:30 am and evening worship 6:00 pm; Saturday Hebrew worship 10:30 am; Wednesday Eucharist 10:30 am",
-      "notes": "Rev. David Pileggi, rector; the oldest Protestant church in the Middle East, consecrated in 1849, with a guesthouse and heritage centre inside Jaffa Gate."
+      "notes": "Rev. David Pileggi, rector; the oldest Protestant church in the Middle East, consecrated in 1849, with a guesthouse and heritage centre inside Jaffa Gate.",
+      "lat": 31.7761,
+      "lng": 35.2289
     }
   ]
 }
