@@ -1,5 +1,5 @@
 ---
-title: Billy Graham, born 7 November 1918: the farm boy who preached Christ to 215 million people, the 1960 Africa tour, and the one message he never changed
+title: Billy Graham: the farm boy who preached Christ to 215 million people, the 1960 Africa tour, and the one message he never changed
 searchTitle: Billy Graham: The Life of the Evangelist, Born 7 November 1918
 date: 2026-11-06T20:00:00Z
 author: The Glorious Anchor team

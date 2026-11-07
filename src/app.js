@@ -259,7 +259,8 @@
     t.textContent = (t.dataset.prefix || '') + relTime(when);
     t.title = updated ? `Updated ${new Date(when).toLocaleString()} · first published ${new Date(a.publishedAt).toLocaleString()}` : new Date(when).toLocaleString();
     const link = node.querySelector('.card__title a');
-    link.href = a.url; link.innerHTML = highlight(a.title, state.query);
+    // On a birthday or homegoing anniversary the headline says so.
+    link.href = a.url; link.innerHTML = highlight(a.anniversary ? `${a.anniversaryHeadline}: ${a.title}` : a.title, state.query);
     if (a.internal) { link.removeAttribute('target'); media.removeAttribute('target'); }
     const sum = node.querySelector('.card__summary');
     if (a.summary) sum.innerHTML = highlight(a.summary, state.query); else sum.remove();

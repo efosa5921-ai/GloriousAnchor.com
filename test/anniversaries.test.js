@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { anniversaryFor, parseLifeDate, dayIn } from '../scripts/lib/anniversaries.js';
-import { compilePost, postToArticle } from '../scripts/lib/posts.js';
+import { compilePost, postToArticle, renderPostPage } from '../scripts/lib/posts.js';
 import { selectAnniversaries, selectNew } from '../scripts/lib/announce.js';
 
 const site = { name: 'Glorious Anchor', url: 'https://example.com' };
@@ -31,6 +31,8 @@ test('an article about a general is pinned and labelled on the day, and announce
   assert.equal(onDay.pinned, true); assert.equal(onDay.anniversary, 'Born this day, 1918'); assert.equal(onDay.person, 'Billy Graham');
   const offDay = compilePost('2026-11-06-billy-graham.md', md, site, nov7 + 86400 * 1000);
   assert.equal(offDay.pinned, false); assert.equal(offDay.anniversary, undefined);
+  assert.match(renderPostPage('{{anniversaryLine}}', onDay, site, []), /Born on this day in 1918/);
+  assert.equal(renderPostPage('{{anniversaryLine}}', offDay, site, []), '');
   const a = postToArticle(onDay, site);
   assert.equal(a.anniversaryAt, onDay.anniversaryAt); assert.equal(a.pinned, true);
   // Already announced as a new article: the anniversary post goes out once this year, under its own id.

@@ -129,7 +129,7 @@ export function postToArticle(post, site) {
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const fmtDate = (t) => new Date(t).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 
-/** Fill the article page template. Placeholders: {{title}} {{description}} {{url}} {{image}} {{author}} {{date}} {{isoDate}} {{minutes}} {{body}} {{share}} {{more}} {{site}} {{verse}} {{robots}} {{draftBanner}} */
+/** Fill the article page template. Placeholders: {{title}} {{description}} {{url}} {{image}} {{author}} {{date}} {{isoDate}} {{minutes}} {{body}} {{share}} {{more}} {{site}} {{verse}} {{robots}} {{draftBanner}} {{anniversaryLine}} */
 export function renderPostPage(template, post, site, others) {
   const more = others.filter((p) => p.slug !== post.slug).slice(0, 4)
     .map((p) => `<li><a href="../${esc(p.slug)}/">${esc(p.title)}</a> <span class="muted">${esc(fmtDate(p.publishedAt))}</span></li>`).join('');
@@ -143,6 +143,7 @@ export function renderPostPage(template, post, site, others) {
     jsonld: articleJsonLd(post, site),
     share: post.draft ? '' : shareBarHtml({ url: post.url, title: post.searchTitle || post.title, summary: post.summary, site, label: 'Share this article' }),
     robots: post.draft ? '<meta name="robots" content="noindex, nofollow">' : '',
+    anniversaryLine: post.anniversaryHeadline ? `<p class="article__eyebrow">${esc(post.anniversaryHeadline)}</p>` : '',
     draftBanner: post.draft ? `<div class="banner banner--draft" role="status"><strong>Draft preview.</strong> This article is not published: it is not listed anywhere, not in the feeds, and search engines are asked to ignore it. Read it through, then tell Claude to publish it or edit it in the admin and untick <em>Draft</em>.</div>` : '',
   };
   return template.replace(/\{\{(\w+)\}\}/g, (_, k) => vars[k] ?? '');

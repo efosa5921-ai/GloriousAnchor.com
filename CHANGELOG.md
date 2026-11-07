@@ -4,6 +4,10 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 7 November 2026
+
+- **Anniversary headlines**: on a God's General's birthday or homegoing day the headline itself now begins "Born on this day in 1918" or "Went home to the Lord … years ago today", on the card and at the top of the article, and the gold chip is readable on the lead card.
+
 ## 6 November 2026
 
 - **God's Generals**: a new tab for the lives of past men and women of God. Each article carries the person's birthday and homegoing date, and on those days every year it leads the front page with a "Born this day" or "Went home this day" label and is posted to Telegram and X. First up: [Billy Graham](/articles/billy-graham-gods-general/), born 7 November 1918.
