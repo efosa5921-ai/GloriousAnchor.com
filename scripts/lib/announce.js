@@ -10,8 +10,9 @@ const URL_LEN = 23; // X counts every link as 23 characters
 
 /** Which items to announce this run: every new own article and pick, plus a few fresh top stories. */
 export function selectNew(articles, announced, { maxStories = 3, maxAgeHours = 24, now = Date.now() } = {}) {
+  // An item's id changes with its title, so a retitled article is also recognised by its URL (see rememberUrls).
   const seen = new Set(Object.keys(announced));
-  const fresh = articles.filter((a) => !seen.has(a.id));
+  const fresh = articles.filter((a) => !seen.has(a.id) && !seen.has(`u:${a.url}`));
   const priority = fresh.filter((a) => a.internal || a.kind === 'pick');
   const cutoff = now - maxAgeHours * 3600 * 1000;
   const stories = fresh
@@ -44,6 +45,11 @@ export function selectAnniversaries(articles, announced, { now = Date.now(), yea
   return articles
     .filter((a) => a.internal && a.anniversary && announced[a.id] && !announced[`${a.id}@${year}`])
     .map((a) => ({ ...a, id: `${a.id}@${year}`, shareTitle: `${a.anniversaryHeadline}: ${postTitle(a)}` }));
+}
+
+/** Record the URL of every announced item, so that a change of title (and so of id) never announces it again. */
+export function rememberUrls(articles, announced, now = Date.now()) {
+  for (const a of articles) if (announced[a.id] && a.url) announced[`u:${a.url}`] = now;
 }
 
 /** Podcast feeds often title episodes by date or number alone; prefix the show name so a post never reads "23.10.26". */

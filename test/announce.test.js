@@ -59,6 +59,15 @@ test('findRepost matches by id, URL, article slug or title fragment', async () =
   assert.equal(findRepost(list, ''), null);
 });
 
+test('a retitled article is recognised by its URL and not announced again', async () => {
+  const { rememberUrls } = await import('../scripts/lib/announce.js');
+  const a = { id: 'old', url: 'https://x.com/articles/a/', internal: true, kind: 'article', publishedAt: 1, sourceId: 'own' };
+  const announced = { old: 1 };
+  rememberUrls([a], announced, 2);
+  assert.equal(announced['u:https://x.com/articles/a/'], 2);
+  assert.equal(selectNew([{ ...a, id: 'new' }], announced, { now: 3 }).length, 0);
+});
+
 test('recordOutcome marks an item announced once any channel took it, and parks a failed X post for retry', () => {
   const announced = {}; const pending = {}; const a = { id: 'a1' };
   recordOutcome(announced, pending, a, { Telegram: true, X: false }, 100);

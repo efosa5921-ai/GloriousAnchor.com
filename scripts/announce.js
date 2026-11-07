@@ -12,7 +12,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { selectNew, selectAnniversaries, telegramMessage, xText, oauthHeader, findRepost, recordOutcome, postTitle } from './lib/announce.js';
+import { selectNew, selectAnniversaries, telegramMessage, xText, oauthHeader, findRepost, recordOutcome, postTitle, rememberUrls } from './lib/announce.js';
 import { dayIn } from './lib/anniversaries.js';
 import { previewImage } from './lib/share.js';
 
@@ -161,6 +161,7 @@ async function main() {
     }
     recordOutcome(announced, pending, a, results, now);
   }
+  rememberUrls(articles, announced, now);
   // Forget ids older than 30 days so the state file stays small.
   for (const [id, t] of Object.entries(announced)) if (now - t > 30 * 86400 * 1000) delete announced[id];
   if (!dry) { await writeFile(stateFile, JSON.stringify(announced)); await writeFile(pendingFile, JSON.stringify(pending)); }
