@@ -1,9 +1,9 @@
 ---
 title: Herzog hands Eisenkot the mandate: 28 days to turn 67 recommendations into 61 seats, with Netanyahu warning of "national suicide" and Liberman ruling out Arab support
-searchTitle: Israel: Herzog Gives Eisenkot the Mandate, 28 Days to Form a Government
+searchTitle: Israel: Herzog Gives Eisenkot the Mandate, 28 Days to Govern
 date: 2026-10-27T22:30:00Z
 author: The Glorious Anchor team
-summary: Herzog has tasked Gadi Eisenkot with forming Israel's government: 67 recommendations to 46, a 28-day clock to 6 December, and no majority yet. What happens now.
+summary: Herzog has tasked Gadi Eisenkot with forming Israel's government: 67 recommendations to 46, a 28-day clock to 6 December, no majority yet. What now.
 image: https://www.israelhayom.com/wp-content/uploads/2026/10/Benjamin-Netanyahu-and-Gadi-Eisenkot.jpg
 categories: news, pitn
 keywords: Herzog tasks Eisenkot, Eisenkot mandate form government, Israel coalition talks 2026, Herzog consultations recommendations, Israel election results 2026, Israel election final results, Israel election count seats, Knesset election October 2026, Netanyahu election results, Gadi Eisenkot Yashar, Israel election who won, Israel coalition 61 seats, Arab parties Knesset seats, Herzog coalition talks, pray for the peace of Jerusalem, Israel election prophecy
