@@ -6,7 +6,7 @@ author: Michael Ede
 summary: FESTAC 77 ran from 15 January to 12 February 1977, when one naira bought $1.55 and Nigeria lent to the IMF. What was done, what followed, the 2027 jubilee.
 image: images/festac-77-regatta.jpg
 categories: pitn, teaching
-keywords: FESTAC 77, FESTAC 77 at 50, FESTAC 2027 anniversary, FESTAC 77 idolatry, FESTAC 77 curse Nigeria, FESTAC 77 Shango priest, Obasanjo libation FESTAC, naira stronger than dollar, Nigeria lent money to IMF 1974, Nigeria external debt history, Nigeria national repentance, Hosea 2:8 corn wine oil Baal, 2 Chronicles 7:14 Nigeria, FESTAC Africa 2027 Asaba, CBAAC golden jubilee
+keywords: FESTAC 77, FESTAC 77 at 50, Nigeria 2027 election 16 January jubilee, Nigeria leased to darkness FESTAC, mystery of jubilee Nigeria, Leviticus 25 jubilee Nigeria, FESTAC 2027 anniversary, FESTAC 77 idolatry, FESTAC 77 curse Nigeria, FESTAC 77 Shango priest, Obasanjo libation FESTAC, naira stronger than dollar, Nigeria lent money to IMF 1974, Nigeria external debt history, Nigeria national repentance, Hosea 2:8 corn wine oil Baal, 2 Chronicles 7:14 Nigeria, FESTAC Africa 2027 Asaba, CBAAC golden jubilee
 draft: true
 ---
 
@@ -18,7 +18,7 @@ That month one naira bought about a dollar and fifty-five cents. Three years ear
 
 On 15 January 2027 it will be fifty years. The Federal Government's culture agency wants a hundred countries in Lagos to celebrate the golden jubilee, and a private revival of the festival has announced that it is coming home to Nigeria the same year. Nigeria's Pentecostal churches opposed FESTAC before it opened, as a plot to revive idol worship, and a line of preachers has called it the nation's root sin ever since.
 
-This article sets the whole record in one place: what Nigeria had before the festival, what was done at it in public, what Scripture says about such acts, what happened to the nation afterwards, what the economists and the prophets each say about why, what is planned for 2027, and what the church should do with the year of jubilee.
+This article sets the whole record in one place: what Nigeria had before the festival, what was done at it in public, what Scripture says about such acts, what happened to the nation afterwards, what the economists and the prophets each say about why, what is planned for 2027, why the nation's next presidential election now falls on 16 January 2027, the day after the fiftieth anniversary, and what the church should do with the year of jubilee.
 
 *Picture: a decorated canoe at the FESTAC 77 regatta on the Lagos lagoon, 1977. Photograph by Helinä Rautavaara, Helinä Rautavaara Museum, Espoo, CC BY 2.0, via Wikimedia Commons.*
 
@@ -102,6 +102,20 @@ Separately, a private revival called FESTAC Africa, chaired by the engineer Yink
 
 Both plans speak of the creative economy, tourism and diplomacy. Neither, so far, has said anything about the fire, the libation or the mask. The church should not expect them to. It should decide what it will do with the same year.
 
+## The lease, the jubilee, and an election moved to 16 January 2027
+
+I will say plainly what I believe, and then set out the facts that any reader can check.
+
+I believe that at FESTAC 77 Nigeria was leased to darkness. Not sold outright, because "the earth is the LORD's, and the fulness thereof" (Psalm 24:1) and no head of state can sign away what belongs to God. But leased, the way land was leased in Israel. The law of Moses would not allow land to be sold for ever: "The land shall not be sold for ever: for the land is mine; for ye are strangers and sojourners with me" (Leviticus 25:23). A man in hard times could part with his inheritance, and the buyer held it and took its harvests, but only until the fiftieth year. Then the trumpet sounded and "ye shall return every man unto his possession" (Leviticus 25:10, 13). What was given away under pressure came back to its rightful owner by law, without a kobo paid, because the owner's claim had never lapsed. That is the mystery of jubilee: a lease that darkness takes in a nation's boom has a term written into it by God, and the term is fifty years.
+
+The nation's leaders in 1977 presented Nigeria to the spirits of the land through its fire, its libation and its emblem, and took the harvest of the oil years as the price. For fifty years the buyer has held the land and taken its harvests, in debt, in the naira, in blood. The fiftieth year has now come. Counting 1977 as the first year, the fiftieth year began on 15 January 2026 and ends on 14 January 2027; counting fifty completed years, it begins on 15 January 2027. Either way the trumpet sounds this winter, and I believe the mystery of jubilee has come to deliver Nigeria and return her to her owner.
+
+Here is the fact that made me write this section. Under the Electoral Act of 2022, Nigeria's presidential and National Assembly elections were fixed for Saturday 20 February 2027, well inside the jubilee by either count. On 18 February 2026 President Tinubu signed the Electoral Act 2026, and on 26 February the Independent National Electoral Commission announced that the elections had been brought forward to Saturday 16 January 2027, the day after the fiftieth anniversary of the Shango fire at Surulere, with the governorship polls moved from 6 March to 6 February. The commission's stated reason was that the new Act "introduced adjustments to statutory timelines governing pre-election and electoral activities" and the calendar had to be realigned. Before that, Muslim groups and former Vice President Atiku Abubakar had complained that 20 February would fall in Ramadan. Those are the reasons on the record, and I report them. No presidential election has been held in January since the return to democracy in 1999.
+
+I do not believe the timing is an accident. The men who moved the date may have had nothing in their minds but Ramadan and the lawyers' calendar. But Paul tells the church that "we wrestle not against flesh and blood, but against principalities, against powers, against the rulers of the darkness of this world" (Ephesians 6:12), and the rulers of this darkness know the terms of their own lease better than the men who signed it. Nigeria will now choose the government that leads her into the jubilee not in the jubilee's first weeks but on its first morning, before the restoration has had time to work on the hearts of the voters, in the last hours in which the old lease could still be said to hold. Whoever moved the date, and for whatever reason they gave, I believe the kingdom of darkness is trying to install its tenants before the owner's trumpet is heard.
+
+That is not a reason for fear. It is a reason to understand the hour. "The LORD hath prepared his throne in the heavens; and his kingdom ruleth over all" (Psalm 103:19). The jubilee was never in the gift of INEC. But it tells the church what to pray for between now and 16 January 2027, and it tells every believer who holds a voter's card what that card is for.
+
 ## What the church should do with the year of jubilee
 
 In the law of Moses the fiftieth year was the jubilee: "Ye shall hallow the fiftieth year, and proclaim liberty throughout all the land unto all the inhabitants thereof" (Leviticus 25:10). Debts were cancelled, land went back to its families, and the trumpet was blown on the Day of Atonement, the day of confession. A nation that is marking fifty years since it presented itself to other gods could do worse than take the Bible's own fiftieth year as its pattern.
@@ -110,6 +124,7 @@ In the law of Moses the fiftieth year was the jubilee: "Ye shall hallow the fift
 - **Confess it.** Daniel's prayer is the pattern: the righteous confessing the nation's sin as their own, in fasting and humility. Several ministries already hold such prayers. A church of Nigeria's size could hold one together, and 15 January 2027 is the date. If the nation marks the week with another festival, the church should answer it with prayer rather than complaint.
 - **Pray Hosea, not Siloam.** Not "whose fault was it", but "we prepared your corn, wine and oil for Baal; forgive us and give us the vineyards again." Hosea does not end at chapter two, verse nine: "I will allure her, and bring her into the wilderness, and speak comfortably unto her. And I will give her her vineyards from thence" (2:14–15).
 - **Turn.** "Turn from their wicked ways" is the clause in 2 Chronicles 7:14 that is easiest to skip. A nation's repentance from idolatry at the top is tested by its Christians' repentance from the idols that live comfortably in the pews: the money that paid for FESTAC and still rules the land, the tribe, the title, the big man.
+- **Vote as a jubilee people.** The election of 16 January 2027 falls on the jubilee's first morning. Every believer with a voter's card should pray before using it, and use it, and watch the count, remembering that leaders are the first harvest of a restored land or the last of a leased one.
 - **Work.** Haggai's remedy for the bag with holes was a building site, not only a prayer meeting: "Go up to the mountain, and bring wood, and build the house" (1:8). A repentant nation farms, makes and saves. The groundnut pyramids were built by hand.
 
 The promise attached to 2 Chronicles 7:14 is not that the naira will recover or the elections will be clean. It is that God will hear, forgive and heal the land. The church in Nigeria has preached that verse to the nation for fifty years. The fiftieth year is a good time to take it at its word.
@@ -145,6 +160,10 @@ Because the nation's leaders publicly honoured traditional gods and ancestors on
 ### What is planned for the FESTAC 50th anniversary in 2027?
 
 The Centre for Black and African Arts and Civilisation announced in July 2026 that it is targeting about a hundred countries for the golden jubilee. FESTAC Africa, a private revival that has run annual editions since 2022, announced on 25 May 2026 at Mandela Park Resort in Asaba that its 2027 edition returns to Nigeria, with Delta State leading the activities, after a 2026 edition in Dakar in October.
+
+### Why does the 2027 presidential election fall on 16 January?
+
+Under the Electoral Act 2022 it was fixed for 20 February 2027. After President Tinubu signed the Electoral Act 2026 on 18 February 2026, INEC announced on 26 February that the presidential and National Assembly elections would be brought forward to 16 January 2027, citing the new Act's statutory timelines; Muslim groups had also objected that 20 February fell in Ramadan. The date is the day after the fiftieth anniversary of FESTAC's opening. This article argues that the timing matters spiritually, while reporting the official reasons.
 
 ### How should Christians respond to FESTAC at fifty?
 
