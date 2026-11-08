@@ -16,7 +16,7 @@ On Friday 6 November 2026, at ten in the morning, Bishop David Oyedepo stood on 
 
 If the seat count holds, and no outside body has yet measured it, it is the largest church auditorium on earth, larger than the Glory Dome in Abuja, larger than the Ark that Oyedepo's own Winners Chapel is finishing at Canaanland, larger than anything in Seoul or São Paulo or Houston. The first Sunday service is tomorrow, 8 November. This is what was built, who built it, what was said over it, and what a building this size is for.
 
-*Picture: worshippers inside the Hand of God Cathedral during the dedication service on 6 November 2026. Frame from Salvation Ministries' broadcast.*
+*Picture: the Hand of God Cathedral, the central dome and its five wings, as rendered for the dedication broadcast. Salvation Ministries.*
 
 ## From 34 people on Birabi Street
 
