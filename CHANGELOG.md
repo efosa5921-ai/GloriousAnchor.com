@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 8 November 2026
 
+- **Updated: [Israel's coalition talks](/articles/israel-election-results-exit-polls/)**: Herzog hands Eisenkot the mandate at the President's Residence, the 28-day clock to 6 December, the president's reasoning and his charge to Eisenkot, Netanyahu's "national suicide" warning and Yashar's reply, Liberman, Golan and Bennett on the Haredi road, Ben Gvir's call for new elections, Deri's exit from the Knesset list, and the interference probes falling apart.
 - **The Holy Spirit tab is for the Holy Spirit only**: news and general Pentecostal sources that had been filed there (Charisma News and Magazine, Influence, Bill Johnson, Jesus Image, Arome Osayi) move to News, Faith & Culture and Teaching, and our own articles on churches, buildings and ministers leave the tab. Pneuma Review, David Diga Hernandez, Isaiah Saldivar and Vlad Savchuk stay.
 - **Salvation Ministries joins Teaching**: the official channel of Pastor David Ibiyeomie's church, with the full dedication service of the Hand of God Cathedral as a pick.
 
