@@ -7,7 +7,6 @@ summary: Salvation Ministries' Hand of God Cathedral, 120,000 seats at Igwuruta,
 image: images/hand-of-god-cathedral.jpg
 categories: news, holyspirit
 keywords: Hand of God Cathedral, Salvation Ministries new church, David Ibiyeomie cathedral, largest church in the world, 120000 seat church Port Harcourt, Igwuruta cathedral dedication, Oyedepo dedicates Hand of God, Salvation Ministries Igwuruta, biggest church auditorium Africa, Haggai 2:9 glory of the latter house, Salvation Ministries first service November 8
-draft: true
 ---
 
 > *The glory of this latter house shall be greater than of the former, saith the LORD of hosts: and in this place will I give peace, saith the LORD of hosts.* (Haggai 2:9)

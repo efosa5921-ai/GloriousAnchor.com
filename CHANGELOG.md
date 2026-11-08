@@ -10,7 +10,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 7 November 2026
 
-- **Draft for the owner: Hand of God Cathedral**: Salvation Ministries' 120,000-seat headquarters at Igwuruta, dedicated by Bishop Oyedepo on 6 November, the funding and the figures, who was there, and what a building that size is for.
+- **New article: [Hand of God Cathedral](/articles/hand-of-god-cathedral-salvation-ministries-port-harcourt/)**: Salvation Ministries' 120,000-seat headquarters at Igwuruta, dedicated by Bishop Oyedepo on 6 November, the funding and the figures, who was there, and what a building that size is for.
 - **Anniversary headlines**: on a God's General's birthday or homegoing day the headline itself now begins "Born on this day in 1918" or "Went home to the Lord … years ago today", on the card and at the top of the article, and the gold chip is readable on the lead card.
 
 ## 6 November 2026
