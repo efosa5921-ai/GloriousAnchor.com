@@ -5,7 +5,7 @@ date: 2026-11-02
 author: Michael Ede
 summary: Michael Ede, visioner of Glorious Anchor International Network, records the encounters that birthed GAIN, its name, and its vision, purpose and tools.
 image: images/operation-gain-cover.jpg
-categories: teaching, articles, holyspirit, eschatology
+categories: teaching, articles, eschatology
 keywords: Operation GAIN, Glorious Anchor International Network, GAIN mission and vision, Michael Ede, Prevailing Prayer Mountain, Efosa Adun, tornado of His power riding in the wings of His glory, Goshen city of light, Hebrews 6:19 anchor for the soul, Isaiah 61:1-2 Luke 4:18-19, we pray to gather even as we gather to pray, gainers of souls 1 Corinthians 9:19-23
 draft: true
 ---

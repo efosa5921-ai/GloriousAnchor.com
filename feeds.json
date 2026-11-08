@@ -65,7 +65,7 @@
     {
       "id": "holyspirit",
       "label": "The Holy Spirit",
-      "description": "News and teaching on the Spirit-filled life from Pentecostal and charismatic publishers."
+      "description": "Teaching and writing about the Holy Spirit: who he is, his gifts, his baptism and his work in the believer, and nothing else."
     },
     {
       "id": "articles",
@@ -846,9 +846,8 @@
       "name": "Charisma News",
       "url": "https://charismanews.com/feed/",
       "homepage": "https://charismanews.com",
-      "category": "holyspirit",
+      "category": "news",
       "categories": [
-        "holyspirit",
         "news"
       ],
       "kind": "news",
@@ -859,9 +858,12 @@
       "name": "Charisma Magazine",
       "url": "https://charismamag.com/feed/",
       "homepage": "https://charismamag.com",
-      "category": "holyspirit",
+      "category": "culture",
       "kind": "article",
-      "featured": true
+      "featured": true,
+      "categories": [
+        "culture"
+      ]
     },
     {
       "id": "pneuma-review",
@@ -877,9 +879,8 @@
       "name": "Influence Magazine",
       "url": "https://influencemagazine.com/rss",
       "homepage": "https://influencemagazine.com",
-      "category": "holyspirit",
+      "category": "teaching",
       "categories": [
-        "holyspirit",
         "teaching"
       ],
       "kind": "article",
@@ -1417,10 +1418,10 @@
       "type": "youtube",
       "channelId": "UCspy9Ay2Z9VI__qS7Fdbs6Q",
       "homepage": "https://www.bethel.com",
-      "category": "holyspirit",
+      "category": "teaching",
       "kind": "video",
       "categories": [
-        "holyspirit",
+        "teaching",
         "video"
       ],
       "featured": true
@@ -1431,10 +1432,10 @@
       "type": "youtube",
       "channelId": "UCu-rO0kN-fbuGKTllbuEvZw",
       "homepage": "https://jesusimage.tv",
-      "category": "holyspirit",
+      "category": "teaching",
       "kind": "video",
       "categories": [
-        "holyspirit",
+        "teaching",
         "video"
       ]
     },
@@ -1529,10 +1530,10 @@
       "type": "youtube",
       "channelId": "UCxh7gzwGHFwPn0S6GU1HEFA",
       "homepage": "https://charismamag.com",
-      "category": "holyspirit",
+      "category": "news",
       "kind": "video",
       "categories": [
-        "holyspirit",
+        "news",
         "video"
       ]
     },
@@ -1578,7 +1579,7 @@
       "kind": "audio",
       "categories": [
         "radio",
-        "holyspirit"
+        "news"
       ]
     },
     {
@@ -1675,7 +1676,7 @@
       "kind": "audio",
       "categories": [
         "radio",
-        "holyspirit"
+        "teaching"
       ]
     },
     {
@@ -1703,7 +1704,7 @@
       "kind": "audio",
       "categories": [
         "radio",
-        "holyspirit"
+        "teaching"
       ]
     },
     {
@@ -1737,10 +1738,10 @@
       "type": "youtube",
       "channelId": "UCh6Sn6v_mdhwWTEpNvo5A4A",
       "homepage": "https://www.youtube.com/@apostlearomeosayi",
-      "category": "holyspirit",
+      "category": "teaching",
       "kind": "video",
       "categories": [
-        "holyspirit",
+        "teaching",
         "video"
       ]
     },

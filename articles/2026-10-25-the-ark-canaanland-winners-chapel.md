@@ -5,7 +5,7 @@ date: 2026-10-25
 author: The Glorious Anchor team
 summary: The Ark at Canaanland, Ota: how Bishop Oyedepo's 109,000-seat auditorium began in 2021, what is inside, why the 2025 dedication moved, and where it stands now.
 image: https://k24.digital/wp-content/uploads/2026/09/Winners-Chapel-the-Ark-church.jpg
-categories: news, holyspirit
+categories: news
 keywords: The Ark Canaanland, Winners Chapel Ark project, Ark auditorium Ota, Living Faith Church Ark dedication date, largest church auditorium in the world, Bishop David Oyedepo Ark, 109000 seat church Nigeria, Canaanland Ota, Faith Tabernacle, Ark project progress 2026
 ---
 

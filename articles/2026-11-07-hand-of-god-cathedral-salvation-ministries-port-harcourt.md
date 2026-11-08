@@ -5,7 +5,7 @@ date: 2026-11-07T06:00:00Z
 author: The Glorious Anchor team
 summary: Salvation Ministries' Hand of God Cathedral, 120,000 seats at Igwuruta, Port Harcourt, dedicated by Oyedepo on 6 Nov 2026: figures, funding and purpose.
 image: images/hand-of-god-cathedral.jpg
-categories: news, holyspirit
+categories: news
 keywords: Hand of God Cathedral, Salvation Ministries new church, David Ibiyeomie cathedral, largest church in the world, 120000 seat church Port Harcourt, Igwuruta cathedral dedication, Oyedepo dedicates Hand of God, Salvation Ministries Igwuruta, biggest church auditorium Africa, Haggai 2:9 glory of the latter house, Salvation Ministries first service November 8
 ---
 

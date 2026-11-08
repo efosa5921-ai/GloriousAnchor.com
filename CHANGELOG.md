@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 8 November 2026
 
+- **The Holy Spirit tab is for the Holy Spirit only**: news and general Pentecostal sources that had been filed there (Charisma News and Magazine, Influence, Bill Johnson, Jesus Image, Arome Osayi) move to News, Faith & Culture and Teaching, and our own articles on churches, buildings and ministers leave the tab. Pneuma Review, David Diga Hernandez, Isaiah Saldivar and Vlad Savchuk stay.
 - **Salvation Ministries joins Teaching**: the official channel of Pastor David Ibiyeomie's church, with the full dedication service of the Hand of God Cathedral as a pick.
 
 ## 7 November 2026

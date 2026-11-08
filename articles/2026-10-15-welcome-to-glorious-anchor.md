@@ -29,7 +29,7 @@ Top Stories opens with **From our writers**, a slider of our own articles that t
 
 Every section also has its own address, such as gloriousanchor.com/eschatology/ or gloriousanchor.com/news/, listed in the footer of every page, so you can bookmark or share one section on its own.
 - **Prophecy in the News** reads current events in the light of Scripture: our own articles on what is happening in the world and what the Bible says about it, alongside prophecy ministries.
-- **The Holy Spirit** brings news and teaching on the Spirit-filled life, from Pentecostal and charismatic publishers.
+- **The Holy Spirit** is given entirely to teaching and writing about the Holy Spirit: who he is, his gifts, his baptism and his work in the believer.
 - **Writers & Blogs** collects individual authors, including their newsletters.
 - **YouTube** shows new videos from teaching, apologetics and worship channels.
 - **Radio** gathers Christian podcasts and audio teaching. Press Listen and the episode plays right there on the card.
