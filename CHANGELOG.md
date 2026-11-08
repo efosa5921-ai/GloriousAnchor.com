@@ -4,6 +4,10 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 8 November 2026
+
+- **Salvation Ministries joins Teaching**: the official channel of Pastor David Ibiyeomie's church, with the full dedication service of the Hand of God Cathedral as a pick.
+
 ## 7 November 2026
 
 - **Draft for the owner: Hand of God Cathedral**: Salvation Ministries' 120,000-seat headquarters at Igwuruta, dedicated by Bishop Oyedepo on 6 November, the funding and the figures, who was there, and what a building that size is for.

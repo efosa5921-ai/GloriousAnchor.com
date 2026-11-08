@@ -42,6 +42,20 @@ The platform on Friday was a family tree of Nigerian Pentecostalism. Oyedepo, wh
 
 Ibiyeomie spoke about the bishop as a son speaks: "Every time I get to a crossroad, I position myself to hear from Bishop Oyedepo and he always says the thing I want answers to." A clip of Jerry Eze going down on his knees to greet first Ibiyeomie and then Oyedepo went round the internet by evening, as did the footage of the bishops seeing Oyedepo off to his jet. Nigerians, as ever, were divided about what they saw.
 
+## Watch the dedication
+
+Salvation Ministries streamed the whole service, three and a half hours of it, from the processional to the final prayer. The recording is on the church's own channel:
+
+<div class="video">
+<iframe src="https://www.youtube.com/embed/0RJZa2zk7i0" title="Cathedral Dedication Service, Friday 6 November 2026 (Salvation Ministries)" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+</div>
+
+For a shorter look, Church Gist filmed [Bishop Oyedepo and his entourage walking into the cathedral](https://www.youtube.com/watch?v=GqpipuJQWd4) through the crowd, and there is a [two-minute tour of the building](https://www.youtube.com/watch?v=78bH0VPlT7M), inside and out.
+
+## Sunday: the first service
+
+On Sunday morning, 8 November, the congregation met in the cathedral for the first time, for a [Special Thanksgiving Service streamed live](https://www.youtube.com/watch?v=7Vm3T_nhqSE) from a quarter to seven in the morning, Port Harcourt time, with thousands watching online as the seats filled. Salvation Ministries' services, morning devotions and the Hour of Salvation now appear in our [Teaching](/teaching/) section.
+
 ## "This will never be reduced to an altar of entertainment"
 
 Oyedepo's dedication prayer was short and it was pointed. "The fire of the Lord will never go out from this altar," he declared. "This will never be reduced to an altar of entertainment." Anyone who has watched a great church lose its first love will know why a man of 72 would pray that over a building meant to outlast him. He also spoke to the moment Nigeria is in, warning against any attempt to declare the country an Islamic state and saying the church would prevail.

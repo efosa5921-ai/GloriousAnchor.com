@@ -1759,6 +1759,19 @@
       "featured": true
     },
     {
+      "id": "yt-salvation-ministries",
+      "name": "Salvation Ministries",
+      "type": "youtube",
+      "channelId": "UCH7KHtVTI91GcN6yuwvaFvQ",
+      "homepage": "https://www.smhos.org",
+      "category": "teaching",
+      "kind": "video",
+      "categories": [
+        "teaching",
+        "video"
+      ]
+    },
+    {
       "id": "yt-derek-prince",
       "name": "Derek Prince Ministries",
       "type": "youtube",
