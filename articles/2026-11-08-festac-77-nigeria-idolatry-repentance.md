@@ -2,7 +2,7 @@
 title: FESTAC 77: the four weeks Nigeria was leased to darkness, the lease that expires on 12 February 2027, and the two jubilees the nation must choose between
 searchTitle: FESTAC 77: Nigeria's Lease to Darkness Ends 12 February 2027
 date: 2026-11-08T21:00:00Z
-author: Michael Ede
+author: Efosa Adun
 summary: At FESTAC 77 Nigeria's leaders leased the nation to darkness for fifty years. The lease ends 12 February 2027. Two jubilees are offered; one sets her free.
 image: images/festac-77-at-fifty-cover.jpg
 categories: pitn, teaching
