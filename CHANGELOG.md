@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 9 November 2026
 
+- **Front page on wide screens**: the three cards beside the slider now share its height evenly, carry a short summary and centre their text, instead of a title floating in an empty box.
 - **Slider fix**: the front page's first, quick load now always includes our recent articles, so the "From our writers" slider appears at once on every screen instead of a single lead card; the What's new card no longer shows a time in the future.
 - **IndexNow**: every deploy now tells Bing and the other IndexNow search engines which pages are new or changed, so articles are indexed within hours rather than days.
 - **Articles primed for search and AI assistants**: the closing questions on every article now feed FAQ structured data, articles can name the topics they are about, pages carry publish and update times and speakable markup for assistants, a plain-text map of the site is published at /llms.txt, and the robots file welcomes search and AI crawlers while keeping drafts private.
