@@ -68,6 +68,10 @@ jobs:
           X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
           X_STORIES_PER_RUN: ${{ github.event.inputs.x_stories || '0' }}
           REPOST: ${{ github.event.inputs.repost || '' }}
+      - name: Tell search engines about new pages (IndexNow)
+        if: github.event_name != 'pull_request'
+        continue-on-error: true
+        run: node scripts/indexnow.js
       - name: Check feed health
         id: health
         run: node scripts/health.js --threshold 3

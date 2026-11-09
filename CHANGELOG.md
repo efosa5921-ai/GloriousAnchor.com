@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 9 November 2026
 
+- **IndexNow**: every deploy now tells Bing and the other IndexNow search engines which pages are new or changed, so articles are indexed within hours rather than days.
 - **Articles primed for search and AI assistants**: the closing questions on every article now feed FAQ structured data, articles can name the topics they are about, pages carry publish and update times and speakable markup for assistants, a plain-text map of the site is published at /llms.txt, and the robots file welcomes search and AI crawlers while keeping drafts private.
 
 ## 8 November 2026
