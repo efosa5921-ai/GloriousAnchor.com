@@ -4,7 +4,7 @@ searchTitle: FESTAC 77 at 50: What Happened, Nigeria's Wealth, and 2027
 date: 2026-11-08T21:00:00Z
 author: Michael Ede
 summary: FESTAC 77 ran from 15 January to 12 February 1977, when one naira bought $1.55 and Nigeria lent to the IMF. What was done, what followed, the 2027 jubilee.
-image: images/festac-77-regatta.jpg
+image: images/festac-77-at-fifty-cover.jpg
 categories: pitn, teaching
 keywords: FESTAC 77, FESTAC 77 at 50, Nigeria 2027 election 16 January jubilee, Nigeria leased to darkness FESTAC, mystery of jubilee Nigeria, Leviticus 25 jubilee Nigeria, FESTAC 2027 anniversary, FESTAC 77 idolatry, FESTAC 77 curse Nigeria, FESTAC 77 Shango priest, Obasanjo libation FESTAC, naira stronger than dollar, Nigeria lent money to IMF 1974, Nigeria external debt history, Nigeria national repentance, Hosea 2:8 corn wine oil Baal, 2 Chronicles 7:14 Nigeria, FESTAC Africa 2027 Asaba, CBAAC golden jubilee
 draft: true
@@ -20,7 +20,7 @@ On 15 January 2027 it will be fifty years since the fire was lit, and on 12 Febr
 
 This article sets the whole record in one place: what Nigeria had before the festival, what was done at it in public, what Scripture says about such acts, what happened to the nation afterwards, what the economists and the prophets each say about why, what is planned for 2027, why the nation's next elections have been moved to 16 January and 6 February 2027, inside those same four weeks, and what the church should do with the year of jubilee.
 
-*Picture: a decorated canoe at the FESTAC 77 regatta on the Lagos lagoon, 1977. Photograph by Helinä Rautavaara, Helinä Rautavaara Museum, Espoo, CC BY 2.0, via Wikimedia Commons.*
+*Cover: a decorated canoe at the FESTAC 77 regatta on the Lagos lagoon, 1977. Photograph by Helinä Rautavaara, Helinä Rautavaara Museum, Espoo, CC BY 2.0, via Wikimedia Commons.*
 
 ## Before: the land fed the nation and lent to the world
 
@@ -40,6 +40,10 @@ The spending followed. The Udoji awards of 1975 doubled public salaries with arr
 
 The facts below are not in dispute. They come from the festival's own records, from the historians who have studied it and from the people who were there.
 
+![The grandstand at the Grand Durbar, Kaduna, hung with the festival emblem](/articles/images/festac-77-durbar-grandstand.jpg)
+
+*The grandstand at the Grand Durbar in Kaduna, February 1977, hung with banners of the festival emblem, the Queen Idia mask. Photograph by Helinä Rautavaara, Helinä Rautavaara Museum, CC BY 2.0, via Wikimedia Commons.*
+
 - **The emblem** was a copy of the sixteenth-century ivory pendant mask of Queen Idia of Benin, carved for the festival by Erhabor Emokpae after the British Museum refused to lend the original looted in 1897. In Benin court tradition the mask is a royal and ancestral image. It went onto banners, programmes, coins and buses, and became the face of the nation for a month.
 - **The opening** at the National Stadium on 15 January began with a twenty-one gun salute and the release of a thousand pigeons. Then a Shango priest, a priest of the Yoruba god of thunder, lit the festival flame. General Olusegun Obasanjo, the military head of state, presided.
 - **The colloquium**, which the organisers called the heart of the festival, opened with the festival's Grand Patron pouring a libation of water and alcohol to the gods and the ancestors, with the Oba of Lagos among the guests at the high table. Its working groups included one on "Black civilisation and religion", and the Vatican sent observers.
@@ -47,6 +51,10 @@ The facts below are not in dispute. They come from the festival's own records, f
 - **The exhibitions** showed two thousand years of Nigerian art: the Nok terracottas, the Ife heads, Igbo-Ukwu bronzes and the Benin court pieces, with the carvings of fifty nations beside them.
 
 Nobody hid any of this. It was the point. FESTAC was conceived, from its first edition in Dakar in 1966 under Léopold Senghor's philosophy of Négritude, as a return to Africa's own spiritual sources after colonialism. Lagos in 1977 was that return on the grandest scale, and religion was written into the programme beside music, dance and literature.
+
+![An ivory pendant mask of Queen Idia of Benin](/articles/images/queen-idia-mask.jpg)
+
+*One of the sixteenth-century ivory pendant masks of Queen Idia of Benin, sister to the British Museum piece that the FESTAC emblem copied. Metropolitan Museum of Art, public domain.*
 
 ## What Scripture says about such acts
 
@@ -57,6 +65,10 @@ Lighting a nation's festival fire by the hand of a priest of Shango is not neutr
 Culture is not the issue. Bezaleel was filled with the Spirit of God to carve and cast for the tabernacle (Exodus 31:1–5), and the gospel has made every African language and every drum fit for the praise of Christ. The question Scripture asks of any object or rite is whom it serves. A masquerade in the town it comes from is not a costume. A libation is not hospitality. When a head of state performs them on behalf of a nation, the nation has, in the Bible's terms, been presented to those spirits. That is why Israel's kings were judged not for what their people did in private but for what they did at the public altars, and why Josiah's reform began with the high places the kings before him had built (2 Kings 23).
 
 ## After: the turn
+
+![A gas flare burning at Nembe Creek in the Niger Delta](/articles/images/niger-delta-gas-flare.jpg)
+
+*A gas flare at Nembe Creek in the Niger Delta, 1993. By 1988 oil was 87 per cent of Nigeria's exports and three quarters of the government's revenue. Photograph by Sara Leigh Lewis, CC BY-SA 4.0, via Wikimedia Commons.*
 
 The year after FESTAC, Nigeria went to the Eurodollar market for the first time. The one-billion-dollar "jumbo loan" signed in January 1978, for the steel projects, was followed within the year by another of 750 million. The IMF's own historians date the change in Nigeria's borrowing from that year. Commercial loans, almost nothing in 1977, were two thirds of the debt by 1982.
 
@@ -95,6 +107,10 @@ The truth the church can stand on is narrower than the slogan and stronger than 
 ## 2027: the jubilee being planned
 
 The fiftieth anniversary falls on Friday 15 January 2027, and the same four weeks run to Friday 12 February 2027. Two sets of plans are already in motion.
+
+![Horsemen at the Grand Durbar, Kaduna, 1977](/articles/images/festac-77-durbar-horsemen.jpg)
+
+*Horsemen at the Grand Durbar, Kaduna, February 1977. The plans for 2027 promise the same spectacle. Photograph by Helinä Rautavaara, Helinä Rautavaara Museum, CC BY 2.0, via Wikimedia Commons.*
 
 The Federal Government's Centre for Black and African Arts and Civilisation, the agency created to keep FESTAC's legacy, announced on 2 July 2026 in Lagos that it is targeting the participation of about a hundred countries in the golden jubilee. Its director-general, Aisha Augie, said the anniversary would "celebrate Africa's shared cultural heritage" and bring governments, cultural institutions and the diaspora together. She spoke at a dialogue on the Eyo masquerade as an instrument of soft power, where the head of the National Council for Arts and Culture, Obi Asika, said festivals and indigenous knowledge should be treated as intellectual property that creates wealth.
 
