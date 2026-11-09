@@ -8,7 +8,8 @@
 import { readFile } from 'node:fs/promises';
 import { oauthHeader, X_MAX } from './lib/announce.js';
 
-const env = process.env;
+// Secrets pasted into GitHub sometimes carry a trailing line break; trim everything, as announce.js does.
+const env = Object.fromEntries(Object.entries(process.env).map(([k, v]) => [k, typeof v === 'string' ? v.trim() : v]));
 const file = process.argv[2];
 const dry = process.argv.includes('--dry-run');
 if (!file) { console.error('usage: node scripts/thread.js <file.md> [--dry-run]'); process.exit(2); }
