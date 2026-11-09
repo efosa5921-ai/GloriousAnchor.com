@@ -117,10 +117,11 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 .hero .lead .card__media { aspect-ratio: 16 / 9; }
 .hero .lead .card__title { font-size: clamp(1.35rem, 2.4vw, 1.9rem); }
 .hero .lead .card__summary { display: -webkit-box; -webkit-line-clamp: 4; }
-.hero .side { display: grid; grid-template-columns: 112px minmax(0, 1fr); }
+.hero .side { display: grid; grid-template-columns: minmax(150px, 42%) minmax(0, 1fr); }
 .hero .side .card__media { aspect-ratio: auto; height: 100%; min-height: 112px; width: 100%; }
 /* Side cards share the slider's height on wide screens, so they carry a short summary and centre their text rather than leaving a hole. */
-.hero .side .card__summary { display: -webkit-box; -webkit-line-clamp: 3; font-size: .92rem; }
+.hero .side .card__summary { display: -webkit-box; -webkit-line-clamp: 2; font-size: .92rem; }
+.hero .side .card__title { display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; -webkit-line-clamp: 3; }
 .hero .side .card__body { justify-content: center; }
 .hero .side .card__title { font-size: 1.05rem; }
 .hero .side .save { top: auto; bottom: 8px; }
@@ -297,6 +298,7 @@ mark { background: var(--gold-soft); color: inherit; border-radius: 2px; padding
   .hero { grid-template-columns: 1fr; }
   .hero { grid-auto-rows: auto; }
   .hero .lead { grid-row: auto; }
+  .hero .side { grid-template-columns: 112px minmax(0, 1fr); }
   .hero .side .card__summary { display: none; }
   .hero .side .card__body { justify-content: flex-start; }
   .brand__tag { display: none; }
