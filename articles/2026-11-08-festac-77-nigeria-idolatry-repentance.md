@@ -11,6 +11,8 @@ about: FESTAC 77|https://en.wikipedia.org/wiki/FESTAC_77, Nigeria|https://en.wik
 draft: true
 ---
 
+**The article every Nigerian needs to read.**
+
 > *For she did not know that I gave her corn, and wine, and oil, and multiplied her silver and gold, which they prepared for Baal.* (Hosea 2:8)
 
 On Saturday 15 January 1977, at the National Stadium in Surulere, a priest of Shango set the festival bowl alight before the Head of State and sixty thousand people, and the Second World Black and African Festival of Arts and Culture began. It ran for four weeks, to Saturday 12 February 1977, in Lagos and for its last days in Kaduna. Some seventeen thousand artists, dancers, scholars and musicians came from fifty-six countries. It was the largest gathering of Black people the world had seen, and the oil boom paid for all of it.
