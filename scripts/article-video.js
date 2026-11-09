@@ -54,7 +54,8 @@ export function parseScript(text) {
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const BRAND = '<div class="brand"><svg viewBox="0 0 24 24" fill="none" stroke="#d4a62a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2"/><path d="M12 6v16M5 12H2a10 10 0 0 0 20 0h-3M8 9h8"/></svg>Glorious Anchor · gloriousanchor.com</div>';
 
-function frameHtml(scene, index, total, imageDataUrl) {
+function frameHtml(scene, index, total, imageDataUrl, layer = 'all') {
+  const showPhoto = layer !== 'text', showText = layer !== 'photo';
   const pct = ((index + 1) / total * 100).toFixed(1);
   const common = `
   * { box-sizing: border-box; } html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; font-family: Georgia, "Times New Roman", serif; color: #fff; background: #0b1f3a; }
@@ -68,13 +69,14 @@ function frameHtml(scene, index, total, imageDataUrl) {
   }
   if (imageDataUrl) {
     return `<!doctype html><html><head><meta charset="utf-8"><style>${common}
+    ${showText && !showPhoto ? 'html, body { background: transparent; }' : ''}
     .bg { position: absolute; inset: 0; background: url(${imageDataUrl}) center/cover no-repeat; }
     .shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(6,16,34,.88) 0%, rgba(6,16,34,.45) 30%, rgba(6,16,34,0) 55%, rgba(6,16,34,.55) 100%); }
     .text { position: absolute; left: 96px; right: 420px; top: 88px; text-shadow: 0 3px 24px rgba(0,0,0,.6); }
     .brand { top: 96px; bottom: auto; }
     .caption { font-size: 58px; line-height: 1.12; font-weight: 700; text-wrap: balance; }
-    </style></head><body><div class="bg"></div><div class="shade"></div>
-    <div class="text"><div class="kicker">${esc(scene.kicker || '')}</div><div class="caption">${esc(scene.caption || '')}</div></div>${BRAND}<div class="bar"></div></body></html>`;
+    </style></head><body>${showPhoto ? '<div class="bg"></div><div class="shade"></div>' : ''}
+    ${showText ? `<div class="text"><div class="kicker">${esc(scene.kicker || '')}</div><div class="caption">${esc(scene.caption || '')}</div></div>${BRAND}<div class="bar"></div>` : ''}</body></html>`;
   }
   return `<!doctype html><html><head><meta charset="utf-8"><style>${common}
     body { background: radial-gradient(120% 90% at 50% 0%, #1f3f6e 0%, #0b1f3a 55%, #07142a 100%); }
@@ -158,13 +160,20 @@ async function main() {
     const png = path.join(work, `f${n}.png`);
     await page.setContent(frameHtml(scene, i, scenes.length, dataUrl), { waitUntil: 'load' });
     await page.screenshot({ path: png });
+    // Photo scenes move, so the words are kept on a separate still layer and composited after the motion.
+    let photoPng = null, textPng = null;
+    if (dataUrl && scene.style !== 'plain') {
+      photoPng = path.join(work, `p${n}.png`); textPng = path.join(work, `t${n}.png`);
+      await page.setContent(frameHtml(scene, i, scenes.length, dataUrl, 'photo'), { waitUntil: 'load' }); await page.screenshot({ path: photoPng });
+      await page.setContent(frameHtml(scene, i, scenes.length, dataUrl, 'text'), { waitUntil: 'load' }); await page.screenshot({ path: textPng, omitBackground: true });
+    }
     if (FRAMES_ONLY) { console.log(`  frame ${n}: ${scene.caption || scene.image || ''}`); continue; }
     const mp3 = path.join(work, `s${n}.mp3`), padded = path.join(work, `s${n}.m4a`);
     await speak(scene.narration, mp3, head);
     await run('ffmpeg', ['-y', '-loglevel', 'error', '-i', mp3, '-af', `apad=pad_dur=${PAUSE}`, '-c:a', 'aac', '-b:a', '160k', '-ar', '48000', padded]);
     const secs = await duration(padded);
     if (scene.image && scene.style !== 'plain') cues.push(...cuesFor(scene.narration, total, secs - PAUSE));
-    total += secs; frames.push({ png, secs, i }); clips.push(padded);
+    total += secs; frames.push({ png, photoPng, textPng, secs, i, moving: Boolean(dataUrl) }); clips.push(padded);
     console.log(`  scene ${n}: ${secs.toFixed(1)}s  ${scene.caption || ''}`);
   }
   await browser.close();
@@ -180,9 +189,19 @@ async function main() {
     const y = 'ih/2-(ih/zoom/2)';
     const fadeOut = Math.max(0, f.secs - 0.6).toFixed(2);
     f.clip = f.png.replace(/\.png$/, '.mp4');
-    await run('ffmpeg', ['-y', '-loglevel', 'error', '-loop', '1', '-framerate', String(FPS), '-i', f.png, '-t', f.secs.toFixed(3),
-      '-vf', `scale=2496:1404,zoompan=z='${z}':x='${x}':y='${y}':d=1:s=1920x1080:fps=${FPS},fade=t=in:d=0.5,fade=t=out:st=${fadeOut}:d=0.6,format=yuv420p`,
-      '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '20', '-threads', '2', '-an', f.clip], { maxBuffer: 16 * 1024 * 1024 });
+    const fades = `fade=t=in:d=0.5,fade=t=out:st=${fadeOut}:d=0.6,format=yuv420p`;
+    if (f.photoPng) {
+      await run('ffmpeg', ['-y', '-loglevel', 'error', '-loop', '1', '-framerate', String(FPS), '-i', f.photoPng, '-loop', '1', '-framerate', String(FPS), '-i', f.textPng, '-t', f.secs.toFixed(3),
+        '-filter_complex', `[0:v]scale=2496:1404,zoompan=z='${z}':x='${x}':y='${y}':d=1:s=1920x1080:fps=${FPS}[bg];[bg][1:v]overlay=0:0:shortest=1,${fades}`,
+        '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '20', '-threads', '2', '-an', f.clip], { maxBuffer: 16 * 1024 * 1024 });
+    } else if (f.moving) {
+      await run('ffmpeg', ['-y', '-loglevel', 'error', '-loop', '1', '-framerate', String(FPS), '-i', f.png, '-t', f.secs.toFixed(3),
+        '-vf', `scale=2496:1404,zoompan=z='${z}':x='${x}':y='${y}':d=1:s=1920x1080:fps=${FPS},${fades}`,
+        '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '20', '-threads', '2', '-an', f.clip], { maxBuffer: 16 * 1024 * 1024 });
+    } else {
+      await run('ffmpeg', ['-y', '-loglevel', 'error', '-loop', '1', '-framerate', String(FPS), '-i', f.png, '-t', f.secs.toFixed(3), '-vf', fades,
+        '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '20', '-threads', '2', '-an', f.clip], { maxBuffer: 16 * 1024 * 1024 });
+    }
   }
   await writeFile(path.join(work, 'frames.txt'), frames.map((f) => `file '${f.clip}'`).join('\n') + '\n');
   const subs = path.join(work, 'subs.ass');
