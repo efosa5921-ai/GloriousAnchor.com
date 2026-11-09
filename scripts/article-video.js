@@ -98,7 +98,7 @@ async function speak(text, file, head) {
     return;
   }
   const args = ['-m', 'edge_tts', '--voice', head.voice || 'en-NG-AbeoNeural', '--text', text, '--write-media', file];
-  if (head.rate) args.push('--rate', head.rate);
+  if (head.rate) args.push(`--rate=${head.rate}`); // a value such as -4% must travel with its flag, or argparse reads it as an option
   for (let attempt = 1; attempt <= 3; attempt++) {
     try { await run('python3', args, { maxBuffer: 64 * 1024 * 1024 }); return; }
     catch (err) { if (attempt === 3) throw err; console.warn(`  (tts retry ${attempt}: ${String(err.message).split('\n')[0]})`); await new Promise((r) => setTimeout(r, 3000)); }
