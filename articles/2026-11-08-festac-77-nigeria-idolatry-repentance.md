@@ -8,7 +8,6 @@ image: images/festac-77-at-fifty-cover.jpg
 categories: pitn, teaching
 keywords: FESTAC 77, FESTAC 77 at 50, two jubilees Nigeria 2027, Luke 4:18 acceptable year of the Lord Nigeria, Nigeria 2027 election 16 January jubilee, Nigeria leased to darkness FESTAC, mystery of jubilee Nigeria, Leviticus 25 jubilee Nigeria, FESTAC 2027 anniversary, FESTAC 77 idolatry, FESTAC 77 curse Nigeria, FESTAC 77 Shango priest, Obasanjo libation FESTAC, naira stronger than dollar, Nigeria lent money to IMF 1974, Nigeria external debt history, Nigeria national repentance, Hosea 2:8 corn wine oil Baal, 2 Chronicles 7:14 Nigeria, FESTAC Africa 2027 Asaba, CBAAC golden jubilee
 about: FESTAC 77|https://en.wikipedia.org/wiki/FESTAC_77, Nigeria|https://en.wikipedia.org/wiki/Nigeria, Olusegun Obasanjo|https://en.wikipedia.org/wiki/Olusegun_Obasanjo, Nigerian naira|https://en.wikipedia.org/wiki/Nigerian_naira, Jubilee (biblical)|https://en.wikipedia.org/wiki/Jubilee_(biblical), 2027 Nigerian general election|https://en.wikipedia.org/wiki/2027_Nigerian_general_election, Economy of Nigeria|https://en.wikipedia.org/wiki/Economy_of_Nigeria
-draft: true
 ---
 
 **The article every Nigerian needs to read.**
