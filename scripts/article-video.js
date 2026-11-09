@@ -71,6 +71,7 @@ function frameHtml(scene, index, total, imageDataUrl) {
     .bg { position: absolute; inset: 0; background: url(${imageDataUrl}) center/cover no-repeat; }
     .shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(6,16,34,.88) 0%, rgba(6,16,34,.45) 30%, rgba(6,16,34,0) 55%, rgba(6,16,34,.55) 100%); }
     .text { position: absolute; left: 96px; right: 420px; top: 88px; text-shadow: 0 3px 24px rgba(0,0,0,.6); }
+    .brand { top: 96px; bottom: auto; }
     .caption { font-size: 58px; line-height: 1.12; font-weight: 700; text-wrap: balance; }
     </style></head><body><div class="bg"></div><div class="shade"></div>
     <div class="text"><div class="kicker">${esc(scene.kicker || '')}</div><div class="caption">${esc(scene.caption || '')}</div></div>${BRAND}<div class="bar"></div></body></html>`;
@@ -87,14 +88,33 @@ function frameHtml(scene, index, total, imageDataUrl) {
 
 /** Cues for one scene: sentences, timed in proportion to their length across the spoken part of the scene. */
 export function cuesFor(text, start, spoken) {
-  const parts = String(text).match(/[^.!?]+[.!?]+["']?|[^.!?]+$/g)?.map((p) => p.trim()).filter(Boolean) || [];
+  const sentences = String(text).match(/[^.!?]+[.!?]+["']?|[^.!?]+$/g)?.map((p) => p.trim()).filter(Boolean) || [];
+  // Long sentences are split at a comma or semicolon so no cue runs past two lines on screen.
+  const parts = [];
+  for (const sent of sentences) {
+    if (sent.length <= 95) { parts.push(sent); continue; }
+    let rest = sent;
+    while (rest.length > 95) {
+      const cut = Math.max(rest.lastIndexOf(', ', 95), rest.lastIndexOf('; ', 95), rest.lastIndexOf(': ', 95));
+      if (cut < 30) break;
+      parts.push(rest.slice(0, cut + 1).trim()); rest = rest.slice(cut + 1).trim();
+    }
+    if (rest) parts.push(rest);
+  }
   const chars = parts.reduce((n, p) => n + p.length, 0) || 1;
   let t = start; const out = [];
   for (const p of parts) { const d = spoken * (p.length / chars); out.push({ start: t, end: t + d, text: p }); t += d; }
   return out;
 }
-const stamp = (t) => { const h = Math.floor(t / 3600), m = Math.floor(t / 60) % 60, sec = t % 60; return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${sec.toFixed(3).padStart(6, '0').replace('.', ',')}`; };
-export const srt = (cues) => cues.map((c, i) => `${i + 1}\n${stamp(c.start)} --> ${stamp(c.end)}\n${c.text}\n`).join('\n');
+const stamp = (t) => { const h = Math.floor(t / 3600), m = Math.floor(t / 60) % 60, sec = t % 60; return `${h}:${String(m).padStart(2, '0')}:${sec.toFixed(2).padStart(5, '0')}`; };
+/** An ASS subtitle file sized to the 1920×1080 frame: one bold white line or two on a soft dark box at the foot. */
+export const ass = (cues) => [
+  '[Script Info]', 'ScriptType: v4.00+', 'PlayResX: 1920', 'PlayResY: 1080', 'WrapStyle: 0', '',
+  '[V4+ Styles]',
+  'Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding',
+  'Style: Default,DejaVu Sans,44,&H00FFFFFF,&H00FFFFFF,&H00000000,&H9A000000,-1,0,0,0,100,100,0,0,4,10,0,2,240,240,60,1', '',
+  '[Events]', 'Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text',
+  ...cues.map((c) => `Dialogue: 0,${stamp(c.start)},${stamp(c.end)},Default,,0,0,0,,${c.text.replace(/\n/g, ' ')}`), ''].join('\n');
 
 async function duration(file) {
   const { stdout } = await run('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'default=nw=1:nk=1', file]);
@@ -165,16 +185,15 @@ async function main() {
       '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '20', '-threads', '2', '-an', f.clip], { maxBuffer: 16 * 1024 * 1024 });
   }
   await writeFile(path.join(work, 'frames.txt'), frames.map((f) => `file '${f.clip}'`).join('\n') + '\n');
-  const subs = path.join(work, 'subs.srt');
-  await writeFile(subs, srt(cues));
+  const subs = path.join(work, 'subs.ass');
+  await writeFile(subs, ass(cues));
   await writeFile(path.join(work, 'audio.txt'), clips.map((c) => `file '${c}'`).join('\n') + '\n');
   const audio = path.join(work, 'audio.m4a');
   await run('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', path.join(work, 'audio.txt'), '-c', 'copy', audio]);
   await copyFile(frames[0].png, path.join(OUT, `${slug}.png`));
   const out = path.join(OUT, `${slug}.mp4`);
-  const style = "FontName=DejaVu Sans,FontSize=19,Bold=1,PrimaryColour=&H00FFFFFF,OutlineColour=&H00000000,BackColour=&H88000000,BorderStyle=4,Outline=0,Shadow=0,MarginV=54,MarginL=140,MarginR=140,Alignment=2";
   await run('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', path.join(work, 'frames.txt'), '-i', audio,
-    '-vf', `subtitles='${subs.replace(/'/g, "\\'")}':force_style='${style}',format=yuv420p`, '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '22', '-threads', '2', '-c:a', 'aac', '-b:a', '160k', '-shortest', '-movflags', '+faststart', out], { maxBuffer: 64 * 1024 * 1024 });
+    '-vf', `subtitles='${subs.replace(/'/g, "\\'")}',format=yuv420p`, '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '22', '-threads', '2', '-c:a', 'aac', '-b:a', '160k', '-shortest', '-movflags', '+faststart', out], { maxBuffer: 64 * 1024 * 1024 });
   const m = Math.floor(total / 60), s = Math.round(total % 60);
   console.log(`wrote ${path.relative(ROOT, out)} (${m}m ${String(s).padStart(2, '0')}s) and ${slug}.png`);
 }
