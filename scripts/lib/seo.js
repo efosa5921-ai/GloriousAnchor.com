@@ -40,8 +40,11 @@ export function articleJsonLd(post, site) {
     { '@type': 'Article', '@id': `${post.url}#article`, headline: post.title, description: post.summary, url: post.url, mainEntityOfPage: post.url,
       datePublished: new Date(post.publishedAt).toISOString(), dateModified: new Date(post.updatedAt || post.publishedAt).toISOString(), inLanguage: 'en',
       author: post.author && post.author !== site.name ? { '@type': 'Person', name: post.author } : { '@id': `${b}/#org` },
-      publisher: { '@id': `${b}/#org` }, ...(post.image ? { image: [post.image] } : {}), wordCount: post.readingMinutes * 220,
+      publisher: { '@id': `${b}/#org` }, ...(post.image ? { image: [post.image] } : {}), wordCount: post.wordCount || post.readingMinutes * 220,
+      isAccessibleForFree: true, speakable: { '@type': 'SpeakableSpecification', cssSelector: ['.article__title', '.article__body > p:first-of-type'] },
+      ...(post.about?.length ? { about: post.about.map((a) => ({ '@type': 'Thing', name: a.name, ...(a.sameAs ? { sameAs: a.sameAs } : {}) })) } : {}),
       ...(post.keywords?.length ? { keywords: post.keywords.join(', ') } : {}), ...(post.categories?.length ? { articleSection: post.categories.join(', ') } : {}) },
+    ...(post.faq?.length ? [{ '@type': 'FAQPage', '@id': `${post.url}#faq`, mainEntity: post.faq.map((f) => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer } })) }] : []),
     { '@type': 'Organization', '@id': `${b}/#org`, name: site.name, url: `${b}/`, logo: `${b}/assets/icon-512.png` },
     { '@type': 'BreadcrumbList', itemListElement: [
       { '@type': 'ListItem', position: 1, name: site.name, item: `${b}/` },
@@ -157,7 +160,7 @@ export function prerenderCards(articles, n = 24, imageProxy = '') {
 </article>`).join('\n');
 }
 
-export function metaTags({ title, description, url, image, type = 'website', site }) {
+export function metaTags({ title, description, url, image, type = 'website', site, published, modified, author, tags }) {
   return [
     url ? `<link rel="canonical" href="${esc(url)}">` : '',
     `<meta property="og:type" content="${type}">`, `<meta property="og:site_name" content="${esc(site.name)}">`,
@@ -165,6 +168,10 @@ export function metaTags({ title, description, url, image, type = 'website', sit
     description ? `<meta property="og:description" content="${esc(description)}">` : '', image ? `<meta property="og:image" content="${esc(image)}">` : '',
     `<meta name="twitter:card" content="${image ? 'summary_large_image' : 'summary'}">`, title ? `<meta name="twitter:title" content="${esc(title)}">` : '',
     description ? `<meta name="twitter:description" content="${esc(description)}">` : '', image ? `<meta name="twitter:image" content="${esc(image)}">` : '',
+    published ? `<meta property="article:published_time" content="${new Date(published).toISOString()}">` : '',
+    modified ? `<meta property="article:modified_time" content="${new Date(modified).toISOString()}">` : '',
+    author ? `<meta property="article:author" content="${esc(author)}">` : '',
+    ...(tags || []).slice(0, 10).map((t) => `<meta property="article:tag" content="${esc(t)}">`),
   ].filter(Boolean).join('\n  ');
 }
 

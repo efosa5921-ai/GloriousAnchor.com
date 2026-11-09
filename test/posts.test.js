@@ -72,6 +72,19 @@ test('searchTitle drives the tab and meta title while the heading keeps the full
   assert.match(w, /under 65/); assert.match(w, /only 5 characters/); assert.match(w, /no keywords/); assert.match(w, /no picture/); assert.match(w, /words/);
 });
 
+test('the questions section becomes FAQ data and about: names entities', async () => {
+  const { faqFromMarkdown, compilePost } = await import('../scripts/lib/posts.js');
+  const md = '---\ntitle: T\nabout: FESTAC 77|https://en.wikipedia.org/wiki/FESTAC_77, Nigeria\n---\n\nBody.\n\n## Questions this article answers\n\n### When was it held?\n\nFrom **15 January** to 12 February 1977.\n\n### Who presided?\n\nObasanjo.\n';
+  const faq = faqFromMarkdown(md.split('---\n')[2]);
+  assert.equal(faq.length, 2); assert.equal(faq[0].question, 'When was it held?'); assert.equal(faq[0].answer, 'From 15 January to 12 February 1977.');
+  const p = compilePost('2026-01-01-t.md', md, { name: 'S', url: 'https://x.com' });
+  assert.equal(p.faq.length, 2); assert.deepEqual(p.about, [{ name: 'FESTAC 77', sameAs: 'https://en.wikipedia.org/wiki/FESTAC_77' }, { name: 'Nigeria' }]);
+  assert.ok(p.wordCount > 0);
+  const { articleJsonLd } = await import('../scripts/lib/seo.js');
+  const ld = articleJsonLd(p, { name: 'S', url: 'https://x.com' });
+  assert.match(ld, /"@type":"FAQPage"/); assert.match(ld, /"about":\[\{"@type":"Thing","name":"FESTAC 77"/); assert.match(ld, /speakable/);
+});
+
 test('a pin lasts three days unless given a date or "always"', async () => {
   const { pinActive } = await import('../scripts/lib/pins.js');
   const day = 24 * 3600 * 1000; const t0 = Date.parse('2026-10-21T00:00:00Z');

@@ -1,4 +1,23 @@
+# Glorious Anchor welcomes search engines and AI assistants. Drafts and the admin are private.
 User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /drafts/
+
+User-agent: GPTBot
+Allow: /
+Disallow: /admin/
+Disallow: /drafts/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin/
+Disallow: /drafts/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin/
+Disallow: /drafts/
+
+User-agent: Google-Extended
+Allow: /

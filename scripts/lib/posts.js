@@ -60,6 +60,24 @@ function parseDate(meta, filename) {
   return Number.isNaN(t) ? null : t;
 }
 
+/** The "## Questions this article answers" section as [{ question, answer }], for FAQ structured data. */
+export function faqFromMarkdown(body) {
+  const text = String(body);
+  const start = text.search(/^##\s+Questions this article answers\s*$/m);
+  if (start < 0) return [];
+  let section = text.slice(text.indexOf('\n', start) + 1);
+  const next = section.search(/^##\s/m);
+  if (next >= 0) section = section.slice(0, next);
+  const out = [];
+  for (const chunk of section.split(/^###\s+/m).slice(1)) {
+    const nl = chunk.indexOf('\n');
+    const question = stripHtml(marked.parseInline(chunk.slice(0, nl < 0 ? undefined : nl).trim()));
+    const answer = stripHtml(marked.parse(chunk.slice(nl < 0 ? chunk.length : nl + 1).trim(), { gfm: true })).replace(/\s+/g, ' ').trim();
+    if (question && answer) out.push({ question, answer });
+  }
+  return out;
+}
+
 /** Turn one Markdown file into a post object (or null for invalid files). Drafts come back with draft: true and a /drafts/ URL. */
 export function compilePost(filename, text, site, now = Date.now()) {
   const { meta, body } = parseFrontMatter(text);
@@ -77,6 +95,13 @@ export function compilePost(filename, text, site, now = Date.now()) {
   const keywords = String(meta.keywords || '').split(',').map((k) => k.trim()).filter(Boolean);
   const searchTitle = stripHtml(meta.searchtitle || meta.search_title || '') || null;
   const updatedAt = meta.updated ? Date.parse(/^\d{4}-\d{2}-\d{2}$/.test(meta.updated) ? `${meta.updated}T12:00:00Z` : meta.updated) : NaN;
+  // Search and answer engines: the closing "Questions this article answers" section becomes FAQ structured data, and
+  // `about:` names the topics (Name|https://en.wikipedia.org/... pairs) so the article is tied to known entities.
+  const faq = faqFromMarkdown(body);
+  const about = String(meta.about || '').split(',').map((x) => x.trim()).filter(Boolean).map((x) => {
+    const [name, url] = x.split('|').map((y) => y.trim());
+    return url ? { name, sameAs: url } : /^https?:/.test(name) ? { name: decodeURIComponent(name.split('/').pop()).replace(/_/g, ' '), sameAs: name } : { name };
+  });
   // God's Generals: born/died (YYYY-MM-DD) feature the article on those days each year.
   const life = { ...(meta.born ? { born: String(meta.born) } : {}), ...(meta.died ? { died: String(meta.died) } : {}), ...(meta.person ? { person: stripHtml(String(meta.person)) } : {}) };
   const anniv = anniversaryFor(life, now);
@@ -87,6 +112,9 @@ export function compilePost(filename, text, site, now = Date.now()) {
     ...(keywords.length ? { keywords } : {}),
     ...(searchTitle ? { searchTitle } : {}),
     ...(Number.isNaN(updatedAt) ? {} : { updatedAt }),
+    wordCount: words,
+    ...(faq.length ? { faq } : {}),
+    ...(about.length ? { about } : {}),
     ...life,
     ...(anniv ? { anniversary: anniv.label, anniversaryHeadline: anniv.headline, anniversaryAt: anniv.at } : {}),
     author: stripHtml(meta.author || site.name),
@@ -139,10 +167,11 @@ export function renderPostPage(template, post, site, others) {
     minutes: String(post.readingMinutes), body: post.html, more: more ? `<ul class="article__more">${more}</ul>` : '',
     site: esc(site.name), verse: esc(site.verse || ''),
     hero: post.image ? `<img class="article__hero" src="${esc(post.image)}" alt="${esc(post.title)}">` : '',
-    meta: metaTags({ title: post.searchTitle || post.title, description: post.summary, url: post.url, image: post.image || `${site.url.replace(/\/$/, '')}/assets/social.jpg`, type: 'article', site }),
+    meta: metaTags({ title: post.searchTitle || post.title, description: post.summary, url: post.url, image: post.image || `${site.url.replace(/\/$/, '')}/assets/social.jpg`, type: 'article', site,
+      published: post.publishedAt, modified: post.updatedAt || post.publishedAt, author: post.author, tags: post.keywords }),
     jsonld: articleJsonLd(post, site),
     share: post.draft ? '' : shareBarHtml({ url: post.url, title: post.searchTitle || post.title, summary: post.summary, site, label: 'Share this article' }),
-    robots: post.draft ? '<meta name="robots" content="noindex, nofollow">' : '',
+    robots: post.draft ? '<meta name="robots" content="noindex, nofollow">' : '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">',
     anniversaryLine: post.anniversaryHeadline ? `<p class="article__eyebrow">${esc(post.anniversaryHeadline)}</p>` : '',
     draftBanner: post.draft ? `<div class="banner banner--draft" role="status"><strong>Draft preview.</strong> This article is not published: it is not listed anywhere, not in the feeds, and search engines are asked to ignore it. Read it through, then tell Claude to publish it or edit it in the admin and untick <em>Draft</em>.</div>` : '',
   };

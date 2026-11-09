@@ -7,6 +7,7 @@ summary: At FESTAC 77 Nigeria's leaders leased the nation to darkness for fifty 
 image: images/festac-77-at-fifty-cover.jpg
 categories: pitn, teaching
 keywords: FESTAC 77, FESTAC 77 at 50, two jubilees Nigeria 2027, Luke 4:18 acceptable year of the Lord Nigeria, Nigeria 2027 election 16 January jubilee, Nigeria leased to darkness FESTAC, mystery of jubilee Nigeria, Leviticus 25 jubilee Nigeria, FESTAC 2027 anniversary, FESTAC 77 idolatry, FESTAC 77 curse Nigeria, FESTAC 77 Shango priest, Obasanjo libation FESTAC, naira stronger than dollar, Nigeria lent money to IMF 1974, Nigeria external debt history, Nigeria national repentance, Hosea 2:8 corn wine oil Baal, 2 Chronicles 7:14 Nigeria, FESTAC Africa 2027 Asaba, CBAAC golden jubilee
+about: FESTAC 77|https://en.wikipedia.org/wiki/FESTAC_77, Nigeria|https://en.wikipedia.org/wiki/Nigeria, Olusegun Obasanjo|https://en.wikipedia.org/wiki/Olusegun_Obasanjo, Nigerian naira|https://en.wikipedia.org/wiki/Nigerian_naira, Jubilee (biblical)|https://en.wikipedia.org/wiki/Jubilee_(biblical), 2027 Nigerian general election|https://en.wikipedia.org/wiki/2027_Nigerian_general_election, Economy of Nigeria|https://en.wikipedia.org/wiki/Economy_of_Nigeria
 draft: true
 ---
 
@@ -21,6 +22,15 @@ On 15 January 2027 it will be fifty years since the fire was lit, and on 12 Febr
 This article sets the whole record in one place: what Nigeria had before the festival, what was done at it in public, what Scripture says about such acts, what happened to the nation afterwards, what the economists and the prophets each say about why, what is planned for 2027, why the nation's next elections have been moved to 16 January and 6 February 2027, inside those same four weeks, and what the church should do with the year of jubilee.
 
 *Cover: a decorated canoe at the FESTAC 77 regatta on the Lagos lagoon, 1977. Photograph by Helinä Rautavaara, Helinä Rautavaara Museum, Espoo, CC BY 2.0, via Wikimedia Commons.*
+
+**Key facts**
+
+- **FESTAC 77** ran from Saturday 15 January to Saturday 12 February 1977 in Lagos and Kaduna, under General Olusegun Obasanjo, with about 17,000 participants from 56 countries.
+- **Its opening** at the National Stadium, Surulere, was lit by a priest of Shango; its colloquium opened with a libation to the gods and ancestors; its emblem was the Queen Idia ivory mask.
+- **Before it**, one naira bought about $1.55 and Nigeria had lent $120 million to the IMF and $240 million to the World Bank in 1974. External debt was about $3 billion.
+- **After it**, the first $1 billion commercial loan was signed in January 1978; debt reached $18.6 billion by 1982 and ₦166.79 trillion (about $121 billion) by June 2026. A dollar cost ₦1,379 on 30 June 2026.
+- **The fiftieth year**: the festival's fifty years are complete on 12 February 2027. Nigeria's elections were moved to 16 January and 6 February 2027, inside those weeks. The new government takes office on 29 May 2027.
+- **Two jubilees** are planned or offered for 2027: a state and private festival revival, and the biblical jubilee of Leviticus 25 and Luke 4:18–19.
 
 ## Before: the land fed the nation and lent to the world
 
@@ -160,6 +170,18 @@ In the law of Moses the fiftieth year was the jubilee: "Ye shall hallow the fift
 The promise attached to 2 Chronicles 7:14 is not that the naira will recover or the elections will be clean. It is that God will hear, forgive and heal the land. The church in Nigeria has preached that verse to the nation for fifty years. The fiftieth year is a good time to take it at its word.
 
 *Related reading: [The record of two silences: Nigeria's press, government and the killing of Christians](/articles/media-silence-christians-murdered-nigeria/), [The Seven Spirits of Christ: the Holy Spirit in Isaiah 11](/articles/the-holy-spirit-connection/), and our [Prophecy in the News](/pitn/) section.*
+
+## Sources
+
+- Wikipedia, [FESTAC 77](https://en.wikipedia.org/wiki/FESTAC_77); Red Bull Music Academy, [FESTAC '77](https://daily.redbullmusicacademy.com/2017/05/festac-77-feature/); OldNaija, [How FESTAC '77 was celebrated in Lagos](https://oldnaija.com/2020/12/29/how-festac-77-was-celebrated-in-lagos-nigeria-in-1977/); Oxford Research Encyclopedia of African History, [Festac 77: A Black World's Fair](https://oxfordre.com/africanhistory/display/10.1093/acrefore/9780190277734.001.0001/acrefore-9780190277734-e-798).
+- Andrew Apter, ["FESTAC for Black People: Oil Capitalism and the Spectacle of Culture in Nigeria"](https://quod.lib.umich.edu/p/passages/4761530.0006.002/--festac-for-black-people-oil-capitalism-and-the-spectacle?rgn=main&view=fulltext), *Passages*, University of Michigan, on the colloquium libation.
+- Guardian Nigeria, [FESTAC '77 not fetish, says Obasanjo](https://guardian.ng/art/festac-77-not-fetish-says-obasanjo/), November 2017; Tribune, [Nigeria's real problem emanating from FESTAC '77, cleric](https://tribuneonlineng.com/nigerias-real-problem-emanating-festac-77-cleric/), 2018; Church Times Nigeria, [FESTAC 77 number one sin of Nigeria against God, Pastor Adepoju](https://churchtimesnigeria.net/festac-adepoju-nigeria/), 2019; Vanguard, [FESTAC 77 responsible for Nigeria's woes, cleric](https://www.vanguardngr.com/2013/04/festac-77-responsible-for-nigerias-woes-cleric/), 2013.
+- Tribune, [Nigeria @ 66: from lender to IMF, World Bank to heavy borrower](https://tribuneonlineng.com/nigeria-66-from-lender-to-imf-world-bank-to-heavy-borrower-despite-rising-revenue/), October 2026; Vanguard, [IMF borrowed from Nigeria in 1974, former finance minister](https://www.vanguardngr.com/2017/09/imf-borrowed-nigeria-1974-former-finance-minister/); IMF, [An Oil Facility](https://www.elibrary.imf.org/display/book/9781451922684/ch017.xml), *IMF History 1972–1978*.
+- G24, [Nigeria and the Burden of External Debt](https://g24.org/wp-content/uploads/2023/10/Session-1_5-6.pdf); Euromoney, [The extraordinary Nigerian jumbo](https://www.euromoney.com/article/27bjsstsqxhkmh1y5f4a6/capital-markets/the-extraordinary-nigerian-jumbo/); IMF, [Macroeconomic Approach to External Debt: the case of Nigeria](https://www.elibrary.imf.org/display/book/9781557757913/ch002.xml); Debt Management Office figures via [Vanguard](https://www.vanguardngr.com/2026/09/nigerias-public-debt-rises-to-n166-7-trn/), September 2026; Center for Global Development, [Nigerian Debt Relief](https://www.cgdev.org/topics/nigerian-debt-relief).
+- Pulse Nigeria, [How the naira-to-dollar rate fell from 6 kobo to ₦1,609](https://www.pulse.ng/story/timeline-of-naira-to-dollar-exchange-rate-from-1972-present-2025050912322920946); Channels TV, [Naira to dollar exchange rate, 3 June 2026](https://www.channelstv.com/2026/06/03/naira-to-dollar-exchange-rate-today-june-3-2026/).
+- Voice of Nigeria, [CBAAC targets 100 countries for FESTAC '77 golden jubilee](https://von.gov.ng/cbaac-targets-100-nations-for-festac-77-golden-jubilee/), July 2026; LightRay Media, [FESTAC Africa 2027 returns to Nigeria as Asaba kicks off 50th anniversary activations](https://lightraymedia.org/2026/05/25/festac-africa-2027-returns-to-nigeria-as-asaba-kicks-off-50th-anniversary-activations), May 2026; Citi Newsroom, [Ghana hosts 2025 FESTAC Africa](https://citinewsroom.com/2025/06/ghana-hosts-2025-festac-africa-to-revamp-cultural-economy-and-regional-integration/).
+- Premium Times via AllAfrica, [INEC reschedules 2027 general election, releases new timetable](https://allafrica.com/stories/202602270088.html), 26 February 2026; INEC, [Full election calendar](https://www.inecnigeria.org/elections/calendar).
+- Scripture quotations are from the King James Version.
 
 ## Questions this article answers
 

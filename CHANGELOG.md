@@ -4,6 +4,10 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 9 November 2026
+
+- **Articles primed for search and AI assistants**: the closing questions on every article now feed FAQ structured data, articles can name the topics they are about, pages carry publish and update times and speakable markup for assistants, a plain-text map of the site is published at /llms.txt, and the robots file welcomes search and AI crawlers while keeping drafts private.
+
 ## 8 November 2026
 
 - **Draft for the owner: FESTAC 77 at fifty**: one article on what Nigeria had before 15 January 1977, what was done at the festival, the fall that followed, what the economists and the prophets say, the church's objection since 1977, the jubilee plans for 2027, the election moved to 16 January 2027 and what the author believes it means, and what the church should do with the fiftieth year.

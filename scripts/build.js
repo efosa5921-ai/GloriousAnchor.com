@@ -404,6 +404,13 @@ async function finalizeSeo({ site, articles, posts, churches, categories = [] })
   await writeFile(path.join(DIST, 'sitemap.xml'), sitemapXml(entries));
   const robotsPath = path.join(DIST, 'robots.txt');
   await writeFile(robotsPath, (await readFile(robotsPath, 'utf8')).trimEnd() + `\nSitemap: ${b}/sitemap.xml\n`);
+  // llms.txt: a plain-text map of the site for AI assistants and answer engines (https://llmstxt.org).
+  const llms = [`# ${site.name}`, '', `> ${site.tagline || 'Christian news, voices and video, anchored in one place.'}`, '',
+    `${site.name} is a Christian news and teaching site published from Nigeria for believers everywhere. It gathers headlines from trusted Christian publishers, publishes its own reported articles and teaching, and keeps a directory of churches.`, '',
+    '## Our articles', '', ...posts.map((p) => `- [${p.title}](${p.url}): ${p.summary}`), '',
+    '## Sections', '', `- [Headlines](${b}/)`, `- [All articles](${b}/articles/)`, ...sections.map((s) => `- [${s.label}](${b}/${s.slug}/)`), `- [Church directory](${b}/churches/)`, `- [Daily digest](${b}/digest/)`, '',
+    '## Feeds', '', `- [Articles RSS](${b}/articles/feed.xml)`, `- [Headlines RSS](${b}/feed.xml)`, `- [Sitemap](${b}/sitemap.xml)`, ''].join('\n');
+  await writeFile(path.join(DIST, 'llms.txt'), llms);
   // Analytics (optional, privacy-friendly): injected into every page only when a site id is set.
   const analytics = analyticsTag(site);
   if (analytics) {
