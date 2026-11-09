@@ -1,9 +1,9 @@
 ---
-title: FESTAC 77 at fifty: what Nigeria had before 15 January 1977, what was done at the festival, the fall that followed, and the jubilee the nation is planning for 2027
-searchTitle: FESTAC 77 at 50: What Happened, Nigeria's Wealth, and 2027
+title: FESTAC 77: the four weeks Nigeria was leased to darkness, the lease that expires on 12 February 2027, and the two jubilees the nation must choose between
+searchTitle: FESTAC 77: Nigeria's Lease to Darkness Ends 12 February 2027
 date: 2026-11-08T21:00:00Z
 author: Michael Ede
-summary: FESTAC 77 ran from 15 January to 12 February 1977, when one naira bought $1.55 and Nigeria lent to the IMF. What was done, what followed, the 2027 jubilee.
+summary: At FESTAC 77 Nigeria's leaders leased the nation to darkness for fifty years. The lease ends 12 February 2027. Two jubilees are offered; one sets her free.
 image: images/festac-77-at-fifty-cover.jpg
 categories: pitn, teaching
 keywords: FESTAC 77, FESTAC 77 at 50, two jubilees Nigeria 2027, Luke 4:18 acceptable year of the Lord Nigeria, Nigeria 2027 election 16 January jubilee, Nigeria leased to darkness FESTAC, mystery of jubilee Nigeria, Leviticus 25 jubilee Nigeria, FESTAC 2027 anniversary, FESTAC 77 idolatry, FESTAC 77 curse Nigeria, FESTAC 77 Shango priest, Obasanjo libation FESTAC, naira stronger than dollar, Nigeria lent money to IMF 1974, Nigeria external debt history, Nigeria national repentance, Hosea 2:8 corn wine oil Baal, 2 Chronicles 7:14 Nigeria, FESTAC Africa 2027 Asaba, CBAAC golden jubilee
