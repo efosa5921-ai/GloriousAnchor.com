@@ -26,7 +26,6 @@ const OUT = path.resolve(ROOT, arg('--out', 'videos/articles'));
 const NO_TTS = argv.includes('--no-tts');
 const FRAMES_ONLY = argv.includes('--frames-only');
 const PAUSE = 0.8; // seconds of silence after each scene
-if (!arg('--script')) { console.error('usage: node scripts/article-video.js --script video-scripts/<slug>.md'); process.exit(2); }
 
 async function loadPlaywright() {
   const req = createRequire(import.meta.url);
@@ -70,9 +69,9 @@ function frameHtml(scene, index, total, imageDataUrl) {
   if (imageDataUrl) {
     return `<!doctype html><html><head><meta charset="utf-8"><style>${common}
     .bg { position: absolute; inset: 0; background: url(${imageDataUrl}) center/cover no-repeat; }
-    .shade { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(6,16,34,.94) 0%, rgba(6,16,34,.55) 38%, rgba(6,16,34,.08) 70%); }
-    .text { position: absolute; left: 96px; right: 420px; bottom: 120px; text-shadow: 0 3px 24px rgba(0,0,0,.6); }
-    .caption { font-size: 64px; line-height: 1.12; font-weight: 700; text-wrap: balance; }
+    .shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(6,16,34,.88) 0%, rgba(6,16,34,.45) 30%, rgba(6,16,34,0) 55%, rgba(6,16,34,.55) 100%); }
+    .text { position: absolute; left: 96px; right: 420px; top: 88px; text-shadow: 0 3px 24px rgba(0,0,0,.6); }
+    .caption { font-size: 58px; line-height: 1.12; font-weight: 700; text-wrap: balance; }
     </style></head><body><div class="bg"></div><div class="shade"></div>
     <div class="text"><div class="kicker">${esc(scene.kicker || '')}</div><div class="caption">${esc(scene.caption || '')}</div></div>${BRAND}<div class="bar"></div></body></html>`;
   }
@@ -85,6 +84,17 @@ function frameHtml(scene, index, total, imageDataUrl) {
     </style></head><body><div class="ring"></div>
     <div class="text"><div class="kicker">${esc(scene.kicker || '')}</div><div class="caption">${esc(scene.caption || '')}</div></div>${BRAND}<div class="bar"></div></body></html>`;
 }
+
+/** Cues for one scene: sentences, timed in proportion to their length across the spoken part of the scene. */
+export function cuesFor(text, start, spoken) {
+  const parts = String(text).match(/[^.!?]+[.!?]+["']?|[^.!?]+$/g)?.map((p) => p.trim()).filter(Boolean) || [];
+  const chars = parts.reduce((n, p) => n + p.length, 0) || 1;
+  let t = start; const out = [];
+  for (const p of parts) { const d = spoken * (p.length / chars); out.push({ start: t, end: t + d, text: p }); t += d; }
+  return out;
+}
+const stamp = (t) => { const h = Math.floor(t / 3600), m = Math.floor(t / 60) % 60, sec = t % 60; return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${sec.toFixed(3).padStart(6, '0').replace('.', ',')}`; };
+export const srt = (cues) => cues.map((c, i) => `${i + 1}\n${stamp(c.start)} --> ${stamp(c.end)}\n${c.text}\n`).join('\n');
 
 async function duration(file) {
   const { stdout } = await run('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'default=nw=1:nk=1', file]);
@@ -106,6 +116,7 @@ async function speak(text, file, head) {
 }
 
 async function main() {
+  if (!arg('--script')) { console.error('usage: node scripts/article-video.js --script video-scripts/<slug>.md'); process.exit(2); }
   const { head, scenes } = parseScript(await readFile(SCRIPT, 'utf8'));
   const slug = path.basename(SCRIPT).replace(/\.md$/, '');
   const work = path.join(ROOT, '.video-work', slug);
@@ -115,7 +126,7 @@ async function main() {
   const { chromium } = await loadPlaywright();
   const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || undefined, args: ['--no-sandbox'] });
   const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });
-  const frames = [], clips = [];
+  const frames = [], clips = [], cues = [];
   let total = 0;
   for (const [i, scene] of scenes.entries()) {
     const n = String(i + 1).padStart(2, '0');
@@ -132,19 +143,38 @@ async function main() {
     await speak(scene.narration, mp3, head);
     await run('ffmpeg', ['-y', '-loglevel', 'error', '-i', mp3, '-af', `apad=pad_dur=${PAUSE}`, '-c:a', 'aac', '-b:a', '160k', '-ar', '48000', padded]);
     const secs = await duration(padded);
-    total += secs; frames.push({ png, secs }); clips.push(padded);
+    if (scene.image && scene.style !== 'plain') cues.push(...cuesFor(scene.narration, total, secs - PAUSE));
+    total += secs; frames.push({ png, secs, i }); clips.push(padded);
     console.log(`  scene ${n}: ${secs.toFixed(1)}s  ${scene.caption || ''}`);
   }
   await browser.close();
   if (FRAMES_ONLY) { console.log(`frames written to ${path.relative(ROOT, work)}`); return; }
 
-  await writeFile(path.join(work, 'frames.txt'), frames.map((f) => `file '${f.png}'\nduration ${f.secs.toFixed(3)}`).join('\n') + `\nfile '${frames.at(-1).png}'\n`);
+  // Each still becomes a clip with slow movement (zoom in, or a drift across) and a soft fade at both ends.
+  const FPS = 30;
+  for (const f of frames) {
+    const n = Math.max(2, Math.round(f.secs * FPS));
+    const zoomIn = f.i % 2 === 0;
+    const z = zoomIn ? `1+0.10*on/${n}` : '1.10';
+    const x = zoomIn ? 'iw/2-(iw/zoom/2)' : `(iw-iw/zoom)*on/${n}`;
+    const y = 'ih/2-(ih/zoom/2)';
+    const fadeOut = Math.max(0, f.secs - 0.6).toFixed(2);
+    f.clip = f.png.replace(/\.png$/, '.mp4');
+    await run('ffmpeg', ['-y', '-loglevel', 'error', '-loop', '1', '-framerate', String(FPS), '-i', f.png, '-t', f.secs.toFixed(3),
+      '-vf', `scale=2496:1404,zoompan=z='${z}':x='${x}':y='${y}':d=1:s=1920x1080:fps=${FPS},fade=t=in:d=0.5,fade=t=out:st=${fadeOut}:d=0.6,format=yuv420p`,
+      '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '20', '-threads', '2', '-an', f.clip], { maxBuffer: 16 * 1024 * 1024 });
+  }
+  await writeFile(path.join(work, 'frames.txt'), frames.map((f) => `file '${f.clip}'`).join('\n') + '\n');
+  const subs = path.join(work, 'subs.srt');
+  await writeFile(subs, srt(cues));
   await writeFile(path.join(work, 'audio.txt'), clips.map((c) => `file '${c}'`).join('\n') + '\n');
   const audio = path.join(work, 'audio.m4a');
   await run('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', path.join(work, 'audio.txt'), '-c', 'copy', audio]);
   await copyFile(frames[0].png, path.join(OUT, `${slug}.png`));
   const out = path.join(OUT, `${slug}.mp4`);
-  await run('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', path.join(work, 'frames.txt'), '-i', audio, '-vf', 'fps=30,format=yuv420p', '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '23', '-threads', '2', '-c:a', 'aac', '-b:a', '160k', '-shortest', '-movflags', '+faststart', out], { maxBuffer: 64 * 1024 * 1024 });
+  const style = "FontName=DejaVu Sans,FontSize=19,Bold=1,PrimaryColour=&H00FFFFFF,OutlineColour=&H00000000,BackColour=&H88000000,BorderStyle=4,Outline=0,Shadow=0,MarginV=54,MarginL=140,MarginR=140,Alignment=2";
+  await run('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', path.join(work, 'frames.txt'), '-i', audio,
+    '-vf', `subtitles='${subs.replace(/'/g, "\\'")}':force_style='${style}',format=yuv420p`, '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '22', '-threads', '2', '-c:a', 'aac', '-b:a', '160k', '-shortest', '-movflags', '+faststart', out], { maxBuffer: 64 * 1024 * 1024 });
   const m = Math.floor(total / 60), s = Math.round(total % 60);
   console.log(`wrote ${path.relative(ROOT, out)} (${m}m ${String(s).padStart(2, '0')}s) and ${slug}.png`);
 }
