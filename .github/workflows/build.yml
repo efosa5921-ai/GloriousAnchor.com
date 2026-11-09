@@ -11,6 +11,9 @@ on:
       x_stories:
         description: 'Fresh stories to post to X this run (own articles and picks always post)'
         default: '0'
+      thread:
+        description: 'Post a thread to X from this file, e.g. threads/festac-77.md'
+        default: ''
       repost:
         description: 'Post this item again to Telegram and X, with its picture (article URL, id or title fragment)'
         default: ''
@@ -68,6 +71,15 @@ jobs:
           X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
           X_STORIES_PER_RUN: ${{ github.event.inputs.x_stories || '0' }}
           REPOST: ${{ github.event.inputs.repost || '' }}
+      - name: Post a thread to X (only when a thread file is given)
+        if: github.event.inputs.thread != ''
+        continue-on-error: true
+        run: node scripts/thread.js "${{ github.event.inputs.thread }}"
+        env:
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
       - name: Tell search engines about new pages (IndexNow)
         if: github.event_name != 'pull_request'
         continue-on-error: true
