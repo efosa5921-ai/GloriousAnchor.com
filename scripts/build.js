@@ -444,7 +444,9 @@ async function buildOwnArticles(site, catIds = null) {
     const log = await readFile(path.join(ROOT, 'CHANGELOG.md'), 'utf8');
     const newest = log.match(/^## (.+)$/m)?.[1];
     const date = newest ? new Date(newest + ' UTC') : null;
-    const dated = date && !Number.isNaN(date.getTime()) ? log.replace(/^---\n/, `---\ndate: ${date.toISOString().slice(0, 10)}\nslug: whats-new\n`) : log.replace(/^---\n/, '---\nslug: whats-new\n');
+    // Dated at noon on the day of the newest entry, but never in the future: a card must not read "in 5 hours".
+    const stamp = date && !Number.isNaN(date.getTime()) ? new Date(Math.min(Date.now(), date.getTime() + 12 * 3600 * 1000)).toISOString() : null;
+    const dated = stamp ? log.replace(/^---\n/, `---\ndate: ${stamp}\nslug: whats-new\n`) : log.replace(/^---\n/, '---\nslug: whats-new\n');
     const post = compilePost('whats-new.md', dated, site);
     if (post) posts.push(post);
   } catch { /* no changelog */ }
@@ -615,7 +617,10 @@ async function main() {
   try { await access(videosDir); await cp(videosDir, path.join(DIST, 'videos'), { recursive: true }); } catch { /* none yet */ }
   // Full set stays in the build cache (articles.json is re-read next build); the site gets a slim, capped copy.
   const published = capOutput(articles, limits.outputPerSource || 15, limits.outputMax || 700).map((a) => slimArticle(a));
-  const pinnedFirst = [...published.filter((a) => a.pinned), ...published.filter((a) => !a.pinned)];
+  // latest.json is the small first slice the page paints before the full set arrives. It must always carry our own
+  // recent articles, or the "From our writers" slider has nothing to show on first paint when the feeds are busy.
+  const recentOwn = (a) => a.internal && Math.max(a.updatedAt || 0, a.publishedAt || 0) > Date.now() - 30 * 86400 * 1000;
+  const pinnedFirst = [...published.filter((a) => a.pinned), ...published.filter((a) => !a.pinned && recentOwn(a)), ...published.filter((a) => !a.pinned && !recentOwn(a))];
   await writeFile(path.join(DATA_DIR, 'articles.json'), JSON.stringify(published));
   await writeFile(path.join(DATA_DIR, 'latest.json'), JSON.stringify(pinnedFirst.slice(0, 48)));
   await writeFile(path.join(DATA_DIR, 'articles-full.json'), JSON.stringify(articles));
