@@ -1,0 +1,45 @@
+name: Render an article video
+
+on:
+  workflow_dispatch:
+    inputs:
+      script:
+        description: 'Scene script, e.g. video-scripts/festac-77-at-fifty.md'
+        required: true
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: article-video
+  cancel-in-progress: false
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Install ffmpeg and the speech engine
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg && pip install -q edge-tts
+      - name: Install Chromium
+        run: npm i --no-save playwright@1.49.1 && npx playwright install --with-deps chromium
+      - name: Render
+        run: node scripts/article-video.js --script "${{ github.event.inputs.script }}"
+      - name: Commit the video
+        run: |
+          git config user.name "article-video bot"
+          git config user.email "noreply@gloriousanchor.com"
+          git add videos/articles/*.mp4 videos/articles/*.png
+          git diff --cached --quiet && echo "No changes" || (git commit -m "Render article video: ${{ github.event.inputs.script }}" && git push origin main)
+      - name: Rebuild the site with the new video
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run build.yml --ref main
