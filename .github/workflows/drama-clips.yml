@@ -1,0 +1,59 @@
+name: Generate drama clips
+
+# Makes AI-acted clips for a dramatised film with Google's Veo through the Gemini API (scripts/veo-clips.js).
+# Portraits and clips persist between runs as the "drama-work" artifact; each run restores it, adds to it and
+# uploads it again. The key is the GEMINI_API_KEY repository secret.
+on:
+  workflow_dispatch:
+    inputs:
+      args:
+        description: 'Arguments for scripts/veo-clips.js, e.g. "--list-models", "--portraits", "--shots 02-naira-note,06-flame", "--all"'
+        required: true
+        default: '--list-models'
+      shots:
+        description: 'Shot list'
+        required: true
+        default: 'video-scripts/festac-77-drama-shots.md'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: drama-clips
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Restore portraits and clips from the last run
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p .video-work/drama
+          id=$(gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts?name=drama-work&per_page=1" --jq '.artifacts[0].id // empty')
+          if [ -n "$id" ]; then
+            gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts/$id/zip" > /tmp/drama-work.zip
+            unzip -q -o /tmp/drama-work.zip -d .video-work/drama && echo "restored artifact $id" && find .video-work/drama -type f | sort
+          else
+            echo "no previous artifact"
+          fi
+      - name: Generate
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: node scripts/veo-clips.js "${{ github.event.inputs.shots }}" ${{ github.event.inputs.args }}
+      - name: Keep the portraits and clips
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: drama-work
+          path: .video-work/drama
+          if-no-files-found: ignore
+          retention-days: 90
+          overwrite: true
