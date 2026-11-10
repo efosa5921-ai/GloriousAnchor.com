@@ -14,6 +14,10 @@ on:
         description: 'Shot list'
         required: true
         default: 'video-scripts/festac-77-drama-shots.md'
+      assemble:
+        description: 'Also assemble the film from the clips with the narrator, and commit it to videos/articles'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -63,6 +67,14 @@ jobs:
           git config user.email "noreply@gloriousanchor.com"
           git add video-scripts/drama
           git diff --cached --quiet && echo "nothing new" || (git commit -m "Drama clips: portraits and previews" && git pull --rebase origin main && git push origin main)
+      - name: Assemble the film
+        if: ${{ github.event.inputs.assemble == 'true' }}
+        run: |
+          pip install -q edge-tts
+          npm i --no-save playwright@1.49.1 && npx playwright install --with-deps chromium
+          node scripts/drama-assemble.js --shots "${{ github.event.inputs.shots }}" --out videos/articles
+          git add videos/articles/*.mp4 videos/articles/*.png
+          git diff --cached --quiet && echo "nothing new" || (git commit -m "Assemble drama film: ${{ github.event.inputs.shots }}" && git pull --rebase origin main && git push origin main)
       - name: Keep the portraits and clips
         if: always()
         uses: actions/upload-artifact@v4
