@@ -140,17 +140,36 @@ function findVideo(res) {
 }
 
 async function download(uri, out) {
-  // uri is "files/<id>" (or a full URL); wait for the file to become ACTIVE, then download it.
-  const name = uri.startsWith('http') ? uri : uri.replace(/^\/+/, '');
+  // uri is "files/<id>" or a full URL to that file; wait for the file to become ACTIVE, then download it.
+  const name = uri.startsWith('http') ? (uri.match(/files\/[^/:?]+/) || [uri])[0] : uri.replace(/^\/+/, '');
   for (let i = 0; i < 120; i++) {
     const f = await api('GET', name);
     if (f.state === 'ACTIVE' || !f.state) break;
     if (f.state === 'FAILED') throw new Error(`file ${name} failed`);
     await new Promise(r => setTimeout(r, 5000));
   }
-  const res = await fetch(`${API}/${name}:download?alt=media`, { headers: headers(), redirect: 'follow' });
-  if (!res.ok) throw new Error(`download ${res.status}: ${(await res.text()).slice(0, 300)}`);
-  fs.writeFileSync(out, Buffer.from(await res.arrayBuffer()));
+  const urls = [`${API}/${name}:download?alt=media`, uri.startsWith('http') ? `${uri}:download?alt=media` : null, `${API}/download/${name}:download?alt=media`].filter(Boolean);
+  let last;
+  for (const u of urls) {
+    const res = await fetch(u, { headers: headers(), redirect: 'follow' });
+    if (res.ok) { fs.writeFileSync(out, Buffer.from(await res.arrayBuffer())); return; }
+    last = `${u} -> ${res.status} ${(await res.text()).slice(0, 200)}`;
+  }
+  throw new Error(`download failed: ${last}`);
+}
+
+// --recover: download every video the Files API still holds (generated clips are stored for a while) as recovered-N.mp4.
+async function recover() {
+  const dir = path.join(WORK, 'clips'); fs.mkdirSync(dir, { recursive: true });
+  const out = await api('GET', 'files?pageSize=100');
+  const files = (out.files || []).filter(f => /video/.test(f.mimeType || ''));
+  console.log(`${(out.files || []).length} files, ${files.length} videos`);
+  let n = 0;
+  for (const f of files) {
+    console.log(`  ${f.name} ${f.mimeType} ${f.sizeBytes || ''} ${f.createTime || ''} ${f.displayName || ''} ${f.uri || ''}`);
+    const dest = path.join(dir, `recovered-${++n}.mp4`);
+    try { await download(f.uri || f.name, dest); console.log(`    -> ${dest}`); } catch (e) { console.log(`    ${e.message}`); }
+  }
 }
 
 async function generate(spec, ids) {
@@ -180,6 +199,7 @@ async function generate(spec, ids) {
       const res = await postLong('interactions', body);
       const v = findVideo(res);
       if (!v) { failures++; console.log(`no video: status ${res.status}; ${JSON.stringify(res).slice(0, 800)}`); continue; }
+      console.log(`video: ${JSON.stringify({ ...v, data: v.data ? `${v.data.length} chars` : undefined })}`);
       if (v.data) fs.writeFileSync(out, Buffer.from(v.data, 'base64')); else await download(v.uri, out);
       console.log(`${path.relative(process.cwd(), out)} (${Math.round(fs.statSync(out).size / 1024)} KB, ${Math.round((Date.now() - started) / 1000)} s)`);
     } catch (e) { failures++; console.log(`failed: ${e.message.slice(0, 1200)}`); }
@@ -192,9 +212,10 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const spec = file ? parseShots(fs.readFileSync(file, 'utf8')) : null;
   try {
     if (flag('list-models')) await listModels();
+    if (flag('recover')) await recover();
     if (flag('portraits')) await portraits(spec);
     if (flag('all')) await generate(spec, 'all');
     else if (opt('shots')) await generate(spec, opt('shots').split(',').map(s => s.trim()));
-    else if (!flag('list-models') && !flag('portraits')) { console.log(`${spec.shots.length} shots, ${Object.keys(spec.chars).length} characters; total ${spec.shots.reduce((a, s) => a + s.seconds, 0)} s`); }
+    else if (!flag('list-models') && !flag('portraits') && !flag('recover')) { console.log(`${spec.shots.length} shots, ${Object.keys(spec.chars).length} characters; total ${spec.shots.reduce((a, s) => a + s.seconds, 0)} s`); }
   } catch (e) { console.error(e.message); process.exit(1); }
 }
