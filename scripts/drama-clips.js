@@ -1,10 +1,11 @@
 #!/usr/bin/env node
-// Generate the clips of a dramatised film with Google's Veo model through the Gemini API.
+// Generate the clips of a dramatised film with Google's Gemini Omni Flash video model (the Gemini API's video
+// generator since Veo was retired from it in October 2026), through the Interactions API.
 //
-//   node scripts/veo-clips.js video-scripts/festac-77-drama-shots.md --list-models
-//   node scripts/veo-clips.js video-scripts/festac-77-drama-shots.md --portraits          # one still per character
-//   node scripts/veo-clips.js video-scripts/festac-77-drama-shots.md --shots 02-naira-note,04-pastor-speaks
-//   node scripts/veo-clips.js video-scripts/festac-77-drama-shots.md --all [--model veo-3.1-fast-generate-preview]
+//   node scripts/drama-clips.js video-scripts/festac-77-drama-shots.md --list-models
+//   node scripts/drama-clips.js video-scripts/festac-77-drama-shots.md --portraits          # one still per character
+//   node scripts/drama-clips.js video-scripts/festac-77-drama-shots.md --shots 02-naira-note,04-pastor-speaks
+//   node scripts/drama-clips.js video-scripts/festac-77-drama-shots.md --all [--model gemini-omni-1.2-flash]
 //                             [--resolution 720p|1080p] [--no-refs] [--dry-run] [--force]
 //
 // The shot list is Markdown: a `style:` line and a `negative:` line, a "## Characters" list of `- **id**: description`,
@@ -71,24 +72,18 @@ async function listModels() {
   for (const m of out.models || []) {
     const n = m.name.replace('models/', '');
     const methods = m.supportedGenerationMethods || [];
-    if (/veo|video|image|lyria/i.test(n) || methods.some(x => /predict/i.test(x)) || flag('verbose')) console.log(n.padEnd(44), methods.join(','));
+    if (/omni|veo|video|image/i.test(n) || flag('verbose')) console.log(n.padEnd(44), methods.join(','));
   }
 }
 
 async function pickModel(kind) {
   const out = await api('GET', 'models?pageSize=200');
   const names = (out.models || []).map(m => m.name.replace('models/', ''));
-  const prefs = kind === 'veo'
-    ? [/^veo-3\.1-fast-generate/, /^veo-3\.1-generate/, /^veo-3\.0-fast-generate/, /^veo-3\.0-generate/, /^veo/]
-    : [/^gemini-3\.1-flash-image$/, /^gemini-3-pro-image$/, /flash-image$/, /image-preview$/, /image/];
+  const prefs = kind === 'veo' ? [/^gemini-omni-[\d.]+-flash$/, /omni/] : [/^gemini-3\.1-flash-image$/, /^gemini-3-pro-image$/, /flash-image$/, /image-preview$/, /image/];
   for (const re of prefs) { const hit = names.find(n => re.test(n) && !/exp/.test(n)); if (hit) return hit; }
-  if (kind === 'veo') return null; // Veo models are not always listed; generate() then tries the known names
   throw new Error(`no ${kind} model available to this key; run --list-models`);
 }
 
-// Known Veo model names in the Gemini API, newest first; a 404 moves to the next.
-const VEO_CANDIDATES = ['veo-3.1-fast-generate-preview', 'veo-3.1-generate-preview', 'veo-3.1-fast-generate-001',
-  'veo-3.1-generate-001', 'veo-3.0-fast-generate-001', 'veo-3.0-generate-001', 'veo-2.0-generate-001'];
 
 async function portraits(spec) {
   const dir = path.join(WORK, 'portraits'); fs.mkdirSync(dir, { recursive: true });
@@ -180,7 +175,7 @@ async function generate(spec, ids) {
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-  if (!file && !flag('list-models')) { console.error('usage: node scripts/veo-clips.js <shots.md> --list-models | --portraits | --shots a,b | --all'); process.exit(2); }
+  if (!file && !flag('list-models')) { console.error('usage: node scripts/drama-clips.js <shots.md> --list-models | --portraits | --shots a,b | --all'); process.exit(2); }
   const spec = file ? parseShots(fs.readFileSync(file, 'utf8')) : null;
   try {
     if (flag('list-models')) await listModels();

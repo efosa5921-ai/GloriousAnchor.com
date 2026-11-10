@@ -1,13 +1,13 @@
 name: Generate drama clips
 
-# Makes AI-acted clips for a dramatised film with Google's Veo through the Gemini API (scripts/veo-clips.js).
+# Makes AI-acted clips for a dramatised film with Google's Veo through the Gemini API (scripts/drama-clips.js).
 # Portraits and clips persist between runs as the "drama-work" artifact; each run restores it, adds to it and
 # uploads it again. The key is the GEMINI_API_KEY repository secret.
 on:
   workflow_dispatch:
     inputs:
       args:
-        description: 'Arguments for scripts/veo-clips.js, e.g. "--list-models", "--portraits", "--shots 02-naira-note,06-flame", "--all"'
+        description: 'Arguments for scripts/drama-clips.js, e.g. "--portraits", "--shots 02-naira-note,06-flame", "--all"'
         required: true
         default: '--list-models'
       shots:
@@ -47,7 +47,7 @@ jobs:
       - name: Generate
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: node scripts/veo-clips.js "${{ github.event.inputs.shots }}" ${{ github.event.inputs.args }}
+        run: node scripts/drama-clips.js "${{ github.event.inputs.shots }}" ${{ github.event.inputs.args }}
       - name: Commit the portraits and small previews of the clips to the repository
         if: always()
         run: |
