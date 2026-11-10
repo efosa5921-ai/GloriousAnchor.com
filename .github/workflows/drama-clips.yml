@@ -16,7 +16,7 @@ on:
         default: 'video-scripts/festac-77-drama-shots.md'
 
 permissions:
-  contents: read
+  contents: write
   actions: read
 
 concurrency:
@@ -48,6 +48,21 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: node scripts/veo-clips.js "${{ github.event.inputs.shots }}" ${{ github.event.inputs.args }}
+      - name: Commit the portraits and small previews of the clips to the repository
+        if: always()
+        run: |
+          sudo apt-get install -y -qq ffmpeg > /dev/null
+          mkdir -p video-scripts/drama/portraits video-scripts/drama/previews
+          cp -n .video-work/drama/portraits/*.png video-scripts/drama/portraits/ 2>/dev/null || true
+          for f in .video-work/drama/clips/*.mp4; do
+            [ -f "$f" ] || continue
+            out="video-scripts/drama/previews/$(basename "$f")"
+            [ -f "$out" ] || ffmpeg -loglevel error -y -i "$f" -vf scale=640:-2 -c:v libx264 -preset veryfast -crf 30 -c:a aac -b:a 64k "$out"
+          done
+          git config user.name "drama-clips bot"
+          git config user.email "noreply@gloriousanchor.com"
+          git add video-scripts/drama
+          git diff --cached --quiet && echo "nothing new" || (git commit -m "Drama clips: portraits and previews" && git pull --rebase origin main && git push origin main)
       - name: Keep the portraits and clips
         if: always()
         uses: actions/upload-artifact@v4
