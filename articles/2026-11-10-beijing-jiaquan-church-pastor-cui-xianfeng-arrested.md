@@ -1,13 +1,12 @@
 ---
 title: China's war on the church: a hundred police break up Beijing's Jiaquan Church on its twentieth birthday, its pastor is jailed for "fraud" over the offering, and his wife is shut out of the country
 searchTitle: China Jails Beijing Pastor Cui Xianfeng, Breaks Up Jiaquan Church
-date: 2026-11-10T07:00:00Z
+date: 2026-11-10T19:36:00Z
 author: The Glorious Anchor team
 summary: Beijing pastor Cui Xianfeng was arrested on 23 October 2026 on "fraud" charges over offerings after 100 police raided Jiaquan Church's anniversary party.
 image: images/jiaquan-church-beijing.jpg
 categories: news
 keywords: Jiaquan Church Beijing, Cui Xianfeng arrested, Edward Cui pastor, Beijing house church raid 2026, China house church crackdown, Zion Church Beijing Jin Mingri, China pastor fraud charges offerings, Shijingshan detention centre, persecuted church China 2026, pray for China Christians, unregistered church China
-draft: true
 ---
 
 > *Remember them that are in bonds, as bound with them; and them which suffer adversity, as being yourselves also in the body.* (Hebrews 13:3)
