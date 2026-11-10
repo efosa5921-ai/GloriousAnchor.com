@@ -239,10 +239,10 @@ seconds: 8
 narration: What was leased in four weeks of 1977 returns to its owner on the twelfth of February, 2027, by a law older than Nigeria.
 Dawn, the forecourt of the National Theatre in Lagos. The sixty-year-old man in the cream agbada stands with the woman pastor. Behind them, out of the half-light, hundreds of quiet Nigerians in ordinary clothes walk in and gather, no banners, no dancing, a young man among them carrying a brass trumpet. The sky brightening behind the huge curved roof.
 
-### 13-the-lease-is-over
+### 13-the-lease-is-over-v2
 chars: baba-tunde, grace
 seconds: 8
-Close two-shot at dawn. The old man closes the faded programme, holds it a moment with both hands, and gives it to the woman pastor. He says quietly: "My father wanted me to remember it all my life. I have. The lease is over." She takes it and holds his hand.
+Exterior, outdoors at dawn on the wide open concrete forecourt in front of the National Theatre in Lagos, the building's huge curved grey roof filling the background, a silent crowd of hundreds standing behind them in the half-light, cool blue-gold sky. Close two-shot. The old man closes the faded programme, holds it a moment with both hands, and gives it to the woman pastor. He says quietly: "My father wanted me to remember it all my life. I have. The lease is over." She takes it and holds his hand. Not indoors, no church interior.
 
 ### 13-trumpet-sunrise
 chars:
