@@ -67,9 +67,11 @@ export function parseShots(md) {
 
 async function listModels() {
   const out = await api('GET', 'models?pageSize=200');
+  console.log(`${(out.models || []).length} models visible to this key`);
   for (const m of out.models || []) {
     const n = m.name.replace('models/', '');
-    if (/veo|image/i.test(n)) console.log(n.padEnd(44), (m.supportedGenerationMethods || []).join(','));
+    const methods = m.supportedGenerationMethods || [];
+    if (/veo|video|image|lyria/i.test(n) || methods.some(x => /predict/i.test(x)) || flag('verbose')) console.log(n.padEnd(44), methods.join(','));
   }
 }
 
