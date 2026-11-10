@@ -1,6 +1,6 @@
 ---
-title: Beijing's Jiaquan Church: a hundred police at a twentieth-anniversary party, a pastor charged with "fraud" over the offering, and a wife kept out of China for three years
-searchTitle: Beijing Pastor Cui Xianfeng Arrested: Jiaquan Church Raided
+title: China's war on the church: a hundred police break up Beijing's Jiaquan Church on its twentieth birthday, its pastor is jailed for "fraud" over the offering, and his wife is shut out of the country
+searchTitle: China Jails Beijing Pastor Cui Xianfeng, Breaks Up Jiaquan Church
 date: 2026-11-10T07:00:00Z
 author: The Glorious Anchor team
 summary: Beijing pastor Cui Xianfeng was arrested on 23 October 2026 on "fraud" charges over offerings after 100 police raided Jiaquan Church's anniversary party.
@@ -16,7 +16,7 @@ At ten to six on the evening of Thursday 4 September 2026, about fifty members o
 
 On 23 October a Beijing prosecutor approved his formal arrest on suspicion of fraud. He is being held at the Shijingshan District Detention Centre. His wife, who is South Korean, has not been allowed into China to see him since 2023. His message to the church, passed out through the lawyers, was one sentence: hold fast to your faith and never lose hope.
 
-This is the second of Beijing's large unregistered churches to be broken up in thirteen months, and the charge is the same one being used against the first. Here is what is known, from the Associated Press, which spoke to his wife this week, and from ChinaAid, which has followed the case since the raid.
+This is the second of Beijing's large unregistered churches that the Chinese state has broken up in thirteen months, and the charge is the same one being used against the first: a government that will not let a church register now prosecutes it for taking an offering. Here is what is known, from the Associated Press, which spoke to his wife this week, and from ChinaAid, which has followed the case since the raid.
 
 *Picture: Beijing at dusk, with the words Pastor Cui Xianfeng sent out to his church from the Shijingshan detention centre. Photo: Picrazy2, Wikimedia Commons, CC BY-SA 4.0.*
 
