@@ -213,9 +213,13 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   try {
     if (flag('list-models')) await listModels();
     if (flag('recover')) await recover();
+    if (opt('rename')) for (const pair of opt('rename').split(',')) { // recovered-3:02-naira-note
+      const [from, to] = pair.split(':'); const a = path.join(WORK, 'clips', `${from}.mp4`), b = path.join(WORK, 'clips', `${to}.mp4`);
+      if (fs.existsSync(a)) { fs.renameSync(a, b); console.log(`renamed ${from} -> ${to}`); } else console.log(`no ${from} to rename`);
+    }
     if (flag('portraits')) await portraits(spec);
     if (flag('all')) await generate(spec, 'all');
     else if (opt('shots')) await generate(spec, opt('shots').split(',').map(s => s.trim()));
-    else if (!flag('list-models') && !flag('portraits') && !flag('recover')) { console.log(`${spec.shots.length} shots, ${Object.keys(spec.chars).length} characters; total ${spec.shots.reduce((a, s) => a + s.seconds, 0)} s`); }
+    else if (!flag('list-models') && !flag('portraits') && !flag('recover') && !opt('rename')) { console.log(`${spec.shots.length} shots, ${Object.keys(spec.chars).length} characters; total ${spec.shots.reduce((a, s) => a + s.seconds, 0)} s`); }
   } catch (e) { console.error(e.message); process.exit(1); }
 }
