@@ -171,7 +171,7 @@ async function generate(spec, ids) {
       model,
       input: [...refs.map(r => r.part), { type: 'text', text: prompt }],
       response_format: { type: 'video', aspect_ratio: '16:9', resolution, duration: `${shot.seconds}s`, delivery: 'uri' },
-      background: false, store: false, stream: false,
+      background: false, store: true, stream: false,
     };
     if (flag('dry-run')) { console.log(`${shot.id}: ${refs.length} refs\n${prompt}\n`); continue; }
     process.stdout.write(`${shot.id}: generating (${refs.length} refs)... `);
