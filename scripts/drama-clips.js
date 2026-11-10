@@ -17,6 +17,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import https from 'node:https';
 
 const API = 'https://generativelanguage.googleapis.com/v1beta';
 const WORK = path.join(process.cwd(), '.video-work', 'drama');
@@ -106,72 +107,84 @@ async function portraits(spec) {
 }
 
 function refsFor(shot) {
+  // Omni takes up to 6 reference images, at most 2 characters: one portrait each for the first two characters.
   if (flag('no-refs')) return [];
-  return shot.chars.slice(0, 3).map(c => {
+  return shot.chars.slice(0, 2).map(c => {
     const p = path.join(WORK, 'portraits', `${c}.png`);
     if (!fs.existsSync(p)) { console.log(`  (no portrait for ${c}; run --portraits)`); return null; }
-    return { image: { bytesBase64Encoded: fs.readFileSync(p).toString('base64'), mimeType: 'image/png' }, referenceType: 'asset' };
+    return { id: c, part: { type: 'image', data: fs.readFileSync(p).toString('base64'), mime_type: 'image/png' } };
   }).filter(Boolean);
 }
 
+// A POST with no socket timeout: Omni answers synchronously and a 1080p clip can take several minutes.
+function postLong(p, body) {
+  return new Promise((resolve, reject) => {
+    const data = JSON.stringify(body);
+    const u = new URL(`${API}/${p}`);
+    const req = https.request({ hostname: u.hostname, path: u.pathname + u.search, method: 'POST',
+      headers: { ...headers(), 'content-length': Buffer.byteLength(data) } }, res => {
+      let text = ''; res.setEncoding('utf8'); res.on('data', d => text += d);
+      res.on('end', () => {
+        let json; try { json = JSON.parse(text); } catch { json = { raw: text }; }
+        if (res.statusCode >= 300) reject(new Error(`POST ${p} -> ${res.statusCode}: ${text.slice(0, 1500)}`)); else resolve(json);
+      });
+    });
+    req.on('error', reject); req.write(data); req.end();
+  });
+}
+
+function findVideo(res) {
+  if (res.output_video) return res.output_video;
+  for (const step of res.steps || []) for (const c of step.content || []) if (c.type === 'video') return c;
+  return null;
+}
+
 async function download(uri, out) {
-  const res = await fetch(uri, { headers: headers(), redirect: 'follow' });
+  // uri is "files/<id>" (or a full URL); wait for the file to become ACTIVE, then download it.
+  const name = uri.startsWith('http') ? uri : uri.replace(/^\/+/, '');
+  for (let i = 0; i < 120; i++) {
+    const f = await api('GET', name);
+    if (f.state === 'ACTIVE' || !f.state) break;
+    if (f.state === 'FAILED') throw new Error(`file ${name} failed`);
+    await new Promise(r => setTimeout(r, 5000));
+  }
+  const res = await fetch(`${API}/${name}:download?alt=media`, { headers: headers(), redirect: 'follow' });
   if (!res.ok) throw new Error(`download ${res.status}: ${(await res.text()).slice(0, 300)}`);
   fs.writeFileSync(out, Buffer.from(await res.arrayBuffer()));
 }
 
 async function generate(spec, ids) {
   const dir = path.join(WORK, 'clips'); fs.mkdirSync(dir, { recursive: true });
-  let model = opt('model') || (flag('dry-run') ? '(chosen at run time)' : await pickModel('veo'));
-  let candidates = model ? [model] : VEO_CANDIDATES;
+  const model = opt('model', 'gemini-omni-1.2-flash');
   const resolution = opt('resolution', '1080p');
-  console.log(`clips with ${model || candidates.join(' | ')} at ${resolution}`);
+  console.log(`clips with ${model} at ${resolution}`);
   const todo = spec.shots.filter(s => ids === 'all' || ids.includes(s.id));
+  let failures = 0;
   for (const shot of todo) {
     const out = path.join(dir, `${shot.id}.mp4`);
     if (fs.existsSync(out) && !flag('force')) { console.log(`${shot.id}: exists`); continue; }
-    const cast = shot.chars.map(c => spec.chars[c]).filter(Boolean).join(' ');
-    const prompt = `${spec.style}\n\n${shot.prompt}${cast ? `\n\nThe people: ${cast}` : ''}`;
     const refs = refsFor(shot);
+    const cast = shot.chars.map(c => spec.chars[c]).filter(Boolean).join(' ');
+    const refNote = refs.length ? `\n\nThe reference image${refs.length > 1 ? 's show' : ' shows'} ${refs.map((r, i) => `${i === 0 ? 'first' : 'second'}: ${spec.chars[r.id].split(',')[0]}`).join('; ')}. Keep their faces, build and clothing exactly as shown.` : '';
+    const prompt = `${spec.style} One continuous shot, no cuts.\n\n${shot.prompt}${cast ? `\n\nThe people: ${cast}` : ''}${refNote}\n\nDo not include: ${spec.negative}.`;
     const body = {
-      instances: [{ prompt, ...(refs.length ? { referenceImages: refs } : {}) }],
-      parameters: { aspectRatio: '16:9', resolution, durationSeconds: shot.seconds, negativePrompt: spec.negative,
-        personGeneration: refs.length ? 'allow_adult' : 'allow_all' },
+      model,
+      input: [...refs.map(r => r.part), { type: 'text', text: prompt }],
+      response_format: { type: 'video', aspect_ratio: '16:9', resolution, duration: `${shot.seconds}s`, delivery: 'uri' },
+      background: false, store: false, stream: false,
     };
     if (flag('dry-run')) { console.log(`${shot.id}: ${refs.length} refs\n${prompt}\n`); continue; }
-    process.stdout.write(`${shot.id}: submitting (${refs.length} refs)... `);
-    const submit = async () => {
-      let lastErr;
-      for (const m of candidates) {
-        try { const op = await api('POST', `models/${m}:predictLongRunning`, body); model = m; candidates = [m]; return op; }
-        catch (e) { lastErr = e; if (/404|NOT_FOUND|not found|not supported/i.test(e.message) && candidates.length > 1) { console.log(`\n  ${m}: not available`); continue; } throw e; }
-      }
-      throw lastErr;
-    };
-    let op;
-    try { op = await submit(); }
-    catch (e) {
-      if (refs.length && /reference/i.test(e.message)) {
-        console.log('reference images refused; retrying without');
-        delete body.instances[0].referenceImages; body.parameters.personGeneration = 'allow_all';
-        op = await submit();
-      } else throw e;
-    }
-    process.stdout.write(`${model} `);
+    process.stdout.write(`${shot.id}: generating (${refs.length} refs)... `);
     const started = Date.now();
-    while (!op.done) {
-      await new Promise(r => setTimeout(r, 10000));
-      op = await api('GET', op.name);
-      if (Date.now() - started > 15 * 60 * 1000) throw new Error(`${shot.id}: timed out`);
-    }
-    if (op.error) { console.log(`failed: ${JSON.stringify(op.error)}`); continue; }
-    const r = op.response || {};
-    const sample = r.generateVideoResponse?.generatedSamples?.[0] || r.generatedVideos?.[0] || r.videos?.[0];
-    const uri = sample?.video?.uri || sample?.uri;
-    if (!uri) { console.log(`no video: ${JSON.stringify(r).slice(0, 600)}`); continue; }
-    await download(uri, out);
-    console.log(`${out} (${Math.round(fs.statSync(out).size / 1024)} KB, ${Math.round((Date.now() - started) / 1000)} s)`);
+    try {
+      const res = await postLong('interactions', body);
+      const v = findVideo(res);
+      if (!v) { failures++; console.log(`no video: status ${res.status}; ${JSON.stringify(res).slice(0, 800)}`); continue; }
+      if (v.data) fs.writeFileSync(out, Buffer.from(v.data, 'base64')); else await download(v.uri, out);
+      console.log(`${path.relative(process.cwd(), out)} (${Math.round(fs.statSync(out).size / 1024)} KB, ${Math.round((Date.now() - started) / 1000)} s)`);
+    } catch (e) { failures++; console.log(`failed: ${e.message.slice(0, 1200)}`); }
   }
+  if (failures) { console.log(`${failures} clip(s) failed`); process.exitCode = 1; }
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
