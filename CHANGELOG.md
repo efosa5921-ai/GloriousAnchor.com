@@ -4,6 +4,10 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 10 November 2026
+
+- **Beijing Jiaquan Church**: a report on the arrest of Pastor Cui Xianfeng on "fraud" charges over the church's offerings, the raid on its twentieth-anniversary party by more than a hundred police, and how the case follows the breaking up of Zion Church.
+
 ## 9 November 2026
 
 - **Front page on wide screens**: the three cards beside the slider now share its height evenly, give two fifths of their width to the picture, carry a short summary and centre their text, instead of a title floating in an empty box beside a thin strip of picture.
