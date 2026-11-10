@@ -78,10 +78,15 @@ async function pickModel(kind) {
   const names = (out.models || []).map(m => m.name.replace('models/', ''));
   const prefs = kind === 'veo'
     ? [/^veo-3\.1-fast-generate/, /^veo-3\.1-generate/, /^veo-3\.0-fast-generate/, /^veo-3\.0-generate/, /^veo/]
-    : [/flash-image$/, /image-preview$/, /image/];
+    : [/^gemini-3\.1-flash-image$/, /^gemini-3-pro-image$/, /flash-image$/, /image-preview$/, /image/];
   for (const re of prefs) { const hit = names.find(n => re.test(n) && !/exp/.test(n)); if (hit) return hit; }
+  if (kind === 'veo') return null; // Veo models are not always listed; generate() then tries the known names
   throw new Error(`no ${kind} model available to this key; run --list-models`);
 }
+
+// Known Veo model names in the Gemini API, newest first; a 404 moves to the next.
+const VEO_CANDIDATES = ['veo-3.1-fast-generate-preview', 'veo-3.1-generate-preview', 'veo-3.1-fast-generate-001',
+  'veo-3.1-generate-001', 'veo-3.0-fast-generate-001', 'veo-3.0-generate-001', 'veo-2.0-generate-001'];
 
 async function portraits(spec) {
   const dir = path.join(WORK, 'portraits'); fs.mkdirSync(dir, { recursive: true });
@@ -120,9 +125,10 @@ async function download(uri, out) {
 
 async function generate(spec, ids) {
   const dir = path.join(WORK, 'clips'); fs.mkdirSync(dir, { recursive: true });
-  const model = opt('model') || (flag('dry-run') ? '(chosen at run time)' : await pickModel('veo'));
+  let model = opt('model') || (flag('dry-run') ? '(chosen at run time)' : await pickModel('veo'));
+  let candidates = model ? [model] : VEO_CANDIDATES;
   const resolution = opt('resolution', '1080p');
-  console.log(`clips with ${model} at ${resolution}`);
+  console.log(`clips with ${model || candidates.join(' | ')} at ${resolution}`);
   const todo = spec.shots.filter(s => ids === 'all' || ids.includes(s.id));
   for (const shot of todo) {
     const out = path.join(dir, `${shot.id}.mp4`);
@@ -137,15 +143,24 @@ async function generate(spec, ids) {
     };
     if (flag('dry-run')) { console.log(`${shot.id}: ${refs.length} refs\n${prompt}\n`); continue; }
     process.stdout.write(`${shot.id}: submitting (${refs.length} refs)... `);
+    const submit = async () => {
+      let lastErr;
+      for (const m of candidates) {
+        try { const op = await api('POST', `models/${m}:predictLongRunning`, body); model = m; candidates = [m]; return op; }
+        catch (e) { lastErr = e; if (/404|NOT_FOUND|not found|not supported/i.test(e.message) && candidates.length > 1) { console.log(`\n  ${m}: not available`); continue; } throw e; }
+      }
+      throw lastErr;
+    };
     let op;
-    try { op = await api('POST', `models/${model}:predictLongRunning`, body); }
+    try { op = await submit(); }
     catch (e) {
       if (refs.length && /reference/i.test(e.message)) {
         console.log('reference images refused; retrying without');
         delete body.instances[0].referenceImages; body.parameters.personGeneration = 'allow_all';
-        op = await api('POST', `models/${model}:predictLongRunning`, body);
+        op = await submit();
       } else throw e;
     }
+    process.stdout.write(`${model} `);
     const started = Date.now();
     while (!op.done) {
       await new Promise(r => setTimeout(r, 10000));
@@ -167,9 +182,9 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const spec = file ? parseShots(fs.readFileSync(file, 'utf8')) : null;
   try {
     if (flag('list-models')) await listModels();
-    else if (flag('portraits')) await portraits(spec);
-    else if (flag('all')) await generate(spec, 'all');
+    if (flag('portraits')) await portraits(spec);
+    if (flag('all')) await generate(spec, 'all');
     else if (opt('shots')) await generate(spec, opt('shots').split(',').map(s => s.trim()));
-    else { console.log(`${spec.shots.length} shots, ${Object.keys(spec.chars).length} characters; total ${spec.shots.reduce((a, s) => a + s.seconds, 0)} s`); }
+    else if (!flag('list-models') && !flag('portraits')) { console.log(`${spec.shots.length} shots, ${Object.keys(spec.chars).length} characters; total ${spec.shots.reduce((a, s) => a + s.seconds, 0)} s`); }
   } catch (e) { console.error(e.message); process.exit(1); }
 }
