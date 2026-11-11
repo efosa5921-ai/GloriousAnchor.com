@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 11 November 2026
 
+- **FESTAC 77 article**: the tide passage now says why the powers lose their standing after 12 February 2027: God's jubilee in Leviticus 25:9–15, with its release of captives, cancellation of debt, return of property and rest for the land.
 - **FESTAC 77 article**: the warning about a second festival now says plainly that the much bigger jubilee FESTAC proposed for 2027 would renew the lease whatever month it is held in, rather than only if it fell in the same four weeks.
 
 ## 10 November 2026
