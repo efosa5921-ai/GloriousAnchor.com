@@ -26,13 +26,13 @@ negative: subtitles, captions, text overlay, watermark, cartoon, animation, CGI 
 ### 01-theatre-dawn
 chars: baba-tunde
 seconds: 8
-narration: This building was finished in 1976 for a festival that lasted four weeks. The festival ended on the twelfth of February, 1977. Today is the twelfth of February, 2027. Fifty years to the day.
+narration: This building was finished in 1976 for a festival that lasted four weeks. The festival ended on the twelfth of February, 1977.
 Dawn, grey-blue light. Wide shot of the National Theatre in Lagos, a vast concrete building shaped like a military cap, its curved roof against a pale sky. A sixty-year-old Nigerian man in a cream agbada stands alone on the empty concrete forecourt, small in the frame, holding an old faded paper booklet. Slow push in. Distant traffic, birds.
 
 ### 01-programme
 chars: baba-tunde
 seconds: 8
-narration: This man was there. He was ten years old. He has carried this programme for fifty years.
+narration: Today is the twelfth of February, 2027. Fifty years to the day. This man was there. He was ten years old. He has carried this programme for fifty years.
 Close on the old man's hands opening a faded 1977 festival programme, the cover the colour of tea, a child's handwriting inside. He looks up from it at the great building, eyes wet, and breathes out slowly. Dawn light on his face.
 
 ### 02-sitting-room-1974

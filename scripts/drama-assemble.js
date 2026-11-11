@@ -115,6 +115,7 @@ async function main() {
   let n = 0;
   for (const shot of spec.shots) {
     n++;
+    process.stdout.write(`  [${Math.floor(total / 60)}:${String(Math.floor(total % 60)).padStart(2, '0')}]`);
     const clip = path.join(CLIPS, `${shot.id}.mp4`);
     if (!existsSync(clip)) { missing.push(shot.id); console.warn(`  ${shot.id}: no clip, skipped`); continue; }
     const seg = path.join(work, `seg-${String(n).padStart(3, '0')}.mp4`);
@@ -144,9 +145,11 @@ async function main() {
     } else {
       // Narration over the moving clip; the clip's own sound under it; hold the last frame if the narrator runs longer.
       const secs = Math.max(clipSecs, nSecs);
-      const hold = Math.max(0, secs - clipSecs);
+      const slow = Math.min(1.5, secs / clipSecs); // stretch the clip a little before freezing its last frame
+      const slowed = clipSecs * slow;
+      const hold = Math.max(0, secs - slowed);
       await run('ffmpeg', [...FF, '-i', clip, '-i', mp3,
-        '-filter_complex', `[0:v]${norm},tpad=stop_mode=clone:stop_duration=${hold.toFixed(3)},fade=t=in:d=0.3,fade=t=out:st=${(secs - 0.4).toFixed(2)}:d=0.4,format=yuv420p[v];[0:a]volume=0.3,apad=pad_dur=${hold.toFixed(3)}[bg];[1:a]apad=pad_dur=${Math.max(0, secs - nSecs + 0.5).toFixed(3)},aresample=48000[nar];[bg][nar]amix=inputs=2:duration=first:normalize=0,afade=t=out:st=${(secs - 0.4).toFixed(2)}:d=0.4[a]`,
+        '-filter_complex', `[0:v]${norm},setpts=${slow.toFixed(4)}*PTS,tpad=stop_mode=clone:stop_duration=${hold.toFixed(3)},fade=t=in:d=0.3,fade=t=out:st=${(secs - 0.4).toFixed(2)}:d=0.4,format=yuv420p[v];[0:a]atempo=${(1 / slow).toFixed(4)},volume=0.3,apad=pad_dur=${(hold + 0.5).toFixed(3)}[bg];[1:a]apad=pad_dur=${Math.max(0, secs - nSecs + 0.5).toFixed(3)},aresample=48000[nar];[bg][nar]amix=inputs=2:duration=first:normalize=0,afade=t=out:st=${(secs - 0.4).toFixed(2)}:d=0.4[a]`,
         '-map', '[v]', '-map', '[a]', '-t', secs.toFixed(3), ...ENC, seg], { maxBuffer: 16 * 1024 * 1024 });
       total += secs; console.log(`  ${shot.id}: ${secs.toFixed(1)}s with narration`);
     }
@@ -163,7 +166,15 @@ async function main() {
 
   await writeFile(path.join(work, 'all.txt'), segments.map((s) => `file '${s}'`).join('\n') + '\n');
   const out = path.join(OUT, `${slug}.mp4`);
-  await run('ffmpeg', [...FF, '-f', 'concat', '-safe', '0', '-i', path.join(work, 'all.txt'), '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '22', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '160k', '-movflags', '+faststart', out], { maxBuffer: 64 * 1024 * 1024 });
+  // The repository copy stays under GitHub's 100 MB file limit (about 1.8 Mb/s for a seven-minute film);
+  // a full-quality copy goes beside the clips, where the workflow keeps it as an artifact.
+  const minutes = total / 60;
+  const maxrate = Math.max(1200, Math.min(6000, Math.floor(88 * 8 * 1024 / (total || 1) - 160)));
+  await run('ffmpeg', [...FF, '-f', 'concat', '-safe', '0', '-i', path.join(work, 'all.txt'), '-c:v', 'libx264', '-preset', 'medium', '-crf', '23', '-maxrate', `${maxrate}k`, '-bufsize', `${maxrate * 2}k`, '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '128k', '-movflags', '+faststart', out], { maxBuffer: 64 * 1024 * 1024 });
+  const full = path.join(path.dirname(CLIPS), 'film', `${slug}.full.mp4`);
+  await mkdir(path.dirname(full), { recursive: true });
+  await run('ffmpeg', [...FF, '-f', 'concat', '-safe', '0', '-i', path.join(work, 'all.txt'), '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '20', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', full], { maxBuffer: 64 * 1024 * 1024 });
+  console.log(`full-quality copy: ${path.relative(ROOT, full)} (${Math.round((await import('node:fs')).statSync(full).size / 1048576)} MB); repository copy at ${maxrate} kb/s`);
   await copyFile(titlePng, path.join(OUT, `${slug}.png`));
   const m = Math.floor(total / 60), s = Math.round(total % 60);
   console.log(`wrote ${path.relative(ROOT, out)} (${m}m ${String(s).padStart(2, '0')}s), ${segments.length} segments${missing.length ? `, missing clips: ${missing.join(', ')}` : ''}`);
