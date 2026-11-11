@@ -231,6 +231,7 @@ The woman pastor at the front of the dark, full church, on her knees, speaking i
 ### 12-many-churches
 chars:
 seconds: 8
+narration: By reason of God's jubilee, according to Leviticus 25, verses 9 to 15, the powers that took the lease will no longer have the grounds to stand. The trumpet of jubilee proclaims four things: the release of slaves and captives, the cancellation of debt, the return of property, and rest for the land.
 Montage feel in one shot: a village chapel of mud and tin at dusk, a few dozen Nigerian worshippers kneeling with a kerosene lamp; then through a doorway a glimpse of a cathedral with candles. In the chapel a young man raises a ram's-horn trumpet to his lips and blows a long note.
 
 ### 13-crowd-gathers

@@ -319,6 +319,8 @@ Every public fact in the narration (dates, figures, what was done at the festiva
 
 **NARRATOR:** In Leviticus the jubilee was proclaimed not with a festival but with a trumpet, on the Day of Atonement, the day the nation confessed its sin. Freedom, restoration, rest and reset, and all of them on the far side of confession. And when Jesus stood up in Nazareth and read the jubilee from Isaiah, he said: "This day is this scripture fulfilled in your ears."
 
+**NARRATOR:** By reason of God's jubilee, according to Leviticus 25, verses 9 to 15, the powers that took the lease will no longer have the grounds to stand. The trumpet of jubilee proclaims four things: the release of slaves and captives, the cancellation of debt, the return of property, and rest for the land.
+
 *Church after church: a trumpet is raised. The drums of the festival and the trumpets of the churches on the soundtrack together, the trumpets growing louder.*
 
 ---
