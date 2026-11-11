@@ -327,7 +327,7 @@ Every public fact in the narration (dates, figures, what was done at the festiva
 
 ## SCENE 13. THE NATIONAL THEATRE. DAWN, 12 FEBRUARY 2027, AS IT COULD BE.
 
-**NARRATOR:** Picture the morning of the twelfth of February, 2027. What was leased in four weeks of 1977 returns to its owner that day, by a law older than Nigeria. Whether the people of God are standing here that morning, in confession and with a trumpet, or whether the nation spends the jubilee year renewing the lease at another festival, is being decided now.
+**NARRATOR:** Picture the morning of the twelfth of February, 2027. What was leased in four weeks of 1977 returns to its owner that day, by a law older than Nigeria. Whether the people of God are standing here that morning in confession and prayer, proclaiming the acceptable year of the Lord, or whether the nation spends the jubilee year renewing the lease at another festival, is being decided now.
 
 *As in the cold open. Baba Tunde on the forecourt. Behind him, out of the half-light, people arrive: Pastor Grace, the congregation, others, quietly, until there are hundreds. Nobody dances. Nobody carries a banner. A young man carries a trumpet.*
 
