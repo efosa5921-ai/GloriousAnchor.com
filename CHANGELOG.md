@@ -4,6 +4,10 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 11 November 2026
+
+- **FESTAC 77 article**: the warning about a second festival now says plainly that the much bigger jubilee FESTAC proposed for 2027 would renew the lease whatever month it is held in, rather than only if it fell in the same four weeks.
+
 ## 10 November 2026
 
 - **Beijing Jiaquan Church**: a report on the arrest of Pastor Cui Xianfeng on "fraud" charges over the church's offerings, the raid on its twentieth-anniversary party by more than a hundred police, and how the case follows the breaking up of Zion Church.
