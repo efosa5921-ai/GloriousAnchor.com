@@ -35,15 +35,15 @@ Every public fact in the narration (dates, figures, what was done at the festiva
 
 ---
 
-## SCENE 1. COLD OPEN. THE NATIONAL THEATRE, IGANMU. DAWN, 12 FEBRUARY 2027.
+## SCENE 1. COLD OPEN. THE NATIONAL THEATRE, IGANMU. DAWN, TODAY.
 
 *Grey light. The theatre's great hat-shaped roof against the sky. A man of sixty, BABA TUNDE, stands alone on the empty forecourt in a good agbada, holding an old festival programme, its cover faded to the colour of tea. He looks at it, then at the building.*
 
-**NARRATOR:** This building was finished in 1976 for a festival that lasted four weeks. The festival ended on the twelfth of February, 1977. Today is the twelfth of February, 2027. Fifty years to the day.
+**NARRATOR:** This building was finished in 1976 for a festival that lasted four weeks. The festival ended on the twelfth of February, 1977. On the twelfth of February, 2027, it will be fifty years to the day.
 
 *Baba Tunde opens the programme. Inside, in a child's handwriting: "Tunde Oyelaran, age 10. Daddy took me."*
 
-**NARRATOR:** This man was there. He was ten years old. He has carried this programme for fifty years, and he has come back today because of something his mother said at a dinner table in 1976, and something a pastor said to him last year. To understand why he is standing here, you have to go back to a time when Nigeria lent money to the world.
+**NARRATOR:** This man was there. He was ten years old. He has carried this programme for fifty years, and he knows what that date means, because of something his mother said at a dinner table in 1976, and something a pastor said to him last year. To understand why he is standing here, you have to go back to a time when Nigeria lent money to the world.
 
 *Title card over the theatre: **FESTAC 77: THE LEASE**.*
 
@@ -307,7 +307,7 @@ Every public fact in the narration (dates, figures, what was done at the festiva
 
 ---
 
-## SCENE 12. TWO JUBILEES. 15 JANUARY TO 12 FEBRUARY 2027.
+## SCENE 12. TWO JUBILEES. THE ROAD TO 12 FEBRUARY 2027.
 
 *Intercut, faster. On one side: a stadium, drums, dancers, the mask on banners, fireworks, a presenter talking about tourism and the creative economy. On the other: Pastor Grace's church, full, lights low, the congregation on its knees. Baba Tunde among them. Other churches: a village chapel, a Catholic cathedral, a campus fellowship, a prayer group on a bus.*
 
@@ -325,7 +325,9 @@ Every public fact in the narration (dates, figures, what was done at the festiva
 
 ---
 
-## SCENE 13. THE NATIONAL THEATRE. DAWN, 12 FEBRUARY 2027.
+## SCENE 13. THE NATIONAL THEATRE. DAWN, 12 FEBRUARY 2027, AS IT COULD BE.
+
+**NARRATOR:** Picture the morning of the twelfth of February, 2027. What was leased in four weeks of 1977 returns to its owner that day, by a law older than Nigeria. Whether the people of God are standing here that morning, in confession and with a trumpet, or at a bigger festival with the same drums, is being decided now.
 
 *As in the cold open. Baba Tunde on the forecourt. Behind him, out of the half-light, people arrive: Pastor Grace, the congregation, others, quietly, until there are hundreds. Nobody dances. Nobody carries a banner. A young man carries a trumpet.*
 
@@ -333,7 +335,7 @@ Every public fact in the narration (dates, figures, what was done at the festiva
 
 *He closes the programme and gives it to her.*
 
-**BABA TUNDE:** Put it on the fire with the rest. The lease is over.
+**BABA TUNDE:** On the twelfth of February the lease is over. We will be here.
 
 *Pastor Grace reads aloud, from his mother's Bible.*
 
@@ -341,7 +343,7 @@ Every public fact in the narration (dates, figures, what was done at the festiva
 
 *She nods to the young man. He raises the trumpet. One long note over the forecourt, over the roof, over the lagoon. The sun comes up behind the theatre.*
 
-**NARRATOR:** This is not a prophecy about an election. It is an understanding of the hour. What was leased in four weeks of 1977 returns to its owner on the twelfth of February, 2027, by a law older than Nigeria. Whether the nation signs a new lease that month, or sounds a trumpet, is in the hands of the people of God. "The Spirit of the Lord is upon me, because he hath anointed me to preach the gospel to the poor... to preach the acceptable year of the Lord."
+**NARRATOR:** This is not a prophecy about an election. It is an understanding of the hour. Whether the nation signs a new lease in its jubilee year, or sounds a trumpet, is in the hands of the people of God, between now and that morning. "The Spirit of the Lord is upon me, because he hath anointed me to preach the gospel to the poor... to preach the acceptable year of the Lord."
 
 *Hold on the trumpeter against the sunrise. Fade.*
 
@@ -356,7 +358,9 @@ Every public fact in the narration (dates, figures, what was done at the festiva
 
 ## Production notes
 
-**Running time.** About fourteen minutes at a natural pace. Scenes 8 and 12 are montages and can be cut to length.
+**Running time.** About fourteen minutes at a natural pace when played in full; the AI-acted version cuts the dialogue to one or two lines a shot and runs seven minutes.
+
+**The present day.** The film is meant to be watched from now until well after 12 February 2027. Scenes 1 and 13 are set at the theatre at dawn, but the narrator never says that day has come: scene 1 looks forward to it and scene 13 pictures it. Keep it that way in any re-edit. Scenes 8 and 12 are montages and can be cut to length.
 
 **Narration.** The narrator's lines are complete and can be recorded first, so that filming has a track to cut to. Glorious Anchor's existing video pipeline can produce the narration track, the title cards, the end card and burned-in subtitles, and can assemble the filmed scenes with the narration once the footage is delivered.
 
