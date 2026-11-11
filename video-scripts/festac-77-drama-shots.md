@@ -237,7 +237,7 @@ Montage feel in one shot: a village chapel of mud and tin at dusk, a few dozen N
 ### 13-crowd-gathers
 chars: baba-tunde, grace
 seconds: 8
-narration: Picture the morning of the twelfth of February, 2027. What was leased in four weeks of 1977 returns to its owner that day, by a law older than Nigeria. Whether the people of God are standing here that morning, in confession and with a trumpet, or at a bigger festival with the same drums, is being decided now.
+narration: Picture the morning of the twelfth of February, 2027. What was leased in four weeks of 1977 returns to its owner that day, by a law older than Nigeria. Whether the people of God are standing here that morning, in confession and with a trumpet, or whether the nation spends the jubilee year renewing the lease at another festival, is being decided now.
 Dawn, the forecourt of the National Theatre in Lagos. The sixty-year-old man in the cream agbada stands with the woman pastor. Behind them, out of the half-light, hundreds of quiet Nigerians in ordinary clothes walk in and gather, no banners, no dancing, a young man among them carrying a brass trumpet. The sky brightening behind the huge curved roof.
 
 ### 13-the-lease-is-over-v3
