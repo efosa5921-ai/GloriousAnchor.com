@@ -301,9 +301,9 @@ Every public fact in the narration (dates, figures, what was done at the festiva
 
 **BABA TUNDE:** "He that covereth his sins shall not prosper."
 
-**PASTOR GRACE:** But Baba, there is a second festival. A hundred countries. The same emblem. The same drums. In the same four weeks.
+**PASTOR GRACE:** But Baba, there is a second festival. A much bigger one, for 2027, to mark the jubilee. A hundred countries. The same emblem. The same drums.
 
-**BABA TUNDE:** *(nodding)* That is why I came. A commemoration is one thing. A second FESTAC, in the same weeks, by the same kind of men, with the same silence about whose altar it is: in the terms of the lease, that is not a commemoration. That is a renewal.
+**BABA TUNDE:** *(nodding)* That is why I came. A commemoration is one thing. A bigger FESTAC for the jubilee year, by the same kind of men, with the same silence about whose altar it is: in the terms of the lease, that is not a commemoration. That is a renewal.
 
 ---
 

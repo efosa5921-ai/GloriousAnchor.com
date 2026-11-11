@@ -108,7 +108,7 @@ async function main() {
   if (existsSync(dawn)) { await run('ffmpeg', [...FF, '-ss', '2', '-i', dawn, '-frames:v', '1', '-q:v', '3', titleBg]); bgUrl = `data:image/jpeg;base64,${(await readFile(titleBg)).toString('base64')}`; }
   const titlePng = path.join(work, 'title.png');
   await page.setContent(cardHtml({ kicker: 'A dramatisation', title: 'FESTAC 77: The Lease', bg: bgUrl,
-    lines: ['Fifty years on from the four weeks that changed Nigeria.', 'The Oyelaran family is invented; the dates and facts are documented.'] }), { waitUntil: 'load' });
+    lines: ['The four weeks that changed Nigeria, and the day in 2027 when the lease on her expires.', 'The Oyelaran family is invented; the dates and facts are documented.'] }), { waitUntil: 'load' });
   await page.screenshot({ path: titlePng });
   const titleSeg = path.join(work, 'seg-000.mp4'); await cardSegment(titlePng, 6, titleSeg); segments.push(titleSeg); total += 6;
 
@@ -159,7 +159,7 @@ async function main() {
   // End card.
   const endPng = path.join(work, 'end.png');
   await page.setContent(cardHtml({ kicker: 'Read the full account, with every source', title: 'gloriousanchor.com',
-    lines: ['FESTAC 77: the four weeks Nigeria was leased to darkness,', 'the lease that expires on 12 February 2027, and the two jubilees the nation must choose between.', 'By Efosa Adun.'] }), { waitUntil: 'load' });
+    lines: ['Between now and 12 February 2027: confession, intercession,', 'and the proclamation of the acceptable year of the Lord.', 'FESTAC 77: the four weeks Nigeria was leased to darkness. By Efosa Adun.'] }), { waitUntil: 'load' });
   await page.screenshot({ path: endPng });
   const endSeg = path.join(work, 'seg-999.mp4'); await cardSegment(endPng, 8, endSeg); segments.push(endSeg); total += 8;
   await browser.close();

@@ -26,13 +26,13 @@ negative: subtitles, captions, text overlay, watermark, cartoon, animation, CGI 
 ### 01-theatre-dawn
 chars: baba-tunde
 seconds: 8
-narration: This building was finished in 1976 for a festival that lasted four weeks. The festival ended on the twelfth of February, 1977.
+narration: This building was finished in 1976 for a festival that lasted four weeks. The festival ended on the twelfth of February, 1977. On the twelfth of February, 2027, it will be fifty years to the day.
 Dawn, grey-blue light. Wide shot of the National Theatre in Lagos, a vast concrete building shaped like a military cap, its curved roof against a pale sky. A sixty-year-old Nigerian man in a cream agbada stands alone on the empty concrete forecourt, small in the frame, holding an old faded paper booklet. Slow push in. Distant traffic, birds.
 
 ### 01-programme
 chars: baba-tunde
 seconds: 8
-narration: Today is the twelfth of February, 2027. Fifty years to the day. This man was there. He was ten years old. He has carried this programme for fifty years.
+narration: This man was there. He was ten years old. He has carried this programme for fifty years, and he knows what that date means.
 Close on the old man's hands opening a faded 1977 festival programme, the cover the colour of tea, a child's handwriting inside. He looks up from it at the great building, eyes wet, and breathes out slowly. Dawn light on his face.
 
 ### 02-sitting-room-1974
@@ -207,10 +207,10 @@ chars: grace
 seconds: 8
 The woman pastor stands at the wall calendar with her finger on the twelfth of February and says slowly: "For fifty years evil in this country has swum with the tide. After the twelfth of February the tide turns. Evil will still be done. But it will be swimming against the current. And it will tire."
 
-### 11-renewal
+### 11-renewal-v2
 chars: baba-tunde, grace
 seconds: 8
-The sixty-year-old man, grave, says: "A second FESTAC, in the same weeks, by the same kind of men, with the same silence about whose altar it is. In the terms of the lease, that is not a commemoration. That is a renewal." The woman pastor nods once, decided. Church office, afternoon light.
+The sixty-year-old man, grave, says: "They are planning a much bigger FESTAC for 2027, to mark the jubilee. The same kind of men, the same silence about whose altar it is. In the terms of the lease, that is not a commemoration. That is a renewal." The woman pastor nods once, decided. Church office, afternoon light.
 
 ### 12-festival-drums
 chars:
@@ -236,13 +236,13 @@ Montage feel in one shot: a village chapel of mud and tin at dusk, a few dozen N
 ### 13-crowd-gathers
 chars: baba-tunde, grace
 seconds: 8
-narration: What was leased in four weeks of 1977 returns to its owner on the twelfth of February, 2027, by a law older than Nigeria.
+narration: Picture the morning of the twelfth of February, 2027. What was leased in four weeks of 1977 returns to its owner that day, by a law older than Nigeria. Whether the people of God are standing here that morning, in confession and with a trumpet, or at a bigger festival with the same drums, is being decided now.
 Dawn, the forecourt of the National Theatre in Lagos. The sixty-year-old man in the cream agbada stands with the woman pastor. Behind them, out of the half-light, hundreds of quiet Nigerians in ordinary clothes walk in and gather, no banners, no dancing, a young man among them carrying a brass trumpet. The sky brightening behind the huge curved roof.
 
-### 13-the-lease-is-over-v2
+### 13-the-lease-is-over-v3
 chars: baba-tunde, grace
 seconds: 8
-Exterior, outdoors at dawn on the wide open concrete forecourt in front of the National Theatre in Lagos, the building's huge curved grey roof filling the background, a silent crowd of hundreds standing behind them in the half-light, cool blue-gold sky. Close two-shot. The old man closes the faded programme, holds it a moment with both hands, and gives it to the woman pastor. He says quietly: "My father wanted me to remember it all my life. I have. The lease is over." She takes it and holds his hand. Not indoors, no church interior.
+Exterior, outdoors at dawn on the wide open concrete forecourt in front of the National Theatre in Lagos, the building's huge curved grey roof filling the background, a silent crowd of hundreds standing behind them in the half-light, cool blue-gold sky. Close two-shot. The old man closes the faded programme, holds it a moment with both hands, and gives it to the woman pastor. He says quietly: "My father wanted me to remember it all my life. I have. On the twelfth of February the lease is over. We will be here." She takes it and holds his hand. Not indoors, no church interior.
 
 ### 13-trumpet-sunrise
 chars:
