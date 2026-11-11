@@ -20,6 +20,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 import { parseShots } from './drama-clips.js';
+import { cuesFor, ass } from './article-video.js';
 
 const run = promisify(execFile);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -98,8 +99,16 @@ async function main() {
   const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
   const page = await browser.newPage({ viewport: { width: W, height: H } });
 
-  const segments = [];
+  const segments = [], cues = [];
   let total = 0, missing = [];
+  const quotes = (prompt) => [...String(prompt).matchAll(/["“]([^"”]{3,})["”]/g)].map((m) => m[1].trim());
+  // The actors' lines are known but not the second each is spoken, so they are spread over the clip by length.
+  const dialogueCues = (shot, at, clipSecs) => {
+    const lines = quotes(shot.prompt); if (!lines.length) return;
+    const chars = lines.reduce((n, l) => n + l.length, 0);
+    let t = at + 0.6; const span = Math.max(1, clipSecs - 1.0);
+    for (const l of lines) { const d = span * (l.length / chars); cues.push(...cuesFor(l, t, d)); t += d; }
+  };
 
   // Title card over the first frame of the dawn shot when it exists.
   const titleBg = path.join(work, 'title-bg.jpg');
@@ -124,6 +133,7 @@ async function main() {
     if (!shot.narration) {
       await run('ffmpeg', [...FF, '-i', clip, '-vf', `${norm},fade=t=in:d=0.3,fade=t=out:st=${(clipSecs - 0.3).toFixed(2)}:d=0.3,format=yuv420p`,
         '-af', `afade=t=in:d=0.2,afade=t=out:st=${(clipSecs - 0.3).toFixed(2)}:d=0.3`, ...ENC, seg], { maxBuffer: 16 * 1024 * 1024 });
+      dialogueCues(shot, total, clipSecs);
       segments.push(seg); total += clipSecs; console.log(`  ${shot.id}: ${clipSecs.toFixed(1)}s`); continue;
     }
     const mp3 = path.join(work, `n${n}.mp3`);
@@ -141,6 +151,8 @@ async function main() {
         '-af', `afade=t=out:st=${(clipSecs - 0.3).toFixed(2)}:d=0.3`, ...ENC, part2], { maxBuffer: 16 * 1024 * 1024 });
       await writeFile(path.join(work, `cat${n}.txt`), `file '${part1}'\nfile '${part2}'\n`);
       await run('ffmpeg', [...FF, '-f', 'concat', '-safe', '0', '-i', path.join(work, `cat${n}.txt`), '-c', 'copy', seg]);
+      cues.push(...cuesFor(shot.narration, total, nSecs - 0.5));
+      dialogueCues(shot, total + nSecs, clipSecs);
       total += nSecs + clipSecs; console.log(`  ${shot.id}: ${nSecs.toFixed(1)}s narration, then ${clipSecs.toFixed(1)}s clip`);
     } else {
       // Narration over the moving clip; the clip's own sound under it; hold the last frame if the narrator runs longer.
@@ -151,6 +163,7 @@ async function main() {
       await run('ffmpeg', [...FF, '-i', clip, '-i', mp3,
         '-filter_complex', `[0:v]${norm},setpts=${slow.toFixed(4)}*PTS,tpad=stop_mode=clone:stop_duration=${hold.toFixed(3)},fade=t=in:d=0.3,fade=t=out:st=${(secs - 0.4).toFixed(2)}:d=0.4,format=yuv420p[v];[0:a]atempo=${(1 / slow).toFixed(4)},volume=0.3,apad=pad_dur=${(hold + 0.5).toFixed(3)}[bg];[1:a]apad=pad_dur=${Math.max(0, secs - nSecs + 0.5).toFixed(3)},aresample=48000[nar];[bg][nar]amix=inputs=2:duration=first:normalize=0,afade=t=out:st=${(secs - 0.4).toFixed(2)}:d=0.4[a]`,
         '-map', '[v]', '-map', '[a]', '-t', secs.toFixed(3), ...ENC, seg], { maxBuffer: 16 * 1024 * 1024 });
+      cues.push(...cuesFor(shot.narration, total, nSecs - 0.5));
       total += secs; console.log(`  ${shot.id}: ${secs.toFixed(1)}s with narration`);
     }
     segments.push(seg);
@@ -165,15 +178,19 @@ async function main() {
   await browser.close();
 
   await writeFile(path.join(work, 'all.txt'), segments.map((s) => `file '${s}'`).join('\n') + '\n');
+  const subs = path.join(work, 'subs.ass');
+  await writeFile(subs, ass(cues));
+  const burn = ['-vf', `subtitles='${subs.replace(/'/g, "\\'")}',format=yuv420p`];
+  console.log(`  ${cues.length} subtitle cues`);
   const out = path.join(OUT, `${slug}.mp4`);
   // The repository copy stays under GitHub's 100 MB file limit (about 1.8 Mb/s for a seven-minute film);
   // a full-quality copy goes beside the clips, where the workflow keeps it as an artifact.
   const minutes = total / 60;
   const maxrate = Math.max(1200, Math.min(6000, Math.floor(88 * 8 * 1024 / (total || 1) - 160)));
-  await run('ffmpeg', [...FF, '-f', 'concat', '-safe', '0', '-i', path.join(work, 'all.txt'), '-c:v', 'libx264', '-preset', 'medium', '-crf', '23', '-maxrate', `${maxrate}k`, '-bufsize', `${maxrate * 2}k`, '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '128k', '-movflags', '+faststart', out], { maxBuffer: 64 * 1024 * 1024 });
+  await run('ffmpeg', [...FF, '-f', 'concat', '-safe', '0', '-i', path.join(work, 'all.txt'), ...burn, '-c:v', 'libx264', '-preset', 'medium', '-crf', '23', '-maxrate', `${maxrate}k`, '-bufsize', `${maxrate * 2}k`, '-c:a', 'aac', '-b:a', '128k', '-movflags', '+faststart', out], { maxBuffer: 64 * 1024 * 1024 });
   const full = path.join(path.dirname(CLIPS), 'film', `${slug}.full.mp4`);
   await mkdir(path.dirname(full), { recursive: true });
-  await run('ffmpeg', [...FF, '-f', 'concat', '-safe', '0', '-i', path.join(work, 'all.txt'), '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '20', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', full], { maxBuffer: 64 * 1024 * 1024 });
+  await run('ffmpeg', [...FF, '-f', 'concat', '-safe', '0', '-i', path.join(work, 'all.txt'), ...burn, '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '20', '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', full], { maxBuffer: 64 * 1024 * 1024 });
   console.log(`full-quality copy: ${path.relative(ROOT, full)} (${Math.round((await import('node:fs')).statSync(full).size / 1048576)} MB); repository copy at ${maxrate} kb/s`);
   await copyFile(titlePng, path.join(OUT, `${slug}.png`));
   const m = Math.floor(total / 60), s = Math.round(total % 60);
