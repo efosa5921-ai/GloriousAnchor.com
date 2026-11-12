@@ -127,6 +127,7 @@ export function followHtml(site, { label = 'Follow us' } = {}) {
   const links = [];
   if (site.whatsappChannel) links.push(['WhatsApp channel', site.whatsappChannel, 'whatsapp']);
   if (site.telegramChannel) links.push(['Telegram', site.telegramChannel, 'telegram']);
+  if (site.youtubeChannel) links.push(['YouTube', site.youtubeChannel, 'youtube']);
   if (site.xHandle) links.push([`@${site.xHandle.replace(/^@/, '')} on X`, `https://x.com/${encodeURIComponent(site.xHandle.replace(/^@/, ''))}`, 'x']);
   if (!links.length) return '';
   return `<nav class="follow" aria-label="${esc(label)}"><span class="follow__label">${esc(label)}</span>${links.map(([text, href, k]) => `<a class="follow__link follow__link--${k}" href="${esc(href)}" target="_blank" rel="noopener">${esc(text)}</a>`).join('')}</nav>`;

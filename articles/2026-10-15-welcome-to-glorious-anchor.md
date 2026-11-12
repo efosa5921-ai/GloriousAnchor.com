@@ -89,6 +89,6 @@ Yes, it is free, and no, it sets no tracking cookies and shows no advertising. Y
 
 ### How do I get Glorious Anchor on my phone?
 
-Open gloriousanchor.com in your browser and choose "Add to Home Screen". It then opens like an app. You can also follow the WhatsApp channel, Telegram channel or the daily email digest.
+Open gloriousanchor.com in your browser and choose "Add to Home Screen". It then opens like an app. You can also follow the WhatsApp channel, the Telegram channel, [our YouTube channel](https://www.youtube.com/@gloriousanchor) or the daily email digest.
 
 Thank you for reading. Stay anchored.

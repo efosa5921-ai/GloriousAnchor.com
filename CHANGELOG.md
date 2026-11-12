@@ -4,6 +4,10 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 12 November 2026
+
+- **YouTube**: the site now links to our YouTube channel, @gloriousanchor, in the footer and the follow block, and the channel's own uploads join GAIN TV.
+
 ## 11 November 2026
 
 - **FESTAC 77 article**: the tide passage now says why the powers lose their standing after 12 February 2027: God's jubilee in Leviticus 25:9–15, with its release of captives, cancellation of debt, return of property and rest for the land.

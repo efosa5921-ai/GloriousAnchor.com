@@ -312,7 +312,7 @@ async function finalizeSeo({ site, articles, posts, churches, categories = [] })
   let index = await readFile(indexPath, 'utf8');
   const verification = site.googleSiteVerification ? `<meta name="google-site-verification" content="${escHtml(site.googleSiteVerification)}">` : '';
   index = index.replace('<!--seo:head-->', [metaTags({ title: `${site.name} — Christian News, Voices & Video`, description: site.tagline, url: `${b}/`, image: social, site }), verification, homeJsonLd(site)].filter(Boolean).join('\n  '));
-  const footerFollow = [site.whatsappChannel && `<a href="${escHtml(site.whatsappChannel)}" target="_blank" rel="noopener">WhatsApp</a> · `, site.telegramChannel && `<a href="${escHtml(site.telegramChannel)}" target="_blank" rel="noopener">Telegram</a> · `].filter(Boolean).join('');
+  const footerFollow = [site.whatsappChannel && `<a href="${escHtml(site.whatsappChannel)}" target="_blank" rel="noopener">WhatsApp</a> · `, site.telegramChannel && `<a href="${escHtml(site.telegramChannel)}" target="_blank" rel="noopener">Telegram</a> · `, site.youtubeChannel && `<a href="${escHtml(site.youtubeChannel)}" target="_blank" rel="noopener">YouTube</a> · `].filter(Boolean).join('');
   // Section landing pages: every category gets its own address (brand pages cover their categories, /articles/ covers ours).
   const brandByCategory = Object.fromEntries(Object.entries(site.brands || {}).filter(([k, v]) => !k.startsWith('_') && v?.category).map(([k, v]) => [v.category, k]));
   const sections = categories.filter((c) => !['top', 'ours'].includes(c.id))

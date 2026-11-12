@@ -500,7 +500,8 @@ Note: Anything extra to show after answering.`;
       h('label', {}, 'Contact email ', h('span', { class: 'help' }, 'Shown as a Contact link in the footer.'), h('input', { name: 'contactEmail', type: 'email', value: data.site.contactEmail || '' })),
       h('div', { class: 'editor__grid' },
         h('label', {}, 'WhatsApp channel link', h('input', { name: 'whatsappChannel', type: 'url', value: data.site.whatsappChannel || '', placeholder: 'https://whatsapp.com/channel/…' })),
-        h('label', {}, 'Telegram channel link', h('input', { name: 'telegramChannel', type: 'url', value: data.site.telegramChannel || '', placeholder: 'https://t.me/…' }))),
+        h('label', {}, 'Telegram channel link', h('input', { name: 'telegramChannel', type: 'url', value: data.site.telegramChannel || '', placeholder: 'https://t.me/…' })),
+        h('label', {}, 'YouTube channel link', h('input', { name: 'youtubeChannel', type: 'url', value: data.site.youtubeChannel || '', placeholder: 'https://www.youtube.com/@…' }))),
       h('label', {}, 'X (Twitter) handle ', h('span', { class: 'help' }, 'Added as "via @handle" when items are shared or auto-posted.'), h('input', { name: 'xHandle', value: data.site.xHandle || '' })),
       h('h2', {}, 'Feeds'),
       h('label', {}, 'Hidden stories ', h('span', { class: 'help' }, 'One per line: a story id (the part after /s/ in a story link, e.g. 1viixrk), a full story link, or a publisher link to hide everything under it. Hidden stories vanish from the site at the next build.'), h('textarea', { name: 'hidden', rows: 4, placeholder: '1viixrk\nhttps://example.com/section/' }, (data.hidden || []).join('\n'))),
@@ -510,7 +511,7 @@ Note: Anything extra to show after answering.`;
     );
     f.addEventListener('submit', (e) => {
       e.preventDefault(); const fd = new FormData(f);
-      for (const k of ['name', 'tagline', 'verse', 'url', 'googleSiteVerification', 'goatcounter', 'cloudflareAnalytics', 'xHandle', 'newsletter', 'contactEmail', 'whatsappChannel', 'telegramChannel']) { const v = String(fd.get(k) || '').trim(); if (v) data.site[k] = v; else delete data.site[k]; }
+      for (const k of ['name', 'tagline', 'verse', 'url', 'googleSiteVerification', 'goatcounter', 'cloudflareAnalytics', 'xHandle', 'newsletter', 'contactEmail', 'whatsappChannel', 'telegramChannel', 'youtubeChannel']) { const v = String(fd.get(k) || '').trim(); if (v) data.site[k] = v; else delete data.site[k]; }
       data.limits.maxAgeHours = Number(fd.get('maxAgeHours')) || 96; data.limits.perSource = Number(fd.get('perSource')) || 25;
       const hidden = String(fd.get('hidden') || '').split(/\r?\n/).map((x) => x.trim()).filter(Boolean);
       if (hidden.length) data.hidden = hidden; else delete data.hidden;

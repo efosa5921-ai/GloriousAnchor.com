@@ -10,6 +10,7 @@
     "contactEmail": "info@gloriousanchor.com",
     "whatsappChannel": "https://whatsapp.com/channel/0029VbDsSvP2Jl86RiDqNe3d",
     "telegramChannel": "https://t.me/gloriousanchor",
+    "youtubeChannel": "https://www.youtube.com/@gloriousanchor",
     "xHandle": "GloriousAnchor",
     "goatcounter": "gloriousanchor"
   },
@@ -1742,6 +1743,18 @@
       "kind": "video",
       "categories": [
         "teaching",
+        "video"
+      ]
+    },
+    {
+      "id": "yt-gloriousanchor",
+      "name": "GAIN TV (Glorious Anchor)",
+      "type": "youtube",
+      "channelId": "UCgYATocAQg_rM6nn1S5l8ww",
+      "homepage": "https://www.youtube.com/@gloriousanchor",
+      "category": "video",
+      "kind": "video",
+      "categories": [
         "video"
       ]
     },
