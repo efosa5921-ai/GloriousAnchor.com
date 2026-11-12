@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 12 November 2026
 
+- **FESTAC 77: The Lease**: the article now opens with our seven-minute dramatised film of the story, made with AI-generated actors, which is also on our YouTube channel.
 - **YouTube**: the site now links to our YouTube channel, @gloriousanchor, in the footer and the follow block, and the channel's own uploads join GAIN TV.
 
 ## 11 November 2026

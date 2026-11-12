@@ -2,7 +2,7 @@
 title: FESTAC 77: the four weeks Nigeria was leased to darkness, the lease that expires on 12 February 2027, and the two jubilees the nation must choose between
 searchTitle: FESTAC 77: Nigeria's Lease to Darkness Ends 12 February 2027
 date: 2026-11-08T21:00:00Z
-updated: 2026-11-11T12:30:00Z
+updated: 2026-11-12T04:30:00Z
 author: Efosa Adun
 summary: At FESTAC 77 Nigeria's leaders leased the nation to darkness for fifty years. The lease ends 12 February 2027. Two jubilees are offered; one sets her free.
 image: images/festac-77-at-fifty-cover.jpg
@@ -24,6 +24,14 @@ On 15 January 2027 it will be fifty years since the fire was lit, and on 12 Febr
 This article sets the whole record in one place: what Nigeria had before the festival, what was done at it in public, what Scripture says about such acts, what happened to the nation afterwards, what the economists and the prophets each say about why, what is planned for 2027, why the nation's next elections have been moved to 16 January and 6 February 2027, inside those same four weeks, and what the church should do with the year of jubilee.
 
 *Cover: a decorated canoe at the FESTAC 77 regatta on the Lagos lagoon, 1977. Photograph by Helinä Rautavaara, Helinä Rautavaara Museum, Espoo, CC BY 2.0, via Wikimedia Commons.*
+
+## Watch the film: FESTAC 77: The Lease
+
+A seven-minute dramatisation of this article, with AI-generated actors and a narrator: an invented Lagos family from the one-naira note of 1974 to the morning of 12 February 2027. The dates and facts are the ones set out below.
+
+<iframe src="https://www.youtube.com/embed/H_hnWUqkWno" title="FESTAC 77: The Lease" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+
+*Watch on YouTube: [FESTAC 77: The Lease](https://www.youtube.com/watch?v=H_hnWUqkWno). Subscribe to [our channel](https://www.youtube.com/@gloriousanchor) for more.*
 
 **Key facts**
 
