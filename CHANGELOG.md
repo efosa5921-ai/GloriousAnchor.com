@@ -4,6 +4,10 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 13 November 2026
+
+- **Nigeria before and after FESTAC 77**: a side-by-side comparison of the naira, the debt, the farms, the people and the church across the fifty years, drawn from the FESTAC 77 article.
+
 ## 12 November 2026
 
 - **FESTAC 77: The Lease**: the article now opens with our seven-minute dramatised film of the story, made with AI-generated actors, which is also on our YouTube channel.
