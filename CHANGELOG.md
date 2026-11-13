@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 13 November 2026
 
+- **FESTAC 77 article**: the church's objection now carries the record from 1977 itself: Christianity Today's April 1977 report that Christian and Muslim leaders decried the festival's idolatrous customs, that nudity was banned among Nigerian performers, and that 20,000 gospel tracts went in fifteen minutes at the opening.
 - **Nigeria before and after FESTAC 77**: a side-by-side comparison of the naira, the debt, the farms, the people and the church across the fifty years, drawn from the FESTAC 77 article.
 
 ## 12 November 2026
