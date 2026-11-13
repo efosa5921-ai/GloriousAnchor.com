@@ -3,7 +3,7 @@ title: Nigeria before and after FESTAC 77: the naira, the debt, the farms, the p
 searchTitle: Nigeria Before and After FESTAC 77: Fifty Years Compared
 date: 2026-11-13T07:00:00Z
 author: The Glorious Anchor team
-summary: Nigeria before and after FESTAC 77, compared: the naira from $1.52 to ₦1,379 a dollar, lender to the IMF to debtor of ₦167 trillion, farms to oil, and the church.
+summary: Nigeria before and after FESTAC 77: the naira from $1.52 to ₦1,379 a dollar, IMF lender to ₦167 trillion debtor, farms to oil, and the church.
 image: images/nigeria-before-and-after-festac-77.jpg
 categories: pitn, teaching
 keywords: Nigeria before and after FESTAC 77, Nigeria economy 1977 vs 2026, naira to dollar 1977, naira stronger than dollar, Nigeria lent IMF World Bank 1974, Nigeria external debt history, groundnut pyramids Kano, Nigeria resource curse, FESTAC 77 consequences, Nigeria 50 years decline, Hosea 2:8 Nigeria, FESTAC 77 at 50
