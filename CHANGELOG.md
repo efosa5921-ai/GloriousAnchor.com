@@ -4,6 +4,10 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 15 November 2026
+
+- **Pick**: Kaestrings' "Let It Show", recorded live in Abuja, is in the picks, on GAIN TV and on GAIN Radio.
+
 ## 13 November 2026
 
 - **FESTAC 77 article**: the church's objection now carries the record from 1977 itself: Christianity Today's April 1977 report that Christian and Muslim leaders decried the festival's idolatrous customs, that nudity was banned among Nigerian performers, and that 20,000 gospel tracts went in fifteen minutes at the opening.
