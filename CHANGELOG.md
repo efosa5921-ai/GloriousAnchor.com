@@ -6,7 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 15 November 2026
 
-- **Pick**: Kaestrings' "Let It Show", recorded live in Abuja, is in the picks, on GAIN TV and on GAIN Radio.
+- **Pick**: Kaestrings' "Let It Show", recorded live in Abuja, is in the picks: the video on GAIN TV, and the audio track on GAIN Radio.
 
 ## 13 November 2026
 
