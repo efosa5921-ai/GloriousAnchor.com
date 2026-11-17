@@ -92,10 +92,10 @@ chars: oyelaran, ebun-1976
 seconds: 8
 Night, the 1976 Lagos sitting room. The husband in a white agbada at the dining table with a plate, not eating, a letter in front of him. His wife, in a green adire wrapper and white head-tie, sits down opposite and puts her Bible on the table. The husband says, tired: "A plot of the devil, signed by forty people. Your name is on it, Ebun." Only the husband speaks, and he says every word of that line himself, in his own male voice. The wife, whose name is Ebun, does not speak at all: her lips stay closed, she meets his eyes and nods once.
 
-### 05-who-lights-the-fire-a
+### 05-who-lights-the-fire-a2
 chars: ebun-1976, oyelaran
-seconds: 9
-Across the dining table at night, lamplight, the fan turning. Only the wife speaks; the husband in the white agbada does not speak at all, his lips stay closed and he looks down at his plate. She asks quietly: "Bamidele, who lights the fire? Who pours the drink, and to whom?" She says every word of the line herself, then waits for an answer that does not come. Nothing else is said.
+seconds: 8
+Across the dining table at night, lamplight, the fan turning. The wife, in a green adire wrapper and white head-tie, faces her husband in his white agbada. Only the wife speaks; the husband does not speak at all, his lips stay closed and he looks down at his plate. She asks quietly: "Bamidele, who lights the fire? Who pours the drink, and to whom?" She says every word of the line herself, then waits for an answer that does not come. Nothing else is said.
 
 ### 05-who-lights-the-fire-b
 chars: ebun-1976, oyelaran
@@ -163,15 +163,15 @@ seconds: 8
 narration: In 1986 the government took the structural adjustment programme and let the naira float.
 The same Lagos sitting room in 1986, the furniture worn, the television older. A slim nineteen-year-old Nigerian student in a university T-shirt holds a typed letter, his mother in a faded brown ankara gown and brown head-tie beside him, his father, now retired and greying, bare-headed in a faded light-blue kaftan, in the armchair. Only the student speaks. He says: "The scholarship for England is cancelled. All of them. They say the foreign exchange is finished."
 
-### 08-old-note-v2
+### 08-old-note-v3
 chars: oyelaran-1986, ebun-1986
 seconds: 8
-Close on the retired father, greying and bare-headed in a faded light-blue kaftan, in the armchair, taking an old, soft one-naira note out of his wallet and looking at it. He says, almost to himself: "It was worth one dollar and fifty cents. I told him. I promised him." Then his wife, in a faded brown ankara gown and brown head-tie, says softly, one word only: "Bamidele." 1986 sitting room, afternoon light through curtains.
+Close on the retired father, greying and bare-headed in a faded light-blue kaftan, in the armchair, taking an old, soft one-naira note out of his wallet and looking at it. Only he speaks. He says, almost to himself: "It was worth one dollar and fifty cents. I told him. I promised him." His wife, in a faded brown ankara gown and brown head-tie, sits beside him and lays her hand on his arm without a word; her lips stay closed. 1986 sitting room, afternoon light through curtains. Nothing else is said.
 
-### 08-what-was-the-term-v2
-chars: oyelaran-1986, ebun-1986
+### 08-what-was-the-term-v3
+chars: oyelaran-1986
 seconds: 8
-Night, the same sitting room, 1986. The old father, greying and bare-headed in a faded light-blue kaftan, sits alone with the faded 1977 festival programme in his hands. His wife, in a faded brown ankara gown and brown head-tie, comes to the doorway. Without turning he says: "Ebun. The thing you said. He calls it an agreement. What was the term?" Only he speaks. She comes and sits beside him, does not answer, and takes his hand.
+Night, the same sitting room, 1986. Close on the old father alone in the frame, greying and bare-headed in a faded light-blue kaftan, the faded 1977 festival programme in his hands, a lamp behind him. Nobody else is in the frame. He says quietly, to someone out of frame: "Ebun. The thing you said. He calls it an agreement. What was the term?" He says every word of the line himself, ending on the question. Nothing else is said; a woman's hand comes to rest on his shoulder.
 
 ### 09-big-church
 chars: nwosu-old, baba-tunde
@@ -203,7 +203,7 @@ Interior, 2026, the same Lagos sitting room modernised, a flat-screen television
 ### 10-both-inside-v3
 chars: baba-tunde
 seconds: 9
-The sixty-year-old man in the cream agbada stands by a bookshelf in his sitting room holding an open old Bible with a faded 1977 festival programme as its bookmark, a frozen television news screen glowing behind him. He reads the page in silence, looks up at the television and says under his breath, slowly: "Fifty years. Both of them. Both of them inside." He says every word of the line. Nothing else is said.
+The sixty-year-old man in the cream agbada stands by a bookshelf in his sitting room holding an open old Bible with a faded 1977 festival programme as its bookmark, a frozen television news screen glowing behind him. He reads the page in silence, looks up at the television and says under his breath, slowly: "Both of them. Both of them inside." He says every word of the line. Nothing else is said.
 
 ### 11-grace-office
 chars: grace, baba-tunde
@@ -214,6 +214,7 @@ Interior, a modern church office in 2027: bookshelves, a framed photograph of an
 ### 11-no-right-to-stand-v2
 chars: baba-tunde, grace
 seconds: 15
+trim: 8.4
 Church office, afternoon light. Only the sixty-year-old man in the cream agbada speaks; the woman pastor does not speak at all, her lips stay closed and she listens. He leans forward across the desk and says in Nigerian English, without hurrying: "An election on the twentieth of February would have been held on ground they no longer had any right to stand on. On the sixteenth of January their standing is still lawful." He says every word of the line himself and finishes it before the clip ends. She takes off her glasses and looks at the wall calendar.
 
 ### 11-the-tide-a
@@ -226,10 +227,10 @@ chars: grace
 seconds: 10
 The woman pastor turns from the wall calendar in her church office to face the room, calm and certain, and says slowly: "Evil will still be done. But it will be swimming against the current. And it will tire." She says every word of the line and finishes it before the clip ends. Nobody else speaks.
 
-### 11-renewal-a
+### 11-renewal-a2
 chars: baba-tunde, grace
-seconds: 11
-Church office, afternoon light. Only the sixty-year-old man in the cream agbada speaks; the woman pastor does not speak at all, her lips stay closed and she listens. He says, grave, without hurrying: "They are planning a much bigger FESTAC for 2027, to mark the jubilee. The same kind of men, the same silence about whose altar it is." He says every word of the line himself and finishes it before the clip ends.
+seconds: 7
+Church office, afternoon light. Only the sixty-year-old man in the cream agbada speaks; the woman pastor does not speak at all, her lips stay closed and she listens. He says, grave: "They are planning a much bigger FESTAC for 2027, to mark the jubilee." He says every word of the line himself. Nothing else is said.
 
 ### 11-renewal-b
 chars: baba-tunde, grace
