@@ -245,6 +245,11 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   try {
     if (flag('list-models')) await listModels();
     if (flag('recover')) await recover();
+    if (opt('fetch')) for (const pair of opt('fetch').split(',')) { // files/abc123:08-old-note-v2 — a clip that was generated but failed to download
+      const k = pair.lastIndexOf(':'); const file = pair.slice(0, k), to = path.join(WORK, 'clips', `${pair.slice(k + 1)}.mp4`);
+      fs.mkdirSync(path.dirname(to), { recursive: true });
+      try { await download(file, to); console.log(`fetched ${file} -> ${path.relative(process.cwd(), to)} (${Math.round(fs.statSync(to).size / 1024)} KB)`); } catch (e) { console.log(`fetch ${file} failed: ${e.message.slice(0, 300)}`); process.exitCode = 1; }
+    }
     if (flag('transcribe')) await transcribe(spec, opt('shots') ? opt('shots').split(',').map(s => s.trim()) : 'all');
     if (opt('rename')) for (const pair of opt('rename').split(',')) { // recovered-3:02-naira-note
       const [from, to] = pair.split(':'); const a = path.join(WORK, 'clips', `${from}.mp4`), b = path.join(WORK, 'clips', `${to}.mp4`);
