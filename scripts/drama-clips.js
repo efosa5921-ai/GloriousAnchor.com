@@ -46,7 +46,8 @@ export function parseShots(md) {
   const negative = (md.match(/^negative:\s*(.+)$/m) || [])[1] || '';
   const chars = {};
   const charBlock = (md.split(/^## Characters\s*$/m)[1] || '').split(/^---\s*$/m)[0];
-  for (const m of charBlock.matchAll(/^- \*\*([\w-]+)\*\*:\s*(.+)$/gm)) chars[m[1]] = m[2].trim();
+  const bases = {}; // a later look of the same person, drawn from the earlier portrait so the face stays the same
+  for (const m of charBlock.matchAll(/^- \*\*([\w-]+)\*\*(?:\s*\(from ([\w-]+)\))?:\s*(.+)$/gm)) { chars[m[1]] = m[3].trim(); if (m[2]) bases[m[1]] = m[2]; }
   const shots = [];
   for (const block of md.split(/^### /m).slice(1)) {
     const lines = block.split('\n');
@@ -65,7 +66,7 @@ export function parseShots(md) {
     shot.prompt = body.join('\n').trim();
     if (shot.prompt) shots.push(shot);
   }
-  return { style, negative, chars, shots };
+  return { style, negative, chars, bases, shots };
 }
 
 async function listModels() {
@@ -94,10 +95,14 @@ async function portraits(spec) {
   for (const [id, desc] of Object.entries(spec.chars)) {
     const out = path.join(dir, `${id}.png`);
     if (fs.existsSync(out) && !flag('force')) { console.log(`  ${id}: exists`); continue; }
-    const prompt = `Photorealistic character reference portrait for a film, head and shoulders, neutral expression, facing camera, plain mid-grey background, soft studio light, 35mm film look. ${desc}. No text, no watermark.`;
+    const base = spec.bases?.[id], basePng = base ? path.join(dir, `${base}.png`) : null;
+    if (base && !fs.existsSync(basePng)) { console.log(`  ${id}: needs the portrait of ${base} first`); continue; }
+    const prompt = base
+      ? `The attached image is the reference portrait of a film character. Make a new photorealistic reference portrait of the SAME person: the same face, bone structure, skin tone and features, instantly recognisable as the same individual. Change only what follows. ${desc}. Head and shoulders, neutral expression, facing camera, plain mid-grey background, soft studio light, 35mm film look. No text, no watermark.`
+      : `Photorealistic character reference portrait for a film, head and shoulders, neutral expression, facing camera, plain mid-grey background, soft studio light, 35mm film look. ${desc}. No text, no watermark.`;
     if (flag('dry-run')) { console.log(`  ${id}: ${prompt}`); continue; }
     const res = await api('POST', `models/${model}:generateContent`, {
-      contents: [{ parts: [{ text: prompt }] }],
+      contents: [{ parts: [...(base ? [{ inline_data: { mime_type: 'image/png', data: fs.readFileSync(basePng).toString('base64') } }] : []), { text: prompt }] }],
       generationConfig: { responseModalities: ['IMAGE'] },
     });
     const part = (res.candidates?.[0]?.content?.parts || []).find(p => p.inlineData);

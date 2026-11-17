@@ -20,6 +20,10 @@ negative: subtitles, captions, text overlay, watermark, cartoon, animation, CGI 
 - **nwosu-old**: Pastor Nwosu in 2005, the same man at sixty, heavier, grey hair, dark suit and tie.
 - **grace**: Pastor Grace Nwosu-Adeyemi in 2027, a Nigerian woman in her fifties, grey-streaked natural hair, a smart navy dress, reading glasses.
 - **hassan**: Mr Hassan, a Hausa Nigerian man in his forties, white kaftan and embroidered cap, cheerful.
+- **ebun-1976** (from ebun): Mama Ebun Oyelaran in 1976, the same woman, now wearing a deep green and cream adire wrapper and blouse with a plain white head-tie, as worn to an evening fellowship.
+- **ebun-1977** (from ebun): Mama Ebun Oyelaran in January 1977, the same woman, now wearing a white lace blouse over a wine-red wrapper with a soft white scarf tied over her hair.
+- **ebun-1986** (from ebun): Mama Ebun Oyelaran in 1986, the same woman ten years older, in her late forties, a little grey showing at her temples, fine lines at the eyes, wearing a faded brown and cream ankara gown with a simple brown head-tie.
+- **oyelaran-1986** (from oyelaran): Chief Bamidele Oyelaran in 1986, the same man ten years older, about fifty, retired, his hair and moustache greying, bare-headed, wearing a plain faded light-blue kaftan.
 
 ---
 
@@ -67,34 +71,34 @@ chars: hassan, oyelaran
 seconds: 8
 The Hausa official in a white kaftan, pleased, leans back and says: "The Grand Patron will open the colloquium with a libation. Water and schnapps, to the gods and the ancestors. Everybody is happy." The Yoruba official says nothing and looks at the poster of the ivory queen's mask on the wall. Office, 1976, warm afternoon light.
 
-### 04-classroom-fellowship
-chars: nwosu-young, ebun
+### 04-classroom-fellowship-v2
+chars: nwosu-young, ebun-1976
 seconds: 8
 narration: The Pentecostal churches in 1977 were a small and despised minority.
-Night interior, a Nigerian primary-school classroom: a dozen adults on low wooden children's benches under one bare bulb, a hand-painted cloth banner reading nothing legible on the wall, a blackboard. A thin young Nigerian pastor in a short-sleeved white shirt stands at the front holding a worn Bible as the last line of a hymn fades. A woman in a blue gele sits among the women.
+Night interior, a Nigerian primary-school classroom: a dozen adults on low wooden children's benches under one bare bulb, a hand-painted cloth banner reading nothing legible on the wall, a blackboard. A thin young Nigerian pastor in a short-sleeved white shirt stands at the front holding a worn Bible as the last line of a hymn fades. A woman in a green adire wrapper and a white head-tie sits among the women. Nobody speaks.
 
 ### 04-pastor-speaks-v2
 chars: nwosu-young
 seconds: 15
 Medium close-up of the thin young pastor in the lamplit classroom, earnest, Bible in hand, alone in the frame. He says in Nigerian English, firmly but quietly, without hurrying: "In January the government of this country is going to light a fire to Shango in the National Stadium, and pour drink to the gods. In our name. In the name of Nigeria." He says every word of the line and finishes it before the clip ends, then holds the look. Nobody else speaks.
 
-### 04-who-will-sign
-chars: nwosu-young, ebun
+### 04-who-will-sign-v2
+chars: nwosu-young, ebun-1976
 seconds: 8
-The young pastor holds up a typed letter in the lamplit classroom and says: "It says this festival is a plot of the devil to revive the worship of idols in Nigeria. Who will sign?" Hands rise on the benches. The woman in the blue gele hesitates, looks down, then slowly raises her hand. Bare bulb, moths, night.
+The young pastor holds up a typed letter in the lamplit classroom and says: "It says this festival is a plot of the devil to revive the worship of idols in Nigeria. Who will sign?" Only the pastor speaks. Hands rise on the benches. The woman in the green adire wrapper and white head-tie hesitates, looks down, then slowly raises her hand without a word. Bare bulb, moths, night.
 
-### 05-dinner-letter-v2
-chars: oyelaran, ebun
-seconds: 10
-Night, the 1976 Lagos sitting room. The husband at the dining table with a plate, not eating. His wife sits down opposite and puts her Bible on the table. He has a letter from the secretariat in front of him. The husband says, tired: "A plot of the devil, signed by forty people. Your name is on it, Ebun." Only the husband speaks, and he says every word of that line himself, in his own male voice. The wife, whose name is Ebun, does not speak at all: her lips stay closed, she meets his eyes and nods once.
+### 05-dinner-letter-v3
+chars: oyelaran, ebun-1976
+seconds: 8
+Night, the 1976 Lagos sitting room. The husband in a white agbada at the dining table with a plate, not eating, a letter in front of him. His wife, in a green adire wrapper and white head-tie, sits down opposite and puts her Bible on the table. The husband says, tired: "A plot of the devil, signed by forty people. Your name is on it, Ebun." Only the husband speaks, and he says every word of that line himself, in his own male voice. The wife, whose name is Ebun, does not speak at all: her lips stay closed, she meets his eyes and nods once.
 
 ### 05-who-lights-the-fire-a
-chars: ebun, oyelaran
+chars: ebun-1976, oyelaran
 seconds: 9
 Across the dining table at night, lamplight, the fan turning. Only the wife speaks; the husband in the white agbada does not speak at all, his lips stay closed and he looks down at his plate. She asks quietly: "Bamidele, who lights the fire? Who pours the drink, and to whom?" She says every word of the line herself, then waits for an answer that does not come. Nothing else is said.
 
 ### 05-who-lights-the-fire-b
-chars: ebun, oyelaran
+chars: ebun-1976, oyelaran
 seconds: 12
 Across the dining table at night, lamplight, close on the wife. Only she speaks; the husband does not speak at all, his lips stay closed. She says quietly and steadily: "You can call it culture. The one they are pouring it to does not call it culture. He calls it an agreement." She says every word of the line herself, ending on the word agreement, and holds his eyes. Nothing else is said.
 
@@ -114,10 +118,10 @@ chars: tunde-boy, oyelaran
 seconds: 8
 From the stands: far below on the stadium field, a lone figure in red robes carries a flaming torch across the grass towards a tall brazier. The boy stands up on his seat and shouts: "Daddy! Daddy, look!" The flame goes up in the brazier and the crowd roars. The father says quietly, not smiling: "I see it."
 
-### 06-fellowship-kneels
-chars: nwosu-young, ebun
+### 06-fellowship-kneels-v2
+chars: nwosu-young, ebun-1977
 seconds: 8
-Day, the primary-school classroom, shutters half closed. A dozen Nigerian adults kneel on the concrete floor between the children's benches, praying aloud softly. The thin young pastor stands with his eyes open, listening to a distant stadium roar through the window, and says: "Lord, it is done in our name. Write down that it was not done in our hearts."
+Day, the primary-school classroom, shutters half closed. A dozen Nigerian adults kneel on the concrete floor between the children's benches, praying aloud softly, among them a woman in a white lace blouse and a white scarf. The thin young pastor stands with his eyes open, listening to a distant stadium roar through the window, and says: "Lord, it is done in our name. Write down that it was not done in our hearts." Only the pastor's words are clear.
 
 ### 07-libation
 chars: oyelaran, hassan
@@ -153,21 +157,21 @@ seconds: 8
 narration: The year after the festival, Nigeria went to the international money markets for the first time.
 Interior, a government office in 1981, greyer and shabbier, the same two officials older. The Hausa man in a kaftan reads a folded newspaper and says heavily: "Eighteen billion dollars. Four years ago we were lending it." The Yoruba man, grey at the temples, does not look up from his file: "Four years ago."
 
-### 08-scholarship-letter
-chars: tunde-19, ebun, oyelaran
+### 08-scholarship-letter-v2
+chars: ebun-1986, oyelaran-1986, tunde-19
 seconds: 8
 narration: In 1986 the government took the structural adjustment programme and let the naira float.
-The same Lagos sitting room in 1986, the furniture worn, the television older. A slim nineteen-year-old Nigerian student in a university T-shirt holds a typed letter, his mother in a faded gele beside him, his father, now retired and grey, in the armchair. The student says: "The scholarship for England is cancelled. All of them. They say the foreign exchange is finished."
+The same Lagos sitting room in 1986, the furniture worn, the television older. A slim nineteen-year-old Nigerian student in a university T-shirt holds a typed letter, his mother in a faded brown ankara gown and brown head-tie beside him, his father, now retired and greying, bare-headed in a faded light-blue kaftan, in the armchair. Only the student speaks. He says: "The scholarship for England is cancelled. All of them. They say the foreign exchange is finished."
 
-### 08-old-note
-chars: oyelaran, ebun
+### 08-old-note-v2
+chars: oyelaran-1986, ebun-1986
 seconds: 8
-Close on the retired father in the armchair taking an old, soft one-naira note out of his wallet and looking at it. He says, almost to himself: "It was worth one dollar and fifty cents. I told him. I promised him." His wife says softly: "Bamidele." 1986 sitting room, afternoon light through curtains.
+Close on the retired father, greying and bare-headed in a faded light-blue kaftan, in the armchair, taking an old, soft one-naira note out of his wallet and looking at it. He says, almost to himself: "It was worth one dollar and fifty cents. I told him. I promised him." Then his wife, in a faded brown ankara gown and brown head-tie, says softly, one word only: "Bamidele." 1986 sitting room, afternoon light through curtains.
 
-### 08-what-was-the-term
-chars: oyelaran, ebun
+### 08-what-was-the-term-v2
+chars: oyelaran-1986, ebun-1986
 seconds: 8
-Night, the same sitting room, 1986. The old father alone with the faded 1977 festival programme in his hands. His wife comes to the doorway. Without turning he says: "Ebun. The thing you said. He calls it an agreement. What was the term?" She comes and sits beside him, does not answer, and takes his hand.
+Night, the same sitting room, 1986. The old father, greying and bare-headed in a faded light-blue kaftan, sits alone with the faded 1977 festival programme in his hands. His wife, in a faded brown ankara gown and brown head-tie, comes to the doorway. Without turning he says: "Ebun. The thing you said. He calls it an agreement. What was the term?" Only he speaks. She comes and sits beside him, does not answer, and takes his hand.
 
 ### 09-big-church
 chars: nwosu-old, baba-tunde
