@@ -41,10 +41,10 @@ seconds: 8
 narration: Go back to a time when Nigeria lent money to the world.
 Interior, a Lagos sitting room in 1974: a wooden radiogram, a ceiling fan turning, framed photographs, a small black-and-white television. A Nigerian civil servant in a white shirt and dark tie sits in an armchair opening a bottle of beer, smiling at the television. His wife in blue ankara and gele carries in a dish. Their ten-year-old son plays with a toy car on the floor. Evening lamplight, the fan humming.
 
-### 02-naira-note
+### 02-naira-note-v2
 chars: oyelaran, tunde-boy
-seconds: 8
-The father holds up a 1970s one-naira banknote to his ten-year-old son and says warmly in Nigerian English: "One naira. Do you know what one naira buys in London? One dollar and fifty cents. More than their own money." The boy stares at the note, impressed. Warm 1970s sitting room, lamplight.
+seconds: 10
+The father holds up a 1970s one-naira banknote to his ten-year-old son and says warmly in Nigerian English: "One naira. Do you know what one naira buys in London? One dollar and fifty cents. More than their own money." Only the father speaks, and he says every word of that line himself. The boy does not speak at all: his lips stay closed and he stares at the note, impressed. Warm 1970s sitting room, lamplight.
 
 ### 02-ebun-watches
 chars: ebun, oyelaran
@@ -83,10 +83,10 @@ chars: nwosu-young, ebun
 seconds: 8
 The young pastor holds up a typed letter in the lamplit classroom and says: "It says this festival is a plot of the devil to revive the worship of idols in Nigeria. Who will sign?" Hands rise on the benches. The woman in the blue gele hesitates, looks down, then slowly raises her hand. Bare bulb, moths, night.
 
-### 05-dinner-letter
+### 05-dinner-letter-v2
 chars: oyelaran, ebun
-seconds: 8
-Night, the 1976 Lagos sitting room. The husband at the dining table with a plate, not eating. His wife sits down opposite and puts her Bible on the table. He says, tired: "Hassan showed me a letter today. A plot of the devil. Signed by forty people. Your name is on it, Ebun." She meets his eyes: "Yes."
+seconds: 10
+Night, the 1976 Lagos sitting room. The husband at the dining table with a plate, not eating. His wife sits down opposite and puts her Bible on the table. The husband says, tired: "Hassan showed me a letter today. A plot of the devil. Signed by forty people. Your name is on it, Ebun." Only the husband speaks, and he says every word of that line himself, in his own male voice. The wife, whose name is Ebun, does not speak at all: her lips stay closed, she meets his eyes and nods once.
 
 ### 05-who-lights-the-fire
 chars: ebun, oyelaran
