@@ -84,10 +84,28 @@ async function speak(text, file) {
 
 const hasDialogue = (prompt) => /["“][^"”]{3,}["”]/.test(prompt);
 
-/** A still card held for `secs` with a soft fade in and out and silence. */
-async function cardSegment(png, secs, out) {
+/** A still card held for `secs` with silence, a soft fade out and (unless fadeIn is false) a soft fade in. */
+async function cardSegment(png, secs, out, { fadeIn = true } = {}) {
   await run('ffmpeg', [...FF, '-loop', '1', '-framerate', String(FPS), '-i', png, '-f', 'lavfi', '-i', 'anullsrc=r=48000:cl=stereo', '-t', secs.toFixed(3),
-    '-vf', `fade=t=in:d=0.6,fade=t=out:st=${(secs - 0.8).toFixed(2)}:d=0.8,format=yuv420p`, ...ENC, '-shortest', out], { maxBuffer: 16 * 1024 * 1024 });
+    '-vf', `${fadeIn ? 'fade=t=in:d=0.6,' : ''}fade=t=out:st=${(secs - 0.8).toFixed(2)}:d=0.8,format=yuv420p`, ...ENC, '-shortest', out], { maxBuffer: 16 * 1024 * 1024 });
+}
+
+/** The opening card: the network's name and mark over the film's first picture. */
+function productionHtml(bg) {
+  return `<!doctype html><html><head><meta charset="utf-8"><style>
+  html,body{margin:0;width:${W}px;height:${H}px;overflow:hidden;background:#0b1526}
+  .c{position:relative;width:${W}px;height:${H}px;color:#fff;text-align:center;font-family:"Liberation Sans","DejaVu Sans",sans-serif;
+     background:${bg ? `#000 url(${bg}) center/cover no-repeat` : 'radial-gradient(ellipse at 50% 40%,#22365c 0%,#0b1526 75%)'}}
+  .c:before{content:"";position:absolute;inset:0;background:${bg ? 'linear-gradient(180deg,rgba(5,10,25,.30),rgba(5,10,25,.72))' : 'none'}}
+  .m{position:absolute;left:0;right:0;top:250px}
+  .m svg{width:170px;height:170px;filter:drop-shadow(0 4px 18px rgba(0,0,0,.7))}
+  .a{position:absolute;left:0;right:0;top:470px;font-size:34px;letter-spacing:.34em;text-transform:uppercase;color:#d4a62a;font-weight:700;text-shadow:0 2px 12px rgba(0,0,0,.8)}
+  .n{position:absolute;left:80px;right:80px;top:530px;font-family:"Liberation Serif","DejaVu Serif",Georgia,serif;font-size:84px;line-height:1.1;text-shadow:0 4px 24px rgba(0,0,0,.8)}
+  .p{position:absolute;left:0;right:0;top:750px;font-size:34px;letter-spacing:.34em;text-transform:uppercase;color:#d4a62a;font-weight:700;text-shadow:0 2px 12px rgba(0,0,0,.8)}
+  </style></head><body><div class="c">
+  <div class="m"><svg viewBox="0 0 24 24" fill="none" stroke="#d4a62a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2"/><path d="M12 6v16M5 12H2a10 10 0 0 0 20 0h-3M8 9h8"/></svg></div>
+  <div class="a">A</div><div class="n">Glorious Anchor International&nbsp;Network</div><div class="p">Production</div>
+  </div></body></html>`;
 }
 
 async function main() {
@@ -115,6 +133,11 @@ async function main() {
   const dawn = path.join(CLIPS, '01-theatre-dawn.mp4');
   let bgUrl = null;
   if (existsSync(dawn)) { await run('ffmpeg', [...FF, '-ss', '2', '-i', dawn, '-frames:v', '1', '-q:v', '3', titleBg]); bgUrl = `data:image/jpeg;base64,${(await readFile(titleBg)).toString('base64')}`; }
+  // Opening card, at full brightness from the first frame: many apps show a video's first frame as its thumbnail.
+  const prodPng = path.join(work, 'production.png');
+  await page.setContent(productionHtml(bgUrl), { waitUntil: 'load' });
+  await page.screenshot({ path: prodPng });
+  const prodSeg = path.join(work, 'seg-0000.mp4'); await cardSegment(prodPng, 4, prodSeg, { fadeIn: false }); segments.push(prodSeg); total += 4;
   const titlePng = path.join(work, 'title.png');
   await page.setContent(cardHtml({ kicker: 'A dramatisation', title: 'FESTAC 77: The Lease', bg: bgUrl,
     lines: ['The four weeks that changed Nigeria, and the day in 2027 when the lease on her expires.', 'The Oyelaran family is invented; the dates and facts are documented.'] }), { waitUntil: 'load' });
