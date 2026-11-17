@@ -73,10 +73,10 @@ seconds: 8
 narration: The Pentecostal churches in 1977 were a small and despised minority.
 Night interior, a Nigerian primary-school classroom: a dozen adults on low wooden children's benches under one bare bulb, a hand-painted cloth banner reading nothing legible on the wall, a blackboard. A thin young Nigerian pastor in a short-sleeved white shirt stands at the front holding a worn Bible as the last line of a hymn fades. A woman in a blue gele sits among the women.
 
-### 04-pastor-speaks
+### 04-pastor-speaks-v2
 chars: nwosu-young
-seconds: 8
-Medium close-up of the thin young pastor in the lamplit classroom, earnest, Bible in hand. He says in Nigerian English, firmly but quietly: "In January the government of this country is going to light a fire to Shango in the National Stadium, and pour drink to the gods. In our name. In the name of Nigeria."
+seconds: 15
+Medium close-up of the thin young pastor in the lamplit classroom, earnest, Bible in hand, alone in the frame. He says in Nigerian English, firmly but quietly, without hurrying: "In January the government of this country is going to light a fire to Shango in the National Stadium, and pour drink to the gods. In our name. In the name of Nigeria." He says every word of the line and finishes it before the clip ends, then holds the look. Nobody else speaks.
 
 ### 04-who-will-sign
 chars: nwosu-young, ebun
@@ -88,10 +88,10 @@ chars: oyelaran, ebun
 seconds: 10
 Night, the 1976 Lagos sitting room. The husband at the dining table with a plate, not eating. His wife sits down opposite and puts her Bible on the table. He has a letter from the secretariat in front of him. The husband says, tired: "A plot of the devil, signed by forty people. Your name is on it, Ebun." Only the husband speaks, and he says every word of that line himself, in his own male voice. The wife, whose name is Ebun, does not speak at all: her lips stay closed, she meets his eyes and nods once.
 
-### 05-who-lights-the-fire
+### 05-who-lights-the-fire-v2
 chars: ebun, oyelaran
-seconds: 8
-Across the dining table at night, the wife in the blue gele asks quietly: "Bamidele, who lights the fire? Who pours the drink, and to whom?" The husband does not answer. She continues: "You can call it culture. The one they are pouring it to does not call it culture. He calls it an agreement." Lamplight, the fan turning.
+seconds: 15
+Across the dining table at night, lamplight, the fan turning. Only the wife in the blue gele speaks; the husband in the white agbada does not speak at all, his lips stay closed and he looks down at his plate. She says quietly, without hurrying: "Bamidele, who lights the fire? Who pours the drink, and to whom? You can call it culture. The one they are pouring it to does not call it culture. He calls it an agreement." She says every word of the line herself and finishes it before the clip ends.
 
 ### 05-tunde-listens
 chars: tunde-boy
@@ -170,15 +170,15 @@ seconds: 8
 narration: The revival came in the eighties, and the fellowships of 1977 became the biggest congregations on the face of the earth.
 Interior, 2005, an enormous modern Nigerian church auditorium with thousands of empty seats on a weekday, high ceiling, daylight through tall windows. A heavy grey-haired pastor in a dark suit walks the centre aisle slowly beside a Nigerian man of thirty-eight in a shirt and tie. Wide, then tracking with them.
 
-### 09-they-laughed
+### 09-they-laughed-v2
 chars: nwosu-old
-seconds: 8
-The old heavy pastor stops in the aisle of the vast empty church, gestures at the thousands of seats and says in Nigerian English: "Forty of us. In a classroom. They laughed at us, Tunde. Now look. God answered the small people. But he has not yet answered the nation."
+seconds: 13
+The old heavy pastor stops in the aisle of the vast empty church, gestures at the thousands of seats and says in Nigerian English, without hurrying: "Forty of us. In a classroom. They laughed at us, Tunde. Now look. God answered the small people. But he has not yet answered the nation." He says every word of the line and finishes it before the clip ends. Nobody else speaks.
 
 ### 09-leviticus
 chars: nwosu-old, baba-tunde
 seconds: 8
-Close on the old pastor's hands opening a worn black Bible to a page with faded ink handwriting in the margin. He taps the note with a thick finger and says: "Fifteenth of January to twelfth of February, 1977. I wrote it that night. Fifty years, Tunde. Fifty years." The younger man beside him looks from the page to the pastor's face.
+Close on the old pastor's hands opening a worn black Bible to a page with faded ink handwriting in the margin. He taps the note with a thick finger and says: "Fifteenth of January to twelfth of February. I wrote it that night. Fifty years, Tunde. Fifty years." The younger man beside him looks from the page to the pastor's face.
 
 ### 10-news-2026
 chars: baba-tunde
@@ -186,10 +186,10 @@ seconds: 8
 narration: Then, in February 2026, the dates moved.
 Interior, 2026, the same Lagos sitting room modernised, a flat-screen television where the old set stood. A sixty-year-old Nigerian man in a cream agbada watches the news with two small grandchildren on the rug. A newsreader's voice says: "The presidential election, previously fixed for the twentieth of February, will now hold on Saturday the sixteenth of January, 2027." The man slowly sits forward.
 
-### 10-both-inside
+### 10-both-inside-v2
 chars: baba-tunde
-seconds: 8
-The sixty-year-old man takes an old Bible down from a shelf, opens it at a page where a faded 1977 festival programme is kept as a bookmark, reads a handwritten margin note, and looks up at the frozen television screen. He says under his breath: "Fifteenth of January to twelfth of February. Fifty years. Both of them. Both of them inside." He picks up his phone.
+seconds: 12
+The sixty-year-old man in the cream agbada stands by a bookshelf in his sitting room holding an open old Bible with a faded 1977 festival programme as its bookmark, a frozen television news screen glowing behind him. He looks from the page up to the television and says under his breath, slowly: "Fifteenth of January to twelfth of February. Fifty years. Both of them. Both of them inside." He says every word of the line and finishes it before the clip ends, then lowers the Bible.
 
 ### 11-grace-office
 chars: grace, baba-tunde
@@ -197,20 +197,30 @@ seconds: 8
 narration: The men who moved the dates may have had nothing in their minds but the calendar. But the powers know the terms of their own lease to the day.
 Interior, a modern church office in 2027: bookshelves, a framed photograph of an old pastor on the wall, a wall calendar for January and February 2027 with three dates circled in red. A Nigerian woman pastor in her fifties with grey-streaked hair and reading glasses sits across the desk from the sixty-year-old man, an open Bible between them.
 
-### 11-no-right-to-stand
+### 11-no-right-to-stand-v2
 chars: baba-tunde, grace
-seconds: 8
-The sixty-year-old man leans forward across the desk and says in Nigerian English: "An election on the twentieth of February would have been held on ground they no longer had any right to stand on. On the sixteenth of January their standing is still lawful." The woman pastor takes off her glasses and looks at the wall calendar.
+seconds: 15
+Church office, afternoon light. Only the sixty-year-old man in the cream agbada speaks; the woman pastor does not speak at all, her lips stay closed and she listens. He leans forward across the desk and says in Nigerian English, without hurrying: "An election on the twentieth of February would have been held on ground they no longer had any right to stand on. On the sixteenth of January their standing is still lawful." He says every word of the line himself and finishes it before the clip ends. She takes off her glasses and looks at the wall calendar.
 
-### 11-the-tide
+### 11-the-tide-a
 chars: grace
-seconds: 8
-The woman pastor stands at the wall calendar with her finger on the twelfth of February and says slowly: "For fifty years evil in this country has swum with the tide. After the twelfth of February the tide turns. Evil will still be done. But it will be swimming against the current. And it will tire."
+seconds: 10
+The woman pastor stands alone at the wall calendar in her church office with her finger on the twelfth of February and says slowly: "For fifty years evil in this country has swum with the tide. After the twelfth of February the tide turns." She says every word of the line and finishes it before the clip ends. Nobody else speaks.
 
-### 11-renewal-v2
+### 11-the-tide-b
+chars: grace
+seconds: 10
+The woman pastor turns from the wall calendar in her church office to face the room, calm and certain, and says slowly: "Evil will still be done. But it will be swimming against the current. And it will tire." She says every word of the line and finishes it before the clip ends. Nobody else speaks.
+
+### 11-renewal-a
 chars: baba-tunde, grace
-seconds: 8
-The sixty-year-old man, grave, says: "They are planning a much bigger FESTAC for 2027, to mark the jubilee. The same kind of men, the same silence about whose altar it is. In the terms of the lease, that is not a commemoration. That is a renewal." The woman pastor nods once, decided. Church office, afternoon light.
+seconds: 11
+Church office, afternoon light. Only the sixty-year-old man in the cream agbada speaks; the woman pastor does not speak at all, her lips stay closed and she listens. He says, grave, without hurrying: "They are planning a much bigger FESTAC for 2027, to mark the jubilee. The same kind of men, the same silence about whose altar it is." He says every word of the line himself and finishes it before the clip ends.
+
+### 11-renewal-b
+chars: baba-tunde, grace
+seconds: 9
+Church office, afternoon light, close on the sixty-year-old man in the cream agbada. Only he speaks; the woman pastor does not speak at all. He says slowly, with weight: "In the terms of the lease, that is not a commemoration. That is a renewal." He says every word of the line himself and finishes it before the clip ends. The woman pastor nods once, decided.
 
 ### 12-festival-drums
 chars:
@@ -223,10 +233,10 @@ chars: grace, baba-tunde
 seconds: 8
 Night, 2027, a large Nigerian church with the lights low, thousands of people kneeling in the pews, heads bowed, a low murmur of prayer. At the front the woman pastor kneels too. Among the congregation the sixty-year-old man in the cream agbada, eyes shut, an old programme pressed in both hands. Slow, reverent camera move.
 
-### 12-confession
+### 12-confession-v2
 chars: grace
-seconds: 8
-The woman pastor at the front of the dark, full church, on her knees, speaking into a microphone with her eyes closed: "We confess that in 1977 this nation, in all our names, lit a fire to a god that is no god, and we were silent, or we were few. Lord, we were few. Forgive this land." The congregation answers in a wave of sound.
+seconds: 15
+The woman pastor at the front of the dark, full church, on her knees, speaking into a microphone with her eyes closed, the congregation kneeling in silence behind her. Only she speaks; the congregation makes no sound until she has finished. She says, without hurrying: "We confess that in 1977 this nation, in all our names, lit a fire to a god that is no god, and we were silent, or we were few. Lord, we were few. Forgive this land." She says every word of the line herself and finishes it before the clip ends.
 
 ### 12-many-churches
 chars:
