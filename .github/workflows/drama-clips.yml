@@ -53,6 +53,7 @@ jobs:
           mkdir -p .video-work/drama/portraits
           cp -n video-scripts/drama/portraits/*.png .video-work/drama/portraits/ 2>/dev/null || true
           ls .video-work/drama/portraits
+          touch /tmp/run-start
       - name: Generate
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -66,7 +67,8 @@ jobs:
           for f in .video-work/drama/clips/*.mp4; do
             [ -f "$f" ] || continue
             out="video-scripts/drama/previews/$(basename "$f")"
-            [ -f "$out" ] || ffmpeg -loglevel error -y -i "$f" -vf scale=640:-2 -c:v libx264 -preset veryfast -crf 30 -c:a aac -b:a 64k "$out"
+            # A clip remade in this run replaces its preview.
+            if [ ! -f "$out" ] || [ "$f" -nt /tmp/run-start ]; then ffmpeg -loglevel error -y -i "$f" -vf scale=640:-2 -c:v libx264 -preset veryfast -crf 30 -c:a aac -b:a 64k "$out"; fi
           done
           git config user.name "drama-clips bot"
           git config user.email "noreply@gloriousanchor.com"
