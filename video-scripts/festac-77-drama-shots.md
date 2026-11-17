@@ -86,7 +86,7 @@ The young pastor holds up a typed letter in the lamplit classroom and says: "It 
 ### 05-dinner-letter-v2
 chars: oyelaran, ebun
 seconds: 10
-Night, the 1976 Lagos sitting room. The husband at the dining table with a plate, not eating. His wife sits down opposite and puts her Bible on the table. The husband says, tired: "Hassan showed me a letter today. A plot of the devil. Signed by forty people. Your name is on it, Ebun." Only the husband speaks, and he says every word of that line himself, in his own male voice. The wife, whose name is Ebun, does not speak at all: her lips stay closed, she meets his eyes and nods once.
+Night, the 1976 Lagos sitting room. The husband at the dining table with a plate, not eating. His wife sits down opposite and puts her Bible on the table. He has a letter from the secretariat in front of him. The husband says, tired: "A plot of the devil, signed by forty people. Your name is on it, Ebun." Only the husband speaks, and he says every word of that line himself, in his own male voice. The wife, whose name is Ebun, does not speak at all: her lips stay closed, she meets his eyes and nods once.
 
 ### 05-who-lights-the-fire
 chars: ebun, oyelaran
