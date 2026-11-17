@@ -188,6 +188,9 @@ async function generate(spec, ids) {
   for (const shot of todo) {
     const out = path.join(dir, `${shot.id}.mp4`);
     if (fs.existsSync(out) && !flag('force')) { console.log(`${shot.id}: exists`); continue; }
+    // Never generate a shot whose characters' portraits are missing: the faces would be invented afresh.
+    const lacking = flag('no-refs') ? [] : shot.chars.slice(0, 2).filter(ch => !fs.existsSync(path.join(WORK, 'portraits', `${ch}.png`)));
+    if (lacking.length) { failures++; console.log(`${shot.id}: NOT generated, no portrait for ${lacking.join(', ')} (run --portraits first)`); continue; }
     const refs = refsFor(shot);
     const cast = shot.chars.map(c => spec.chars[c]).filter(Boolean).join(' ');
     const refNote = refs.length ? `\n\nThe reference image${refs.length > 1 ? 's show' : ' shows'} ${refs.map((r, i) => `${i === 0 ? 'first' : 'second'}: ${spec.chars[r.id].split(',')[0]}`).join('; ')}. Keep their faces, build and clothing exactly as shown.` : '';
