@@ -207,18 +207,43 @@ async function generate(spec, ids) {
   if (failures) { console.log(`${failures} clip(s) failed`); process.exitCode = 1; }
 }
 
+// --transcribe: ask a Gemini model to write down, for every clip with spoken lines, who says which words, and print it
+// beside the scripted lines, so a line the video model handed to the wrong character is caught before assembly.
+async function transcribe(spec, ids) {
+  const model = opt('check-model', 'gemini-flash-latest');
+  const previews = path.join(process.cwd(), 'video-scripts', 'drama', 'previews');
+  const quoted = (p) => [...String(p).matchAll(/"([^"]{3,})"/g)].map((m) => m[1]);
+  const todo = spec.shots.filter((s) => quoted(s.prompt).length && (ids === 'all' || ids.includes(s.id)));
+  console.log(`transcribing ${todo.length} dialogue clips with ${model}`);
+  for (const shot of todo) {
+    const file = [path.join(previews, `${shot.id}.mp4`), path.join(WORK, 'clips', `${shot.id}.mp4`)].find((f) => fs.existsSync(f) && fs.statSync(f).size < 14 * 1024 * 1024);
+    if (!file) { console.log(`\n== ${shot.id}: no clip small enough to send`); continue; }
+    const body = { contents: [{ parts: [
+      { inline_data: { mime_type: 'video/mp4', data: fs.readFileSync(file).toString('base64') } },
+      { text: 'Watch and listen to this short film clip. List every spoken utterance in order. For each one give: the start time in seconds; who speaks, described by what is seen (for example "man in white agbada and cap", "woman in blue headwrap", "boy in striped T-shirt", "off-screen voice"), judged by whose lips move and by the voice; whether the voice is male, female or a child; and the exact words. One utterance per line, in the form: [time] SPEAKER (voice): "words". Do not add commentary.' },
+    ] }], generationConfig: { temperature: 0 } };
+    try {
+      const res = await api('POST', `models/${model}:generateContent`, body);
+      const text = (res.candidates?.[0]?.content?.parts || []).map((p) => p.text || '').join('').trim();
+      console.log(`\n== ${shot.id}\n  script: ${quoted(shot.prompt).map((q) => `"${q}"`).join(' / ')}\n${text.split('\n').map((l) => `  heard:  ${l}`).join('\n')}`);
+    } catch (e) { console.log(`\n== ${shot.id}: ${e.message.slice(0, 400)}`); }
+  }
+}
+
 if (import.meta.url === `file://${process.argv[1]}`) {
   if (!file && !flag('list-models')) { console.error('usage: node scripts/drama-clips.js <shots.md> --list-models | --portraits | --shots a,b | --all'); process.exit(2); }
   const spec = file ? parseShots(fs.readFileSync(file, 'utf8')) : null;
   try {
     if (flag('list-models')) await listModels();
     if (flag('recover')) await recover();
+    if (flag('transcribe')) await transcribe(spec, opt('shots') ? opt('shots').split(',').map(s => s.trim()) : 'all');
     if (opt('rename')) for (const pair of opt('rename').split(',')) { // recovered-3:02-naira-note
       const [from, to] = pair.split(':'); const a = path.join(WORK, 'clips', `${from}.mp4`), b = path.join(WORK, 'clips', `${to}.mp4`);
       if (fs.existsSync(a)) { fs.renameSync(a, b); console.log(`renamed ${from} -> ${to}`); } else console.log(`no ${from} to rename`);
     }
     if (flag('portraits')) await portraits(spec);
-    if (flag('all')) await generate(spec, 'all');
+    if (flag('transcribe')) { /* checking only */ }
+    else if (flag('all')) await generate(spec, 'all');
     else if (opt('shots')) await generate(spec, opt('shots').split(',').map(s => s.trim()));
     else if (!flag('list-models') && !flag('portraits') && !flag('recover') && !opt('rename')) { console.log(`${spec.shots.length} shots, ${Object.keys(spec.chars).length} characters; total ${spec.shots.reduce((a, s) => a + s.seconds, 0)} s`); }
   } catch (e) { console.error(e.message); process.exit(1); }
