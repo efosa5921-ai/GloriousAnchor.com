@@ -88,10 +88,15 @@ chars: oyelaran, ebun
 seconds: 10
 Night, the 1976 Lagos sitting room. The husband at the dining table with a plate, not eating. His wife sits down opposite and puts her Bible on the table. He has a letter from the secretariat in front of him. The husband says, tired: "A plot of the devil, signed by forty people. Your name is on it, Ebun." Only the husband speaks, and he says every word of that line himself, in his own male voice. The wife, whose name is Ebun, does not speak at all: her lips stay closed, she meets his eyes and nods once.
 
-### 05-who-lights-the-fire-v2
+### 05-who-lights-the-fire-a
 chars: ebun, oyelaran
-seconds: 15
-Across the dining table at night, lamplight, the fan turning. Only the wife in the blue gele speaks; the husband in the white agbada does not speak at all, his lips stay closed and he looks down at his plate. She says quietly, without hurrying: "Bamidele, who lights the fire? Who pours the drink, and to whom? You can call it culture. The one they are pouring it to does not call it culture. He calls it an agreement." She says every word of the line herself and finishes it before the clip ends.
+seconds: 9
+Across the dining table at night, lamplight, the fan turning. Only the wife speaks; the husband in the white agbada does not speak at all, his lips stay closed and he looks down at his plate. She asks quietly: "Bamidele, who lights the fire? Who pours the drink, and to whom?" She says every word of the line herself, then waits for an answer that does not come. Nothing else is said.
+
+### 05-who-lights-the-fire-b
+chars: ebun, oyelaran
+seconds: 12
+Across the dining table at night, lamplight, close on the wife. Only she speaks; the husband does not speak at all, his lips stay closed. She says quietly and steadily: "You can call it culture. The one they are pouring it to does not call it culture. He calls it an agreement." She says every word of the line herself, ending on the word agreement, and holds his eyes. Nothing else is said.
 
 ### 05-tunde-listens
 chars: tunde-boy
@@ -170,10 +175,15 @@ seconds: 8
 narration: The revival came in the eighties, and the fellowships of 1977 became the biggest congregations on the face of the earth.
 Interior, 2005, an enormous modern Nigerian church auditorium with thousands of empty seats on a weekday, high ceiling, daylight through tall windows. A heavy grey-haired pastor in a dark suit walks the centre aisle slowly beside a Nigerian man of thirty-eight in a shirt and tie. Wide, then tracking with them.
 
-### 09-they-laughed-v2
+### 09-they-laughed-a
 chars: nwosu-old
-seconds: 13
-The old heavy pastor stops in the aisle of the vast empty church, gestures at the thousands of seats and says in Nigerian English, without hurrying: "Forty of us. In a classroom. They laughed at us, Tunde. Now look. God answered the small people. But he has not yet answered the nation." He says every word of the line and finishes it before the clip ends. Nobody else speaks.
+seconds: 8
+The old heavy pastor stops in the aisle of the vast empty church, gestures at the thousands of seats and says in Nigerian English: "Forty of us. In a classroom. They laughed at us, Tunde." He says every word of the line. Nothing else is said.
+
+### 09-they-laughed-b
+chars: nwosu-old
+seconds: 10
+Close on the old heavy pastor in the aisle of the vast empty church, the rows of seats behind him. He says in Nigerian English, with quiet weight: "Now look. God answered the small people. But he has not yet answered the nation." He says every word of the line, ending on the word nation. Nothing else is said.
 
 ### 09-leviticus
 chars: nwosu-old, baba-tunde
@@ -186,10 +196,10 @@ seconds: 8
 narration: Then, in February 2026, the dates moved.
 Interior, 2026, the same Lagos sitting room modernised, a flat-screen television where the old set stood. A sixty-year-old Nigerian man in a cream agbada watches the news with two small grandchildren on the rug. A newsreader's voice says: "The presidential election, previously fixed for the twentieth of February, will now hold on Saturday the sixteenth of January, 2027." The man slowly sits forward.
 
-### 10-both-inside-v2
+### 10-both-inside-v3
 chars: baba-tunde
-seconds: 12
-The sixty-year-old man in the cream agbada stands by a bookshelf in his sitting room holding an open old Bible with a faded 1977 festival programme as its bookmark, a frozen television news screen glowing behind him. He looks from the page up to the television and says under his breath, slowly: "Fifteenth of January to twelfth of February. Fifty years. Both of them. Both of them inside." He says every word of the line and finishes it before the clip ends, then lowers the Bible.
+seconds: 9
+The sixty-year-old man in the cream agbada stands by a bookshelf in his sitting room holding an open old Bible with a faded 1977 festival programme as its bookmark, a frozen television news screen glowing behind him. He reads the page in silence, looks up at the television and says under his breath, slowly: "Fifty years. Both of them. Both of them inside." He says every word of the line. Nothing else is said.
 
 ### 11-grace-office
 chars: grace, baba-tunde
@@ -233,10 +243,15 @@ chars: grace, baba-tunde
 seconds: 8
 Night, 2027, a large Nigerian church with the lights low, thousands of people kneeling in the pews, heads bowed, a low murmur of prayer. At the front the woman pastor kneels too. Among the congregation the sixty-year-old man in the cream agbada, eyes shut, an old programme pressed in both hands. Slow, reverent camera move.
 
-### 12-confession-v2
+### 12-confession-a
 chars: grace
-seconds: 15
-The woman pastor at the front of the dark, full church, on her knees, speaking into a microphone with her eyes closed, the congregation kneeling in silence behind her. Only she speaks; the congregation makes no sound until she has finished. She says, without hurrying: "We confess that in 1977 this nation, in all our names, lit a fire to a god that is no god, and we were silent, or we were few. Lord, we were few. Forgive this land." She says every word of the line herself and finishes it before the clip ends.
+seconds: 11
+The woman pastor at the front of the dark, full church, on her knees, speaking into a microphone with her eyes closed, the congregation kneeling in silence behind her. Only she speaks; the congregation makes no sound. She says, steadily: "We confess that in 1977 this nation, in all our names, lit a fire to a god that is no god." She says every word of the line herself. Nothing else is said.
+
+### 12-confession-b
+chars: grace
+seconds: 10
+Close on the woman pastor on her knees at the front of the dark, full church, microphone in hand, eyes closed, the congregation kneeling in silence behind her. Only she speaks; the congregation makes no sound. She says, her voice breaking a little: "And we were silent, or we were few. Lord, we were few. Forgive this land." She says every word of the line herself, ending on the word land. Nothing else is said.
 
 ### 12-many-churches
 chars:

@@ -151,8 +151,13 @@ async function main() {
   for (const shot of spec.shots) {
     n++;
     process.stdout.write(`  [${Math.floor(total / 60)}:${String(Math.floor(total % 60)).padStart(2, '0')}]`);
-    const clip = path.join(CLIPS, `${shot.id}.mp4`);
+    let clip = path.join(CLIPS, `${shot.id}.mp4`);
     if (!existsSync(clip)) { missing.push(shot.id); console.warn(`  ${shot.id}: no clip, skipped`); continue; }
+    if (shot.trim) { // keep only the clip's first N seconds
+      const cut = path.join(work, `trim-${n}.mp4`);
+      await run('ffmpeg', [...FF, '-i', clip, '-t', String(shot.trim), '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '16', '-c:a', 'aac', '-b:a', '192k', cut], { maxBuffer: 16 * 1024 * 1024 });
+      clip = cut;
+    }
     const seg = path.join(work, `seg-${String(n).padStart(3, '0')}.mp4`);
     const clipSecs = await duration(clip);
     const norm = `scale=${W}:${H}:force_original_aspect_ratio=decrease,pad=${W}:${H}:(ow-iw)/2:(oh-ih)/2,fps=${FPS}`;

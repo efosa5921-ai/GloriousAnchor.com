@@ -54,10 +54,11 @@ export function parseShots(md) {
     const shot = { id, chars: [], seconds: 8, narration: '', prompt: '' };
     const body = [];
     for (const line of lines) {
-      const m = line.match(/^(chars|seconds|narration):\s*(.*)$/);
+      const m = line.match(/^(chars|seconds|narration|trim):\s*(.*)$/);
       if (m && !body.length) {
         if (m[1] === 'chars') shot.chars = m[2].split(',').map(s => s.trim()).filter(Boolean);
         else if (m[1] === 'seconds') shot.seconds = Number(m[2]) || 8;
+        else if (m[1] === 'trim') shot.trim = Number(m[2]) || 0; // use only the clip's first N seconds (the model sometimes adds stray words after the line)
         else shot.narration = m[2].trim();
       } else if (line.trim() || body.length) body.push(line);
     }
@@ -220,7 +221,7 @@ async function transcribe(spec, ids) {
     if (!file) { console.log(`\n== ${shot.id}: no clip small enough to send`); continue; }
     const body = { contents: [{ parts: [
       { inline_data: { mime_type: 'video/mp4', data: fs.readFileSync(file).toString('base64') } },
-      { text: 'Watch and listen to this short film clip. List every spoken utterance in order. For each one give: the start time in seconds; who speaks, described by what is seen (for example "man in white agbada and cap", "woman in blue headwrap", "boy in striped T-shirt", "off-screen voice"), judged by whose lips move and by the voice; whether the voice is male, female or a child; and the exact words. One utterance per line, in the form: [time] SPEAKER (voice): "words". Do not add commentary.' },
+      { text: 'Watch and listen to this short film clip. List every spoken utterance in order. For each one give: who speaks, described by what is seen (for example "man in white agbada and cap", "woman in blue headwrap", "boy in striped T-shirt", "off-screen voice"), judged by whose lips move and by the voice; whether the voice is male, female or a child; and the exact words. Give the start and the end of each utterance in seconds to one decimal place. One utterance per line, in the form: [start-end] SPEAKER (voice): "words". Do not add commentary.' },
     ] }], generationConfig: { temperature: 0 } };
     try {
       const res = await api('POST', `models/${model}:generateContent`, body);
