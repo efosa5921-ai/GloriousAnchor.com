@@ -227,14 +227,10 @@ chars: grace
 seconds: 10
 The woman pastor turns from the wall calendar in her church office to face the room, calm and certain, and says slowly: "Evil will still be done. But it will be swimming against the current. And it will tire." She says every word of the line and finishes it before the clip ends. Nobody else speaks.
 
-### 11-renewal-a2
-chars: baba-tunde, grace
-seconds: 7
-Church office, afternoon light. Only the sixty-year-old man in the cream agbada speaks; the woman pastor does not speak at all, her lips stay closed and she listens. He says, grave: "They are planning a much bigger FESTAC for 2027, to mark the jubilee." He says every word of the line himself. Nothing else is said.
-
 ### 11-renewal-b
 chars: baba-tunde, grace
 seconds: 9
+narration: And the much bigger FESTAC now proposed for 2027, to mark the jubilee?
 Church office, afternoon light, close on the sixty-year-old man in the cream agbada. Only he speaks; the woman pastor does not speak at all. He says slowly, with weight: "In the terms of the lease, that is not a commemoration. That is a renewal." He says every word of the line himself and finishes it before the clip ends. The woman pastor nods once, decided.
 
 ### 12-festival-drums
