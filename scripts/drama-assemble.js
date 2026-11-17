@@ -94,15 +94,18 @@ async function cardSegment(png, secs, out, { fadeIn = true } = {}) {
 function productionHtml(bg) {
   return `<!doctype html><html><head><meta charset="utf-8"><style>
   html,body{margin:0;width:${W}px;height:${H}px;overflow:hidden;background:#0b1526}
-  .c{position:relative;width:${W}px;height:${H}px;color:#fff;text-align:center;font-family:"Liberation Sans","DejaVu Sans",sans-serif;
-     background:${bg ? `#000 url(${bg}) center/cover no-repeat` : 'radial-gradient(ellipse at 50% 40%,#22365c 0%,#0b1526 75%)'}}
-  .c:before{content:"";position:absolute;inset:0;background:${bg ? 'linear-gradient(180deg,rgba(5,10,25,.30),rgba(5,10,25,.72))' : 'none'}}
+  .c{position:relative;width:${W}px;height:${H}px;color:#fff;text-align:center;font-family:"Liberation Sans","DejaVu Sans",sans-serif;overflow:hidden;
+     background:radial-gradient(ellipse at 50% 40%,#22365c 0%,#0b1526 75%)}
+  /* The picture is softened and dimmed so the mark and the name sit on it cleanly, whoever stands in the frame. */
+  .bg{position:absolute;inset:-40px;background:${bg ? `url(${bg}) center/cover no-repeat` : 'none'};filter:blur(14px) brightness(.8)}
+  .c:before{content:"";position:absolute;inset:0;z-index:1;background:${bg ? 'linear-gradient(180deg,rgba(8,16,36,.38),rgba(8,16,36,.62))' : 'none'}}
+  .m,.a,.n,.p{z-index:2}
   .m{position:absolute;left:0;right:0;top:250px}
   .m svg{width:170px;height:170px;filter:drop-shadow(0 4px 18px rgba(0,0,0,.7))}
   .a{position:absolute;left:0;right:0;top:470px;font-size:34px;letter-spacing:.34em;text-transform:uppercase;color:#d4a62a;font-weight:700;text-shadow:0 2px 12px rgba(0,0,0,.8)}
   .n{position:absolute;left:80px;right:80px;top:530px;font-family:"Liberation Serif","DejaVu Serif",Georgia,serif;font-size:84px;line-height:1.1;text-shadow:0 4px 24px rgba(0,0,0,.8)}
   .p{position:absolute;left:0;right:0;top:750px;font-size:34px;letter-spacing:.34em;text-transform:uppercase;color:#d4a62a;font-weight:700;text-shadow:0 2px 12px rgba(0,0,0,.8)}
-  </style></head><body><div class="c">
+  </style></head><body><div class="c"><div class="bg"></div>
   <div class="m"><svg viewBox="0 0 24 24" fill="none" stroke="#d4a62a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2"/><path d="M12 6v16M5 12H2a10 10 0 0 0 20 0h-3M8 9h8"/></svg></div>
   <div class="a">A</div><div class="n">Glorious Anchor International&nbsp;Network</div><div class="p">Production</div>
   </div></body></html>`;
