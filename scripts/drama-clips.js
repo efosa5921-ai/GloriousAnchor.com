@@ -146,22 +146,33 @@ function findVideo(res) {
 }
 
 async function download(uri, out) {
-  // uri is "files/<id>" or a full URL to that file; wait for the file to become ACTIVE, then download it.
+  // uri is "files/<id>" or a full URL to that file. A clip that has been generated has been paid for, so a server error
+  // while fetching it is retried patiently instead of giving the clip up.
   const name = uri.startsWith('http') ? (uri.match(/files\/[^/:?]+/) || [uri])[0] : uri.replace(/^\/+/, '');
-  for (let i = 0; i < 120; i++) {
-    const f = await api('GET', name);
+  const wait = (ms) => new Promise(r => setTimeout(r, ms));
+  for (let i = 0, errors = 0; i < 120; i++) {
+    let f;
+    try { f = await api('GET', name); } catch (e) { if (++errors > 6) break; await wait(10000); continue; } // then try the download anyway
     if (f.state === 'ACTIVE' || !f.state) break;
     if (f.state === 'FAILED') throw new Error(`file ${name} failed`);
-    await new Promise(r => setTimeout(r, 5000));
+    await wait(5000);
   }
-  const urls = [`${API}/${name}:download?alt=media`, uri.startsWith('http') ? `${uri}:download?alt=media` : null, `${API}/download/${name}:download?alt=media`].filter(Boolean);
+  const urls = [uri.startsWith('http') ? uri : null, `${API}/${name}:download?alt=media`, `${API}/download/${name}:download?alt=media`].filter(Boolean);
   let last;
-  for (const u of urls) {
-    const res = await fetch(u, { headers: headers(), redirect: 'follow' });
-    if (res.ok) { fs.writeFileSync(out, Buffer.from(await res.arrayBuffer())); return; }
-    last = `${u} -> ${res.status} ${(await res.text()).slice(0, 200)}`;
+  for (let attempt = 1; attempt <= 8; attempt++) {
+    for (const u of urls) {
+      let res;
+      try { res = await fetch(u, { headers: headers(), redirect: 'follow' }); } catch (e) { last = `${u} -> ${e.message}`; continue; }
+      if (res.ok) {
+        const buf = Buffer.from(await res.arrayBuffer());
+        if (buf.length > 100000) { fs.writeFileSync(out, buf); return; }
+        last = `${u} -> only ${buf.length} bytes`; continue;
+      }
+      last = `${u} -> ${res.status} ${(await res.text()).slice(0, 200)}`;
+    }
+    await wait(15000);
   }
-  throw new Error(`download failed: ${last}`);
+  throw new Error(`download failed after retries (the clip exists as ${name}; fetch it later with --fetch ${name}:<shot>): ${last}`);
 }
 
 // --recover: download every video the Files API still holds (generated clips are stored for a while) as recovered-N.mp4.
@@ -185,6 +196,11 @@ async function generate(spec, ids) {
   console.log(`clips with ${model} at ${resolution}`);
   const todo = spec.shots.filter(s => ids === 'all' || ids.includes(s.id));
   let failures = 0;
+  // A run states what it is about to spend and refuses to start beyond its budget (seconds of video; --budget N).
+  const pending = todo.filter(s => flag('force') || !fs.existsSync(path.join(dir, `${s.id}.mp4`)));
+  const planned = pending.reduce((n, s) => n + s.seconds, 0), budget = Number(opt('budget', 60));
+  console.log(`to generate: ${pending.length} clip(s), ${planned} s of video${pending.length ? ` (${pending.map(s => `${s.id} ${s.seconds}s`).join(', ')})` : ''}; budget ${budget} s`);
+  if (planned > budget && !flag('dry-run')) { console.log(`NOT generating: ${planned} s is over the budget of ${budget} s. Pass --budget ${planned} to allow it.`); process.exitCode = 1; return; }
   for (const shot of todo) {
     const out = path.join(dir, `${shot.id}.mp4`);
     if (fs.existsSync(out) && !flag('force')) { console.log(`${shot.id}: exists`); continue; }
