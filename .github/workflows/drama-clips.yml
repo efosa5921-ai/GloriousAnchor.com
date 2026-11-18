@@ -13,7 +13,7 @@ on:
       shots:
         description: 'Shot list'
         required: true
-        default: 'video-scripts/festac-77-drama-shots.md'
+        default: 'video-scripts/nigeria-the-lease-shots.md'
       assemble:
         description: 'Also assemble the film from the clips with the narrator, and commit it to videos/articles'
         type: boolean

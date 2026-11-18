@@ -2,7 +2,7 @@
 /**
  * Assemble a dramatised film from AI-generated clips (scripts/drama-clips.js) and a narrator.
  *
- *   node scripts/drama-assemble.js --shots video-scripts/festac-77-drama-shots.md [--out videos/articles] [--no-tts]
+ *   node scripts/drama-assemble.js --shots video-scripts/nigeria-the-lease-shots.md [--out videos/articles] [--no-tts]
  *
  * Reads the shot list, takes each shot's clip from .video-work/drama/clips/<id>.mp4 and lays the shot's `narration:`
  * line over it in the narrator's voice (edge-tts, en-NG-AbeoNeural). A narrated shot whose actors also speak plays the
@@ -26,7 +26,7 @@ const run = promisify(execFile);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const argv = process.argv.slice(2);
 const arg = (k, d) => { const i = argv.indexOf(k); return i >= 0 ? argv[i + 1] : d; };
-const SHOTS = path.resolve(ROOT, arg('--shots', 'video-scripts/festac-77-drama-shots.md'));
+const SHOTS = path.resolve(ROOT, arg('--shots', 'video-scripts/nigeria-the-lease-shots.md'));
 const OUT = path.resolve(ROOT, arg('--out', 'videos/articles'));
 const CLIPS = path.resolve(ROOT, arg('--clips', '.video-work/drama/clips'));
 const NO_TTS = argv.includes('--no-tts');

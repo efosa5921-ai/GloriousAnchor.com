@@ -2,10 +2,10 @@
 // Generate the clips of a dramatised film with Google's Gemini Omni Flash video model (the Gemini API's video
 // generator since Veo was retired from it in October 2026), through the Interactions API.
 //
-//   node scripts/drama-clips.js video-scripts/festac-77-drama-shots.md --list-models
-//   node scripts/drama-clips.js video-scripts/festac-77-drama-shots.md --portraits          # one still per character
-//   node scripts/drama-clips.js video-scripts/festac-77-drama-shots.md --shots 02-naira-note,04-pastor-speaks
-//   node scripts/drama-clips.js video-scripts/festac-77-drama-shots.md --all [--model gemini-omni-1.2-flash]
+//   node scripts/drama-clips.js video-scripts/nigeria-the-lease-shots.md --list-models
+//   node scripts/drama-clips.js video-scripts/nigeria-the-lease-shots.md --portraits          # one still per character
+//   node scripts/drama-clips.js video-scripts/nigeria-the-lease-shots.md --shots 02-naira-note,04-pastor-speaks
+//   node scripts/drama-clips.js video-scripts/nigeria-the-lease-shots.md --all [--model gemini-omni-1.2-flash]
 //                             [--resolution 720p|1080p] [--no-refs] [--dry-run] [--force]
 //
 // The shot list is Markdown: a `style:` line and a `negative:` line, a "## Characters" list of `- **id**: description`,

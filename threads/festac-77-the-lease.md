@@ -1,4 +1,4 @@
-image: https://gloriousanchor.com/videos/articles/festac-77-drama.png
+image: https://gloriousanchor.com/videos/articles/nigeria-the-lease.png
 
 FESTAC 77: The Lease. A seven-minute film of the four weeks Nigeria was leased to darkness, and the day in 2027 when the lease expires. 🧵
 
