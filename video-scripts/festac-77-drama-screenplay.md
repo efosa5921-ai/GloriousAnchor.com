@@ -1,4 +1,4 @@
-# FESTAC 77: The Lease
+# Nigeria: The Lease
 
 **A dramatised film with narrator, in thirteen scenes. Running time about 14 minutes.**
 
@@ -45,7 +45,7 @@ Every public fact in the narration (dates, figures, what was done at the festiva
 
 **NARRATOR:** This man was there. He was ten years old. He has carried this programme for fifty years, and he knows what that date means, because of something his mother said at a dinner table in 1976, and something a pastor said to him last year. To understand why he is standing here, you have to go back to a time when Nigeria lent money to the world.
 
-*Title card over the theatre: **FESTAC 77: THE LEASE**.*
+*Title card over the theatre: **NIGERIA: THE LEASE**.*
 
 ---
 
@@ -349,7 +349,7 @@ Every public fact in the narration (dates, figures, what was done at the festiva
 
 *Title card:*
 
-> **FESTAC 77: THE LEASE**
+> **NIGERIA: THE LEASE**
 > Read the full account, with every source, at
 > **gloriousanchor.com/articles/festac-77-nigeria-idolatry-repentance/**
 > Glorious Anchor. Christian news, voices and video, anchored in one place.

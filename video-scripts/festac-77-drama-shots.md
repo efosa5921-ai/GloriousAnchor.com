@@ -1,4 +1,4 @@
-# FESTAC 77: The Lease — shot list for AI-generated clips
+# Nigeria: The Lease — shot list for AI-generated clips
 
 Each `###` block is one clip for Google Veo (8 seconds, 16:9, native sound). `chars:` names the character
 portraits passed as reference images so faces stay the same from clip to clip. The prompt body is sent as written,

@@ -142,8 +142,8 @@ async function main() {
   await page.screenshot({ path: prodPng });
   const prodSeg = path.join(work, 'seg-0000.mp4'); await cardSegment(prodPng, 4, prodSeg, { fadeIn: false }); segments.push(prodSeg); total += 4;
   const titlePng = path.join(work, 'title.png');
-  await page.setContent(cardHtml({ kicker: 'A dramatisation', title: 'FESTAC 77: The Lease', bg: bgUrl,
-    lines: ['The four weeks that changed Nigeria, and the day in 2027 when the lease on her expires.', 'The Oyelaran family is invented; the dates and facts are documented.'] }), { waitUntil: 'load' });
+  await page.setContent(cardHtml({ kicker: 'A dramatisation', title: 'Nigeria: The Lease', bg: bgUrl,
+    lines: ['FESTAC 77, the four weeks that changed Nigeria, and the day in 2027 when the lease on her expires.', 'The Oyelaran family is invented; the dates and facts are documented.'] }), { waitUntil: 'load' });
   await page.screenshot({ path: titlePng });
   const titleSeg = path.join(work, 'seg-000.mp4'); await cardSegment(titlePng, 6, titleSeg); segments.push(titleSeg); total += 6;
 
