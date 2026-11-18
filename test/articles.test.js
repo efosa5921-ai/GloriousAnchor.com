@@ -180,3 +180,10 @@ test('stripLeadingTitle drops a summary\'s leading copy of the headline', () => 
   const a = normaliseItem({ title, link: 'https://x/p', contentSnippet: `${title} Pope Leo XIV is encouraging.`, pubDate: 'Mon, 02 Nov 2026 10:00:00 GMT' }, { id: 's', name: 'S', kind: 'news', category: 'news' }, {});
   assert.equal(a.summary, 'Pope Leo XIV is encouraging.');
 });
+
+test('slimArticle keeps the media of a pick, so its story page says Watch or Listen', () => {
+  const v = slimArticle({ id: '2', title: 'Film', url: 'https://youtu.be/abc', summary: '', publishedAt: 5, kind: 'pick', media: 'video', source: 'YouTube', sourceId: 'picks', category: 'picks' });
+  assert.equal(v.media, 'video');
+  const n = slimArticle({ id: '3', title: 'News', url: 'https://x/3', summary: '', publishedAt: 5, kind: 'news', source: 'S', sourceId: 's', category: 'news' });
+  assert.equal('media' in n, false);
+});

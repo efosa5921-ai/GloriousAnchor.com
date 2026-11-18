@@ -298,6 +298,7 @@ export function slimArticle(a, summaryMax = 160) {
   if (a.shareTitle) out.shareTitle = a.shareTitle;
   if (a.anniversary) { out.anniversary = a.anniversary; out.anniversaryHeadline = a.anniversaryHeadline; out.anniversaryAt = a.anniversaryAt; }
   if (a.note) out.note = a.note;
+  if (a.media) out.media = a.media; // a pick that is a video or audio: the story page says Watch or Listen, and the Video and Audio filters include it
   return out;
 }
 

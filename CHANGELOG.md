@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 18 November 2026
 
+- **Story pages for picks**: a picked video's page now says "Watch" and a picked song's says "Listen", where both used to say "Read the full story"; picks also show under the Video and Audio filters.
 - **Nigeria: The Lease**: our dramatised film of the FESTAC 77 story has a new name and a new cut. Every line is now spoken in full, the family ages and changes clothes across the years, and it opens with the Glorious Anchor International Network card. It is in the FESTAC 77 article and on GAIN TV.
 
 ## 15 November 2026
