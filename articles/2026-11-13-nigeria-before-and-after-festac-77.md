@@ -14,7 +14,7 @@ about: FESTAC 77|https://en.wikipedia.org/wiki/FESTAC_77, Nigerian naira|https:/
 
 Fifty years is long enough for a country to forget what it used to be. Nigerians under sixty have never held a naira that bought more than a dollar, never seen a groundnut pyramid, and never lived in a country that lent money to the World Bank. All three were ordinary facts of life in the Nigeria that staged FESTAC 77.
 
-This article sets the two Nigerias side by side: the one that walked into the National Stadium on 15 January 1977, and the one that will mark the festival's fiftieth year in 2027. It uses the facts gathered in our longer account, [FESTAC 77: the four weeks Nigeria was leased to darkness](/articles/festac-77-nigeria-idolatry-repentance/), where every figure is sourced, and it asks the question that account asks: coincidence, or consequence? If you have seven minutes, [the film](https://www.youtube.com/watch?v=H_hnWUqkWno) tells the same story through one Lagos family.
+This article sets the two Nigerias side by side: the one that walked into the National Stadium on 15 January 1977, and the one that will mark the festival's fiftieth year in 2027. It uses the facts gathered in our longer account, [FESTAC 77: the four weeks Nigeria was leased to darkness](/articles/festac-77-nigeria-idolatry-repentance/), where every figure is sourced, and it asks the question that account asks: coincidence, or consequence? If you have eight minutes, [the film](https://www.youtube.com/watch?v=cvPHKK3gamE) tells the same story through one Lagos family.
 
 *Cover: the groundnut pyramids of Kano in 1965 (David Pirmann, CC BY 2.0) and a gas flare at Nembe Creek in the Niger Delta in 1993 (Sara Leigh Lewis, CC BY-SA 4.0), both via Wikimedia Commons.*
 

@@ -4,6 +4,10 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 18 November 2026
+
+- **Nigeria: The Lease**: our dramatised film of the FESTAC 77 story has a new name and a new cut. Every line is now spoken in full, the family ages and changes clothes across the years, and it opens with the Glorious Anchor International Network card. It is in the FESTAC 77 article and on GAIN TV.
+
 ## 15 November 2026
 
 - **Pick**: Kaestrings' "Let It Show", recorded live in Abuja, is in the picks: the video on GAIN TV, and on GAIN Radio both the track to play at once and the album on Spotify, Apple Music and the other platforms.

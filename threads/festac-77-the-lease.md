@@ -2,7 +2,7 @@ image: https://gloriousanchor.com/videos/articles/nigeria-the-lease.png
 
 FESTAC 77: The Lease. A seven-minute film of the four weeks Nigeria was leased to darkness, and the day in 2027 when the lease expires. 🧵
 
-https://www.youtube.com/watch?v=H_hnWUqkWno
+https://www.youtube.com/watch?v=cvPHKK3gamE
 ---
 Lagos, 1974. A civil servant shows his son a one-naira note: "One dollar and fifty cents. More than their own money."
 
