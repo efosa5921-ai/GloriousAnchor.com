@@ -1,7 +1,7 @@
 ---
 title: Betty Lasher and Bishop Oyedepo: the missionary teacher who led a fifteen-year-old to Christ in 1969, and the army she left behind
 searchTitle: Betty Lasher: The Teacher Who Led Bishop Oyedepo to Christ
-date: 2026-11-19T14:00:00Z
+date: 2026-11-19T17:53:00Z
 author: The Glorious Anchor team
 person: Betty Lasher
 born: 1930-06-18
@@ -11,7 +11,6 @@ image: images/betty-lasher-bishop-oyedepo.jpg
 categories: generals, teaching
 keywords: Betty Lasher, Betty Lasher Bishop Oyedepo, who led Bishop Oyedepo to Christ, Bishop Oyedepo born again 1969, David Oyedepo testimony, Government Secondary School Omu-Aran, missionary teacher Nigeria, Oyedepo mother in the Lord, Betty Lasher death 2022, Daniel 12:3 turn many to righteousness
 about: David Oyedepo|https://en.wikipedia.org/wiki/David_Oyedepo, Living Faith Church Worldwide|https://en.wikipedia.org/wiki/Living_Faith_Church_Worldwide, Omu-Aran|https://en.wikipedia.org/wiki/Omu-Aran
-draft: true
 ---
 
 > *And they that be wise shall shine as the brightness of the firmament; and they that turn many to righteousness as the stars for ever and ever.* (Daniel 12:3)
