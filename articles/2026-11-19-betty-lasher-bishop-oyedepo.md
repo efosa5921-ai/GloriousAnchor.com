@@ -20,7 +20,7 @@ On Wednesday 19 February 1969, in a boys' secondary school in a small town in wh
 
 Most people who know his name do not know hers. He never forgot it. This is the story of Betty Lasher, of the boy she "got hold of", and of what one hidden life can set in motion.
 
-*Cover: Bishop Oyedepo's words about Betty Lasher, spoken on the Sunday after her death in August 2022.*
+*Cover: Bishop David Oyedepo with Betty Lasher, and his words about her, spoken on the Sunday after her death in August 2022.*
 
 ## Who was Betty Lasher?
 
@@ -35,6 +35,10 @@ The fullest picture of her comes from one of those boys. Dr Femi Emmanuel, now a
 - **No soft touch.** She was "a disciplinarian", and Dr Emmanuel remembers being on the wrong end of it. She also spoke a little Yoruba.
 
 "When I look back, I wonder at the life of sacrifice that she lived," he said. "She came to Nigeria as a young lady and stayed all through the years in that village."
+
+![Bishop David Oyedepo with Betty Lasher](/articles/images/betty-lasher-with-bishop-oyedepo.jpg)
+
+*Bishop David Oyedepo with Betty Lasher, the teacher he called his "mother in the Lord". Photographer unknown.*
 
 Accounts of her dates differ. Her online memorial gives her years of missionary teaching as 1967 to 1991; Dr Emmanuel remembers her serving more than thirty years and leaving Omu-Aran in 1990. Other former students say she served with SIM, the mission whose churches became ECWA, and taught afterwards at ECWA Theological College, Kagoro, in Kaduna State, before going home to Oregon in the late 1990s. What nobody disputes is that she gave Nigeria the best decades of her life.
 
