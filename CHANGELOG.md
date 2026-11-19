@@ -4,6 +4,10 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 19 November 2026
+
+- **Betty Lasher and Bishop Oyedepo**: the story of the American missionary teacher who led a fifteen-year-old David Oyedepo to Christ in Omu-Aran in 1969, what he said of her at her death, and what one hidden life set in motion.
+
 ## 18 November 2026
 
 - **Story pages for picks**: a picked video's page now says "Watch" and a picked song's says "Listen", where both used to say "Read the full story"; picks also show under the Video and Audio filters.
