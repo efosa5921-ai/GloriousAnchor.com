@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 19 November 2026
 
+- **God's jubilee**: a Bible teaching on the fiftieth year of Leviticus 25, why God commanded it, how Jesus announced it in Nazareth, and what it means today for His people and His land.
 - **Betty Lasher and Bishop Oyedepo**: the story of the American missionary teacher who led a fifteen-year-old David Oyedepo to Christ in Omu-Aran in 1969, what he said of her at her death, and what one hidden life set in motion.
 
 ## 18 November 2026
