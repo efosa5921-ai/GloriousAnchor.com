@@ -1,5 +1,5 @@
 ---
-title: "Boonk Gang's testimony: how John \"Holy\" Gabbana lost five million followers, went to jail, and met Christ through a cellmate"
+title: Boonk Gang's testimony: how John "Holy" Gabbana lost five million followers, went to jail, and met Christ through a cellmate
 searchTitle: "Boonk Gang Testimony: How Holy Gabbana Found Christ in Jail"
 date: 2026-11-21T14:45:00Z
 author: The Glorious Anchor team
