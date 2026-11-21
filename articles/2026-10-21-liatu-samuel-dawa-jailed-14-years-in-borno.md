@@ -4,7 +4,7 @@ searchTitle: Liatu Samuel Dawa Case: What the Court Record Now Shows
 date: 2026-10-21
 author: The Glorious Anchor team
 summary: Liatu Samuel Dawa was jailed 14 years in Borno. The court record shows a girl of 13 and a custody charge, not an adult convert. An appeal is filed.
-image: images/liatu-samuel-dawa.jpg
+image: images/liatu-samuel-dawa-cover.jpg
 categories: news, apologetics
 keywords: Liatu Samuel Dawa, Lami Samuel Dawa, Liyatu Samuel Dawa, Liatu Dawa appeal, CAN statement Liatu Dawa, CLASFON, Christian mother jailed Borno, 14 years prison evangelism Nigeria, Section 210 Borno Penal Code, Section 38 Nigerian Constitution freedom of religion, Christian persecution Nigeria 2026, Evangelist Amos Suleman, Hebrews 13:3 remember those in prison, Matthew 5:10
 updated: 2026-11-04

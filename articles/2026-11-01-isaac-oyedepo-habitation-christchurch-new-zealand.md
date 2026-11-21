@@ -4,7 +4,7 @@ searchTitle: Isaac Oyedepo Launches Habitation in Christchurch, New Zealand
 date: 2026-11-01T00:30:00Z
 author: The Glorious Anchor team
 summary: Bishop Oyedepo's son Isaac invites Christchurch to "Habitation" from Sunday 1 November: the venue, the Jonah series and his no-offerings ministry.
-image: https://i.ytimg.com/vi/aGRIUiYAqVk/hqdefault.jpg
+image: images/isaac-oyedepo-habitation-cover.jpg
 categories: news
 keywords: Isaac Oyedepo Habitation Christchurch, Isaac Oyedepo New Zealand church, Bishop Oyedepo son new church, Habitation church Christchurch Halswell, Until the City Hears Jonah study, Anazao Generation Connect, Isaac Oyedepo Evangelistic Ministries, Isaac Oyedepo no offerings, Winners Chapel Oyedepo son, Te Hāpua Halswell Centre church
 pinned: true

@@ -4,7 +4,7 @@ searchTitle: Glenn Beck Warning: Europe's "Be Ready" Advisories Explained
 date: 2026-10-29T06:30:00Z
 author: The Glorious Anchor team
 summary: Glenn Beck says Europe's "Be Ready" advisories and the Pentagon's FORTRESS plan mean "something is coming". What the UK, EU, Germany and Sweden really say.
-image: https://pbs.twimg.com/amplify_video_thumb/2115503910983208960/img/LQZlbF3V8IJuDhpK.jpg
+image: images/glenn-beck-warning-cover.jpg
 categories: pitn, news
 keywords: Glenn Beck warning something is coming, Europe Be Ready advisories, UK Be Ready campaign checklist, stockpile cash water food, EU 72 hour emergency kit, Germany ten days supplies, Sweden if crisis or war comes, keep cash at home ECB, Pentagon FORTRESS initiative, Christian preparedness Luke 12:40
 updated: 2026-11-04

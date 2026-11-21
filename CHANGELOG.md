@@ -8,7 +8,7 @@ summary: A running list of what has been added to the site, newest first.
 
 - **God's jubilee**: a Bible teaching on the fiftieth year of Leviticus 25, why God commanded it, how Jesus announced it in Nazareth, and what it means today for His people and His land.
 - **Boonk Gang's testimony**: how the internet's most notorious prankster of 2017 lost five million followers, went to jail, and met Christ through a cellmate who asked him one question. With the film *I Am Holy Gabbana*.
-- **Bolder covers**: the Holy Spirit Connection series and the article on how Noah warned the whole world have new cinematic cover pictures with the headline on them. More articles will follow.
+- **Bolder covers**: almost every article now has a new, more dramatic cover picture with its headline on it: cinematic illustrations for the Bible and teaching pieces, and real photographs, darkened and titled, for the news and the people.
 
 ## 19 November 2026
 

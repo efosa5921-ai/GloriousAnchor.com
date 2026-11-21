@@ -4,7 +4,7 @@ searchTitle: Pentagon FORTRESS Plan: What the 90-Day "Doomsday" Rule Means
 date: 2026-10-28
 author: The Glorious Anchor team
 summary: The Pentagon's FORTRESS plan and the reported 90-day rule for bases: what is confirmed, what is hype, and how to read it with Matthew 24:6.
-image: https://pbs.twimg.com/amplify_video_thumb/2115186135139840000/img/_sT3FfRK2dsGwUGF.jpg
+image: images/pentagon-fortress-cover.jpg
 categories: pitn, news
 keywords: Pentagon doomsday plan, FORTRESS America, Pentagon 90 days bases, Pentagon FORTRESS initiative explained, portable nuclear reactors military bases, Hegseth State of the Force, Sean Parnell power is combat, UK Be Ready campaign stockpile, wars and rumours of wars Matthew 24:6, Christian preparedness
 updated: 2026-11-04

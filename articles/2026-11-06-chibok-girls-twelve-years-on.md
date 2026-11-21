@@ -4,7 +4,7 @@ searchTitle: Chibok Girls 12 Years On: 87 Still Missing, the Church Prays
 date: 2026-11-06T18:00:00Z
 author: The Glorious Anchor team
 summary: Twelve years after Boko Haram took 276 girls from Chibok, 87 are still missing. Who came home, who stayed, a recycled viral clip, and a church praying on.
-image: images/chibok-girls.jpg
+image: images/chibok-girls-cover.jpg
 categories: news
 keywords: Chibok girls, Chibok girls still missing, Bring Back Our Girls, Boko Haram Chibok kidnapping 2014, Chibok girls 2026, Chibok girl escaped with children, Lydia Simon Chibok, Chibok girls Christian, EYN Church of the Brethren Nigeria, Jeremiah 31:16 children shall come back, Hajara Haruna rescued Gwoza, Chibok girls where are they now
 ---

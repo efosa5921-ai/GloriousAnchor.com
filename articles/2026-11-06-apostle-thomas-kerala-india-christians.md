@@ -4,7 +4,7 @@ searchTitle: Apostle Thomas in Kerala: The Story, the Evidence, the Church
 date: 2026-11-06T12:00:00Z
 author: The Glorious Anchor team
 summary: Did the Apostle Thomas reach Kerala in AD 52? The tradition, the seven churches, his tomb at Mylapore, the evidence, and the church that bears his name.
-image: images/apostle-thomas-kerala.jpg
+image: images/apostle-thomas-kerala-cover.jpg
 categories: teaching, articles, apologetics
 keywords: Apostle Thomas in India, St Thomas Kerala AD 52, Saint Thomas Christians, did Thomas go to India, seven churches of St Thomas, Thomas tomb Mylapore, Acts of Thomas, Muziris Kodungallur, Syro-Malabar Church, Mar Thoma Church, Coonan Cross Oath, Kerala Pentecostal church, John 20:28 my Lord and my God, doubting Thomas
 ---
@@ -88,3 +88,5 @@ On 3 January 1653 thousands of Thomas Christians at Mattancherry swore, holding 
 About 6.1 million at the 2011 census, 18 per cent of the state, the highest share of any large Indian state. Roughly 4 per cent of them are Pentecostal, in churches such as the India Pentecostal Church of God, the Assemblies of God and The Pentecostal Mission.
 
 *Sources: the Acts of Thomas; Eusebius, Ecclesiastical History 3.1 and 5.10; Ephrem, Carmina Nisibena 42; the Chronicle of Edessa; Cosmas Indicopleustes, Christian Topography; Marco Polo, Travels; the Thomma Parvam (1601); Encyclopaedia Britannica, "Thomas Christians"; the Kerala Council for Historical Research and Outlook India on the Pattanam excavations (2007-2015); Baselius College, Kottayam, "Historical Study of the Arrival of Apostle St Thomas in Kerala"; Pius Malekandathil on the seven churches; the Malankara Orthodox Syrian Church and Syro-Malabar Church histories; Nasrani.net on the early references; the Indian census of 2011 via "Christianity in Kerala"; histories of Pentecostalism in Kerala (George Berg, Robert F. Cook, K. E. Abraham and the India Pentecostal Church of God); Pope Benedict XVI's general audience of 27 September 2006.*
+
+*Cover: an illustration made with AI.*

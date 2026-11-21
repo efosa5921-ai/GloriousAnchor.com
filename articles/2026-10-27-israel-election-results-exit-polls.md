@@ -4,7 +4,7 @@ searchTitle: Israel: Herzog Gives Eisenkot the Mandate, 28 Days to Govern
 date: 2026-10-27T22:30:00Z
 author: The Glorious Anchor team
 summary: Herzog has tasked Gadi Eisenkot with forming Israel's government: 67 recommendations to 46, a 28-day clock to 6 December, no majority yet. What now.
-image: https://www.israelhayom.com/wp-content/uploads/2026/10/Benjamin-Netanyahu-and-Gadi-Eisenkot.jpg
+image: images/israel-eisenkot-mandate-cover.jpg
 categories: news, pitn
 keywords: Herzog tasks Eisenkot, Eisenkot mandate form government, Israel coalition talks 2026, Herzog consultations recommendations, Israel election results 2026, Israel election final results, Israel election count seats, Knesset election October 2026, Netanyahu election results, Gadi Eisenkot Yashar, Israel election who won, Israel coalition 61 seats, Arab parties Knesset seats, Herzog coalition talks, pray for the peace of Jerusalem, Israel election prophecy
 updated: 2026-11-08
@@ -208,3 +208,5 @@ Herzog tasked Gadi Eisenkot with forming the government on Sunday 8 November, af
 Pray for all in authority (1 Timothy 2:1-2) and for the peace of Jerusalem (Psalm 122:6): for whoever forms the government, for the bereaved and the hostages' families, for Arab and Jewish believers in Israel, and with confidence that God's purposes for Israel do not depend on the outcome (Romans 11:29).
 
 *Sources: President Herzog's statement of 5 November via JNS and Israel National News, and Ynet, Haaretz, JFeed, The Times of Israel, Al Jazeera, ABC News and The Jerusalem Post on Thursday's consultations and the Shin Bet inquiry; the Central Elections Committee's certification of 4 November and Ynet, Israel National News, JFeed, The Jerusalem Post, Haaretz, The Times of Israel, France 24, RTÉ and Fox News on President Herzog's consultations, the recommendations and the Shin Bet update; the Central Elections Committee's final results as published by Israel National News (30 October) and Ynet, and its partial results of 28 October; Ynet on the projected recommendations to the president and Herzog's consultations; JNS, Haaretz and The Times of Israel on Eisenkot's four principles and Netanyahu's response; Israel National News, The Yeshiva World and The Jerusalem Post on Liberman; The Times of Israel, The Jerusalem Post, The New Arab and Axios on Likud's claims and the police response; Haaretz and The Times of Israel on the Shin Bet and Mossad inquiry; Al Jazeera and AFP on Saturday's rally and the Arab vote; exit polls and their revisions as reported by Israel National News, Ynet, The Jerusalem Post, Israel Hayom and i24NEWS on 27 and 28 October 2026; NBC News, CNN, ABC News and Axios. This article is updated as the coalition talks move.*
+
+*Cover photograph: the Knesset building, Jerusalem, by Gary Todd, CC0, via Wikimedia Commons.*

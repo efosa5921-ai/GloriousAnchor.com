@@ -4,7 +4,7 @@ searchTitle: Jordan Church Attack: 9 Christians Killed in Karak, 3 on Trial
 date: 2026-10-24
 author: The Glorious Anchor team
 summary: Islamist gunmen fired on a church funeral in Karak, Jordan, on 23 October 2026, killing nine. Three men are on trial for terrorism. How to pray.
-image: https://pbs.twimg.com/amplify_video_thumb/2113677968706813952/img/5tnAmJKQqDM9fVQU.jpg
+image: images/jordan-church-attack-cover.jpg
 categories: news, pitn
 keywords: Jordan Church attack, Karak church shooting, Islamist attack on Christians Jordan, Hmoud church attack, St George Greek Orthodox Church Karak, Christians in Jordan, church funeral shooting Jordan 2026, King Abdullah iron fist, Christian persecution Middle East, Hebrews 13:3, Matthew 24:9
 updated: 2026-11-04

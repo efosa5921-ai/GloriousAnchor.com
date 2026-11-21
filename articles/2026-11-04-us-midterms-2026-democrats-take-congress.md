@@ -4,7 +4,7 @@ searchTitle: US Midterms 2026: Democrats Sweep, What It Means for Christians
 date: 2026-11-04T10:30:00Z
 author: The Glorious Anchor team
 summary: Democrats won the Senate and House on 3 November 2026: the flips, the evangelical vote, the ballot measures, and what it means for Nigeria and Israel.
-image: images/us-capitol.jpg
+image: images/us-midterms-cover.jpg
 categories: news, pitn
 keywords: US midterm election results 2026, who won the midterms 2026, Democrats win House and Senate, Senate seats flipped 2026, evangelical vote midterms 2026 exit poll, Trump midterm reaction, Vance Iran war midterms, Hakeem Jeffries Speaker, abortion ballot measures 2026 results, midterms Nigeria Christian persecution, midterms Israel aid Democrats, pray for those in authority 1 Timothy 2:1-2, Daniel 2:21 God removes kings
 updated: 2026-11-04T22:30:00Z

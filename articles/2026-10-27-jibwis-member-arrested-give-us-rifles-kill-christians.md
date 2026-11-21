@@ -4,7 +4,7 @@ searchTitle: "Give Us Rifles to Kill Christians": Police Arrest JIBWIS Member
 date: 2026-10-27T21:00:00Z
 author: The Glorious Anchor team
 summary: A 22-year-old in JIBWIS uniform was filmed chanting for AK-47s to kill Christians in Enugu and Jos. The video, the arrest, JIBWIS's disavowal and CAN's demands.
-image: https://pbs.twimg.com/amplify_video_thumb/2115096460467335168/img/QgCfcvA0SZfPLGiA.jpg
+image: images/jibwis-rifles-cover.jpg
 categories: news, pitn
 keywords: JIBWIS member arrested, give us rifles to kill Christians video, Zamfara police arrest viral video, Umar Ibrahim Gandi Maradun, Izala video threatening Christians, Enugu Jos Christians threat, CAN Daniel Okoh statement, Sheikh Bala Lau JIBWIS, Christian persecution Nigeria 2026, Matthew 5:44
 updated: 2026-11-04

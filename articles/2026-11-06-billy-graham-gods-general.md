@@ -7,7 +7,7 @@ person: Billy Graham
 born: 1918-11-07
 died: 2018-02-21
 summary: Billy Graham, born 7 November 1918: from a Charlotte dairy farm to 215 million hearers, the 1960 Africa tour, the Modesto rules, and "the Bible says".
-image: images/billy-graham.jpg
+image: images/billy-graham-cover.jpg
 categories: generals, teaching
 keywords: Billy Graham, Billy Graham biography, Billy Graham born November 7 1918, Billy Graham Africa tour 1960, Billy Graham Lagos crusade, Billy Graham death February 21 2018, Billy Graham quotes, Modesto Manifesto, Billy Graham John 3:16, God's generals, Billy Graham crusades, the Bible says Billy Graham
 ---

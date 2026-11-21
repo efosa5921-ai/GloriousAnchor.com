@@ -4,7 +4,7 @@ searchTitle: Ethiopia: 60 Orthodox Christians Killed in Oromia Attacks
 date: 2026-10-27
 author: The Glorious Anchor team
 summary: Ethiopia's Orthodox Church says 60 Christians were killed in Merti and Shirka, Oromia, on 20 and 24 October. Who is blamed, what the Synod said, how to pray.
-image: https://www.aljazeera.com/wp-content/uploads/2026/10/AFP__20191027__1LS0VD__v1__HighRes__EthiopiaReligionPoliticsOrthodoxUnrest-1793077016.jpg?resize=1920%2C1440
+image: images/ethiopia-oromia-cover.jpg
 categories: news, pitn
 keywords: Ethiopia church attack, Oromia attacks Orthodox Christians, Shirka attack Ethiopia, Merti attack Arsi Zone, Ethiopian Orthodox Tewahedo Church massacre, 60 Christians killed Ethiopia, Oromo Liberation Army attacks, Christian persecution Ethiopia 2026, Western leaders silent Christians killed, Hebrews 13:3
 updated: 2026-11-04
@@ -92,3 +92,5 @@ Oromia has been at war between government forces and the OLA since 2018, with ot
 Pray for the bereaved, the wounded and the Ethiopian Orthodox Church; share the story so the silence is noticed; and support organisations that document and assist persecuted Christians in Ethiopia. Hebrews 13:3 asks believers to remember those who are mistreated as though suffering with them.
 
 *Sources: the Associated Press (27 October 2026), Reuters, Al Jazeera (27 October), BBC News and BBC Amharic via Greek City Times (27 October), Vatican News (October 2026), the Holy Synod of the Ethiopian Orthodox Tewahedo Church, and the X posts by @Reuters and @LizaRosen0000. Figures are the church's and were still being verified; we will update this article as the facts settle.*
+
+*Cover photograph: an Ethiopian Orthodox Timkat procession, by Jean Rebiffé, CC BY 4.0, via Wikimedia Commons.*
