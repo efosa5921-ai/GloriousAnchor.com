@@ -1,9 +1,8 @@
 ---
 title: "God's jubilee: what the fiftieth year of Leviticus 25 means for His people and His land"
 searchTitle: "God's Jubilee: What It Means for His People and His Land"
-date: 2026-11-19T18:30:00Z
+date: 2026-11-21T14:40:00Z
 author: The Glorious Anchor team
-draft: true
 summary: "God's jubilee in Leviticus 25: liberty, debts released, land returned and rest. How Jesus fulfilled it (Luke 4:18-19), for His people and His land."
 image: images/gods-jubilee-leviticus-25.jpg
 categories: teaching, pitn
