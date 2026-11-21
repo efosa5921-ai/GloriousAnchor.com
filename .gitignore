@@ -3,3 +3,4 @@ dist/
 .DS_Store
 server/.env
 .video-work/
+.cover-work/

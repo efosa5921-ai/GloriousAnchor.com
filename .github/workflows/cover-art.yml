@@ -1,0 +1,52 @@
+name: Make cover art
+
+# Makes cinematic cover illustrations for articles with Google's image model (scripts/cover-art.js) and puts them on
+# the "cover-art" branch, where they are picked up, given their headline and added to the article by hand.
+# The key is the GEMINI_API_KEY repository secret. Each image costs a few cents.
+on:
+  workflow_dispatch:
+    inputs:
+      names:
+        description: 'Names from cover-art/prompts.json, separated by commas'
+        required: true
+      max:
+        description: 'The most images this run may make'
+        required: true
+        default: '4'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cover-art
+  cancel-in-progress: false
+
+jobs:
+  make:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Make the images
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          NAMES: ${{ github.event.inputs.names }}
+          MAX: ${{ github.event.inputs.max }}
+        run: node scripts/cover-art.js --names "$NAMES" --max "$MAX"
+      - name: Put them on the cover-art branch
+        if: always()
+        run: |
+          ls .cover-work/*.jpg > /dev/null 2>&1 || { echo "no art made"; exit 0; }
+          mkdir -p /tmp/art && cp .cover-work/*.jpg /tmp/art/
+          git config user.name "cover-art bot"
+          git config user.email "noreply@gloriousanchor.com"
+          if git fetch -q origin cover-art; then
+            git checkout -q -B cover-art FETCH_HEAD
+          else
+            git checkout -q --orphan cover-art && git rm -rfq --cached . && git clean -fdxq
+          fi
+          cp /tmp/art/*.jpg . && git add -- *.jpg
+          git diff --cached --quiet && echo "nothing new" || (git commit -qm "Cover art" && git push -q origin cover-art)
