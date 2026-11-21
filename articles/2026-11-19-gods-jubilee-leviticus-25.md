@@ -142,6 +142,7 @@ What is true of one nation is true of any nation, any family and any life. Whate
 
 - Leviticus 25 and 26, Deuteronomy 15, 2 Chronicles 36, Jeremiah 34, Nehemiah 5, Isaiah 61 and Luke 4 are the chief passages. Scripture quotations are from the King James Version, which spells the word "jubile".
 - The inscription on the Liberty Bell: [Wikipedia, Liberty Bell](https://en.wikipedia.org/wiki/Liberty_Bell).
+- Cover: an illustration made with AI.
 
 ## Questions this article answers
 

@@ -4,7 +4,7 @@ searchTitle: How Did Noah Warn the Whole World About the Flood?
 date: 2026-10-18
 author: Efosa Adun
 summary: In Noah's day the earth had one landmass, one language and far fewer people, so his warning could reach everyone. Genesis 10:25, Babel and Pangaea.
-image: images/noah-one-landmass.jpg
+image: images/noah-warned-the-whole-world.jpg
 categories: apologetics
 keywords: how did Noah warn the world, Noah's flood, Pangaea and the Bible, days of Peleg earth divided, Genesis 10:25, Tower of Babel one language, Noah's Ark, Genesis 6
 updated: 2026-10-25
@@ -58,3 +58,5 @@ About 120 years (Genesis 6:3), while the Ark was being built. Peter calls Noah "
 ---
 
 *This answer was first written as a reply on X: [x.com/EfosaAdun](https://x.com/EfosaAdun/status/1960190474704036240).*
+
+*Cover: an illustration made with AI.*

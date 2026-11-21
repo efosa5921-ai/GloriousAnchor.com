@@ -4,6 +4,10 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 21 November 2026
+
+- **Bolder covers**: the Holy Spirit Connection series and the article on how Noah warned the whole world have new cinematic cover pictures with the headline on them. More articles will follow.
+
 ## 19 November 2026
 
 - **God's jubilee**: a Bible teaching on the fiftieth year of Leviticus 25, why God commanded it, how Jesus announced it in Nazareth, and what it means today for His people and His land.

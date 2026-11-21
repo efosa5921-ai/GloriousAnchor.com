@@ -3,7 +3,7 @@ title: The Seven Spirits of Christ: The Holy Spirit Connection, Part 1
 date: 2026-10-20
 author: Glorious Anchor
 summary: What the seven Spirits of God in Isaiah 11:2 and Revelation 5:6 are, why the Comforter means Helper, and why no believer can do without the Holy Ghost.
-image: images/holy-spirit-dove.jpg
+image: images/holy-spirit-connection-1.jpg
 categories: holyspirit, teaching
 keywords: seven Spirits of God, seven Spirits of Christ, Isaiah 11:2, Revelation 5:6, the Comforter, baptism in the Holy Ghost, Holy Spirit connection, WOFBI
 updated: 2026-10-20
@@ -73,3 +73,5 @@ Yes. In Acts the pattern is the same at Pentecost, at the house of Cornelius and
 ---
 
 *Teaching notes from the Leadership Certificate Course of the [Word of Faith Bible Institute (WOFBI)](https://wofbi.lfcww.org), October 2026 special, [Winners' Chapel International, Atlanta](https://www.winnerschapelga.org). All credit to WOFBI for the teaching; learn more or enrol at [wofbi.lfcww.org](https://wofbi.lfcww.org). Scripture quotations are from the King James Version.*
+
+*Cover: an illustration made with AI.*
