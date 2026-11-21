@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 21 November 2026
 
+- **Boonk Gang's testimony**: how the internet's most notorious prankster of 2017 lost five million followers, went to jail, and met Christ through a cellmate who asked him one question. With the film *I Am Holy Gabbana*.
 - **Bolder covers**: the Holy Spirit Connection series and the article on how Noah warned the whole world have new cinematic cover pictures with the headline on them. More articles will follow.
 
 ## 19 November 2026
