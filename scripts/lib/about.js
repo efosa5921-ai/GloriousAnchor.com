@@ -133,7 +133,7 @@ export function renderAboutPage(site, { mission = null } = {}) {
 ${mission ? `
     <section class="about__section about__mission" id="mission">
       <h2>Our mission</h2>
-      <p>The mission document records the encounters that gave birth to ${esc(short)}, the meaning of the name, and the what, why, how, when and where of the vision, as written by its visioner, Michael Ede.</p>
+      <p>The mission document records the encounters that gave birth to ${esc(short)}, the meaning of the name, and the what, why, how, when and where of the vision.</p>
       <p><a class="btn" href="../${esc(mission.path)}" download>Download the mission document</a> <span class="about__file">PDF${mission.pages ? `, ${mission.pages} pages` : ''}, ${esc(size)}</span></p>
     </section>
 ` : ''}
