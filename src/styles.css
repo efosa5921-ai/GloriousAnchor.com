@@ -565,6 +565,7 @@ mark { background: var(--gold-soft); color: inherit; border-radius: 2px; padding
 .about__name { flex: 0 0 150px; font-weight: 700; }
 .about__value { flex: 1; min-width: 0; overflow-wrap: anywhere; }
 .about__mission .btn { background: var(--gold); color: #0b1f3a; text-decoration: none; display: inline-block; }
+.about__local { background: var(--gold-soft); color: #16202e; border-left: 4px solid var(--gold); border-radius: 6px; padding: 10px 14px; }
 .about__file { color: var(--muted); font-size: .92rem; margin-left: 8px; white-space: nowrap; }
 .about .subscribe { margin-top: 40px; }
 @media (max-width: 560px) { .about__item { flex-direction: column; gap: 2px; } .about__name { flex: none; font-size: .82rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); } }

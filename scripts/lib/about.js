@@ -51,7 +51,10 @@ export function prayerSchedule(site, now = new Date()) {
     const abbr = new Intl.DateTimeFormat('en-US', { timeZone: site.prayerAlsoZone, timeZoneName: 'short' }).formatToParts(from).find((x) => x.type === 'timeZoneName')?.value || '';
     text += ` (${clock(inZone(from))} to ${clock(inZone(to))} ${abbr})`.replace(/ \)$/, ')');
   }
-  return { text, from: from.toISOString(), to: to.toISOString() };
+  // The first and last weekday of the run (0 = Sunday), so a visitor a day ahead or behind can be told their own days.
+  const names = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+  const span = String(site.prayerDays || '').toLowerCase().match(new RegExp(`(${names.join('|')})\\s*(?:to|-|–)\\s*(${names.join('|')})`));
+  return { text, from: from.toISOString(), to: to.toISOString(), day: local.getUTCDay(), days: span ? [names.indexOf(span[1]), names.indexOf(span[2])] : null };
 }
 
 /** Every place the network can be followed, in the order shown: [{ key, name, label, url }]. */
@@ -183,8 +186,9 @@ ${mission ? `
 ${site.whatsappCommunity ? `    <section class="about__section about__mission" id="pray">
       <h2>Pray with us</h2>
       <p>We pray to gather, even as we gather to pray. Our goal is a prayer platform that runs 24 hours a day, seven days a week, where prayer never stops until the Lord returns.</p>
-      <p>For now, our prayer community meets on WhatsApp${hours ? `, ${esc(hours.text)}` : ''}. Everyone is welcome.${hours?.from ? ` <span id="prayLocal" data-from="${hours.from}" data-to="${hours.to}" hidden></span>` : ''}</p>
-      ${hours?.from ? `<script>(function(){var e=document.getElementById('prayLocal');if(!e)return;try{var f=function(s){return new Date(s).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});};e.textContent='Where you are, that is '+f(e.dataset.from)+' to '+f(e.dataset.to)+'.';e.hidden=false;}catch(x){}})();</script>` : ''}
+      <p>For now, our prayer community meets on WhatsApp${hours ? `, ${esc(hours.text)}` : ''}. Everyone is welcome.</p>
+      ${hours?.from ? `<p class="about__local" id="prayLocal" data-from="${hours.from}" data-to="${hours.to}" data-base="${esc(`${clock(site.prayerFrom)} to ${clock(site.prayerTo)}`)}" data-day="${hours.day}"${hours.days ? ` data-days="${hours.days.join(',')}"` : ''} hidden></p>
+      <script>(function(){var e=document.getElementById('prayLocal');if(!e)return;try{var a=new Date(e.dataset.from),f=function(d){var h=d.getHours(),m=d.getMinutes();if(!m&&h===12)return'12 noon';if(!m&&!h)return'12 midnight';return(h%12||12)+(m?':'+(m<10?'0':'')+m:'')+(h<12?'am':'pm');};var t=f(a)+' to '+f(new Date(e.dataset.to));if(t===e.dataset.base)return;var z='';try{z=(Intl.DateTimeFormat().resolvedOptions().timeZone||'').split('/').pop().replace(/_/g,' ');}catch(x){}var w='';if(e.dataset.days){var n=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],s=(a.getDay()-Number(e.dataset.day)+7)%7,r=e.dataset.days.split(',');w=', '+n[(Number(r[0])+s)%7]+' to '+n[(Number(r[1])+s)%7];}e.innerHTML='<strong>In your time zone'+(z?' ('+z+')':'')+':</strong> '+t+w+'.';e.hidden=false;}catch(x){}})();</script>` : ''}
       <p><a class="btn" href="${esc(site.whatsappCommunity)}" target="_blank" rel="noopener">Join the prayer community on WhatsApp</a></p>
     </section>
 

@@ -6,7 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 26 November 2026
 
-- **Prayer hours in your own time**: the About us page now shows our prayer hours in your local time as well, and its Eastern (EST or EDT) equivalent follows the clocks by itself when they change.
+- **Prayer hours in your own time**: wherever in the world you open the About us page, it shows our prayer hours and days in your own time zone. The Eastern (EST or EDT) equivalent follows the clocks by itself when they change.
 - **Pray with us**: the About us page now invites you into our WhatsApp prayer community, which prays Monday to Friday from 6pm to 6am Nigerian time (12 noon to 12 midnight EST). The goal is prayer 24 hours a day, seven days a week, that never stops until the Lord returns.
 - **About us**: a new page says who Glorious Anchor International Network is and what it does, lists every place to follow us and how to contact us, and offers the mission document to download. It is linked from the foot of every page.
 

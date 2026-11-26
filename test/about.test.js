@@ -61,6 +61,8 @@ test('the prayer hours follow the clocks: EST in winter, EDT in summer, with no 
   const s = prayerSchedule(pray, new Date('2026-11-26T20:00:00Z'));
   assert.equal(s.from, '2026-11-26T17:00:00.000Z');
   assert.equal(s.to, '2026-11-27T05:00:00.000Z');
+  assert.equal(s.day, 4); // Thursday in Nigeria
+  assert.deepEqual(s.days, [1, 5]);
   assert.equal(prayerSchedule({ prayerTimes: 'Every night' }).text, 'Every night');
   assert.equal(prayerSchedule({}), null);
   assert.deepEqual(['18:00', '06:30', '12:00', '00:00', '13:00', '01:00'].map(clock), ['6pm', '6:30am', '12 noon', '12 midnight', '1pm', '1am']);
