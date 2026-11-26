@@ -512,7 +512,11 @@ Note: Anything extra to show after answering.`;
         h('label', {}, 'Postal address', h('input', { name: 'address', value: data.site.address || '' }))),
       h('div', { class: 'editor__grid' },
         h('label', {}, 'WhatsApp prayer community link', h('input', { name: 'whatsappCommunity', type: 'url', value: data.site.whatsappCommunity || '', placeholder: 'https://chat.whatsapp.com/…' })),
-        h('label', {}, 'Prayer times', h('input', { name: 'prayerTimes', value: data.site.prayerTimes || '', placeholder: 'Monday to Friday, 6pm to 6am (…time)' }))),
+        h('label', {}, 'Prayer days', h('input', { name: 'prayerDays', value: data.site.prayerDays || '', placeholder: 'Monday to Friday' }))),
+      h('div', { class: 'editor__grid' },
+        h('label', {}, 'Prayer starts (Nigerian time)', h('input', { name: 'prayerFrom', type: 'time', value: data.site.prayerFrom || '' })),
+        h('label', {}, 'Prayer ends (Nigerian time)', h('input', { name: 'prayerTo', type: 'time', value: data.site.prayerTo || '' }))),
+      h('p', { class: 'help' }, 'The About us page works out the Eastern (EST or EDT) equivalent of these hours by itself and follows the clocks when they change.'),
       h('label', {}, 'Motto ', h('span', { class: 'help' }, 'Shown under the name on the About us page. These handles and contact details appear there too.'), h('input', { name: 'motto', value: data.site.motto || '' })),
       h('label', {}, 'X (Twitter) handle ', h('span', { class: 'help' }, 'Added as "via @handle" when items are shared or auto-posted.'), h('input', { name: 'xHandle', value: data.site.xHandle || '' })),
       h('h2', {}, 'Feeds'),
@@ -523,7 +527,7 @@ Note: Anything extra to show after answering.`;
     );
     f.addEventListener('submit', (e) => {
       e.preventDefault(); const fd = new FormData(f);
-      for (const k of ['name', 'tagline', 'verse', 'url', 'googleSiteVerification', 'goatcounter', 'cloudflareAnalytics', 'xHandle', 'newsletter', 'contactEmail', 'whatsappChannel', 'telegramChannel', 'youtubeChannel', 'facebookPage', 'instagram', 'tiktok', 'phone', 'whatsappNumber', 'address', 'motto', 'whatsappCommunity', 'prayerTimes']) { const v = String(fd.get(k) || '').trim(); if (v) data.site[k] = v; else delete data.site[k]; }
+      for (const k of ['name', 'tagline', 'verse', 'url', 'googleSiteVerification', 'goatcounter', 'cloudflareAnalytics', 'xHandle', 'newsletter', 'contactEmail', 'whatsappChannel', 'telegramChannel', 'youtubeChannel', 'facebookPage', 'instagram', 'tiktok', 'phone', 'whatsappNumber', 'address', 'motto', 'whatsappCommunity', 'prayerDays', 'prayerFrom', 'prayerTo']) { const v = String(fd.get(k) || '').trim(); if (v) data.site[k] = v; else delete data.site[k]; }
       data.limits.maxAgeHours = Number(fd.get('maxAgeHours')) || 96; data.limits.perSource = Number(fd.get('perSource')) || 25;
       const hidden = String(fd.get('hidden') || '').split(/\r?\n/).map((x) => x.trim()).filter(Boolean);
       if (hidden.length) data.hidden = hidden; else delete data.hidden;

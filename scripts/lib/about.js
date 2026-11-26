@@ -14,12 +14,53 @@ const handleFrom = (url) => { const m = String(url || '').match(/\/@?([\w.-]+)\/
 /** A handle or a full link, for the accounts the admin lets the owner give either way. */
 const profile = (value, prefix) => { const v = String(value || '').trim(); return /^https?:\/\//i.test(v) ? v : `${prefix}${handle(v)}`; };
 
+/** Minutes a time zone is ahead of UTC at a given moment (so daylight-saving changes are followed). */
+function zoneOffset(timeZone, at) {
+  const p = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone, hourCycle: 'h23', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' }).formatToParts(at).map((x) => [x.type, Number(x.value)]));
+  return Math.round((Date.UTC(p.year, p.month - 1, p.day, p.hour, p.minute, p.second) - at.getTime()) / 60000);
+}
+/** "18:00" → "6pm", "12:00" → "12 noon", "00:00" → "12 midnight", "06:30" → "6:30am". */
+export function clock(hhmm) {
+  const [h, m] = String(hhmm).split(':').map(Number);
+  if (m === 0 && h === 12) return '12 noon';
+  if (m === 0 && (h === 0 || h === 24)) return '12 midnight';
+  return `${h % 12 || 12}${m ? `:${String(m).padStart(2, '0')}` : ''}${h % 24 < 12 ? 'am' : 'pm'}`;
+}
+/**
+ * The prayer hours, with their equivalent in a second time zone worked out for today, so the wording follows
+ * the clocks when daylight-saving time starts or ends: "Monday to Friday, 6pm to 6am Nigerian time (12 noon to
+ * 12 midnight EST)". Set by prayerDays, prayerFrom, prayerTo, prayerTimeZone, prayerZoneLabel and prayerAlsoZone
+ * in the site settings; a plain prayerTimes sentence is used as it stands when the hours are not given.
+ * Returns { text, from, to } where from and to are the next session's instants (for showing a visitor's own time).
+ */
+export function prayerSchedule(site, now = new Date()) {
+  if (!site.prayerFrom || !site.prayerTo) return site.prayerTimes ? { text: site.prayerTimes } : null;
+  const zone = site.prayerTimeZone || 'UTC';
+  const local = new Date(now.getTime() + zoneOffset(zone, now) * 60000); // the zone's wall clock, read through the UTC getters
+  const instant = (hhmm) => {
+    const [h, m] = hhmm.split(':').map(Number);
+    const guess = Date.UTC(local.getUTCFullYear(), local.getUTCMonth(), local.getUTCDate(), h, m);
+    return new Date(guess - zoneOffset(zone, new Date(guess)) * 60000);
+  };
+  const from = instant(site.prayerFrom);
+  let to = instant(site.prayerTo);
+  if (to <= from) to = new Date(to.getTime() + 86400000);
+  let text = `${site.prayerDays ? `${site.prayerDays}, ` : ''}${clock(site.prayerFrom)} to ${clock(site.prayerTo)} ${site.prayerZoneLabel || zone}`;
+  if (site.prayerAlsoZone) {
+    const inZone = (d) => new Intl.DateTimeFormat('en-GB', { timeZone: site.prayerAlsoZone, hourCycle: 'h23', hour: '2-digit', minute: '2-digit' }).format(d);
+    const abbr = new Intl.DateTimeFormat('en-US', { timeZone: site.prayerAlsoZone, timeZoneName: 'short' }).formatToParts(from).find((x) => x.type === 'timeZoneName')?.value || '';
+    text += ` (${clock(inZone(from))} to ${clock(inZone(to))} ${abbr})`.replace(/ \)$/, ')');
+  }
+  return { text, from: from.toISOString(), to: to.toISOString() };
+}
+
 /** Every place the network can be followed, in the order shown: [{ key, name, label, url }]. */
-export function socialLinks(site) {
+export function socialLinks(site, now = new Date()) {
   const out = [];
   const add = (key, name, label, url) => { if (url) out.push({ key, name, label, url }); };
   add('whatsapp', 'WhatsApp channel', site.name || 'Glorious Anchor', site.whatsappChannel);
-  add('community', 'WhatsApp community', site.prayerTimes ? `Pray with us: ${site.prayerTimes}` : 'Join our prayer community', site.whatsappCommunity);
+  const hours = prayerSchedule(site, now);
+  add('community', 'WhatsApp community', hours ? `Pray with us: ${hours.text}` : 'Join our prayer community', site.whatsappCommunity);
   add('telegram', 'Telegram', handleFrom(site.telegramChannel) || bare(site.telegramChannel), site.telegramChannel);
   add('youtube', 'YouTube', handleFrom(site.youtubeChannel) || bare(site.youtubeChannel), site.youtubeChannel);
   if (site.xHandle) add('x', 'X (Twitter)', `@${handle(site.xHandle)}`, `https://x.com/${encodeURIComponent(handle(site.xHandle))}`);
@@ -58,12 +99,13 @@ const row = ({ name, label, url }) => `<li class="about__item"><span class="abou
  * @param site     the "site" block of feeds.json
  * @param mission  { path, bytes, pages } of the mission document inside the site, or null when there is none
  */
-export function renderAboutPage(site, { mission = null } = {}) {
+export function renderAboutPage(site, { mission = null, now = new Date() } = {}) {
+  const hours = prayerSchedule(site, now);
   const b = base(site);
   const network = site.network || site.name;
   const short = (network.match(/\(([^)]+)\)/) || [])[1] || site.name;
   const full = network.replace(/\s*\([^)]*\)\s*$/, '');
-  const socials = socialLinks(site);
+  const socials = socialLinks(site, now);
   const contacts = contactDetails(site);
   const description = `About ${full} (${short}): who we are, our mission, how to contact us, and where to follow us on ${socials.slice(0, 4).map((s) => s.name.replace(/ channel| \(Twitter\)/, '')).join(', ')}.`;
   const size = !mission ? '' : mission.bytes < 1024 * 1024 ? `${Math.round(mission.bytes / 1024)} KB` : `${(mission.bytes / 1024 / 1024).toFixed(1).replace(/\.0$/, '')} MB`;
@@ -141,7 +183,8 @@ ${mission ? `
 ${site.whatsappCommunity ? `    <section class="about__section about__mission" id="pray">
       <h2>Pray with us</h2>
       <p>We pray to gather, even as we gather to pray. Our goal is a prayer platform that runs 24 hours a day, seven days a week, where prayer never stops until the Lord returns.</p>
-      <p>For now, our prayer community meets on WhatsApp${site.prayerTimes ? `, ${esc(site.prayerTimes)}` : ''}. Everyone is welcome.</p>
+      <p>For now, our prayer community meets on WhatsApp${hours ? `, ${esc(hours.text)}` : ''}. Everyone is welcome.${hours?.from ? ` <span id="prayLocal" data-from="${hours.from}" data-to="${hours.to}" hidden></span>` : ''}</p>
+      ${hours?.from ? `<script>(function(){var e=document.getElementById('prayLocal');if(!e)return;try{var f=function(s){return new Date(s).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});};e.textContent='Where you are, that is '+f(e.dataset.from)+' to '+f(e.dataset.to)+'.';e.hidden=false;}catch(x){}})();</script>` : ''}
       <p><a class="btn" href="${esc(site.whatsappCommunity)}" target="_blank" rel="noopener">Join the prayer community on WhatsApp</a></p>
     </section>
 

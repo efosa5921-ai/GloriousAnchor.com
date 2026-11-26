@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { socialLinks, contactDetails, detailsText, renderAboutPage } from '../scripts/lib/about.js';
+import { socialLinks, contactDetails, detailsText, renderAboutPage, prayerSchedule, clock } from '../scripts/lib/about.js';
 import { missionBody } from '../scripts/mission-pdf.js';
 
 const site = {
@@ -50,4 +50,18 @@ test('the prayer community shows only when its link is set, with its times', () 
   for (const want of ['id="pray"', 'https://chat.whatsapp.com/abc', 'Monday to Friday, 6pm to 6am']) assert.ok(html.includes(want), want);
   assert.deepEqual(socialLinks(withIt).map((s) => s.key).slice(0, 2), ['whatsapp', 'community']);
   assert.ok(detailsText(withIt).includes('WhatsApp community: https://chat.whatsapp.com/abc'));
+});
+
+test('the prayer hours follow the clocks: EST in winter, EDT in summer, with no change in Nigeria', () => {
+  const pray = { prayerDays: 'Monday to Friday', prayerFrom: '18:00', prayerTo: '06:00', prayerTimeZone: 'Africa/Lagos', prayerZoneLabel: 'Nigerian time', prayerAlsoZone: 'America/New_York' };
+  assert.equal(prayerSchedule(pray, new Date('2026-11-26T20:00:00Z')).text, 'Monday to Friday, 6pm to 6am Nigerian time (12 noon to 12 midnight EST)');
+  assert.equal(prayerSchedule(pray, new Date('2027-03-13T20:00:00Z')).text, 'Monday to Friday, 6pm to 6am Nigerian time (12 noon to 12 midnight EST)');
+  assert.equal(prayerSchedule(pray, new Date('2027-03-14T20:00:00Z')).text, 'Monday to Friday, 6pm to 6am Nigerian time (1pm to 1am EDT)'); // US clocks go forward on 14 March 2027
+  assert.equal(prayerSchedule(pray, new Date('2027-11-07T20:00:00Z')).text, 'Monday to Friday, 6pm to 6am Nigerian time (12 noon to 12 midnight EST)'); // and back on 7 November
+  const s = prayerSchedule(pray, new Date('2026-11-26T20:00:00Z'));
+  assert.equal(s.from, '2026-11-26T17:00:00.000Z');
+  assert.equal(s.to, '2026-11-27T05:00:00.000Z');
+  assert.equal(prayerSchedule({ prayerTimes: 'Every night' }).text, 'Every night');
+  assert.equal(prayerSchedule({}), null);
+  assert.deepEqual(['18:00', '06:30', '12:00', '00:00', '13:00', '01:00'].map(clock), ['6pm', '6:30am', '12 noon', '12 midnight', '1pm', '1am']);
 });
