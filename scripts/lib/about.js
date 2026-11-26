@@ -140,7 +140,8 @@ ${mission ? `
 ` : ''}
 ${site.whatsappCommunity ? `    <section class="about__section about__mission" id="pray">
       <h2>Pray with us</h2>
-      <p>We pray to gather, even as we gather to pray. Our prayer community meets on WhatsApp${site.prayerTimes ? `, ${esc(site.prayerTimes)}` : ''}. Everyone is welcome.</p>
+      <p>We pray to gather, even as we gather to pray. Our goal is a prayer platform that runs 24 hours a day, seven days a week, where prayer never stops until the Lord returns.</p>
+      <p>For now, our prayer community meets on WhatsApp${site.prayerTimes ? `, ${esc(site.prayerTimes)}` : ''}. Everyone is welcome.</p>
       <p><a class="btn" href="${esc(site.whatsappCommunity)}" target="_blank" rel="noopener">Join the prayer community on WhatsApp</a></p>
     </section>
 
