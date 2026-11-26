@@ -339,7 +339,7 @@ async function finalizeSeo({ site, articles, posts, churches, categories = [] })
       .replace(/<span class="brand__name">[^<]*<\/span>/, `<span class="brand__name">${escHtml(name)}</span>`)
       .replace(/<span class="brand__tag">[^<]*<\/span>/, `<span class="brand__tag">${escHtml(tagline || '')}</span>`)
       .replaceAll('href="assets/', 'href="../assets/').replaceAll('src="assets/', 'src="../assets/').replaceAll('href="styles.css"', 'href="../styles.css"').replaceAll('src="app.js"', 'src="../app.js"')
-      .replaceAll('href="data/', 'href="../data/').replaceAll('href="feed.xml"', 'href="../feed.xml"').replaceAll('href="digest/', 'href="../digest/').replaceAll('href="quiz/', 'href="../quiz/').replaceAll('href="articles/', 'href="../articles/').replaceAll('href="churches/', 'href="../churches/').replaceAll('href="admin/', 'href="../admin/');
+      .replaceAll('href="data/', 'href="../data/').replaceAll('href="feed.xml"', 'href="../feed.xml"').replaceAll('href="digest/', 'href="../digest/').replaceAll('href="quiz/', 'href="../quiz/').replaceAll('href="articles/', 'href="../articles/').replaceAll('href="churches/', 'href="../churches/').replaceAll('href="admin/', 'href="../admin/').replaceAll('href="about/', 'href="../about/').replaceAll('href="harvest/', 'href="../harvest/');
     await mkdir(path.join(DIST, slug), { recursive: true });
     await writeFile(path.join(DIST, slug, 'index.html'), page);
   };

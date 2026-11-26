@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 26 November 2026
 
+- **About us, easier to find**: there is now an About us link at the top of the home page and of every section, as well as at the foot.
 - **Updates on WhatsApp**: the About us page has a short form to leave your WhatsApp number and receive our announcements, prayer calls and new articles there.
 - **Prayer hours in your own time**: our prayer hours are now given in GMT, and wherever in the world you open the About us page it also shows them, with the days, in your own time zone.
 - **Pray with us**: the About us page now invites you into our WhatsApp prayer community, which prays Monday to Friday from 5pm to 5am GMT. The goal is prayer 24 hours a day, seven days a week, that never stops until the Lord returns.
