@@ -22,6 +22,7 @@ import { fetchWithFallbacks } from './lib/fallbacks.js';
 import { computeHealth } from './lib/health.js';
 import { compilePost, postToArticle, renderPostPage, renderIndexPage, renderFeed, seoWarnings, OWN_SOURCE } from './lib/posts.js';
 import { normaliseChurch, geocodeKey, nominatimUrl, parseNominatim } from './lib/churches.js';
+import { renderAboutPage } from './lib/about.js';
 import { subscribeHtml, followHtml, sitemapXml, homeJsonLd, churchJsonLd, sectionJsonLd, sectionLinksHtml, prerenderCards, metaTags, churchSlug, base as siteBase } from './lib/seo.js';
 import { readdir } from 'node:fs/promises';
 import { shareUrl, renderSharePage, relatedStories } from './lib/share.js';
@@ -391,6 +392,7 @@ async function finalizeSeo({ site, articles, posts, churches, categories = [] })
   // Sitemap + robots
   const entries = [
     { url: `${b}/`, changefreq: 'hourly', priority: 1.0 },
+    { url: `${b}/about/`, changefreq: 'monthly', priority: 0.8 },
     { url: `${b}/articles/`, changefreq: 'weekly', priority: 0.8 },
     ...posts.map((p) => ({ url: p.url, lastmod: p.publishedAt, changefreq: 'monthly', priority: 0.9 })),
     { url: `${b}/churches/`, changefreq: 'weekly', priority: 0.8 },
@@ -664,6 +666,15 @@ async function main() {
   await mkdir(path.join(DIST, 'digest'), { recursive: true });
   await writeFile(path.join(DIST, 'digest', 'index.html'), renderDigestPage(digestItems, site, today, text));
   await writeFile(path.join(DIST, 'digest', 'digest.txt'), text);
+
+  // About us: who the network is, where to follow it, how to reach it, and the mission document (see lib/about.js).
+  let mission = null;
+  try {
+    const pdf = await readFile(path.join(SRC, 'assets', 'gain-mission.pdf'));
+    mission = { path: 'assets/gain-mission.pdf', bytes: pdf.length, pages: (pdf.toString('latin1').match(/\/Type\s*\/Page\b(?!s)/g) || []).length || null };
+  } catch { /* no mission document yet: the page leaves that section out */ }
+  await mkdir(path.join(DIST, 'about'), { recursive: true });
+  await writeFile(path.join(DIST, 'about', 'index.html'), renderAboutPage(site, { mission }));
 
   // The Harvest: Muslims leaving Islam, as far as it can be counted (see lib/harvest.js and harvest.json).
   const harvestConfig = await readJson(path.join(ROOT, 'harvest.json'), { channels: [], figures: [] });

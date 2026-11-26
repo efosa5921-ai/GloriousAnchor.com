@@ -4,6 +4,10 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 26 November 2026
+
+- **About us**: a new page says who Glorious Anchor International Network is and what it does, lists every place to follow us and how to contact us, and offers the mission document to download. It is linked from the foot of every page.
+
 ## 21 November 2026
 
 - **God's jubilee**: a Bible teaching on the fiftieth year of Leviticus 25, why God commanded it, how Jesus announced it in Nazareth, and what it means today for His people and His land.

@@ -502,6 +502,15 @@ Note: Anything extra to show after answering.`;
         h('label', {}, 'WhatsApp channel link', h('input', { name: 'whatsappChannel', type: 'url', value: data.site.whatsappChannel || '', placeholder: 'https://whatsapp.com/channel/…' })),
         h('label', {}, 'Telegram channel link', h('input', { name: 'telegramChannel', type: 'url', value: data.site.telegramChannel || '', placeholder: 'https://t.me/…' })),
         h('label', {}, 'YouTube channel link', h('input', { name: 'youtubeChannel', type: 'url', value: data.site.youtubeChannel || '', placeholder: 'https://www.youtube.com/@…' }))),
+      h('div', { class: 'editor__grid' },
+        h('label', {}, 'Facebook page link', h('input', { name: 'facebookPage', type: 'url', value: data.site.facebookPage || '', placeholder: 'https://www.facebook.com/…' })),
+        h('label', {}, 'Instagram handle or link', h('input', { name: 'instagram', value: data.site.instagram || '', placeholder: '@…' })),
+        h('label', {}, 'TikTok handle or link', h('input', { name: 'tiktok', value: data.site.tiktok || '', placeholder: '@…' }))),
+      h('div', { class: 'editor__grid' },
+        h('label', {}, 'Phone number', h('input', { name: 'phone', value: data.site.phone || '', placeholder: '+1 …' })),
+        h('label', {}, 'WhatsApp number', h('input', { name: 'whatsappNumber', value: data.site.whatsappNumber || '', placeholder: '+234 …' })),
+        h('label', {}, 'Postal address', h('input', { name: 'address', value: data.site.address || '' }))),
+      h('label', {}, 'Motto ', h('span', { class: 'help' }, 'Shown under the name on the About us page. These handles and contact details appear there too.'), h('input', { name: 'motto', value: data.site.motto || '' })),
       h('label', {}, 'X (Twitter) handle ', h('span', { class: 'help' }, 'Added as "via @handle" when items are shared or auto-posted.'), h('input', { name: 'xHandle', value: data.site.xHandle || '' })),
       h('h2', {}, 'Feeds'),
       h('label', {}, 'Hidden stories ', h('span', { class: 'help' }, 'One per line: a story id (the part after /s/ in a story link, e.g. 1viixrk), a full story link, or a publisher link to hide everything under it. Hidden stories vanish from the site at the next build.'), h('textarea', { name: 'hidden', rows: 4, placeholder: '1viixrk\nhttps://example.com/section/' }, (data.hidden || []).join('\n'))),
@@ -511,7 +520,7 @@ Note: Anything extra to show after answering.`;
     );
     f.addEventListener('submit', (e) => {
       e.preventDefault(); const fd = new FormData(f);
-      for (const k of ['name', 'tagline', 'verse', 'url', 'googleSiteVerification', 'goatcounter', 'cloudflareAnalytics', 'xHandle', 'newsletter', 'contactEmail', 'whatsappChannel', 'telegramChannel', 'youtubeChannel']) { const v = String(fd.get(k) || '').trim(); if (v) data.site[k] = v; else delete data.site[k]; }
+      for (const k of ['name', 'tagline', 'verse', 'url', 'googleSiteVerification', 'goatcounter', 'cloudflareAnalytics', 'xHandle', 'newsletter', 'contactEmail', 'whatsappChannel', 'telegramChannel', 'youtubeChannel', 'facebookPage', 'instagram', 'tiktok', 'phone', 'whatsappNumber', 'address', 'motto']) { const v = String(fd.get(k) || '').trim(); if (v) data.site[k] = v; else delete data.site[k]; }
       data.limits.maxAgeHours = Number(fd.get('maxAgeHours')) || 96; data.limits.perSource = Number(fd.get('perSource')) || 25;
       const hidden = String(fd.get('hidden') || '').split(/\r?\n/).map((x) => x.trim()).filter(Boolean);
       if (hidden.length) data.hidden = hidden; else delete data.hidden;

@@ -4,3 +4,4 @@ dist/
 server/.env
 .video-work/
 .cover-work/
+.mission-pdf.html
