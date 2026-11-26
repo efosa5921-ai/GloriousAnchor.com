@@ -94,6 +94,34 @@ export function detailsText(site, { mission } = {}) {
   return lines.join('\n');
 }
 
+/**
+ * A sign-up for updates on WhatsApp. WhatsApp lets an organisation message only people who have asked for it,
+ * so this collects the number together with that consent. It posts to the newsletter's own subscribe form
+ * (Buttondown), which keeps the number as subscriber metadata under the tag "whatsapp-updates": nothing is
+ * stored on this site. Empty when no Buttondown newsletter is set.
+ */
+export function whatsappSignupHtml(site) {
+  const m = String(site.newsletter || '').match(/^https?:\/\/buttondown\.(?:com|email)\/([\w.-]+)\/?$/i);
+  if (!m) return '';
+  const full = (site.network || site.name).replace(/\s*\([^)]*\)\s*$/, '');
+  return `<section class="about__section" id="whatsapp-updates">
+      <h2>Get our updates on WhatsApp</h2>
+      <p>Leave your WhatsApp number and we will send you our announcements, prayer calls and new articles there. You will also receive our daily email, and you can leave either at any time.</p>
+      <form class="about__form" action="https://buttondown.com/api/emails/embed-subscribe/${esc(m[1])}" method="post" target="_blank">
+        <input type="hidden" name="tag" value="whatsapp-updates">
+        <input type="hidden" name="metadata__whatsapp_consent" value="yes">
+        <label>Your name<input type="text" name="metadata__name" autocomplete="name" maxlength="80"></label>
+        <label>WhatsApp number, with country code<input type="tel" name="metadata__whatsapp" required pattern="\\+?[0-9][0-9 \\(\\)\\-]{6,19}" placeholder="+234 801 234 5678" autocomplete="tel" title="Your number with its country code, for example +234 801 234 5678"></label>
+        <label>Email address<input type="email" name="email" required placeholder="you@example.com" autocomplete="email"></label>
+        <label class="about__consent"><input type="checkbox" required> I agree to receive messages from ${esc(full)} on WhatsApp at this number and by email. I can stop them at any time.</label>
+        <button class="btn" type="submit">Sign me up</button>
+        <p class="about__small">We use your number only to send you our own updates, and we never pass it to anyone else.</p>
+      </form>
+    </section>
+
+`;
+}
+
 const row = ({ name, label, url }) => `<li class="about__item"><span class="about__name">${esc(name)}</span>${url
   ? `<a class="about__value" href="${esc(url)}"${/^https?:/.test(url) ? ' target="_blank" rel="noopener"' : ''}>${esc(label)}</a>`
   : `<span class="about__value">${esc(label)}</span>`}</li>`;
@@ -192,7 +220,7 @@ ${site.whatsappCommunity ? `    <section class="about__section about__mission" i
       <p><a class="btn" href="${esc(site.whatsappCommunity)}" target="_blank" rel="noopener">Join the prayer community on WhatsApp</a></p>
     </section>
 
-` : ''}    <section class="about__section" id="follow">
+` : ''}${whatsappSignupHtml(site) ? `    ${whatsappSignupHtml(site)}` : ''}    <section class="about__section" id="follow">
       <h2>Follow us</h2>
       <ul class="about__list">
         ${socials.map(row).join('\n        ')}

@@ -566,6 +566,13 @@ mark { background: var(--gold-soft); color: inherit; border-radius: 2px; padding
 .about__value { flex: 1; min-width: 0; overflow-wrap: anywhere; }
 .about__mission .btn { background: var(--gold); color: #0b1f3a; text-decoration: none; display: inline-block; }
 .about__local { background: var(--gold-soft); color: #16202e; border-left: 4px solid var(--gold); border-radius: 6px; padding: 10px 14px; }
+.about__form { display: grid; gap: 12px; max-width: 520px; padding: 18px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.about__form label { display: grid; gap: 4px; font-weight: 600; font-size: .95rem; }
+.about__form input[type="text"], .about__form input[type="tel"], .about__form input[type="email"] { font: inherit; font-weight: 400; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--text); min-width: 0; }
+.about__form .about__consent { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; line-height: 1.45; }
+.about__form .about__consent input { margin-top: 4px; flex: none; width: 18px; height: 18px; }
+.about__form .btn { justify-self: start; background: var(--gold); color: #0b1f3a; cursor: pointer; }
+.about__small { margin: 0; color: var(--muted); font-size: .88rem; }
 .about__file { color: var(--muted); font-size: .92rem; margin-left: 8px; white-space: nowrap; }
 .about .subscribe { margin-top: 40px; }
 @media (max-width: 560px) { .about__item { flex-direction: column; gap: 2px; } .about__name { flex: none; font-size: .82rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); } }

@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { socialLinks, contactDetails, detailsText, renderAboutPage, prayerSchedule, clock } from '../scripts/lib/about.js';
+import { socialLinks, contactDetails, detailsText, renderAboutPage, prayerSchedule, clock, whatsappSignupHtml } from '../scripts/lib/about.js';
 import { missionBody } from '../scripts/mission-pdf.js';
 
 const site = {
@@ -66,4 +66,11 @@ test('the prayer hours follow the clocks: EST in winter, EDT in summer, with no 
   assert.equal(prayerSchedule({ prayerTimes: 'Every night' }).text, 'Every night');
   assert.equal(prayerSchedule({}), null);
   assert.deepEqual(['18:00', '06:30', '12:00', '00:00', '13:00', '01:00'].map(clock), ['6pm', '6:30am', '12 noon', '12 midnight', '1pm', '1am']);
+});
+
+test('the WhatsApp sign-up collects the number with consent, and only when a Buttondown newsletter is set', () => {
+  assert.equal(whatsappSignupHtml(site), '');
+  const html = whatsappSignupHtml({ ...site, newsletter: 'https://buttondown.com/gloriousanchor' });
+  for (const want of ['action="https://buttondown.com/api/emails/embed-subscribe/gloriousanchor"', 'name="metadata__whatsapp" required', 'name="tag" value="whatsapp-updates"', 'type="checkbox" required', 'name="email" required', 'I agree to receive messages']) assert.ok(html.includes(want), want);
+  assert.ok(renderAboutPage({ ...site, newsletter: 'https://buttondown.com/gloriousanchor' }).includes('id="whatsapp-updates"'));
 });
