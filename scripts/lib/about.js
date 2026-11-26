@@ -19,6 +19,7 @@ export function socialLinks(site) {
   const out = [];
   const add = (key, name, label, url) => { if (url) out.push({ key, name, label, url }); };
   add('whatsapp', 'WhatsApp channel', site.name || 'Glorious Anchor', site.whatsappChannel);
+  add('community', 'WhatsApp community', site.prayerTimes ? `Pray with us: ${site.prayerTimes}` : 'Join our prayer community', site.whatsappCommunity);
   add('telegram', 'Telegram', handleFrom(site.telegramChannel) || bare(site.telegramChannel), site.telegramChannel);
   add('youtube', 'YouTube', handleFrom(site.youtubeChannel) || bare(site.youtubeChannel), site.youtubeChannel);
   if (site.xHandle) add('x', 'X (Twitter)', `@${handle(site.xHandle)}`, `https://x.com/${encodeURIComponent(handle(site.xHandle))}`);
@@ -137,7 +138,13 @@ ${mission ? `
       <p><a class="btn" href="../${esc(mission.path)}" download>Download the mission document</a> <span class="about__file">PDF${mission.pages ? `, ${mission.pages} pages` : ''}, ${esc(size)}</span></p>
     </section>
 ` : ''}
-    <section class="about__section" id="follow">
+${site.whatsappCommunity ? `    <section class="about__section about__mission" id="pray">
+      <h2>Pray with us</h2>
+      <p>We pray to gather, even as we gather to pray. Our prayer community meets on WhatsApp${site.prayerTimes ? `, ${esc(site.prayerTimes)}` : ''}. Everyone is welcome.</p>
+      <p><a class="btn" href="${esc(site.whatsappCommunity)}" target="_blank" rel="noopener">Join the prayer community on WhatsApp</a></p>
+    </section>
+
+` : ''}    <section class="about__section" id="follow">
       <h2>Follow us</h2>
       <ul class="about__list">
         ${socials.map(row).join('\n        ')}

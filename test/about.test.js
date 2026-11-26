@@ -42,3 +42,12 @@ test('missionBody keeps the document and drops the front matter, site links and 
   const body = missionBody('---\ntitle: T\ndraft: true\n---\n\n## The encounters\n\nText.\n\nFor what the network does online today, read [Welcome](/articles/welcome/).\n\n## Questions this article answers\n\n### Q?\n\nA.\n');
   assert.equal(body, '## The encounters\n\nText.');
 });
+
+test('the prayer community shows only when its link is set, with its times', () => {
+  assert.ok(!renderAboutPage(site).includes('id="pray"'));
+  const withIt = { ...site, whatsappCommunity: 'https://chat.whatsapp.com/abc', prayerTimes: 'Monday to Friday, 6pm to 6am' };
+  const html = renderAboutPage(withIt);
+  for (const want of ['id="pray"', 'https://chat.whatsapp.com/abc', 'Monday to Friday, 6pm to 6am']) assert.ok(html.includes(want), want);
+  assert.deepEqual(socialLinks(withIt).map((s) => s.key).slice(0, 2), ['whatsapp', 'community']);
+  assert.ok(detailsText(withIt).includes('WhatsApp community: https://chat.whatsapp.com/abc'));
+});
