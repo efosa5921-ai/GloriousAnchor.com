@@ -3,6 +3,8 @@
  * Post a thread to X from a Markdown file: posts separated by a line containing only "---".
  * The first post may carry a picture: a line "image: https://..." anywhere in the file (removed from the text).
  * Each post must be 280 characters or fewer (links count as 23). Runs in GitHub Actions with the X secrets.
+ * Whatever follows a line "=== telegram ===" is sent to the Telegram channel as one message, in full, with the
+ * picture shown above it (needs TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID). A file may hold either part or both.
  * Usage: node scripts/thread.js threads/festac-77.md [--dry-run]
  */
 import { readFile } from 'node:fs/promises';
@@ -19,12 +21,25 @@ const x = env.X_API_KEY && env.X_API_SECRET && env.X_ACCESS_TOKEN && env.X_ACCES
 let text = await readFile(file, 'utf8');
 const image = text.match(/^image:\s*(\S+)\s*$/m)?.[1] || null;
 text = text.replace(/^image:.*$/m, '');
-const posts = text.split(/^\s*---\s*$/m).map((p) => p.trim()).filter(Boolean);
+const [forX, forTelegram = ''] = text.split(/^=== telegram ===\s*$/m);
+const telegramText = forTelegram.trim();
+const telegram = env.TELEGRAM_BOT_TOKEN && env.TELEGRAM_CHAT_ID ? { token: env.TELEGRAM_BOT_TOKEN, chat: env.TELEGRAM_CHAT_ID } : null;
+const posts = forX.split(/^\s*---\s*$/m).map((p) => p.trim()).filter(Boolean);
+if (telegramText) { console.log(`telegram (${telegramText.length}) ${telegramText.split('\n')[0].slice(0, 70)}`); if (telegramText.length > 4096) { console.error('  the Telegram message is over 4,096 characters'); process.exit(1); } }
 const length = (p) => p.replace(/https?:\/\/\S+/g, 'x'.repeat(23)).length;
 let bad = false;
 posts.forEach((p, i) => { const n = length(p); console.log(`${i + 1}/${posts.length} (${n}) ${p.split('\n')[0].slice(0, 70)}`); if (n > X_MAX) { bad = true; console.error(`  post ${i + 1} is ${n} characters; the limit is ${X_MAX}`); } });
 if (bad) process.exit(1);
 if (dry) { console.log('dry run: nothing posted'); process.exit(0); }
+if (telegramText) {
+  if (!telegram) console.error('  ✗ Telegram: no credentials');
+  else {
+    const res = await fetch(`https://api.telegram.org/bot${telegram.token}/sendMessage`, { method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ chat_id: telegram.chat, text: telegramText, link_preview_options: image ? { url: image, prefer_large_media: true, show_above_text: true } : { is_disabled: true } }) });
+    console.log(res.ok ? '  ✓ Telegram' : `  ✗ Telegram ${res.status}: ${(await res.text()).slice(0, 200)}`);
+  }
+}
+if (!posts.length) process.exit(0);
 if (!x) { console.error('no X credentials'); process.exit(1); }
 
 async function uploadImage(url) {
