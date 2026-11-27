@@ -3,7 +3,7 @@
   'use strict';
   const $ = (s) => document.querySelector(s);
   const els = { finder: $('#finder'), locate: $('#locateBtn'), place: $('#placeInput'), radius: $('#radiusSel'), unit: $('#unitSel'), listedOnly: $('#listedOnly'), status: $('#status'), map: $('#map'), results: $('#results') };
-  const OVERPASS = ['https://overpass-api.de/api/interpreter', 'https://overpass.kumi.systems/api/interpreter'];
+  const OVERPASS = ['https://overpass-api.de/api/interpreter', 'https://overpass.private.coffee/api/interpreter', 'https://overpass.kumi.systems/api/interpreter'];
   const NOMINATIM = 'https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=';
   const state = { center: null, label: '', results: [], listed: [], map: null, markers: null, busy: false };
 
@@ -40,6 +40,7 @@
   els.submit = els.finder.querySelector('button[type=submit]');
   const labels = new Map([[els.locate, els.locate.innerHTML], [els.submit, els.submit.innerHTML]]);
   let slowTimer = null;
+  const SKELETON = '<li class="church church--skeleton" aria-hidden="true"><span></span><span></span><span></span></li>';
   /* While a search runs, everything says so: the pressed button spins and reads "Searching…", the status line
      turns into a banner, grey placeholders stand where the results will appear, and after a few seconds a note
      explains that the map service can be slow, so nobody thinks the page has stopped. */
@@ -51,7 +52,7 @@
     clearTimeout(slowTimer);
     if (!on) { els.results.querySelectorAll('.church--skeleton').forEach((e) => e.remove()); return; }
     if (button) { button.classList.add('is-busy'); button.textContent = text || 'Searching…'; }
-    if (!els.results.querySelector('.church--skeleton')) els.results.innerHTML = '<li class="church church--skeleton" aria-hidden="true"><span></span><span></span><span></span></li>'.repeat(4);
+    if (!els.results.querySelector('.church--skeleton')) els.results.innerHTML = SKELETON.repeat(4);
     slowTimer = setTimeout(() => { if (state.busy) setStatus(`${els.status.textContent.replace(/…$/, '')}… still searching. The map service can take up to half a minute, please wait.`); }, 6000);
     if (els.status.getBoundingClientRect().bottom > innerHeight) els.status.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
@@ -67,17 +68,49 @@
     if (!hit) throw new Error(`Couldn't find "${q}". Try adding the country, e.g. "Benin City, Nigeria".`);
     return { lat: parseFloat(hit.lat), lng: parseFloat(hit.lon), label: hit.display_name.split(',').slice(0, 2).join(',') };
   }
-  async function overpass(lat, lng, radiusKm) {
-    const q = `[out:json][timeout:25];nwr["amenity"="place_of_worship"]["religion"="christian"](around:${Math.round(radiusKm * 1000)},${lat},${lng});out center tags 300;`;
-    let lastErr;
-    for (const url of OVERPASS) {
-      try {
-        const r = await fetch(url, { method: 'POST', body: 'data=' + encodeURIComponent(q), headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        return (await r.json()).elements || [];
-      } catch (e) { lastErr = e; }
-    }
-    throw new Error(`The map service is busy (${lastErr?.message || 'no response'}). Try a smaller radius or try again shortly.`);
+  /* The churches come from Overpass, the free public query servers of OpenStreetMap, which the whole world shares
+     and which are sometimes slow or stalled. So the question goes to the first server, and if it has not answered
+     within 2.5 seconds (or it fails) the next is asked as well; whichever answers first is used and the others are
+     dropped. No server is waited on for more than 20 seconds, so a stalled one can never hold the search up. */
+  function overpass(lat, lng, radiusKm) {
+    const q = `[out:json][timeout:20];nwr["amenity"="place_of_worship"]["religion"="christian"](around:${Math.round(radiusKm * 1000)},${lat},${lng});out center tags qt 300;`;
+    const body = 'data=' + encodeURIComponent(q);
+    const ctrls = [], errors = [];
+    let next = 0, live = 0, done = false, hedge = null;
+    return new Promise((resolve, reject) => {
+      const launch = () => {
+        if (done || next >= OVERPASS.length) return;
+        const url = OVERPASS[next++], c = new AbortController();
+        ctrls.push(c); live += 1;
+        const kill = setTimeout(() => c.abort(), 20000);
+        fetch(url, { method: 'POST', body, headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, signal: c.signal })
+          .then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
+          .then((j) => { if (!done) { done = true; resolve(j.elements || []); } })
+          .catch((e) => {
+            errors.push(e); live -= 1;
+            if (done) return;
+            if (next < OVERPASS.length) launch();
+            else if (!live) { done = true; reject(new Error(`The map service is busy (${errors.find((x) => /HTTP/.test(x.message))?.message || 'no response'}). Try a smaller radius or try again shortly.`)); }
+          })
+          .finally(() => clearTimeout(kill));
+      };
+      launch();
+      hedge = setInterval(launch, 2500);
+    }).finally(() => { clearInterval(hedge); for (const c of ctrls) c.abort(); });
+  }
+  /* A search already made on this device in the last day is answered from memory, at once. */
+  const CACHE = 'ga_church_searches';
+  const cacheKey = (lat, lng, radiusKm) => `${lat.toFixed(3)},${lng.toFixed(3)},${Math.round(radiusKm * 10)}`;
+  function cached(key) {
+    try { const hit = JSON.parse(localStorage.getItem(CACHE) || '{}')[key]; return hit && Date.now() - hit.at < 86400000 ? hit.list : null; } catch { return null; }
+  }
+  function remember(key, list) {
+    try {
+      const all = JSON.parse(localStorage.getItem(CACHE) || '{}');
+      all[key] = { at: Date.now(), list };
+      const keep = Object.entries(all).sort((a, b) => b[1].at - a[1].at).slice(0, 6);
+      localStorage.setItem(CACHE, JSON.stringify(Object.fromEntries(keep)));
+    } catch { /* storage full or unavailable: the next search simply asks again */ }
   }
   function fromOsm(el) {
     const t = el.tags || {};
@@ -100,16 +133,28 @@
     const radius = Number(els.radius.value);
     setStatus(`Looking for churches within ${radiusLabel()} of ${label}…`);
     setBusy(true, button || els.submit);
+    let failed = '';
     try {
-      let osm = [];
-      try { osm = (await overpass(center.lat, center.lng, radius)).map(fromOsm).filter(Boolean); } catch (e) { if (!state.listed.length) throw e; setStatus(e.message); }
       const listedHere = state.listed.filter((c) => km(center.lat, center.lng, c.lat, c.lng) <= radius);
+      const key = cacheKey(center.lat, center.lng, radius);
+      let osm = cached(key);
+      if (!osm) {
+        // Our own listed churches need no map service, so they are shown straight away while the rest are fetched.
+        if (listedHere.length) {
+          state.results = listedHere.map((c) => ({ ...c, distance: km(center.lat, center.lng, c.lat, c.lng) })).sort((a, b) => a.distance - b.distance);
+          renderResults();
+          els.results.insertAdjacentHTML('beforeend', SKELETON.repeat(3));
+          setStatus(`${listedHere.length} listed ${listedHere.length === 1 ? 'church' : 'churches'} found. Looking for more on the map…`);
+        }
+        try { osm = (await overpass(center.lat, center.lng, radius)).map(fromOsm).filter(Boolean); remember(key, osm); } catch (e) { if (!state.listed.length) throw e; osm = []; failed = e.message; }
+      }
       // Listed churches replace an OSM entry at (nearly) the same spot.
       const osmFiltered = osm.filter((o) => !listedHere.some((l) => km(l.lat, l.lng, o.lat, o.lng) < 0.08));
       const all = [...listedHere, ...osmFiltered].map((c) => ({ ...c, distance: km(center.lat, center.lng, c.lat, c.lng) })).filter((c) => c.distance <= radius);
       all.sort((a, b) => (b.listed - a.listed) || a.distance - b.distance);
       state.results = all;
       renderResults();
+      if (failed) setStatus(`${els.status.textContent} ${failed}`);
       history.replaceState(null, '', `${location.pathname}?lat=${center.lat.toFixed(5)}&lng=${center.lng.toFixed(5)}&r=${+radius.toFixed(1)}&q=${encodeURIComponent(label)}`);
     } catch (e) {
       setStatus(e.message); els.results.innerHTML = ''; els.map.hidden = true;
