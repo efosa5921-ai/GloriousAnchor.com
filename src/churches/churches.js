@@ -2,13 +2,39 @@
 (() => {
   'use strict';
   const $ = (s) => document.querySelector(s);
-  const els = { finder: $('#finder'), locate: $('#locateBtn'), place: $('#placeInput'), radius: $('#radiusSel'), listedOnly: $('#listedOnly'), status: $('#status'), map: $('#map'), results: $('#results') };
+  const els = { finder: $('#finder'), locate: $('#locateBtn'), place: $('#placeInput'), radius: $('#radiusSel'), unit: $('#unitSel'), listedOnly: $('#listedOnly'), status: $('#status'), map: $('#map'), results: $('#results') };
   const OVERPASS = ['https://overpass-api.de/api/interpreter', 'https://overpass.kumi.systems/api/interpreter'];
   const NOMINATIM = 'https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=';
   const state = { center: null, label: '', results: [], listed: [], map: null, markers: null, busy: false };
 
   const km = (lat1, lon1, lat2, lon2) => { const R = 6371, r = (d) => (d * Math.PI) / 180; const dLat = r(lat2 - lat1), dLon = r(lon2 - lon1); const a = Math.sin(dLat / 2) ** 2 + Math.cos(r(lat1)) * Math.cos(r(lat2)) * Math.sin(dLon / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(a)); };
-  const fmtKm = (d) => (d < 1 ? `${Math.round(d * 1000)} m` : `${d.toFixed(d < 10 ? 1 : 0)} km`);
+  /* Distances are shown in miles to visitors in the countries that use them (the United States and its territories,
+     the United Kingdom, Liberia and Myanmar), judged by the device's time zone, and in kilometres to everyone else.
+     The visitor can switch, and the choice is remembered. Searches themselves are always made in kilometres. */
+  const MILE = 1.609344;
+  const MILE_ZONES = /^(America\/(New_York|Chicago|Denver|Los_Angeles|Phoenix|Anchorage|Juneau|Sitka|Metlakatla|Yakutat|Nome|Adak|Detroit|Boise|Menominee|Indianapolis|Louisville|Fort_Wayne|Knox_IN|Shiprock|Indiana\/.+|Kentucky\/.+|North_Dakota\/.+|Puerto_Rico|St_Thomas|St_Croix|Virgin)|Pacific\/(Honolulu|Guam|Saipan|Pago_Pago|Midway|Wake|Johnston)|US\/.+|Europe\/(London|Belfast|Jersey|Guernsey|Isle_of_Man)|GB|GB-Eire|Africa\/Monrovia|Asia\/(Yangon|Rangoon))$/;
+  const RADII = { km: [3, 10, 25, 50], mi: [2, 5, 15, 30] };
+  function defaultUnit() {
+    try { const saved = localStorage.getItem('ga_unit'); if (saved === 'km' || saved === 'mi') return saved; } catch { /* storage unavailable */ }
+    try { const tz = Intl.DateTimeFormat().resolvedOptions().timeZone; if (tz) return MILE_ZONES.test(tz) ? 'mi' : 'km'; } catch { /* fall through to the language */ }
+    return /[-_](US|GB|LR|MM)\b/i.test(navigator.language || '') ? 'mi' : 'km';
+  }
+  let unit = defaultUnit();
+  const fmtDist = (d) => {
+    if (unit === 'km') return d < 1 ? `${Math.round(d * 1000)} m` : `${d.toFixed(d < 10 ? 1 : 0)} km`;
+    const m = d / MILE;
+    return m < 0.1 ? `${Math.max(50, Math.round((m * 5280) / 50) * 50)} ft` : `${m.toFixed(m < 10 ? 1 : 0)} mi`;
+  };
+  /** Fill the radius menu for the unit in use, keeping the same position selected (or the one nearest a given km). */
+  function setUnit(next, nearKm) {
+    unit = next;
+    const keep = nearKm == null ? Math.max(0, els.radius.selectedIndex) : null;
+    els.radius.innerHTML = RADII[unit].map((n) => `<option value="${unit === 'km' ? n : +(n * MILE).toFixed(3)}">within ${n} ${unit === 'km' ? 'km' : n === 1 ? 'mile' : 'miles'}</option>`).join('');
+    const kms = [...els.radius.options].map((o) => Number(o.value));
+    els.radius.selectedIndex = keep != null ? Math.min(keep, kms.length - 1) : kms.reduce((best, v, i) => (Math.abs(v - nearKm) < Math.abs(kms[best] - nearKm) ? i : best), 0);
+    if (els.unit) els.unit.value = unit;
+  }
+  const radiusLabel = () => (els.radius.selectedOptions[0]?.textContent || '').replace(/^within /, '');
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const setStatus = (t) => { els.status.textContent = t; };
   els.submit = els.finder.querySelector('button[type=submit]');
@@ -72,7 +98,7 @@
     if (state.busy) return;
     state.center = center; state.label = label;
     const radius = Number(els.radius.value);
-    setStatus(`Looking for churches within ${radius} km of ${label}…`);
+    setStatus(`Looking for churches within ${radiusLabel()} of ${label}…`);
     setBusy(true, button || els.submit);
     try {
       let osm = [];
@@ -84,7 +110,7 @@
       all.sort((a, b) => (b.listed - a.listed) || a.distance - b.distance);
       state.results = all;
       renderResults();
-      history.replaceState(null, '', `${location.pathname}?lat=${center.lat.toFixed(5)}&lng=${center.lng.toFixed(5)}&r=${radius}&q=${encodeURIComponent(label)}`);
+      history.replaceState(null, '', `${location.pathname}?lat=${center.lat.toFixed(5)}&lng=${center.lng.toFixed(5)}&r=${+radius.toFixed(1)}&q=${encodeURIComponent(label)}`);
     } catch (e) {
       setStatus(e.message); els.results.innerHTML = ''; els.map.hidden = true;
     } finally { setBusy(false); }
@@ -95,13 +121,13 @@
     const listedOnly = els.listedOnly.checked;
     const list = state.results.filter((c) => !listedOnly || c.listed);
     const radius = Number(els.radius.value);
-    setStatus(list.length ? `${list.length} ${list.length === 1 ? 'church' : 'churches'} within ${radius} km of ${state.label}, nearest first.` : `No ${listedOnly ? 'listed ' : ''}churches found within ${radius} km of ${state.label}. Try a larger radius.`);
+    setStatus(list.length ? `${list.length} ${list.length === 1 ? 'church' : 'churches'} within ${radiusLabel()} of ${state.label}, nearest first.` : `No ${listedOnly ? 'listed ' : ''}churches found within ${radiusLabel()} of ${state.label}. Try a larger radius.`);
     els.results.innerHTML = '';
     for (const c of list) {
       const li = document.createElement('li'); li.className = 'church' + (c.listed ? ' church--listed' : ''); li.dataset.id = c.id;
       const dir = `https://www.google.com/maps/dir/?api=1&destination=${c.lat},${c.lng}`;
       li.innerHTML = `
-        <div class="church__head"><h2 class="church__name">${esc(c.name)}</h2><span class="church__dist">${fmtKm(c.distance)}</span></div>
+        <div class="church__head"><h2 class="church__name">${esc(c.name)}</h2><span class="church__dist">${fmtDist(c.distance)}</span></div>
         <p class="church__meta">${[c.listed ? '<span class="pill pill--gold">Listed</span>' : '', c.denomination ? esc(c.denomination) : '', c.address ? esc(c.address) : ''].filter(Boolean).join(' · ')}</p>
         ${c.serviceTimes ? `<p class="church__times">Services: ${esc(c.serviceTimes)}</p>` : ''}
         ${c.notes ? `<p class="church__notes">${esc(c.notes)}</p>` : ''}
@@ -129,7 +155,7 @@
     const pts = [[state.center.lat, state.center.lng]];
     for (const c of list) {
       const m = L.circleMarker([c.lat, c.lng], { radius: c.listed ? 9 : 6, color: c.listed ? '#c9961f' : '#b42318', fillColor: c.listed ? '#c9961f' : '#e53e3e', fillOpacity: .85, weight: 2 })
-        .bindPopup(`<strong>${esc(c.name)}</strong><br>${fmtKm(c.distance)}${c.denomination ? ' · ' + esc(c.denomination) : ''}<br><a href="https://www.google.com/maps/dir/?api=1&destination=${c.lat},${c.lng}" target="_blank" rel="noopener">Directions</a>`);
+        .bindPopup(`<strong>${esc(c.name)}</strong><br>${fmtDist(c.distance)}${c.denomination ? ' · ' + esc(c.denomination) : ''}<br><a href="https://www.google.com/maps/dir/?api=1&destination=${c.lat},${c.lng}" target="_blank" rel="noopener">Directions</a>`);
       m.on('click', () => { document.querySelector(`.church[data-id="${c.id}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }); });
       c._marker = m; m.addTo(state.markers); pts.push([c.lat, c.lng]);
     }
@@ -155,13 +181,19 @@
     try { const c = await geocode(q); setBusy(false); search({ lat: c.lat, lng: c.lng }, c.label, els.submit); } catch (err) { setBusy(false); setStatus(err.message); }
   });
   els.radius.addEventListener('change', () => { if (state.center) search(state.center, state.label); });
+  els.unit?.addEventListener('change', () => {
+    setUnit(els.unit.value === 'mi' ? 'mi' : 'km');
+    try { localStorage.setItem('ga_unit', unit); } catch { /* not remembered, still switched */ }
+    if (state.center) search(state.center, state.label);
+  });
   els.listedOnly.addEventListener('change', () => { if (state.results.length || state.center) renderResults(); });
 
   /* ---------- boot ---------- */
   (async () => {
+    setUnit(unit, 10);
     await loadListed();
     const p = new URLSearchParams(location.search);
-    if (p.get('lat') && p.get('lng')) { if (p.get('r')) els.radius.value = p.get('r'); search({ lat: parseFloat(p.get('lat')), lng: parseFloat(p.get('lng')) }, p.get('q') || 'the chosen place'); }
+    if (p.get('lat') && p.get('lng')) { if (Number(p.get('r')) > 0) setUnit(unit, Number(p.get('r'))); search({ lat: parseFloat(p.get('lat')), lng: parseFloat(p.get('lng')) }, p.get('q') || 'the chosen place'); }
     else if (p.get('q')) { els.place.value = p.get('q'); els.finder.requestSubmit(); }
   })();
 })();

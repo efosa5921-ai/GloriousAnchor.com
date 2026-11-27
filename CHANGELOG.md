@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 27 November 2026
 
+- **Miles or kilometres**: the church finder now shows distances in miles to visitors in the United States, the United Kingdom and the other countries that use miles, and in kilometres everywhere else. You can switch between the two yourself.
 - **Church finder**: it has a new, easier address, gloriousanchor.com/church-finder, and it now shows clearly that it is working while it searches: the button spins, a banner says what it is doing, and placeholders stand in for the results until they arrive.
 
 ## 26 November 2026
