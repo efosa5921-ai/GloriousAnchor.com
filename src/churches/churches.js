@@ -11,7 +11,24 @@
   const fmtKm = (d) => (d < 1 ? `${Math.round(d * 1000)} m` : `${d.toFixed(d < 10 ? 1 : 0)} km`);
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const setStatus = (t) => { els.status.textContent = t; };
-  const setBusy = (on) => { state.busy = on; els.locate.disabled = on; els.finder.querySelector('button[type=submit]').disabled = on; };
+  els.submit = els.finder.querySelector('button[type=submit]');
+  const labels = new Map([[els.locate, els.locate.innerHTML], [els.submit, els.submit.innerHTML]]);
+  let slowTimer = null;
+  /* While a search runs, everything says so: the pressed button spins and reads "Searching…", the status line
+     turns into a banner, grey placeholders stand where the results will appear, and after a few seconds a note
+     explains that the map service can be slow, so nobody thinks the page has stopped. */
+  const setBusy = (on, button, text) => {
+    state.busy = on; els.locate.disabled = on; els.submit.disabled = on;
+    for (const [b, html] of labels) { b.classList.remove('is-busy'); b.innerHTML = html; }
+    els.status.classList.toggle('status--busy', on);
+    els.results.setAttribute('aria-busy', on ? 'true' : 'false');
+    clearTimeout(slowTimer);
+    if (!on) { els.results.querySelectorAll('.church--skeleton').forEach((e) => e.remove()); return; }
+    if (button) { button.classList.add('is-busy'); button.textContent = text || 'Searching…'; }
+    if (!els.results.querySelector('.church--skeleton')) els.results.innerHTML = '<li class="church church--skeleton" aria-hidden="true"><span></span><span></span><span></span></li>'.repeat(4);
+    slowTimer = setTimeout(() => { if (state.busy) setStatus(`${els.status.textContent.replace(/…$/, '')}… still searching. The map service can take up to half a minute, please wait.`); }, 6000);
+    if (els.status.getBoundingClientRect().bottom > innerHeight) els.status.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
 
   /* ---------- data ---------- */
   async function loadListed() {
@@ -51,12 +68,12 @@
   }
 
   /* ---------- search ---------- */
-  async function search(center, label) {
+  async function search(center, label, button) {
     if (state.busy) return;
-    setBusy(true);
     state.center = center; state.label = label;
     const radius = Number(els.radius.value);
     setStatus(`Looking for churches within ${radius} km of ${label}…`);
+    setBusy(true, button || els.submit);
     try {
       let osm = [];
       try { osm = (await overpass(center.lat, center.lng, radius)).map(fromOsm).filter(Boolean); } catch (e) { if (!state.listed.length) throw e; setStatus(e.message); }
@@ -67,7 +84,7 @@
       all.sort((a, b) => (b.listed - a.listed) || a.distance - b.distance);
       state.results = all;
       renderResults();
-      history.replaceState(null, '', `?lat=${center.lat.toFixed(5)}&lng=${center.lng.toFixed(5)}&r=${radius}&q=${encodeURIComponent(label)}`);
+      history.replaceState(null, '', `${location.pathname}?lat=${center.lat.toFixed(5)}&lng=${center.lng.toFixed(5)}&r=${radius}&q=${encodeURIComponent(label)}`);
     } catch (e) {
       setStatus(e.message); els.results.innerHTML = ''; els.map.hidden = true;
     } finally { setBusy(false); }
@@ -124,9 +141,9 @@
   /* ---------- events ---------- */
   els.locate.addEventListener('click', () => {
     if (!navigator.geolocation) { setStatus('Your browser cannot share location. Type a town instead.'); return; }
-    setStatus('Getting your location…'); setBusy(true);
+    setStatus('Getting your location…'); setBusy(true, els.locate, 'Locating…');
     navigator.geolocation.getCurrentPosition(
-      (pos) => { setBusy(false); search({ lat: pos.coords.latitude, lng: pos.coords.longitude }, 'your location'); },
+      (pos) => { setBusy(false); search({ lat: pos.coords.latitude, lng: pos.coords.longitude }, 'your location', els.locate); },
       (err) => { setBusy(false); setStatus(err.code === 1 ? 'Location permission was denied. Type a town instead.' : 'Could not get your location. Type a town instead.'); },
       { enableHighAccuracy: false, timeout: 12000, maximumAge: 300000 },
     );
@@ -134,8 +151,8 @@
   els.finder.addEventListener('submit', async (e) => {
     e.preventDefault();
     const q = els.place.value.trim(); if (!q) { els.place.focus(); return; }
-    setBusy(true); setStatus(`Finding ${q}…`);
-    try { const c = await geocode(q); setBusy(false); search({ lat: c.lat, lng: c.lng }, c.label); } catch (err) { setBusy(false); setStatus(err.message); }
+    setStatus(`Finding ${q}…`); setBusy(true, els.submit);
+    try { const c = await geocode(q); setBusy(false); search({ lat: c.lat, lng: c.lng }, c.label, els.submit); } catch (err) { setBusy(false); setStatus(err.message); }
   });
   els.radius.addEventListener('change', () => { if (state.center) search(state.center, state.label); });
   els.listedOnly.addEventListener('change', () => { if (state.results.length || state.center) renderResults(); });

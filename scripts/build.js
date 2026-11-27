@@ -339,7 +339,7 @@ async function finalizeSeo({ site, articles, posts, churches, categories = [] })
       .replace(/<span class="brand__name">[^<]*<\/span>/, `<span class="brand__name">${escHtml(name)}</span>`)
       .replace(/<span class="brand__tag">[^<]*<\/span>/, `<span class="brand__tag">${escHtml(tagline || '')}</span>`)
       .replaceAll('href="assets/', 'href="../assets/').replaceAll('src="assets/', 'src="../assets/').replaceAll('href="styles.css"', 'href="../styles.css"').replaceAll('src="app.js"', 'src="../app.js"')
-      .replaceAll('href="data/', 'href="../data/').replaceAll('href="feed.xml"', 'href="../feed.xml"').replaceAll('href="digest/', 'href="../digest/').replaceAll('href="quiz/', 'href="../quiz/').replaceAll('href="articles/', 'href="../articles/').replaceAll('href="churches/', 'href="../churches/').replaceAll('href="admin/', 'href="../admin/').replaceAll('href="about/', 'href="../about/').replaceAll('href="harvest/', 'href="../harvest/');
+      .replaceAll('href="data/', 'href="../data/').replaceAll('href="feed.xml"', 'href="../feed.xml"').replaceAll('href="digest/', 'href="../digest/').replaceAll('href="quiz/', 'href="../quiz/').replaceAll('href="articles/', 'href="../articles/').replaceAll('href="churches/', 'href="../churches/').replaceAll('href="church-finder/', 'href="../church-finder/').replaceAll('href="admin/', 'href="../admin/').replaceAll('href="about/', 'href="../about/').replaceAll('href="harvest/', 'href="../harvest/');
     await mkdir(path.join(DIST, slug), { recursive: true });
     await writeFile(path.join(DIST, slug, 'index.html'), page);
   };
@@ -385,9 +385,13 @@ async function finalizeSeo({ site, articles, posts, churches, categories = [] })
   // Finder page: meta + a static list of listed churches for crawlers
   const finderPath = path.join(DIST, 'churches', 'index.html');
   let finder = await readFile(finderPath, 'utf8');
-  finder = finder.replace('<!--seo:head-->', metaTags({ title: `Find a church near you — ${site.name}`, description: 'Find Christian churches near you: search by your location or a town, see them on a map with distances, websites and directions.', url: `${b}/churches/`, image: social, site }));
+  finder = finder.replace('<!--seo:head-->', metaTags({ title: `Find a church near you — ${site.name}`, description: 'Find Christian churches near you: search by your location or a town, see them on a map with distances, websites and directions.', url: `${b}/church-finder/`, image: social, site }));
   finder = finder.replace('<!--listed-->', located.length ? `<h2>Churches listed with ${escHtml(site.name)}</h2><ul class="article__more">${located.map((c) => `<li><a href="./${c.slug}/">${escHtml(c.name)}</a>${c.address ? ` <span class="muted">${escHtml(c.address)}</span>` : ''}</li>`).join('')}</ul>` : '');
   await writeFile(finderPath, finder);
+  // The finder's public address is /church-finder/. The same page is written there with a <base> pointing at
+  // /churches/, where its script, its data and the listed churches' own pages live; /churches/ keeps working.
+  await mkdir(path.join(DIST, 'church-finder'), { recursive: true });
+  await writeFile(path.join(DIST, 'church-finder', 'index.html'), finder.replace('<meta charset="utf-8">', '<meta charset="utf-8">\n  <base href="../churches/">'));
 
   // Sitemap + robots
   const entries = [
@@ -395,7 +399,7 @@ async function finalizeSeo({ site, articles, posts, churches, categories = [] })
     { url: `${b}/about/`, changefreq: 'monthly', priority: 0.8 },
     { url: `${b}/articles/`, changefreq: 'weekly', priority: 0.8 },
     ...posts.map((p) => ({ url: p.url, lastmod: p.publishedAt, changefreq: 'monthly', priority: 0.9 })),
-    { url: `${b}/churches/`, changefreq: 'weekly', priority: 0.8 },
+    { url: `${b}/church-finder/`, changefreq: 'weekly', priority: 0.8 },
     { url: `${b}/digest/`, changefreq: 'daily', priority: 0.8 },
     { url: `${b}/harvest/`, changefreq: 'daily', priority: 0.8 },
     { url: `${b}/quiz/`, changefreq: 'daily', priority: 0.8 },
@@ -410,7 +414,7 @@ async function finalizeSeo({ site, articles, posts, churches, categories = [] })
   const llms = [`# ${site.name}`, '', `> ${site.tagline || 'Christian news, voices and video, anchored in one place.'}`, '',
     `${site.name} is a Christian news and teaching site published from Nigeria for believers everywhere. It gathers headlines from trusted Christian publishers, publishes its own reported articles and teaching, and keeps a directory of churches.`, '',
     '## Our articles', '', ...posts.map((p) => `- [${p.title}](${p.url}): ${p.summary}`), '',
-    '## Sections', '', `- [Headlines](${b}/)`, `- [All articles](${b}/articles/)`, ...sections.map((s) => `- [${s.label}](${b}/${s.slug}/)`), `- [Church directory](${b}/churches/)`, `- [Daily digest](${b}/digest/)`, '',
+    '## Sections', '', `- [Headlines](${b}/)`, `- [All articles](${b}/articles/)`, ...sections.map((s) => `- [${s.label}](${b}/${s.slug}/)`), `- [Church finder](${b}/church-finder/)`, `- [Daily digest](${b}/digest/)`, '',
     '## Feeds', '', `- [Articles RSS](${b}/articles/feed.xml)`, `- [Headlines RSS](${b}/feed.xml)`, `- [Sitemap](${b}/sitemap.xml)`, ''].join('\n');
   await writeFile(path.join(DIST, 'llms.txt'), llms);
   // Analytics (optional, privacy-friendly): injected into every page only when a site id is set.

@@ -199,7 +199,7 @@ export function renderAboutPage(site, { mission = null, now = new Date() } = {})
     <section class="about__section">
       <h2>What we do</h2>
       <ul class="about__list">
-        <li class="about__item"><span class="about__name">${esc(site.name)}</span><span class="about__value"><a href="../">${esc(bare(site.url))}</a>: Christian news, voices and video from across the church, gathered in one place every day, with <a href="../articles/">our own articles</a>, a <a href="../digest/">daily digest</a>, a <a href="../churches/">church finder</a>, <a href="../harvest/">The Harvest</a> and a <a href="../quiz/">Bible quiz</a>.</span></li>
+        <li class="about__item"><span class="about__name">${esc(site.name)}</span><span class="about__value"><a href="../">${esc(bare(site.url))}</a>: Christian news, voices and video from across the church, gathered in one place every day, with <a href="../articles/">our own articles</a>, a <a href="../digest/">daily digest</a>, a <a href="../church-finder/">church finder</a>, <a href="../harvest/">The Harvest</a> and a <a href="../quiz/">Bible quiz</a>.</span></li>
         <li class="about__item"><span class="about__name">GAIN TV</span><span class="about__value"><a href="https://gaintv.app">gaintv.app</a>: new Christian teaching, apologetics and worship videos every day.</span></li>
         <li class="about__item"><span class="about__name">GAIN Radio</span><span class="about__value"><a href="https://gainradio.app">gainradio.app</a>: sermons, podcasts and music to listen to.</span></li>
       </ul>

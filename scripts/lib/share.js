@@ -98,7 +98,7 @@ ${moreHtml}
   </main>
   <footer class="footer">
     <div class="wrap footer__row">
-      <div><p class="footer__verse">${esc(site.verse || '')}</p><p><strong>${esc(site.name)}</strong> · <a href="../../">Front page</a> · <a href="../../churches/">Find a church</a> · <a href="../../articles/">Our articles</a></p></div>
+      <div><p class="footer__verse">${esc(site.verse || '')}</p><p><strong>${esc(site.name)}</strong> · <a href="../../">Front page</a> · <a href="../../church-finder/">Find a church</a> · <a href="../../articles/">Our articles</a></p></div>
     </div>
   </footer>
 </body>

@@ -53,7 +53,7 @@
     },
     {
       "name": "Find a church",
-      "url": "../churches/",
+      "url": "../church-finder/",
       "icons": [
         {
           "src": "icon-192.png",

@@ -4,6 +4,10 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 27 November 2026
+
+- **Church finder**: it has a new, easier address, gloriousanchor.com/church-finder, and it now shows clearly that it is working while it searches: the button spins, a banner says what it is doing, and placeholders stand in for the results until they arrive.
+
 ## 26 November 2026
 
 - **About us, easier to find**: there is now an About us link at the top of the home page and of every section, as well as at the foot.

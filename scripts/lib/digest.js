@@ -137,7 +137,7 @@ ${items.map((a, i) => cardHtml(a, { href: shareUrl(a, site), imageProxy: site.im
     <script type="application/json" id="digestData">${JSON.stringify({ site: site.name, date: longDate(date), url: b.replace(/^https?:\/\//, ''), items: items.map((a) => ({ title: a.shareTitle || a.title, source: a.internal ? site.name : a.source, image: a.image ? previewImage(a, site) : null, url: shareUrl(a, site) })) }).replace(/</g, '\\u003c')}</script>
     <pre id="digestMd" hidden>${esc(md)}</pre>
   </main>
-  <footer class="footer"><div class="wrap"><p class="footer__meta"><a href="../">${esc(site.name)}</a> · <a href="../articles/">Our articles</a> · <a href="../churches/">Find a church</a></p></div></footer>
+  <footer class="footer"><div class="wrap"><p class="footer__meta"><a href="../">${esc(site.name)}</a> · <a href="../articles/">Our articles</a> · <a href="../church-finder/">Find a church</a></p></div></footer>
   <script>
     const copier = (btnId, srcId, label) => document.getElementById(btnId).addEventListener('click', async (e) => {
       const t = document.getElementById(srcId).textContent;

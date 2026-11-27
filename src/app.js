@@ -163,7 +163,7 @@
     }
     const digest = document.createElement('a'); digest.className = 'cat cat--link cat--digest'; digest.href = `${BASE}digest/`; digest.textContent = '☀ Daily digest';
     const quiz = document.createElement('a'); quiz.className = 'cat cat--link'; quiz.href = `${BASE}quiz/`; quiz.textContent = '📖 Bible Quiz';
-    const link = document.createElement('a'); link.className = 'cat cat--link'; link.href = `${BASE}churches/`; link.textContent = '⛪ Find a church';
+    const link = document.createElement('a'); link.className = 'cat cat--link'; link.href = `${BASE}church-finder/`; link.textContent = '⛪ Find a church';
     els.cats.append(digest, quiz, link);
   }
   function renderSources() {

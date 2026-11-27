@@ -120,7 +120,7 @@ Everything lives in [`feeds.json`](feeds.json). Each source has an `id` (unique,
 
 ## Church finder
 
-`gloriousanchor.com/churches/` finds Christian churches near a visitor: by their location or any town, within a chosen
+`gloriousanchor.com/church-finder/` (also reachable at `/churches/`) finds Christian churches near a visitor: by their location or any town, within a chosen
 radius, listed nearest-first with a map, denominations, websites and directions. Results come from OpenStreetMap
 (worldwide, free, no key) merged with your own directory in [`churches.json`](churches.json), which shows first with a
 "Listed" badge. Add churches from the admin (Churches tab) or by editing the file; addresses are located automatically
