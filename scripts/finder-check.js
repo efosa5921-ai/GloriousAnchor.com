@@ -36,6 +36,7 @@ const context = await browser.newContext({ timezoneId, geolocation: { latitude: 
 const page = await context.newPage();
 const answers = [];
 page.on('response', (r) => { if (/interpreter|nominatim|photon|geoapify/.test(r.url())) answers.push(`${((Date.now() - t0) / 1000).toFixed(1)}s ${r.status()} ${new URL(r.url()).host}`); });
+page.on('response', async (r) => { if (/geoapify/.test(r.url()) && r.status() >= 400) { const q = r.request(); console.log(`  Geoapify refused (${r.status()}): ${(await r.text().catch(() => '')).slice(0, 200)} | sent Origin: ${q.headers().origin || 'none'}, Referer: ${q.headers().referer || 'none'}`); } });
 page.on('requestfailed', (r) => { if (/interpreter|nominatim/.test(r.url())) answers.push(`${((Date.now() - t0) / 1000).toFixed(1)}s ${r.failure()?.errorText} ${new URL(r.url()).host}`); });
 page.on('pageerror', (e) => console.log(`page error: ${e.message}`));
 const blocked = new Set();
