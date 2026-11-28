@@ -74,9 +74,10 @@
      and which are sometimes slow or stalled. The question goes to the first server, and if it has not answered within
      1.5 seconds (or it fails) the next is asked as well; whichever answers first is used and the others are dropped.
      No server is waited on for more than 30 seconds. `ctrls` collects the requests so a newer search can stop them. */
+  const CAP = 500; // the most churches asked for in one search
   function overpass(lat, lng, radiusKm, ctrls = []) {
-    const q = `[out:json][timeout:25];nwr["amenity"="place_of_worship"]["religion"="christian"](around:${Math.round(radiusKm * 1000)},${lat},${lng});out center tags qt 300;`;
-    const body = 'data=' + encodeURIComponent(q);
+    const q = `[out:json][timeout:25];nwr["amenity"="place_of_worship"]["religion"="christian"](around:${Math.round(radiusKm * 1000)},${lat},${lng});out center tags qt ${CAP};`;
+    const query = '?data=' + encodeURIComponent(q); // a plain GET: one of the servers refuses a POST from a web page
     const errors = [];
     let next = 0, live = 0, done = false, hedge = null;
     return new Promise((resolve, reject) => {
@@ -85,7 +86,7 @@
         const url = OVERPASS[next++], c = new AbortController();
         ctrls.push(c); live += 1;
         const kill = setTimeout(() => c.abort(), 30000);
-        fetch(url, { method: 'POST', body, headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, signal: c.signal })
+        fetch(url + query, { signal: c.signal })
           .then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
           .then((j) => { if (!done) { done = true; resolve(j.elements || []); } })
           .catch((e) => {
@@ -187,8 +188,9 @@
     }
     const ops = [], fast = new AbortController(); // kept apart: the full-list search drops its own requests when it ends, and must not drop the quick one
     pending = [fast, { abort: () => ops.forEach((c) => c.abort()) }];
-    let complete = false;
+    let complete = false, early = [];
     const quickDone = quick(center.lat, center.lng, radius, fast.signal).then((list) => {
+      early = list;
       if (mine !== run || complete || !list.length) return list;
       show(list);
       if (!state.results.length) return list;
@@ -200,7 +202,12 @@
     try {
       const osm = (await overpass(center.lat, center.lng, radius, ops)).map(fromOsm).filter(Boolean);
       if (mine !== run) return;
-      complete = true; remember(key, osm); show(osm);
+      complete = true;
+      // The servers cannot sort by distance, so where an area holds more churches than one search may fetch, the
+      // better-known ones from the quick answer are kept in, and the visitor is told the list is not complete.
+      const all = osm.length >= CAP ? [...osm, ...early.filter((e) => !osm.some((o) => o.id === e.id))] : osm;
+      remember(key, all); show(all);
+      if (osm.length >= CAP) setStatus(`${els.status.textContent} This area has more churches than we can list at once, so choose a smaller distance to be sure of seeing every church close to you.`);
     } catch {
       await quickDone; // the full list failed: make sure the quick answer has had its chance to arrive
       if (mine !== run) return;
