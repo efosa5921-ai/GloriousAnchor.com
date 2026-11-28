@@ -146,6 +146,8 @@
      replaces them; when it cannot be had, they are the answer. */
   const CHURCHY = /church|chapel|cathedral|basilica|parish|ministr|assembl|baptist|methodist|catholic|pentecost|presbyter|lutheran|anglican|episcopal|apostolic|adventist|gospel|christ|tabernacle|fellowship|evangel|orthodox|nazarene|wesleyan|mennonite|quaker|salvation army|kingdom hall|bible|jesus|saint|\bst\.? |holy|trinity|calvary|redeemer|our lady|sacred heart|abbey|priory|minster|\bkirk\b|iglesia|[eé]glise|kirche|chiesa|igreja|kerk|kapelle|capilla|parroquia|par[oó]quia|templo|notre.dame|\bsan(ta|to)? |\bs[aã]o /i;
   const OTHER_FAITH = /mosque|masjid|islam|muslim|synagog|\bshul\b|chabad|jewish|hebrew|\bbeth\b|gurdwara|sikh|mandir|hindu|buddh|vihara|\bzen\b|bah[aá].?[ií]|scientolog|krishna/i;
+  // Groups the map sometimes labels "christian" that are not churches; they are left out whatever the source says.
+  const NOT_A_CHURCH = /r[ou]sicrucian|\bamorc\b|masonic|freemason|\blodge\b|eckankar|grail message|ogboni|occult|scientolog|spiritualis[tm]/i;
   const otherFaith = new Set(); // places the map itself says belong to another faith, whatever their name
   async function nearest(lat, lng, radiusKm, signal) {
     const r = await fetch(`https://photon.komoot.io/reverse?lat=${lat.toFixed(3)}&lon=${lng.toFixed(3)}&radius=${Math.max(1, Math.round(radiusKm))}&limit=50&osm_tag=amenity:place_of_worship`, { signal });
@@ -231,7 +233,7 @@
     const listedHere = state.listed.filter((c) => km(center.lat, center.lng, c.lat, c.lng) <= radius);
     const show = (osm) => {
       // Listed churches replace a map entry at (nearly) the same spot.
-      const others = osm.filter((o) => !listedHere.some((l) => km(l.lat, l.lng, o.lat, o.lng) < 0.08));
+      const others = osm.filter((o) => !NOT_A_CHURCH.test(o.name) && !listedHere.some((l) => km(l.lat, l.lng, o.lat, o.lng) < 0.08));
       const all = [...listedHere, ...others].map((c) => ({ ...c, distance: km(center.lat, center.lng, c.lat, c.lng) })).filter((c) => c.distance <= radius);
       all.sort((a, b) => (b.listed - a.listed) || a.distance - b.distance);
       state.results = all;
