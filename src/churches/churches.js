@@ -75,7 +75,7 @@
   /* The full list comes from Overpass, the free public query servers of OpenStreetMap, which the whole world shares
      and which are sometimes slow or stalled. The question goes to the first server, and if it has not answered within
      1.5 seconds (or it fails) the next is asked as well; whichever answers first is used and the others are dropped.
-     No server is waited on for more than 30 seconds. `ctrls` collects the requests so a newer search can stop them. */
+     No server is waited on for more than 20 seconds. `ctrls` collects the requests so a newer search can stop them. */
   const CAP = 500; // the most churches asked for in one search
   function overpass(lat, lng, radiusKm, ctrls = []) {
     const q = `[out:json][timeout:25];nwr["amenity"="place_of_worship"]["religion"="christian"](around:${Math.round(radiusKm * 1000)},${lat.toFixed(3)},${lng.toFixed(3)});out center tags qt ${CAP};`; // the spot is rounded to about 100 m: near enough to search from, and no server is told exactly where the visitor stands
@@ -87,7 +87,7 @@
         if (done || next >= OVERPASS.length) return;
         const url = OVERPASS[next++], c = new AbortController();
         ctrls.push(c); live += 1;
-        const kill = setTimeout(() => c.abort(), 30000);
+        const kill = setTimeout(() => c.abort(), 20000);
         fetch(url + query, { signal: c.signal })
           .then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
           .then((j) => { if (!done) { done = true; resolve(j.elements || []); } })
@@ -103,10 +103,30 @@
       hedge = setInterval(launch, 1500);
     }).finally(() => { clearInterval(hedge); for (const c of ctrls) c.abort(); });
   }
-  /* A quick first answer, usually in under a second, from OpenStreetMap's place search (Nominatim): up to forty of
-     the better-known churches in the area. They are shown at once and replaced by the full list when it arrives,
-     so there is something to see even when the full list is slow or cannot be had. */
-  const CHURCHY = /church|chapel|cathedral|basilica|parish|ministr|assembl|baptist|methodist|catholic|pentecost|presbyter|lutheran|anglican|episcopal|apostolic|adventist|gospel|christ|tabernacle|fellowship|iglesia|[eé]glise|kirche|chiesa|igreja/i;
+  /* The quick answer, usually in under a second, comes from two free services that hold the same OpenStreetMap
+     data and are far less crowded: Photon (run by Komoot, in Germany) gives the fifty places of worship nearest a
+     point, and OpenStreetMap's own place search (Nominatim) gives up to forty of the better-known churches of an
+     area together with their denomination and website. They are shown at once. When the full list arrives it
+     replaces them; when it cannot be had, they are the answer. */
+  const CHURCHY = /church|chapel|cathedral|basilica|parish|ministr|assembl|baptist|methodist|catholic|pentecost|presbyter|lutheran|anglican|episcopal|apostolic|adventist|gospel|christ|tabernacle|fellowship|evangel|orthodox|nazarene|wesleyan|mennonite|quaker|salvation army|kingdom hall|bible|jesus|saint|\bst\.? |holy|trinity|calvary|redeemer|our lady|sacred heart|abbey|priory|minster|\bkirk\b|iglesia|[eé]glise|kirche|chiesa|igreja|kerk|kapelle|capilla|parroquia|par[oó]quia|templo|notre.dame|\bsan(ta|to)? |\bs[aã]o /i;
+  const OTHER_FAITH = /mosque|masjid|islam|muslim|synagog|\bshul\b|chabad|jewish|hebrew|\bbeth\b|gurdwara|sikh|mandir|hindu|buddh|vihara|\bzen\b|bah[aá].?[ií]|scientolog|krishna/i;
+  const otherFaith = new Set(); // places the map itself says belong to another faith, whatever their name
+  async function nearest(lat, lng, radiusKm, signal) {
+    const r = await fetch(`https://photon.komoot.io/reverse?lat=${lat.toFixed(3)}&lon=${lng.toFixed(3)}&radius=${Math.max(1, Math.round(radiusKm))}&limit=50&osm_tag=amenity:place_of_worship`, { signal });
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    return ((await r.json()).features || []).map(fromPhoton).filter(Boolean);
+  }
+  function fromPhoton(f) {
+    const p = f.properties || {}, g = f.geometry?.coordinates;
+    const type = { N: 'node', W: 'way', R: 'relation' }[p.osm_type];
+    // Photon does not say which faith a place belongs to, so only places whose name is plainly a church's are taken.
+    if (!g || !type || p.osm_value !== 'place_of_worship' || !p.name || OTHER_FAITH.test(p.name) || !CHURCHY.test(p.name)) return null;
+    return {
+      id: `osm-${type}-${p.osm_id}`, name: p.name, unnamed: false, denomination: null,
+      address: [p.housenumber && p.street ? `${p.housenumber} ${p.street}` : p.street, p.locality || p.district, p.city].filter(Boolean).join(', ') || null,
+      website: null, phone: null, serviceTimes: null, lat: g[1], lng: g[0], listed: false, osmUrl: `https://www.openstreetmap.org/${type}/${p.osm_id}`,
+    };
+  }
   async function quick(lat, lng, radiusKm, signal) {
     lat = Number(lat.toFixed(3)); lng = Number(lng.toFixed(3));
     const dLat = radiusKm / 111.32, dLng = radiusKm / (111.32 * Math.max(0.1, Math.cos((lat * Math.PI) / 180)));
@@ -120,7 +140,8 @@
     const worship = h.category === 'amenity' && h.type === 'place_of_worship';
     const building = h.category === 'building' && /^(church|chapel|cathedral)$/.test(h.type);
     if (!worship && !building) return null;
-    if (x.religion ? x.religion !== 'christian' : !building && !CHURCHY.test(h.name || '')) return null; // other faiths' places of worship are left out
+    if (x.religion && x.religion !== 'christian') { otherFaith.add(`osm-${h.osm_type}-${h.osm_id}`); return null; } // other faiths' places of worship are left out
+    if (!x.religion && !building && (OTHER_FAITH.test(h.name || '') || !CHURCHY.test(h.name || ''))) return null;
     const lat = parseFloat(h.lat), lng = parseFloat(h.lon);
     if (!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
     const site = x.website || x['contact:website'] || x.url || null;
@@ -191,31 +212,42 @@
     }
     const ops = [], fast = new AbortController(); // kept apart: the full-list search drops its own requests when it ends, and must not drop the quick one
     pending = [fast, { abort: () => ops.forEach((c) => c.abort()) }];
-    let complete = false, early = [];
-    const quickDone = quick(center.lat, center.lng, radius, fast.signal).then((list) => {
-      early = list;
-      if (mine !== run || complete || !list.length) return list;
-      show(list);
-      if (!state.results.length) return list;
+    let complete = false;
+    const early = new Map(); // id → church, gathered from the quick sources as they answer
+    const filled = (o) => Object.fromEntries(Object.entries(o).filter(([, v]) => v != null && v !== false));
+    const gather = (list) => {
+      for (const c of list) early.set(c.id, { ...c, ...filled(early.get(c.id) || {}), ...filled(c.denomination || c.website ? c : {}) });
+      for (const id of otherFaith) early.delete(id);
+      if (mine !== run || complete || !early.size) return;
+      show([...early.values()]);
+      if (!state.results.length) return;
       setBusy(false); // the first churches are on the page: the buttons work again while the rest load
       els.status.classList.add('status--more');
-      setStatus(`${els.status.textContent.replace(/, nearest first\.$/, ' so far.')} Loading the full list…`);
-      return list;
-    }).catch(() => []);
+      setStatus(`${els.status.textContent.replace(/, nearest first\.$/, ' so far.')} Looking for more…`);
+    };
+    const around = (lat, lng) => nearest(lat, lng, radius, fast.signal).then(gather).catch(() => {});
+    const dLat = (radius / 2) / 111.32, dLng = dLat / Math.max(0.1, Math.cos((center.lat * Math.PI) / 180));
+    const quickDone = Promise.allSettled([
+      // The fifty nearest to the visitor first, then, for a wide search, the fifty nearest to four points around them.
+      around(center.lat, center.lng).then(() => (radius >= 5 && mine === run && !complete
+        ? Promise.allSettled([[dLat, 0], [-dLat, 0], [0, dLng], [0, -dLng]].map(([a, b]) => around(center.lat + a, center.lng + b))) : null)),
+      quick(center.lat, center.lng, radius, fast.signal).then(gather).catch(() => {}),
+    ]);
+    setTimeout(() => fast.abort(), 15000); // the quick sources are not waited on for longer than this
     try {
       const osm = (await overpass(center.lat, center.lng, radius, ops)).map(fromOsm).filter(Boolean);
       if (mine !== run) return;
       complete = true;
       // The servers cannot sort by distance, so where an area holds more churches than one search may fetch, the
-      // better-known ones from the quick answer are kept in, and the visitor is told the list is not complete.
-      const all = osm.length >= CAP ? [...osm, ...early.filter((e) => !osm.some((o) => o.id === e.id))] : osm;
+      // nearest and better-known ones from the quick answer are kept in, and the visitor is told the list is not complete.
+      const all = osm.length >= CAP ? [...osm, ...[...early.values()].filter((e) => !osm.some((o) => o.id === e.id))] : osm;
       remember(key, all); show(all);
       if (osm.length >= CAP) setStatus(`${els.status.textContent} This area has more churches than we can list at once, so choose a smaller distance to be sure of seeing every church close to you.`);
     } catch {
-      await quickDone; // the full list failed: make sure the quick answer has had its chance to arrive
+      await quickDone; // the full list failed: let the quick sources finish, for they are now the answer
       if (mine !== run) return;
       complete = true;
-      if (state.results.length) { renderResults(); setStatus(`${els.status.textContent} The full map list could not be loaded just now, so some churches may be missing. Please try again in a minute.`); }
+      if (state.results.length) { renderResults(); setStatus(`${els.status.textContent} There may be more: the complete map list is busy just now, so try again later, or search a smaller distance, to see the rest.`); }
       else { els.results.innerHTML = ''; els.map.hidden = true; setStatus('We could not reach the map service just now, so we cannot show the churches near you. Please try again in a minute.'); }
     } finally {
       if (mine === run) { setBusy(false); els.status.classList.remove('status--more'); }

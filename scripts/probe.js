@@ -37,7 +37,7 @@ if (targets.every((t) => t.startsWith('web:'))) {
     try {
       const res = await fetch(url, { headers: { 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36', origin: 'https://gloriousanchor.com', referer: 'https://gloriousanchor.com/', accept: '*/*' }, signal: AbortSignal.timeout(40000) });
       const text = await res.text();
-      console.log(`web ${res.status} ${Date.now() - started} ms cors=${res.headers.get('access-control-allow-origin') || 'none'} type=${res.headers.get('content-type') || ''} bytes=${text.length} ${new URL(url).host}${new URL(url).pathname}\n  ${text.slice(0, 500).replace(/\s+/g, ' ')}`);
+      console.log(`web ${res.status} ${Date.now() - started} ms cors=${res.headers.get('access-control-allow-origin') || 'none'} type=${res.headers.get('content-type') || ''} bytes=${text.length} items=${(() => { try { const j = JSON.parse(text); return (j.features || j.elements || j).length; } catch { return '?'; } })()} ${new URL(url).host}${new URL(url).pathname}\n  ${text.slice(0, 500).replace(/\s+/g, ' ')}`);
     } catch (err) { console.log(`web FAILED after ${Date.now() - started} ms: ${err.name} ${err.message} ${new URL(url).host}`); }
   }
   process.exit(0);
