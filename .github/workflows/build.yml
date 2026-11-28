@@ -51,6 +51,8 @@ jobs:
         env:
           # Optional: self-hosted feed server for X / Instagram / TikTok / Facebook (see server/README.md)
           FEEDS_SERVER_URL: ${{ secrets.FEEDS_SERVER_URL }}
+          # Optional: Geoapify key for the church finder's complete, nearest-first list (see README)
+          GEOAPIFY_KEY: ${{ secrets.GEOAPIFY_KEY }}
           RSSHUB_ACCESS_KEY: ${{ secrets.RSSHUB_ACCESS_KEY }}
           FEEDS_BASIC_AUTH: ${{ secrets.FEEDS_BASIC_AUTH }}
           # Optional: YouTube Data API key, used when YouTube's RSS feed server fails (see README)

@@ -126,6 +126,8 @@ radius, listed nearest-first with a map, denominations, websites and directions.
 "Listed" badge. Add churches from the admin (Churches tab) or by editing the file; addresses are located automatically
 at build time and cached. Give `lat`/`lng` directly for precision.
 
+Where the churches come from: with the `GEOAPIFY_KEY` repository secret set, the finder asks Geoapify (the same OpenStreetMap data on dependable servers) for the hundred nearest Christian places of worship, with a "Show more churches" button for the next hundred; one page costs six of the free plan's 3,000 daily credits. Without the key, or when Geoapify cannot be reached, it uses Photon and Nominatim for a quick nearest-first answer and the public Overpass servers for the complete list when they are able to give it. `node scripts/finder-check.js` (the "Check the church finder" workflow) opens the live finder in a real browser and reports what a visitor gets.
+
 ## Search engines (SEO)
 
 Every build also produces `sitemap.xml` (home, article index, each article, the church finder and each listed church),

@@ -387,6 +387,10 @@ async function finalizeSeo({ site, articles, posts, churches, categories = [] })
   let finder = await readFile(finderPath, 'utf8');
   finder = finder.replace('<!--seo:head-->', metaTags({ title: `Find a church near you — ${site.name}`, description: 'Find Christian churches near you: search by your location or a town, see them on a map with distances, websites and directions.', url: `${b}/church-finder/`, image: social, site }));
   finder = finder.replace('<!--listed-->', located.length ? `<h2>Churches listed with ${escHtml(site.name)}</h2><ul class="article__more">${located.map((c) => `<li><a href="./${c.slug}/">${escHtml(c.name)}</a>${c.address ? ` <span class="muted">${escHtml(c.address)}</span>` : ''}</li>`).join('')}</ul>` : '');
+  // With a Geoapify key (the GEOAPIFY_KEY secret) the finder asks Geoapify for the churches, nearest first.
+  // Such keys are made to be used from a web page; the key's allowed origins are set in Geoapify's dashboard.
+  const geoKey = String(expandEnv(site.geoapifyKey || '')).trim();
+  if (/^[\w-]{16,}$/.test(geoKey)) finder = finder.replace('</head>', `  <meta name="geoapify-key" content="${geoKey}">\n</head>`);
   await writeFile(finderPath, finder);
   // The finder's public address is /church-finder/. The same page is written there with a <base> pointing at
   // /churches/, where its script, its data and the listed churches' own pages live; /churches/ keeps working.

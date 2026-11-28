@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const $ = (s) => document.querySelector(s);
-  const els = { finder: $('#finder'), locate: $('#locateBtn'), place: $('#placeInput'), radius: $('#radiusSel'), unit: $('#unitSel'), listedOnly: $('#listedOnly'), status: $('#status'), map: $('#map'), results: $('#results') };
+  const els = { finder: $('#finder'), locate: $('#locateBtn'), place: $('#placeInput'), radius: $('#radiusSel'), unit: $('#unitSel'), listedOnly: $('#listedOnly'), status: $('#status'), more: $('#moreBtn'), map: $('#map'), results: $('#results') };
   // Public OpenStreetMap query servers, tried in this order. On 28 Nov 2026 the main one (overpass-api.de) took
   // 35 s or failed and the French one refused browsers, so on such days the quick answer below is what visitors see.
   // A Russian-hosted mirror (maps.mail.ru) was faster but was removed at the owner's wish.
@@ -103,6 +103,42 @@
       hedge = setInterval(launch, 1500);
     }).finally(() => { clearInterval(hedge); for (const c of ctrls) c.abort(); });
   }
+  /* With a key, the churches come from Geoapify (a German company serving the same OpenStreetMap data from its own
+     dependable servers): the hundred nearest Christian places of worship, already sorted by distance, with a button
+     for the next hundred. One page of a hundred costs six of the free plan's 3,000 daily credits. Without a key,
+     or if Geoapify cannot be reached, the public services below are used instead. */
+  const GEOAPIFY = document.querySelector('meta[name="geoapify-key"]')?.content || '';
+  const PAGE = 100;
+  async function geoapify(lat, lng, radiusKm, offset, signal) {
+    const where = `filter=circle:${lng.toFixed(4)},${lat.toFixed(4)},${Math.round(radiusKm * 1000)}&bias=proximity:${lng.toFixed(4)},${lat.toFixed(4)}&limit=${PAGE}&offset=${offset}&apiKey=${encodeURIComponent(GEOAPIFY)}`;
+    let res = await fetch(`https://api.geoapify.com/v2/places?categories=religion.place_of_worship.christianity&${where}`, { signal });
+    // Should the Christian sub-category ever be renamed, ask for all places of worship and keep the Christian ones.
+    if (res.status === 400) res = await fetch(`https://api.geoapify.com/v2/places?categories=religion.place_of_worship&${where}`, { signal });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const features = (await res.json()).features || [];
+    return { list: features.map(fromGeoapify).filter(Boolean), full: features.length >= PAGE };
+  }
+  function fromGeoapify(f) {
+    const p = f.properties || {}, raw = p.datasource?.raw || {};
+    const cats = (p.categories || []).join(' ');
+    const faith = raw.religion || (/place_of_worship\.(\w+)/.exec(cats) || [])[1] || '';
+    if (faith && !/^christian/.test(faith)) return null;
+    if (!faith && (OTHER_FAITH.test(p.name || '') || !CHURCHY.test(p.name || ''))) return null;
+    const lat = Number(p.lat ?? f.geometry?.coordinates?.[1]), lng = Number(p.lon ?? f.geometry?.coordinates?.[0]);
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
+    const type = { n: 'node', w: 'way', r: 'relation', node: 'node', way: 'way', relation: 'relation' }[String(raw.osm_type || '').toLowerCase()];
+    const name = p.name || raw.name || '';
+    const site = p.website || raw.website || raw['contact:website'] || null;
+    return {
+      id: type && raw.osm_id ? `osm-${type}-${raw.osm_id}` : `geo-${p.place_id || `${lat},${lng}`}`, name: name || 'Church (name not recorded)', unnamed: !name,
+      denomination: raw.denomination ? String(raw.denomination).replace(/_/g, ' ').replace(/\b\w/g, (ch) => ch.toUpperCase()) : null,
+      address: [p.housenumber && p.street ? `${p.housenumber} ${p.street}` : p.street, p.suburb || p.district, p.city].filter(Boolean).join(', ') || (p.address_line2 || null),
+      website: site && /^https?:\/\//i.test(site) ? site : site ? `https://${site}` : null, phone: p.contact?.phone || raw.phone || raw['contact:phone'] || null,
+      serviceTimes: raw.service_times || p.opening_hours || raw.opening_hours || null, lat, lng, listed: false,
+      osmUrl: type && raw.osm_id ? `https://www.openstreetmap.org/${type}/${raw.osm_id}` : null,
+    };
+  }
+
   /* The quick answer, usually in under a second, comes from two free services that hold the same OpenStreetMap
      data and are far less crowded: Photon (run by Komoot, in Germany) gives the fifty places of worship nearest a
      point, and OpenStreetMap's own place search (Nominatim) gives up to forty of the better-known churches of an
@@ -182,7 +218,7 @@
   }
 
   /* ---------- search ---------- */
-  let run = 0, pending = [];
+  let run = 0, pending = [], paging = null;
   async function search(center, label, button) {
     const mine = ++run;
     for (const c of pending.splice(0)) c.abort(); // a new search replaces one that is still loading
@@ -201,14 +237,31 @@
       state.results = all;
       renderResults();
     };
+    paging = null; els.more.hidden = true;
     const key = cacheKey(center.lat, center.lng, radius);
     const known = cached(key);
-    if (known) { show(known); setBusy(false); return; }
+    if (known) {
+      show(known); setBusy(false);
+      // A remembered Geoapify list that ended on a full page may have more behind it.
+      if (GEOAPIFY && known.length && known.length % PAGE === 0) { paging = { center, radius, key, offset: known.length, list: known, show }; els.more.hidden = false; }
+      return;
+    }
     // Our own listed churches need no map service, so they are shown straight away while the rest are fetched.
     if (listedHere.length) {
       show([]);
       els.results.insertAdjacentHTML('beforeend', SKELETON.repeat(3));
       setStatus(`${listedHere.length} listed ${listedHere.length === 1 ? 'church' : 'churches'} found. Looking for more on the map…`);
+    }
+    if (GEOAPIFY) {
+      const g = new AbortController(); pending = [g];
+      const stop = setTimeout(() => g.abort(), 12000);
+      try {
+        const page = await geoapify(center.lat, center.lng, radius, 0, g.signal);
+        if (mine !== run) return;
+        remember(key, page.list); show(page.list); setBusy(false);
+        if (page.full) { paging = { center, radius, key, offset: PAGE, list: page.list, show }; els.more.hidden = false; setStatus(`${els.status.textContent.replace(/^\d+ churches/, `The ${state.results.length} nearest churches`)} Press "Show more churches" below for the next ${PAGE}.`); }
+        return;
+      } catch { if (mine !== run) return; /* Geoapify could not be reached: carry on with the public services */ } finally { clearTimeout(stop); }
     }
     const ops = [], fast = new AbortController(); // kept apart: the full-list search drops its own requests when it ends, and must not drop the quick one
     pending = [fast, { abort: () => ops.forEach((c) => c.abort()) }];
@@ -324,6 +377,19 @@
     setStatus(`Finding ${q}…`); setBusy(true, els.submit);
     try { const c = await geocode(q); setBusy(false); search({ lat: c.lat, lng: c.lng }, c.label, els.submit); } catch (err) { setBusy(false); els.results.innerHTML = ''; setStatus(err.message); }
   });
+  els.more.addEventListener('click', async () => {
+    const p = paging; if (!p) return;
+    const was = els.more.textContent; els.more.disabled = true; els.more.textContent = 'Loading…';
+    try {
+      const page = await geoapify(p.center.lat, p.center.lng, p.radius, p.offset, AbortSignal.timeout(12000));
+      if (paging !== p) return;
+      p.list = [...p.list, ...page.list.filter((c) => !p.list.some((o) => o.id === c.id))]; p.offset += PAGE;
+      remember(p.key, p.list); p.show(p.list);
+      if (page.full) setStatus(`${els.status.textContent.replace(/^\d+ churches/, `The ${state.results.length} nearest churches`)} Press "Show more churches" below for the next ${PAGE}.`);
+      else { paging = null; els.more.hidden = true; }
+    } catch { setStatus(`${els.status.textContent} More could not be loaded just now. Please try again.`); }
+    finally { els.more.disabled = false; els.more.textContent = was; }
+  });
   els.radius.addEventListener('change', () => { if (state.center) search(state.center, state.label); });
   els.unit?.addEventListener('change', () => {
     setUnit(els.unit.value === 'mi' ? 'mi' : 'km');
@@ -331,6 +397,8 @@
     if (state.center) search(state.center, state.label);
   });
   els.listedOnly.addEventListener('change', () => { if (state.results.length || state.center) renderResults(); });
+
+  if (GEOAPIFY) document.querySelector('.churches__foot')?.insertAdjacentHTML('beforeend', ' Search powered by <a href="https://www.geoapify.com/" target="_blank" rel="noopener">Geoapify</a>.');
 
   /* ---------- boot ---------- */
   (async () => {

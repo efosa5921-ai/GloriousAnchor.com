@@ -11,6 +11,7 @@
     "contactEmail": "info@gloriousanchor.com",
     "whatsappChannel": "https://whatsapp.com/channel/0029VbDsSvP2Jl86RiDqNe3d",
     "whatsappCommunity": "https://chat.whatsapp.com/KDDkJ7PSZyq2Kn3nDpKBqe",
+    "geoapifyKey": "${GEOAPIFY_KEY}",
     "prayerDays": "Monday to Friday",
     "prayerFrom": "17:00",
     "prayerTo": "05:00",
