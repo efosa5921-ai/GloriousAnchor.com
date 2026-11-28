@@ -28,6 +28,20 @@ if (targets.length === 1 && targets[0].startsWith('ytapi:')) {
 }
 // "json:<url>" prints up to 12,000 characters of any URL's body (for JSON APIs such as api.fxtwitter.com);
 // "img:<url>" prints an image as base64 so a frame or thumbnail can be looked at where the image host is unreachable.
+// "web:<url>" asks as a visitor's browser on our site would (browser user agent, our Origin) and prints the status,
+// the time taken, whether the answer may be read from our pages (CORS) and its first 500 characters. For checking
+// the public map services the church finder depends on. Several may be given at once.
+if (targets.every((t) => t.startsWith('web:'))) {
+  for (const t of targets) {
+    const url = t.slice(4), started = Date.now();
+    try {
+      const res = await fetch(url, { headers: { 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36', origin: 'https://gloriousanchor.com', referer: 'https://gloriousanchor.com/', accept: '*/*' }, signal: AbortSignal.timeout(40000) });
+      const text = await res.text();
+      console.log(`web ${res.status} ${Date.now() - started} ms cors=${res.headers.get('access-control-allow-origin') || 'none'} type=${res.headers.get('content-type') || ''} bytes=${text.length} ${new URL(url).host}${new URL(url).pathname}\n  ${text.slice(0, 500).replace(/\s+/g, ' ')}`);
+    } catch (err) { console.log(`web FAILED after ${Date.now() - started} ms: ${err.name} ${err.message} ${new URL(url).host}`); }
+  }
+  process.exit(0);
+}
 if (targets.every((t) => /^(json|img):/.test(t))) {
   // Several json: targets may be given at once (one per line of output, a second apart, for rate-limited APIs).
   let out = '';
