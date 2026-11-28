@@ -3,11 +3,11 @@
   'use strict';
   const $ = (s) => document.querySelector(s);
   const els = { finder: $('#finder'), locate: $('#locateBtn'), place: $('#placeInput'), radius: $('#radiusSel'), unit: $('#unitSel'), listedOnly: $('#listedOnly'), status: $('#status'), map: $('#map'), results: $('#results') };
-  // Public OpenStreetMap query servers. Measured on 28 Nov 2026 from a real browser on the live site: the first
-  // answered server-to-server in 2.6 s but refused browsers that day, the second answered in 8 to 12 s, the third
-  // (the main one) took 35 s or failed. Two other mirrors did not answer at all and were dropped.
-  // `node scripts/finder-check.js` (the "Check the church finder" workflow) repeats the measurement.
-  const OVERPASS = ['https://overpass.openstreetmap.fr/api/interpreter', 'https://maps.mail.ru/osm/tools/overpass/api/interpreter', 'https://overpass-api.de/api/interpreter'];
+  // Public OpenStreetMap query servers, tried in this order. On 28 Nov 2026 the main one (overpass-api.de) took
+  // 35 s or failed and the French one refused browsers, so on such days the quick answer below is what visitors see.
+  // A Russian-hosted mirror (maps.mail.ru) was faster but was removed at the owner's wish.
+  // `node scripts/finder-check.js` (the "Check the church finder" workflow) measures them from a real browser.
+  const OVERPASS = ['https://overpass.openstreetmap.fr/api/interpreter', 'https://overpass-api.de/api/interpreter'];
   const NOMINATIM = 'https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=';
   const state = { center: null, label: '', results: [], listed: [], map: null, markers: null, busy: false };
 
