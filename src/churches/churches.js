@@ -3,7 +3,9 @@
   'use strict';
   const $ = (s) => document.querySelector(s);
   const els = { finder: $('#finder'), locate: $('#locateBtn'), place: $('#placeInput'), radius: $('#radiusSel'), unit: $('#unitSel'), listedOnly: $('#listedOnly'), status: $('#status'), map: $('#map'), results: $('#results') };
-  const OVERPASS = ['https://overpass-api.de/api/interpreter', 'https://overpass.private.coffee/api/interpreter', 'https://overpass.kumi.systems/api/interpreter'];
+  // Public OpenStreetMap query servers, quickest first as measured on 28 Nov 2026 for a city search
+  // (2.6 s, 8 s and 35 s; two other mirrors did not answer at all and were dropped).
+  const OVERPASS = ['https://overpass.openstreetmap.fr/api/interpreter', 'https://maps.mail.ru/osm/tools/overpass/api/interpreter', 'https://overpass-api.de/api/interpreter'];
   const NOMINATIM = 'https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=';
   const state = { center: null, label: '', results: [], listed: [], map: null, markers: null, busy: false };
 
@@ -53,7 +55,7 @@
     if (!on) { els.results.querySelectorAll('.church--skeleton').forEach((e) => e.remove()); return; }
     if (button) { button.classList.add('is-busy'); button.textContent = text || 'Searching…'; }
     if (!els.results.querySelector('.church--skeleton')) els.results.innerHTML = SKELETON.repeat(4);
-    slowTimer = setTimeout(() => { if (state.busy) setStatus(`${els.status.textContent.replace(/…$/, '')}… still searching. The map service can take up to half a minute, please wait.`); }, 6000);
+    slowTimer = setTimeout(() => { if (state.busy) setStatus(`${els.status.textContent.replace(/…$/, '')}… still working. This can take up to half a minute, please wait.`); }, 6000);
     if (els.status.getBoundingClientRect().bottom > innerHeight) els.status.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
 
@@ -68,21 +70,21 @@
     if (!hit) throw new Error(`Couldn't find "${q}". Try adding the country, e.g. "Benin City, Nigeria".`);
     return { lat: parseFloat(hit.lat), lng: parseFloat(hit.lon), label: hit.display_name.split(',').slice(0, 2).join(',') };
   }
-  /* The churches come from Overpass, the free public query servers of OpenStreetMap, which the whole world shares
-     and which are sometimes slow or stalled. So the question goes to the first server, and if it has not answered
-     within 2.5 seconds (or it fails) the next is asked as well; whichever answers first is used and the others are
-     dropped. No server is waited on for more than 20 seconds, so a stalled one can never hold the search up. */
-  function overpass(lat, lng, radiusKm) {
-    const q = `[out:json][timeout:20];nwr["amenity"="place_of_worship"]["religion"="christian"](around:${Math.round(radiusKm * 1000)},${lat},${lng});out center tags qt 300;`;
+  /* The full list comes from Overpass, the free public query servers of OpenStreetMap, which the whole world shares
+     and which are sometimes slow or stalled. The question goes to the first server, and if it has not answered within
+     1.5 seconds (or it fails) the next is asked as well; whichever answers first is used and the others are dropped.
+     No server is waited on for more than 30 seconds. `ctrls` collects the requests so a newer search can stop them. */
+  function overpass(lat, lng, radiusKm, ctrls = []) {
+    const q = `[out:json][timeout:25];nwr["amenity"="place_of_worship"]["religion"="christian"](around:${Math.round(radiusKm * 1000)},${lat},${lng});out center tags qt 300;`;
     const body = 'data=' + encodeURIComponent(q);
-    const ctrls = [], errors = [];
+    const errors = [];
     let next = 0, live = 0, done = false, hedge = null;
     return new Promise((resolve, reject) => {
       const launch = () => {
         if (done || next >= OVERPASS.length) return;
         const url = OVERPASS[next++], c = new AbortController();
         ctrls.push(c); live += 1;
-        const kill = setTimeout(() => c.abort(), 20000);
+        const kill = setTimeout(() => c.abort(), 30000);
         fetch(url, { method: 'POST', body, headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, signal: c.signal })
           .then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
           .then((j) => { if (!done) { done = true; resolve(j.elements || []); } })
@@ -90,13 +92,41 @@
             errors.push(e); live -= 1;
             if (done) return;
             if (next < OVERPASS.length) launch();
-            else if (!live) { done = true; reject(new Error(`The map service is busy (${errors.find((x) => /HTTP/.test(x.message))?.message || 'no response'}). Try a smaller radius or try again shortly.`)); }
+            else if (!live) { done = true; reject(new Error('The map service did not answer.')); }
           })
           .finally(() => clearTimeout(kill));
       };
       launch();
-      hedge = setInterval(launch, 2500);
+      hedge = setInterval(launch, 1500);
     }).finally(() => { clearInterval(hedge); for (const c of ctrls) c.abort(); });
+  }
+  /* A quick first answer, usually in under a second, from OpenStreetMap's place search (Nominatim): up to forty of
+     the better-known churches in the area. They are shown at once and replaced by the full list when it arrives,
+     so there is something to see even when the full list is slow or cannot be had. */
+  const CHURCHY = /church|chapel|cathedral|basilica|parish|ministr|assembl|baptist|methodist|catholic|pentecost|presbyter|lutheran|anglican|episcopal|apostolic|adventist|gospel|christ|tabernacle|fellowship|iglesia|[eé]glise|kirche|chiesa|igreja/i;
+  async function quick(lat, lng, radiusKm, signal) {
+    const dLat = radiusKm / 111.32, dLng = radiusKm / (111.32 * Math.max(0.1, Math.cos((lat * Math.PI) / 180)));
+    const url = `https://nominatim.openstreetmap.org/search?q=church&format=jsonv2&limit=40&bounded=1&extratags=1&addressdetails=1&viewbox=${(lng - dLng).toFixed(5)},${(lat + dLat).toFixed(5)},${(lng + dLng).toFixed(5)},${(lat - dLat).toFixed(5)}`;
+    const r = await fetch(url, { headers: { Accept: 'application/json' }, signal });
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    return (await r.json()).map(fromNominatim).filter(Boolean);
+  }
+  function fromNominatim(h) {
+    const x = h.extratags || {}, a = h.address || {};
+    const worship = h.category === 'amenity' && h.type === 'place_of_worship';
+    const building = h.category === 'building' && /^(church|chapel|cathedral)$/.test(h.type);
+    if (!worship && !building) return null;
+    if (x.religion ? x.religion !== 'christian' : !building && !CHURCHY.test(h.name || '')) return null; // other faiths' places of worship are left out
+    const lat = parseFloat(h.lat), lng = parseFloat(h.lon);
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
+    const site = x.website || x['contact:website'] || x.url || null;
+    return {
+      id: `osm-${h.osm_type}-${h.osm_id}`, name: h.name || 'Church (name not recorded)', unnamed: !h.name,
+      denomination: x.denomination ? x.denomination.replace(/_/g, ' ').replace(/\b\w/g, (ch) => ch.toUpperCase()) : null,
+      address: [a.house_number && a.road ? `${a.house_number} ${a.road}` : a.road, a.suburb || a.neighbourhood, a.city || a.town || a.village].filter(Boolean).join(', ') || null,
+      website: site && /^https?:\/\//i.test(site) ? site : site ? `https://${site}` : null, phone: x.phone || x['contact:phone'] || null,
+      serviceTimes: x.service_times || x.opening_hours || null, lat, lng, listed: false, osmUrl: `https://www.openstreetmap.org/${h.osm_type}/${h.osm_id}`,
+    };
   }
   /* A search already made on this device in the last day is answered from memory, at once. */
   const CACHE = 'ga_church_searches';
@@ -127,38 +157,59 @@
   }
 
   /* ---------- search ---------- */
+  let run = 0, pending = [];
   async function search(center, label, button) {
-    if (state.busy) return;
+    const mine = ++run;
+    for (const c of pending.splice(0)) c.abort(); // a new search replaces one that is still loading
     state.center = center; state.label = label;
     const radius = Number(els.radius.value);
+    els.status.classList.remove('status--more');
     setStatus(`Looking for churches within ${radiusLabel()} of ${label}…`);
     setBusy(true, button || els.submit);
-    let failed = '';
-    try {
-      const listedHere = state.listed.filter((c) => km(center.lat, center.lng, c.lat, c.lng) <= radius);
-      const key = cacheKey(center.lat, center.lng, radius);
-      let osm = cached(key);
-      if (!osm) {
-        // Our own listed churches need no map service, so they are shown straight away while the rest are fetched.
-        if (listedHere.length) {
-          state.results = listedHere.map((c) => ({ ...c, distance: km(center.lat, center.lng, c.lat, c.lng) })).sort((a, b) => a.distance - b.distance);
-          renderResults();
-          els.results.insertAdjacentHTML('beforeend', SKELETON.repeat(3));
-          setStatus(`${listedHere.length} listed ${listedHere.length === 1 ? 'church' : 'churches'} found. Looking for more on the map…`);
-        }
-        try { osm = (await overpass(center.lat, center.lng, radius)).map(fromOsm).filter(Boolean); remember(key, osm); } catch (e) { if (!state.listed.length) throw e; osm = []; failed = e.message; }
-      }
-      // Listed churches replace an OSM entry at (nearly) the same spot.
-      const osmFiltered = osm.filter((o) => !listedHere.some((l) => km(l.lat, l.lng, o.lat, o.lng) < 0.08));
-      const all = [...listedHere, ...osmFiltered].map((c) => ({ ...c, distance: km(center.lat, center.lng, c.lat, c.lng) })).filter((c) => c.distance <= radius);
+    history.replaceState(null, '', `${location.pathname}?lat=${center.lat.toFixed(5)}&lng=${center.lng.toFixed(5)}&r=${+radius.toFixed(1)}&q=${encodeURIComponent(label)}`);
+    const listedHere = state.listed.filter((c) => km(center.lat, center.lng, c.lat, c.lng) <= radius);
+    const show = (osm) => {
+      // Listed churches replace a map entry at (nearly) the same spot.
+      const others = osm.filter((o) => !listedHere.some((l) => km(l.lat, l.lng, o.lat, o.lng) < 0.08));
+      const all = [...listedHere, ...others].map((c) => ({ ...c, distance: km(center.lat, center.lng, c.lat, c.lng) })).filter((c) => c.distance <= radius);
       all.sort((a, b) => (b.listed - a.listed) || a.distance - b.distance);
       state.results = all;
       renderResults();
-      if (failed) setStatus(`${els.status.textContent} ${failed}`);
-      history.replaceState(null, '', `${location.pathname}?lat=${center.lat.toFixed(5)}&lng=${center.lng.toFixed(5)}&r=${+radius.toFixed(1)}&q=${encodeURIComponent(label)}`);
-    } catch (e) {
-      setStatus(e.message); els.results.innerHTML = ''; els.map.hidden = true;
-    } finally { setBusy(false); }
+    };
+    const key = cacheKey(center.lat, center.lng, radius);
+    const known = cached(key);
+    if (known) { show(known); setBusy(false); return; }
+    // Our own listed churches need no map service, so they are shown straight away while the rest are fetched.
+    if (listedHere.length) {
+      show([]);
+      els.results.insertAdjacentHTML('beforeend', SKELETON.repeat(3));
+      setStatus(`${listedHere.length} listed ${listedHere.length === 1 ? 'church' : 'churches'} found. Looking for more on the map…`);
+    }
+    const ops = [], fast = new AbortController(); // kept apart: the full-list search drops its own requests when it ends, and must not drop the quick one
+    pending = [fast, { abort: () => ops.forEach((c) => c.abort()) }];
+    let complete = false;
+    const quickDone = quick(center.lat, center.lng, radius, fast.signal).then((list) => {
+      if (mine !== run || complete || !list.length) return list;
+      show(list);
+      if (!state.results.length) return list;
+      setBusy(false); // the first churches are on the page: the buttons work again while the rest load
+      els.status.classList.add('status--more');
+      setStatus(`${els.status.textContent.replace(/, nearest first\.$/, ' so far.')} Loading the full list…`);
+      return list;
+    }).catch(() => []);
+    try {
+      const osm = (await overpass(center.lat, center.lng, radius, ops)).map(fromOsm).filter(Boolean);
+      if (mine !== run) return;
+      complete = true; remember(key, osm); show(osm);
+    } catch {
+      await quickDone; // the full list failed: make sure the quick answer has had its chance to arrive
+      if (mine !== run) return;
+      complete = true;
+      if (state.results.length) { renderResults(); setStatus(`${els.status.textContent} The full map list could not be loaded just now, so some churches may be missing. Please try again in a minute.`); }
+      else { els.results.innerHTML = ''; els.map.hidden = true; setStatus('We could not reach the map service just now, so we cannot show the churches near you. Please try again in a minute.'); }
+    } finally {
+      if (mine === run) { setBusy(false); els.status.classList.remove('status--more'); }
+    }
   }
 
   /* ---------- render ---------- */
@@ -211,19 +262,25 @@
 
   /* ---------- events ---------- */
   els.locate.addEventListener('click', () => {
-    if (!navigator.geolocation) { setStatus('Your browser cannot share location. Type a town instead.'); return; }
-    setStatus('Getting your location…'); setBusy(true, els.locate, 'Locating…');
+    const typeInstead = 'Type your town, city or postcode in the box and press Search.';
+    if (!navigator.geolocation) { setStatus(`This browser cannot share your location. ${typeInstead}`); els.place.focus(); return; }
+    setStatus('Getting your location… if your browser asks, please choose Allow.'); setBusy(true, els.locate, 'Locating…');
+    let settled = false;
+    const finish = () => { if (settled) return false; settled = true; clearTimeout(watch); setBusy(false); return true; };
+    const fail = (msg) => { if (finish()) { els.results.innerHTML = ''; setStatus(msg); els.place.focus(); } };
+    // Some phones and in-app browsers (inside WhatsApp, Telegram or Facebook) never answer at all, so we stop waiting ourselves.
+    const watch = setTimeout(() => fail(`Your device did not give us a location. Check that location is switched on and allowed for this site, or open this page in your normal browser. ${typeInstead}`), 20000);
     navigator.geolocation.getCurrentPosition(
-      (pos) => { setBusy(false); search({ lat: pos.coords.latitude, lng: pos.coords.longitude }, 'your location', els.locate); },
-      (err) => { setBusy(false); setStatus(err.code === 1 ? 'Location permission was denied. Type a town instead.' : 'Could not get your location. Type a town instead.'); },
-      { enableHighAccuracy: false, timeout: 12000, maximumAge: 300000 },
+      (pos) => { if (finish()) search({ lat: pos.coords.latitude, lng: pos.coords.longitude }, 'your location', els.locate); },
+      (err) => fail(err.code === 1 ? `Location is not allowed for this site. Allow it in your browser's settings, or: ${typeInstead}` : `We could not get your location. ${typeInstead}`),
+      { enableHighAccuracy: false, timeout: 15000, maximumAge: 600000 },
     );
   });
   els.finder.addEventListener('submit', async (e) => {
     e.preventDefault();
     const q = els.place.value.trim(); if (!q) { els.place.focus(); return; }
     setStatus(`Finding ${q}…`); setBusy(true, els.submit);
-    try { const c = await geocode(q); setBusy(false); search({ lat: c.lat, lng: c.lng }, c.label, els.submit); } catch (err) { setBusy(false); setStatus(err.message); }
+    try { const c = await geocode(q); setBusy(false); search({ lat: c.lat, lng: c.lng }, c.label, els.submit); } catch (err) { setBusy(false); els.results.innerHTML = ''; setStatus(err.message); }
   });
   els.radius.addEventListener('change', () => { if (state.center) search(state.center, state.label); });
   els.unit?.addEventListener('change', () => {

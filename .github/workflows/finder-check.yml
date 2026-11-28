@@ -1,0 +1,30 @@
+name: Check the church finder
+
+# Opens the live church finder in a real browser at a given spot and reports what a visitor sees and how long the
+# public map services take (scripts/finder-check.js). Run it by hand when the finder seems slow or empty.
+on:
+  workflow_dispatch:
+    inputs:
+      where:
+        description: 'Latitude,longitude to stand at'
+        required: true
+        default: '33.749,-84.388'
+      zone:
+        description: 'Time zone of the visitor'
+        required: true
+        default: 'America/New_York'
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm i --no-save playwright@1.49.1 && npx playwright install --with-deps chromium
+      - run: node scripts/finder-check.js "${{ github.event.inputs.where }}" "${{ github.event.inputs.zone }}"

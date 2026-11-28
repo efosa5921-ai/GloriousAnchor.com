@@ -4,6 +4,10 @@ author: The Glorious Anchor team
 summary: A running list of what has been added to the site, newest first.
 ---
 
+## 28 November 2026
+
+- **Church finder, fixed**: searches, and especially "Use my location", could come back empty when the public map servers were overloaded. The finder now shows the best-known churches near you within a second, then fills in the full list from whichever of three servers answers first. If your device will not share its location, it says so and asks for your town.
+
 ## 27 November 2026
 
 - **A faster church finder**: it now asks several map servers and uses whichever answers first, never waits on a stalled one, shows our own listed churches at once, and answers a search you have already made straight from memory.

@@ -472,6 +472,8 @@ mark { background: var(--gold-soft); color: inherit; border-radius: 2px; padding
 .churches__status.status--busy { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 10px; background: var(--gold-soft); color: #16202e; font-weight: 600; font-size: 1rem; border-left: 4px solid var(--gold); }
 .churches__status.status--busy::before, .finder .btn.is-busy::before { content: ""; flex: none; width: 18px; height: 18px; border-radius: 50%; border: 3px solid currentColor; border-right-color: transparent; animation: spin .8s linear infinite; }
 .finder .btn.is-busy::before { width: 14px; height: 14px; border-width: 2px; }
+.churches__status.status--more { display: flex; align-items: center; gap: 10px; }
+.churches__status.status--more::before { content: ""; flex: none; width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--gold); border-right-color: transparent; animation: spin .8s linear infinite; }
 .finder .btn:disabled { opacity: .75; cursor: progress; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .church--skeleton { cursor: default; display: grid; gap: 10px; padding: 16px; }
