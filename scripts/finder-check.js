@@ -15,6 +15,8 @@ const answers = [];
 page.on('response', (r) => { if (/interpreter|nominatim/.test(r.url())) answers.push(`${((Date.now() - t0) / 1000).toFixed(1)}s ${r.status()} ${new URL(r.url()).host}`); });
 page.on('requestfailed', (r) => { if (/interpreter|nominatim/.test(r.url())) answers.push(`${((Date.now() - t0) / 1000).toFixed(1)}s ${r.failure()?.errorText} ${new URL(r.url()).host}`); });
 page.on('pageerror', (e) => console.log(`page error: ${e.message}`));
+const blocked = new Set();
+page.on('console', (m) => { if (m.type() === 'error' && /interpreter|nominatim|CORS/i.test(m.text())) blocked.add(m.text().replace(/\?data=\S+/, '').slice(0, 300)); });
 let t0 = Date.now();
 await page.goto(url, { waitUntil: 'load' });
 await page.waitForTimeout(1500);
@@ -29,5 +31,6 @@ for (let i = 0; i < 450; i++) {
   if (!s.busy && !s.more && i > 10) { console.log(`  finished at ${((Date.now() - t0) / 1000).toFixed(1)}s: ${s.status}`); break; }
 }
 console.log(`  map services: ${answers.join('; ') || 'none answered'}`);
+for (const b of blocked) console.log(`  browser said: ${b}`);
 console.log(`  map shown: ${await page.evaluate(() => !document.getElementById('map').hidden)}; radius menu: ${await page.evaluate(() => document.getElementById('radiusSel').selectedOptions[0].textContent)}`);
 await browser.close();
