@@ -54,6 +54,16 @@ for (let i = 0; i < 450; i++) {
   if (!s.busy && !s.more && i > 10) { console.log(`  finished at ${((Date.now() - t0) / 1000).toFixed(1)}s: ${s.status}`); break; }
 }
 console.log(`  map services: ${answers.join('; ') || 'none answered'}`);
+for (const line of await page.evaluate(() => [...document.querySelectorAll('.church')].slice(0, 4).map((li) => `${li.querySelector('.church__name')?.textContent} | ${li.querySelector('.church__meta')?.textContent.trim().replace(/\s+/g, ' ')} | links: ${[...li.querySelectorAll('.church__links a')].map((a) => a.textContent.trim()).join(', ')}`))) console.log(`    ${line.slice(0, 200)}`);
+const names = await page.evaluate(() => [...document.querySelectorAll('.church__name')].map((e) => e.textContent));
+console.log(`  names that may be another faith: ${names.filter((n) => /mosque|masjid|islam|synagog|temple|gurdwara|mandir|buddh|hindu|jewish/i.test(n)).slice(0, 8).join(' | ') || 'none'}`);
+if (await page.evaluate(() => !document.getElementById('moreBtn').hidden)) {
+  const before = names.length; const t1 = Date.now();
+  await page.click('#moreBtn');
+  await page.waitForFunction((n) => document.querySelectorAll('.church').length > n || document.getElementById('moreBtn').textContent !== 'Loading…', before, { timeout: 20000 }).catch(() => {});
+  await page.waitForTimeout(500);
+  console.log(`  "Show more churches": ${before} → ${await page.evaluate(() => document.querySelectorAll('.church').length)} in ${((Date.now() - t1) / 1000).toFixed(1)}s; ${await page.evaluate(() => document.getElementById('status').textContent.slice(0, 120))}`);
+}
 for (const b of blocked) console.log(`  browser said: ${b}`);
 console.log(`  map shown: ${await page.evaluate(() => !document.getElementById('map').hidden)}; radius menu: ${await page.evaluate(() => document.getElementById('radiusSel').selectedOptions[0].textContent)}`);
 await browser.close();

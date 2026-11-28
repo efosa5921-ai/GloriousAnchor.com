@@ -6,6 +6,7 @@ summary: A running list of what has been added to the site, newest first.
 
 ## 28 November 2026
 
+- **Church finder, complete and quick**: the finder now lists the hundred churches nearest to you in a second or two, in order of distance, with a "Show more churches" button for the next hundred.
 - **Church finder, fixed**: searches, and especially "Use my location", could come back empty when the public map servers were overloaded. The finder now shows the nearest and best-known churches around you within a second, from two fast map services, and adds the complete list whenever the main map servers are able to give it. If your device will not share its location, it says so and asks for your town.
 
 ## 27 November 2026
