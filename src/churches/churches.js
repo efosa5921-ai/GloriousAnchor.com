@@ -3,8 +3,10 @@
   'use strict';
   const $ = (s) => document.querySelector(s);
   const els = { finder: $('#finder'), locate: $('#locateBtn'), place: $('#placeInput'), radius: $('#radiusSel'), unit: $('#unitSel'), listedOnly: $('#listedOnly'), status: $('#status'), map: $('#map'), results: $('#results') };
-  // Public OpenStreetMap query servers, quickest first as measured on 28 Nov 2026 for a city search
-  // (2.6 s, 8 s and 35 s; two other mirrors did not answer at all and were dropped).
+  // Public OpenStreetMap query servers. Measured on 28 Nov 2026 from a real browser on the live site: the first
+  // answered server-to-server in 2.6 s but refused browsers that day, the second answered in 8 to 12 s, the third
+  // (the main one) took 35 s or failed. Two other mirrors did not answer at all and were dropped.
+  // `node scripts/finder-check.js` (the "Check the church finder" workflow) repeats the measurement.
   const OVERPASS = ['https://overpass.openstreetmap.fr/api/interpreter', 'https://maps.mail.ru/osm/tools/overpass/api/interpreter', 'https://overpass-api.de/api/interpreter'];
   const NOMINATIM = 'https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=';
   const state = { center: null, label: '', results: [], listed: [], map: null, markers: null, busy: false };
@@ -76,7 +78,7 @@
      No server is waited on for more than 30 seconds. `ctrls` collects the requests so a newer search can stop them. */
   const CAP = 500; // the most churches asked for in one search
   function overpass(lat, lng, radiusKm, ctrls = []) {
-    const q = `[out:json][timeout:25];nwr["amenity"="place_of_worship"]["religion"="christian"](around:${Math.round(radiusKm * 1000)},${lat},${lng});out center tags qt ${CAP};`;
+    const q = `[out:json][timeout:25];nwr["amenity"="place_of_worship"]["religion"="christian"](around:${Math.round(radiusKm * 1000)},${lat.toFixed(3)},${lng.toFixed(3)});out center tags qt ${CAP};`; // the spot is rounded to about 100 m: near enough to search from, and no server is told exactly where the visitor stands
     const query = '?data=' + encodeURIComponent(q); // a plain GET: one of the servers refuses a POST from a web page
     const errors = [];
     let next = 0, live = 0, done = false, hedge = null;
@@ -106,6 +108,7 @@
      so there is something to see even when the full list is slow or cannot be had. */
   const CHURCHY = /church|chapel|cathedral|basilica|parish|ministr|assembl|baptist|methodist|catholic|pentecost|presbyter|lutheran|anglican|episcopal|apostolic|adventist|gospel|christ|tabernacle|fellowship|iglesia|[eé]glise|kirche|chiesa|igreja/i;
   async function quick(lat, lng, radiusKm, signal) {
+    lat = Number(lat.toFixed(3)); lng = Number(lng.toFixed(3));
     const dLat = radiusKm / 111.32, dLng = radiusKm / (111.32 * Math.max(0.1, Math.cos((lat * Math.PI) / 180)));
     const url = `https://nominatim.openstreetmap.org/search?q=church&format=jsonv2&limit=40&bounded=1&extratags=1&addressdetails=1&viewbox=${(lng - dLng).toFixed(5)},${(lat + dLat).toFixed(5)},${(lng + dLng).toFixed(5)},${(lat - dLat).toFixed(5)}`;
     const r = await fetch(url, { headers: { Accept: 'application/json' }, signal });
